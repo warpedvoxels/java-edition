@@ -9,6 +9,6 @@ import org.hexalite.network.kraken.extension.unaryPlus
 
 class HexaliteDuelsPlugin : KrakenPlugin(namespace = "duels") {
     override fun up() {
-        console.send(+"[Duels](bold) [All systems have been enabled successfully, I guess...](rainbow)")
+        console.send(+" ")
     }
 }
