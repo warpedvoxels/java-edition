@@ -1,44 +1,34 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-@Suppress("DSL_SCOPE_VIOLATION")
+@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
-    alias(origins.plugins.kotlin.jvm)
-    alias(origins.plugins.fabric.loom) apply false
-    java
+    alias(hexalite.plugins.kotlin.jvm)
+    alias(hexalite.plugins.paperweight.userdev) apply false
+    alias(hexalite.plugins.plugin.yml) apply false
+    alias(hexalite.plugins.shadow)
+    id("hexalite-build-logic")
 }
 
 allprojects {
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "org.gradle.java-library")
+    apply(plugin = "hexalite-build-logic")
+
     repositories {
+        maven("https://papermc.io/repo/repository/maven-public/") {
+            name = "PaperMC"
+        }
+        maven(url = "https://repo.purpurmc.org/snapshots/") {
+            name = "PurpurMC"
+        }
         maven(url = "https://maven.fabricmc.net/") {
             name = "FabricMC"
         }
         mavenCentral()
     }
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-}
-
-subprojects {
-    apply(plugin = "org.jetbrains.kotlin.jvm")
     tasks {
-        processResources {
-            filesMatching("fabric.mod.json") {
-                expand(mutableMapOf("version" to project.version))
-            }
-        }
-        jar {
-            from("LICENSE.txt") {
-                rename { "${it}_origins" }
-            }
-        }
-        java {
-            withSourcesJar()
-        }
-        withType<JavaCompile> {
-            // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-            options.release.set(17)
+        compileKotlin {
+            kotlinOptions.freeCompilerArgs = org.hexalite.network.build_logic.BuildSystemFlags
+            kotlinOptions.jvmTarget = "17"
         }
     }
 }

@@ -1,7 +1,4 @@
-rootProject.name = "hexalite-java-edition"
-
 enableFeaturePreview("VERSION_CATALOGS")
-includeBuild("build-logic")
 
 pluginManagement {
     repositories {
@@ -15,18 +12,10 @@ pluginManagement {
     }
 }
 
-include(
-    ":common",
-    ":kraken-framework",
-    ":origins",
-    ":origins:skills",
-    ":duels"
-)
-
 dependencyResolutionManagement {
     versionCatalogs {
         create("hexalite") {
-            from(files("./hexalite.versions.toml"))
+            from(files("../hexalite.versions.toml"))
         }
     }
 }
