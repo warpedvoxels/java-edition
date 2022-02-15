@@ -13,14 +13,15 @@ minedown = "1.7.1-SNAPSHOT"
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-purpur-api = { module = "org.purpurmc.purpur:purpur-api", version.ref = "purpur" }
+purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 aventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-bukkit-api = { module = "net.kyori:adventure-platform-bukkit", version.ref = "adventure-bukkit" }
+adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
 minedown = { module = "de.themoep:minedown-adventure", version.ref = "minedown" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect"]
-adventure = ["aventure-api", "adventure-bukkit-api"]
+adventure = ["aventure-api", "adventure-bukkit-api", "adventure-extra-kotlin"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

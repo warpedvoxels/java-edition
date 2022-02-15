@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
@@ -10,7 +11,7 @@ repositories {
 gradlePlugin {
     plugins.register("hexalite-build-logic") {
         id = "hexalite-build-logic"
-        implementationClass = "org.hexalite.network.build_logic.BuildLogicPlugin"
+        implementationClass = "org.hexalite.network.build.BuildLogicPlugin"
     }
 }
 

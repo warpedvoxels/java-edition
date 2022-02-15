@@ -1,4 +1,4 @@
-package org.hexalite.network.build_logic
+package org.hexalite.network.build
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

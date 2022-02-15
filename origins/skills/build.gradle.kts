@@ -1,32 +1,31 @@
+import org.hexalite.network.build.Hexalite
+import org.hexalite.network.build.applyPurpurLogic
+
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
     id(hexalite.plugins.plugin.yml.get().pluginId)
-    id(hexalite.plugins.paperweight.userdev.get().pluginId)
     id(hexalite.plugins.shadow.get().pluginId)
 }
 
+applyPurpurLogic()
+
 dependencies {
     compileOnly(project(":kraken-framework"))
-    paperweightDevBundle(org.hexalite.network.build_logic.PURPUR_GROUP, hexalite.versions.purpur.get())
 }
 
 bukkit {
     name = "Skills"
     apiVersion = "1.18"
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
-    authors = listOf("Hexalite Network Development Team")
+    authors = Hexalite.Authors
     depend = listOf("Kraken")
     main = "org.hexalite.network.duels.HexaliteOriginsSkillsPlugin"
     prefix = "Skills"
 }
 
 tasks {
-    reobfJar {
+    getByName<io.papermc.paperweight.tasks.RemapJar>("reobfJar") {
         outputJar.set(layout.buildDirectory.file("libs/${project.name}-reobf.jar"))
-    }
-    build {
-        dependsOn(reobfJar)
-        dependsOn(shadowJar)
     }
     shadowJar {
         exclude {

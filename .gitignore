@@ -120,3 +120,5 @@ run.zip
 build/
 .gradle
 /*.jar
+
+!build-logic/src/main/kotlin/org/hexalite/network/build

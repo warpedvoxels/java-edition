@@ -22,12 +22,15 @@ allprojects {
         maven(url = "https://maven.fabricmc.net/") {
             name = "FabricMC"
         }
+        maven(url = "https://repo.minebench.de") {
+            name = "Minebench"
+        }
         mavenCentral()
     }
 
     tasks {
         compileKotlin {
-            kotlinOptions.freeCompilerArgs = org.hexalite.network.build_logic.BuildSystemFlags
+            kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
             kotlinOptions.jvmTarget = "17"
         }
     }

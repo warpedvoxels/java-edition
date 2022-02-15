@@ -10,7 +10,7 @@ import org.hexalite.network.kraken.KrakenPlugin
 //  / /__/ (_-</ __/ -_) _ \/ -_) __/
 // /____/_/___/\__/\__/_//_/\__/_/
 
-open class BukkitEventListener(val plugin: KrakenPlugin) : Listener
+open class BukkitEventListener(open val plugin: KrakenPlugin) : Listener
 
 inline fun KrakenPlugin.listen(listener: Listener) = server.pluginManager.registerEvents(listener, this)
 
