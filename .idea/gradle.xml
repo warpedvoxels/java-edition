@@ -26,7 +26,7 @@
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/duels" />
-            <option value="$PROJECT_DIR$/kraken-framework" />
+            <option value="$PROJECT_DIR$/kraken" />
             <option value="$PROJECT_DIR$/origins" />
             <option value="$PROJECT_DIR$/origins/skills" />
           </set>

@@ -17,7 +17,7 @@ pluginManagement {
 
 include(
     ":common",
-    ":kraken-framework",
+    ":kraken",
     ":origins",
     ":origins:skills",
     ":duels"

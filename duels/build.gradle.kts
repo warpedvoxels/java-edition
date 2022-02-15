@@ -10,7 +10,7 @@ plugins {
 applyPurpurLogic()
 
 dependencies {
-    compileOnly(project(":kraken-framework"))
+    compileOnly(project(":kraken"))
     compileOnly(rootProject.hexalite.bundles.adventure)
 }
 
