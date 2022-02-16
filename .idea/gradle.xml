@@ -29,6 +29,7 @@
             <option value="$PROJECT_DIR$/kraken" />
             <option value="$PROJECT_DIR$/origins" />
             <option value="$PROJECT_DIR$/origins/skills" />
+            <option value="$PROJECT_DIR$/testing" />
           </set>
         </option>
       </GradleProjectSettings>

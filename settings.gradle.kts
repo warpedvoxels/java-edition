@@ -20,7 +20,8 @@ include(
     ":kraken",
     ":origins",
     ":origins:skills",
-    ":duels"
+    ":duels",
+    ":testing"
 )
 
 dependencyResolutionManagement {

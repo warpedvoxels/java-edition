@@ -13,6 +13,7 @@ applyPurpurLogic()
 dependencies {
     api(rootProject.hexalite.bundles.kotlin.essential)
     api(rootProject.hexalite.minedown)
+    api(project(":common"))
     compileOnly(rootProject.hexalite.bundles.adventure)
 }
 

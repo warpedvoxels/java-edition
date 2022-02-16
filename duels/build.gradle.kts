@@ -30,7 +30,7 @@ tasks {
     }
     shadowJar {
         exclude {
-            it.file?.name?.startsWith("kotlin") == true || it.file?.name?.startsWith("patched_") == true
+            it.file.name.startsWith("kotlin") || it.file.name.startsWith("patched_")
         }
     }
 }
