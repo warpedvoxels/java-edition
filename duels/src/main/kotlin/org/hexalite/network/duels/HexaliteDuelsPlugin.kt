@@ -18,5 +18,5 @@ class HexaliteDuelsPlugin : KrakenPlugin(namespace = "duels") {
 
     override fun down() {
         console.send(+"&rainbow&All systems in this module were disabled.")
- c   }
+    }
 }
