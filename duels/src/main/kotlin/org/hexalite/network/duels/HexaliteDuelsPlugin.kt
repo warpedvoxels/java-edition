@@ -9,10 +9,14 @@ import org.hexalite.network.kraken.extension.unaryPlus
 
 /**
  * The entrypoint for the duels minigame.
- * @author eexsty
+ * @author @eexsty
  */
 class HexaliteDuelsPlugin : KrakenPlugin(namespace = "duels") {
     override fun up() {
         console.send(+"&rainbow&All systems in this module have been enabled.")
     }
+
+    override fun down() {
+        console.send(+"&rainbow&All systems in this module were disabled.")
+ c   }
 }
