@@ -30,6 +30,7 @@
             <option value="$PROJECT_DIR$/origins" />
             <option value="$PROJECT_DIR$/origins/skills" />
             <option value="$PROJECT_DIR$/testing" />
+            <option value="$PROJECT_DIR$/testing/commands" />
           </set>
         </option>
       </GradleProjectSettings>

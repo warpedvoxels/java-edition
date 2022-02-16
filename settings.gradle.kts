@@ -21,7 +21,8 @@ include(
     ":origins",
     ":origins:skills",
     ":duels",
-    ":testing"
+    ":testing",
+    ":testing:commands"
 )
 
 dependencyResolutionManagement {

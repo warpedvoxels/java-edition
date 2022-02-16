@@ -16,6 +16,12 @@ import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.command.KrakenCommand
 import kotlin.math.min
 
+inline fun CommandDispatcher<CommandSourceStack>.run(sender: CommandSourceStack, vararg arguments: String) =
+    execute(arguments.joinToString(" "), sender)
+
+inline fun CommandSender.toStack(): CommandSourceStack =
+    VanillaCommandWrapper.getListener(this)
+
 class BukkitBrigadierCommandWrapper(
     private val _plugin: KrakenPlugin,
     val kraken: KrakenCommand<CommandSourceStack>
@@ -35,9 +41,9 @@ class BukkitBrigadierCommandWrapper(
     }
 
     override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
-        val stack = VanillaCommandWrapper.getListener(sender)
+        val stack = sender.toStack()
         try {
-            dispatcher.execute(listOf(commandLabel, *args).joinToString(" "), stack)
+            dispatcher.run(stack, commandLabel, *args)
         } catch (ex: CommandSyntaxException) {
             stack.sendFailure(ComponentUtils.fromMessage(ex.rawMessage))
             if (ex.input != null && ex.cursor >= 0) {

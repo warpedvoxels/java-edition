@@ -9,19 +9,30 @@ shadow = "7.1.2"
 adventure = "4.9.3"
 adventure-bukkit = "4.0.1"
 minedown = "1.7.1-SNAPSHOT"
+kotest = "5.1.0"
+mockk = "1.12.2"
+valiktor = "0.12.0"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
+# Minecraft
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 aventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-bukkit-api = { module = "net.kyori:adventure-platform-bukkit", version.ref = "adventure-bukkit" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
 minedown = { module = "de.themoep:minedown-adventure", version.ref = "minedown" }
+# Testing
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "valiktor-core"]
 adventure = ["aventure-api", "adventure-bukkit-api", "adventure-extra-kotlin"]
+testing = ["kotest-runner-junit5", "kotest-assertions-core", "kotest-property", "mockk"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
