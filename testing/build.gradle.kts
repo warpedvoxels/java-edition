@@ -4,6 +4,6 @@ allprojects {
     }
     dependencies {
         testImplementation(rootProject.hexalite.bundles.testing)
-        api(project(":kraken"))
+        api(project(":kraken:purpur"))
     }
 }
