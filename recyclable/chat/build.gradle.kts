@@ -10,7 +10,7 @@ plugins {
 applyPurpurLogic()
 
 dependencies {
-    compileOnly(project(":kraken"))
+    compileOnly(project(":kraken:purpur"))
     compileOnly(rootProject.hexalite.bundles.adventure)
 }
 
@@ -19,9 +19,9 @@ bukkit {
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
     authors = Hexalite.Authors
     depend = listOf("Kraken")
-    main = "org.hexalite.network.duels.HexaliteDuelsPlugin"
-    prefix = "Duels"
-    name = "Duels"
+    main = "org.hexalite.network.recyclable.chat.Chat"
+    prefix = "Chat"
+    name = "Chat"
 }
 
 tasks {

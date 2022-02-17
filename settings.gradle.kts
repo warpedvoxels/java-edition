@@ -17,12 +17,13 @@ pluginManagement {
 
 include(
     ":common",
-    ":kraken",
-    ":origins",
-    ":origins:skills",
-    ":duels",
+    ":kraken:purpur",
+    ":arcade:origins",
+    ":arcade:origins:skills",
+    ":arcade:duels",
     ":testing",
-    ":testing:commands"
+    ":testing:commands",
+    ":recyclable:chat",
 )
 
 dependencyResolutionManagement {

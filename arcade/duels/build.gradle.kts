@@ -10,17 +10,18 @@ plugins {
 applyPurpurLogic()
 
 dependencies {
-    compileOnly(project(":kraken"))
+    compileOnly(project(":kraken:purpur"))
+    compileOnly(rootProject.hexalite.bundles.adventure)
 }
 
 bukkit {
-    name = "Skills"
     apiVersion = "1.18"
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
     authors = Hexalite.Authors
     depend = listOf("Kraken")
-    main = "org.hexalite.network.duels.HexaliteOriginsSkillsPlugin"
-    prefix = "Skills"
+    main = "org.hexalite.network.duels.HexaliteDuelsPlugin"
+    prefix = "Duels"
+    name = "Duels"
 }
 
 tasks {
