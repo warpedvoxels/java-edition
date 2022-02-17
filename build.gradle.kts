@@ -33,5 +33,9 @@ allprojects {
             kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
             kotlinOptions.jvmTarget = "17"
         }
+        compileTestKotlin {
+            kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
+            kotlinOptions.jvmTarget = "17"
+        }
     }
 }
