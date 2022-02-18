@@ -3,8 +3,8 @@ plugins {
     alias(hexalite.plugins.kotlin.jvm)
     alias(hexalite.plugins.paperweight.userdev) apply false
     alias(hexalite.plugins.plugin.yml) apply false
-    alias(hexalite.plugins.shadow)
-    id("hexalite-build-logic")
+    alias(hexalite.plugins.shadow) apply false
+    id("hexalite-build-logic") apply false
 }
 
 allprojects {

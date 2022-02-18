@@ -30,6 +30,7 @@ tasks {
     }
     shadowJar {
         exclude {
+            @Suppress("UNNECESSARY_SAFE_CALL")
             it.file?.name?.startsWith("kotlin") == true || it.file?.name?.startsWith("patched_") == true
         }
     }
