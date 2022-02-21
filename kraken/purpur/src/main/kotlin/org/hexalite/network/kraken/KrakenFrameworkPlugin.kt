@@ -9,4 +9,6 @@ inline val kraken: KrakenFrameworkPlugin
 
 class KrakenFrameworkPlugin : KrakenPlugin("kraken") {
     override fun up() = +BukkitBrigadierCompletion(this)
+
+    val config = KrakenConfig(this)
 }

@@ -2,6 +2,7 @@ package org.hexalite.network.kraken.extension
 
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.hexalite.network.kraken.KrakenPlugin
 
@@ -10,19 +11,23 @@ import org.hexalite.network.kraken.KrakenPlugin
 //  / /__/ (_-</ __/ -_) _ \/ -_) __/
 // /____/_/___/\__/\__/_//_/\__/_/
 
-open class BukkitEventListener(open val plugin: KrakenPlugin) : Listener
+interface BukkitEventListener : Listener {
+    val plugin: KrakenPlugin
+}
 
-inline fun KrakenPlugin.listen(listener: Listener) = server.pluginManager.registerEvents(listener, this)
+open class OpenBukkitEventListener(override val plugin: KrakenPlugin) : BukkitEventListener
+
+inline fun KrakenPlugin.readEvents(listener: Listener) = server.pluginManager.registerEvents(listener, this)
 
 inline operator fun BukkitEventListener.unaryPlus() =
-    plugin.listen(this)
+    plugin.readEvents(this)
 
-inline fun <reified T : Event> KrakenPlugin.listen(
+inline fun <reified T : Event> KrakenPlugin.readEvents(
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,
-    crossinline callback: (T) -> Unit
+    crossinline callback: T.() -> Unit
 ): BukkitEventListener {
-    val listener = BukkitEventListener(this)
+    val listener = OpenBukkitEventListener(this)
     server.pluginManager.registerEvent(
         T::class.java,
         listener,
@@ -33,3 +38,13 @@ inline fun <reified T : Event> KrakenPlugin.listen(
     )
     return listener
 }
+
+inline fun <reified T : Event> BukkitEventListener.readEvents(
+    priority: EventPriority = EventPriority.NORMAL,
+    ignoreIfCancelled: Boolean = true,
+    crossinline callback: T.() -> Unit
+) = plugin.readEvents(priority, ignoreIfCancelled, callback)
+
+inline fun Listener.unregister() = HandlerList.unregisterAll(this)
+
+inline operator fun Listener.unaryMinus() = unregister()

@@ -13,6 +13,8 @@ applyPurpurLogic()
 dependencies {
     api(rootProject.hexalite.bundles.kotlin.essential)
     api(rootProject.hexalite.minedown)
+    api(rootProject.hexalite.adventure.extra.kotlin)
+    api(rootProject.hexalite.mordant)
     api(project(":common"))
     compileOnly(rootProject.hexalite.bundles.adventure)
 }
@@ -32,5 +34,6 @@ tasks {
     }
     shadowJar {
         relocate("de.themoep.minedown", "org.hexalite.network.kraken.thirdparty.minedown")
+        minimize()
     }
 }

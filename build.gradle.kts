@@ -4,11 +4,13 @@ plugins {
     alias(hexalite.plugins.paperweight.userdev) apply false
     alias(hexalite.plugins.plugin.yml) apply false
     alias(hexalite.plugins.shadow) apply false
+    alias(hexalite.plugins.kotlinx.serialization) apply false
     id("hexalite-build-logic") apply false
 }
 
 allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "org.gradle.java-library")
     apply(plugin = "hexalite-build-logic")
 

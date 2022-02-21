@@ -1,5 +1,7 @@
 [versions]
-kotlin = "1.6.10"
+kotlin = "1.6.20-M1"
+kotlinx-serialization = "1.3.2"
+kaml = "0.40.0"
 minecraft = "1.18.1"
 paperweight-userdev = "1.3.5-SNAPSHOT"
 plugin-yml = "0.5.1"
@@ -13,10 +15,15 @@ kotest = "5.1.0"
 mockk = "1.12.2"
 valiktor = "0.12.0"
 run-paper = "1.0.6"
+logback = "1.3.0-alpha14"
+slf4j = "2.0.0-alpha6"
+mordant = "2.0.0-beta4"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
 # Minecraft
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
@@ -29,14 +36,17 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+# Logging
+mordant = { module = "com.github.ajalt.mordant:mordant", version.ref = "mordant" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-core", "kaml", "valiktor-core"]
 adventure = ["aventure-api", "adventure-bukkit-api", "adventure-extra-kotlin"]
 testing = ["kotest-runner-junit5", "kotest-assertions-core", "kotest-property", "mockk"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }

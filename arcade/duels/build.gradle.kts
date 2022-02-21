@@ -19,7 +19,7 @@ bukkit {
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
     authors = Hexalite.Authors
     depend = listOf("Kraken")
-    main = "org.hexalite.network.duels.HexaliteDuelsPlugin"
+    main = "org.hexalite.network.duels.DuelsPlugin"
     prefix = "Duels"
     name = "Duels"
 }

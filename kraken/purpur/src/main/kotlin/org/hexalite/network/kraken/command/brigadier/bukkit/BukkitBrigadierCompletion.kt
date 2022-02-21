@@ -4,9 +4,9 @@ import com.destroystokyo.paper.event.brigadier.CommandRegisteredEvent
 import net.minecraft.commands.CommandSourceStack
 import org.bukkit.event.EventHandler
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.extension.BukkitEventListener
+import org.hexalite.network.kraken.extension.OpenBukkitEventListener
 
-class BukkitBrigadierCompletion(override val plugin: KrakenPlugin) : BukkitEventListener(plugin) {
+class BukkitBrigadierCompletion(override val plugin: KrakenPlugin) : OpenBukkitEventListener(plugin) {
 
     @EventHandler
     @Suppress("DEPRECATION")
