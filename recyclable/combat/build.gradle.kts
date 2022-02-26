@@ -17,8 +17,8 @@ bukkit {
     apiVersion = Hexalite.vAPI
     authors = Hexalite.Authors
     depend = Hexalite.Depend
-    main = "org.hexalite.network.chat.ChatPlugin"
-    prefix = "Chat"
+    main = "org.hexalite.network.combat.CombatPlugin"
+    prefix = "Combat"
     name = prefix
 }
 

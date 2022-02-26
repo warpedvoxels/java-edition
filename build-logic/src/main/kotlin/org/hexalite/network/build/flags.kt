@@ -1,3 +1,3 @@
 package org.hexalite.network.build
 
-val BuildSystemFlags = listOf("-opt-in=kotlin.RequiresOptIn")
+val BuildSystemFlags = listOf("-opt-in=kotlin.RequiresOptIn", "-Xcontext-receivers")

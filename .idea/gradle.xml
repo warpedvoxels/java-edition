@@ -33,8 +33,7 @@
             <option value="$PROJECT_DIR$/kraken/purpur" />
             <option value="$PROJECT_DIR$/recyclable" />
             <option value="$PROJECT_DIR$/recyclable/chat" />
-            <option value="$PROJECT_DIR$/testing" />
-            <option value="$PROJECT_DIR$/testing/commands" />
+            <option value="$PROJECT_DIR$/recyclable/combat" />
           </set>
         </option>
       </GradleProjectSettings>

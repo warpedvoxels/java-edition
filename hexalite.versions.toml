@@ -9,7 +9,6 @@ purpur = "1.18.1-R0.1-SNAPSHOT"
 coroutines = "1.6.0"
 shadow = "7.1.2"
 adventure = "4.9.3"
-adventure-bukkit = "4.0.1"
 minedown = "1.7.1-SNAPSHOT"
 kotest = "5.1.0"
 mockk = "1.12.2"
@@ -27,22 +26,17 @@ kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
 # Minecraft
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
-aventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
-adventure-bukkit-api = { module = "net.kyori:adventure-platform-bukkit", version.ref = "adventure-bukkit" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
+adventure-text-serializer-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
 minedown = { module = "de.themoep:minedown-adventure", version.ref = "minedown" }
 # Testing
-kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
-kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
-kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 # Logging
 mordant = { module = "com.github.ajalt.mordant:mordant", version.ref = "mordant" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-core", "kaml", "valiktor-core"]
-adventure = ["aventure-api", "adventure-bukkit-api", "adventure-extra-kotlin"]
-testing = ["kotest-runner-junit5", "kotest-assertions-core", "kotest-property", "mockk"]
+adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

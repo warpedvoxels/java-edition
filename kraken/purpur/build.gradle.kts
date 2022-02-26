@@ -13,27 +13,22 @@ applyPurpurLogic()
 dependencies {
     api(rootProject.hexalite.bundles.kotlin.essential)
     api(rootProject.hexalite.minedown)
-    api(rootProject.hexalite.adventure.extra.kotlin)
+    api(rootProject.hexalite.bundles.adventure)
     api(rootProject.hexalite.mordant)
     api(project(":common"))
     compileOnly(rootProject.hexalite.bundles.adventure)
 }
 
 bukkit {
-    name = "Kraken"
-    apiVersion = "1.18"
-    load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
+    apiVersion = Hexalite.vAPI
     authors = Hexalite.Authors
     main = "org.hexalite.network.kraken.KrakenFrameworkPlugin"
     prefix = "Kraken"
+    name = prefix
 }
 
 tasks {
     getByName<RemapJar>("reobfJar") {
         outputJar.set(layout.buildDirectory.file("libs/${project.name}-reobf.jar"))
-    }
-    shadowJar {
-        relocate("de.themoep.minedown", "org.hexalite.network.kraken.thirdparty.minedown")
-        minimize()
     }
 }

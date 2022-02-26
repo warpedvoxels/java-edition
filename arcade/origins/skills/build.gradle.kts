@@ -14,13 +14,12 @@ dependencies {
 }
 
 bukkit {
-    name = "Skills"
-    apiVersion = "1.18"
-    load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
+    apiVersion = Hexalite.vAPI
     authors = Hexalite.Authors
-    depend = listOf("Kraken")
+    depend = Hexalite.Depend
     main = "org.hexalite.network.duels.HexaliteOriginsSkillsPlugin"
     prefix = "Skills"
+    name = prefix
 }
 
 tasks {

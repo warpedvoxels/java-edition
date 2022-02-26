@@ -21,9 +21,8 @@ include(
     ":arcade:origins",
     ":arcade:origins:skills",
     ":arcade:duels",
-    ":testing",
-    ":testing:commands",
     ":recyclable:chat",
+    ":recyclable:combat",
 )
 
 dependencyResolutionManagement {

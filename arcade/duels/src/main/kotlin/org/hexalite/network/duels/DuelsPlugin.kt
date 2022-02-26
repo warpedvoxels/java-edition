@@ -3,9 +3,8 @@
 package org.hexalite.network.duels
 
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.bukkit.console
-import org.hexalite.network.kraken.extension.send
 import org.hexalite.network.kraken.extension.unaryPlus
+import org.hexalite.network.kraken.logging.info
 
 /**
  * The entrypoint for the duels minigame.
@@ -13,10 +12,10 @@ import org.hexalite.network.kraken.extension.unaryPlus
  */
 class DuelsPlugin : KrakenPlugin(namespace = "duels") {
     override fun up() {
-        console.send(+"&rainbow&All systems in this module have been enabled.")
+        log.info { +"All systems in this module have been &rainbow&enabled&reset&." }
     }
 
     override fun down() {
-        console.send(+"&rainbow&All systems in this module were disabled.")
+        log.info { +"All systems in this module have been &rainbow&disabled&reset&." }
     }
 }

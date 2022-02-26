@@ -1,13 +1,13 @@
 package org.hexalite.network.kraken
 
 import kotlinx.coroutines.*
-import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.plugin.java.JavaPlugin
 import org.hexalite.network.kraken.logging.BasicLogger
 import java.util.concurrent.ConcurrentLinkedQueue
 
 abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
-    val log = BasicLogger()
+    inline val log: BasicLogger
+        get() = BasicLogger.Default
 
     /**
      * A list of jobs that should be cancelled when the plugin is disabled.
@@ -26,15 +26,15 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
     // Executed when the plugin is disabled.
     protected open fun down() {}
 
-    lateinit var adventure: BukkitAudiences
-        private set
+//    lateinit var adventure: BukkitAudiences
+//        private set
 
     /**
      * Make sure that everything is fine before enabling the plugin, then run the [up]
      * function.
      */
     final override fun onEnable() {
-        adventure = BukkitAudiences.create(this)
+        //adventure = BukkitAudiences.create(this)
         up()
     }
 
@@ -49,6 +49,6 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
         down()
         // Cancel just after the [down] function is called to prevent any unexpected behaviour.
         coroutineScope.cancel()
-        adventure.close()
+        //adventure.close()
     }
 }

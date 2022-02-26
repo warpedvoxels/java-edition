@@ -15,13 +15,12 @@ dependencies {
 }
 
 bukkit {
-    apiVersion = "1.18"
-    load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
+    apiVersion = Hexalite.vAPI
     authors = Hexalite.Authors
-    depend = listOf("Kraken")
+    depend = Hexalite.Depend
     main = "org.hexalite.network.duels.DuelsPlugin"
     prefix = "Duels"
-    name = "Duels"
+    name = prefix
 }
 
 tasks {

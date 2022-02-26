@@ -15,6 +15,9 @@ allprojects {
     apply(plugin = "hexalite-build-logic")
 
     repositories {
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
+            name = "SpigotMC"
+        }
         maven("https://papermc.io/repo/repository/maven-public/") {
             name = "PaperMC"
         }
@@ -30,6 +33,12 @@ allprojects {
         mavenCentral()
     }
 
+    dependencies {
+        testImplementation(kotlin("test"))
+        testImplementation(kotlin("test-junit5"))
+        testImplementation(rootProject.hexalite.mockk)
+    }
+
     tasks {
         compileKotlin {
             kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
@@ -38,6 +47,9 @@ allprojects {
         compileTestKotlin {
             kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
             kotlinOptions.jvmTarget = "17"
+        }
+        test {
+            useJUnitPlatform()
         }
     }
 }

@@ -11,8 +11,9 @@ import com.github.ajalt.mordant.rendering.TextColors.*
 
 enum class LoggingLevel(val prefix: String, val color: TextColors) {
     Debug("\uD83E\uDDEA debug", brightBlue),
+    System("⚙️ system", brightGreen),
     Info("\uD83D\uDCE8 info", brightYellow),
     Warning("⚠️ warning", yellow),
-    Error("❌ error", red),
-    Severe("💀 severe", brightRed)
+    Error("❌ error", brightRed),
+    Critical("💀 critical", red)
 }

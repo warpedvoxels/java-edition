@@ -51,7 +51,8 @@ open class OnlinePlayersConcurrentMap<V>(override val plugin: KrakenPlugin, var 
     }
 }
 
-open class OnlineUUIDsConcurrentMap<V>(override val plugin: KrakenPlugin, var onQuitCallback: UUIDMapCallback<V>? = null) : ConcurrentHashMap<UUID, V>(), BukkitEventListener {
+open class OnlineUUIDsConcurrentMap<V : Any>(override val plugin: KrakenPlugin, var onQuitCallback: UUIDMapCallback<V>? = null) : ConcurrentHashMap<UUID, V>(),
+    BukkitEventListener {
     fun makeSureIfItIsListeningToActiveness() {
         if (size == 0) {
             unregister()
@@ -70,15 +71,15 @@ open class OnlineUUIDsConcurrentMap<V>(override val plugin: KrakenPlugin, var on
         makeSureIfItIsListeningToActiveness()
     }
 
-    override fun put(key: UUID, value: V): V? = put(key, value).also {
+    override fun put(key: UUID, value: V): V? = super.put(key, value).also {
         makeSureIfItIsListeningToActiveness()
     }
 
-    override fun remove(key: UUID): V? = remove(key).also {
+    override fun remove(key: UUID): V? = super.remove(key).also {
         makeSureIfItIsListeningToActiveness()
     }
 
-    override fun remove(key: UUID, value: V): Boolean = remove(key, value).also {
+    override fun remove(key: UUID, value: V): Boolean = super.remove(key, value).also {
         makeSureIfItIsListeningToActiveness()
     }
 
@@ -96,14 +97,14 @@ open class OnlineUUIDsConcurrentMap<V>(override val plugin: KrakenPlugin, var on
     }
 }
 
-fun <V> KrakenPlugin.onlinePlayersMapOf(vararg values: Pair<Player, V>, onQuit: PlayerMapCallback<V>? = null) = OnlinePlayersConcurrentMap<V>(this).apply {
+fun <V : Any> KrakenPlugin.onlinePlayersMapOf(vararg values: Pair<Player, V>, onQuit: PlayerMapCallback<V>? = null) = OnlinePlayersConcurrentMap<V>(this).apply {
     values.forEach {
         put(it.first, it.second)
     }
     this.onQuit(onQuit)
 }
 
-fun <V> KrakenPlugin.onlineUUIDsMapOf(vararg values: Pair<UUID, V>, onQuit: UUIDMapCallback<V>? = null) = OnlineUUIDsConcurrentMap<V>(this).apply {
+fun <V : Any> KrakenPlugin.onlineUUIDsMapOf(vararg values: Pair<UUID, V>, onQuit: UUIDMapCallback<V>? = null) = OnlineUUIDsConcurrentMap<V>(this).apply {
     values.forEach {
         put(it.first, it.second)
     }

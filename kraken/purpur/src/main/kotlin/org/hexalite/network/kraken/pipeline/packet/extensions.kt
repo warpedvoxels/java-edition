@@ -6,11 +6,9 @@ import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ServerGamePacketListener
 import org.bukkit.entity.Player
-import org.bukkit.event.server.PluginDisableEvent
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.BukkitEventListener
 import org.hexalite.network.kraken.extension.findPlayer
-import org.hexalite.network.kraken.extension.unregister
 import org.hexalite.network.kraken.extension.uuid
 import java.util.*
 
@@ -25,8 +23,11 @@ typealias PacketTransformOutContext = PlayerPipelineDuplexChannel.(ctx: ChannelH
 typealias PacketTransformInSpecificContext<T, R> = PlayerPipelineDuplexChannel.(ctx: ChannelHandlerContext, packet: T) -> R
 typealias PacketTransformOutSpecificContext<T, R> = PlayerPipelineDuplexChannel.(ctx: ChannelHandlerContext, packet: T, promise: ChannelPromise) -> R
 
+val Player.customDuplexChannelOrNull
+    get() = playerCustomDuplexChannels[uuid]
+
 val Player.customDuplexChannel
-    get() = playerCustomDuplexChannels[uuid] ?: error("Player is not registered with a custom duplex channel.")
+    get() = customDuplexChannelOrNull ?: error("Player is not registered with a custom duplex channel.")
 
 @DslMarker
 @Target(AnnotationTarget.FUNCTION)
@@ -70,6 +71,16 @@ inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncomi
     transformPacketsIncoming<T> { ctx, packet ->
         reader(ctx, packet)
         packet
+    }
+
+/**
+ * Sets the packet in transformation globally.
+ */
+@PacketDslMarker
+inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncomingNull(crossinline reader: PacketTransformInSpecificContext<T, Unit>) =
+    transformPacketsIncoming<T> { ctx, packet ->
+        reader(ctx, packet)
+        null
     }
 
 /**
@@ -158,16 +169,8 @@ inline fun <reified T : Packet<ClientGamePacketListener>> Player.transformPacket
  * Set up the entire packet pipeline injection system.
  */
 fun KrakenPlugin.packetPipelineInjectionSystem(): BukkitEventListener {
-    class InternalDisablerListener(override val plugin: KrakenPlugin) : BukkitEventListener {
-        fun readDisable(event: PluginDisableEvent) {
-            if (event.plugin.name == name) {
-                disableInternalPacketListening()
-                unregister()
-            }
-        }
-    }
     setupInternalPacketListening()
-    return InternalDisablerListener(this)
+    return BukkitPacketPipelineListener(this)
 }
 
 val PlayerPipelineDuplexChannel.uuidOrNull: UUID?
