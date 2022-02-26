@@ -7,5 +7,7 @@ package org.hexalite.network.build
 //              /_/
 
 object Hexalite {
+    const val vAPI = "1.18"
     val Authors = listOf("Hexalite Network Development Team")
+    val Depend = listOf("Kraken")
 }

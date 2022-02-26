@@ -15,13 +15,12 @@ dependencies {
 }
 
 bukkit {
-    apiVersion = "1.18"
-    load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
+    apiVersion = Hexalite.vAPI
     authors = Hexalite.Authors
-    depend = listOf("Kraken")
-    main = "org.hexalite.network.duels.HexaliteDuelsPlugin"
+    depend = Hexalite.Depend
+    main = "org.hexalite.network.duels.DuelsPlugin"
     prefix = "Duels"
-    name = "Duels"
+    name = prefix
 }
 
 tasks {
@@ -30,6 +29,7 @@ tasks {
     }
     shadowJar {
         exclude {
+            @Suppress("UNNECESSARY_SAFE_CALL")
             it.file?.name?.startsWith("kotlin") == true || it.file?.name?.startsWith("patched_") == true
         }
     }

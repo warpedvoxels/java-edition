@@ -56,5 +56,10 @@
       <option name="name" value="Minebench" />
       <option name="url" value="https://repo.minebench.de" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="SpigotMC" />
+      <option name="name" value="SpigotMC" />
+      <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
+    </remote-repository>
   </component>
 </project>
