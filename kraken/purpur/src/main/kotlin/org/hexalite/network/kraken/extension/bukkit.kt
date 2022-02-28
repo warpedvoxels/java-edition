@@ -12,3 +12,6 @@ inline val scheduler get() = Bukkit.getScheduler()
 inline val server get() = Bukkit.getServer()
 
 inline val console get() = server.consoleSender
+
+@DslMarker
+annotation class BukkitDsl

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd "${0%/*}/../run"
+DIRNAME=$(dirname "$(realpath "$0")")
+cd "$DIRNAME/../run"
 
 if [ ! -f ./start ]; then
   echo "#!/bin/bash" >> start

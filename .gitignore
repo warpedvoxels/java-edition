@@ -122,4 +122,8 @@ build/
 .gradle
 /*.jar
 
+# Environment
+.env*
+!.env*.example
+
 !build-logic/src/main/kotlin/org/hexalite/network/build

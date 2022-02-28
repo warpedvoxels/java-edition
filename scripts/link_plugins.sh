@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd "${0%/*}/.."
+DIRNAME=$(dirname "$(realpath "$0")")
+cd "$DIRNAME/.."
 shopt -s dotglob
 
 # Check if the first argument is not empty

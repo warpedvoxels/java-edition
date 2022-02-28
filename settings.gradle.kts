@@ -23,6 +23,7 @@ include(
     ":arcade:duels",
     ":recyclable:chat",
     ":recyclable:combat",
+    ":rest-webserver"
 )
 
 dependencyResolutionManagement {

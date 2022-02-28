@@ -1,31 +1,35 @@
 package org.hexalite.network.chat
 
-import net.minecraft.network.protocol.game.ServerboundChatPacket
+import com.github.ajalt.mordant.rendering.TextColors.brightGreen
+import com.github.ajalt.mordant.rendering.TextColors.brightRed
+import io.papermc.paper.event.player.AsyncChatEvent
+import net.kyori.adventure.extra.kotlin.text
+import net.kyori.adventure.text.Component
+import org.hexalite.network.chat.roles.EliteRole
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.bukkit.console
-import org.hexalite.network.kraken.extension.findPlayer
-import org.hexalite.network.kraken.extension.send
+import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus
 import org.hexalite.network.kraken.logging.info
-import org.hexalite.network.kraken.pipeline.packet.packetPipelineInjectionSystem
-import org.hexalite.network.kraken.pipeline.packet.transformPacketsIncoming
-import org.hexalite.network.kraken.pipeline.packet.uuid
 
 class ChatPlugin : KrakenPlugin(namespace = "chat") {
     override fun up() {
-        +packetPipelineInjectionSystem()
-
-        /**
-         * This is just a placeholder code.
-         * TODO: Chat system
-         */
-        transformPacketsIncoming<ServerboundChatPacket> { _, packet ->
-            val player = uuid.findPlayer()
-            val packet = ServerboundChatPacket(packet.message + " (transformado wow)")
-            console.send("New message sent from ${player.name}: ${packet.message}")
-            packet
+        // This is placeholder code to test the resource pack funcionality.
+        val role = EliteRole
+        readEvents<AsyncChatEvent> {
+            isCancelled = true
+            server.broadcast(text {
+                content(role.unicode)
+                    .append(Component.text(" ${player.name}").color(role.color))
+                    .append(Component.text(": "))
+                    .append(message().color(role.color))
+            })
         }
 
-        log.info { +"All systems in this module have been &rainbow&enabled&reset&." }
+
+        log.info { +"All systems in this module have been ${brightGreen("enabled")}." }
+    }
+
+    override fun down() {
+        log.info { +"All systems in this module have been ${brightRed("disabled")}." }
     }
 }

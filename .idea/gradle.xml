@@ -34,6 +34,7 @@
             <option value="$PROJECT_DIR$/recyclable" />
             <option value="$PROJECT_DIR$/recyclable/chat" />
             <option value="$PROJECT_DIR$/recyclable/combat" />
+            <option value="$PROJECT_DIR$/rest-webserver" />
           </set>
         </option>
       </GradleProjectSettings>
