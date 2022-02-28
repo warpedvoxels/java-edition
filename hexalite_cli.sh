@@ -8,7 +8,7 @@ GRADLE_VERSION=$(gradle --version 2>/dev/null | sed -n 's/^.*Gradle \(.*\)/\1/p'
 KOTLIN_VERSION=$(kotlin -version 2>/dev/null | sed -n 's/^.*Kotlin version \(.*\)/\1/p' || echo "Not found")
 
 run_script() {
-  (cd "$DIRNAME" && bash "./scripts/$1.sh")
+  (cd "$DIRNAME" && bash "./scripts/$1.sh" "$2")
 }
 
 cli_help() {
@@ -42,7 +42,11 @@ cli_build() {
 
   # Build everything then symlink everything
   mkdir -p "$HOME/.hexalite/compiled"
-  (cd "$DIRNAME" && gradle build && run_script "link_plugins" && ln -s "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
+  if [ -z "$1" ]; then
+    (cd "$DIRNAME" && gradle build && ln -s "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
+  else
+    (cd "$DIRNAME" && gradle build && run_script "link_plugins" "$1" && ln -s "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
+  fi
 }
 
 cli_purpur() {
@@ -86,7 +90,7 @@ case "$1" in
     cli_help
     ;;
   -b|--build)
-    cli_build
+    cli_build "$2"
     ;;
   -p|--purpur)
     cli_purpur
