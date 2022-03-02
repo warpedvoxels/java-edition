@@ -2,10 +2,13 @@
 
 package org.hexalite.network.duels
 
-import com.github.ajalt.mordant.rendering.TextColors
+import org.bukkit.event.player.PlayerJoinEvent
+import org.hexalite.network.duels.blocks.PlaceholderBlock
 import org.hexalite.network.kraken.KrakenPlugin
+import org.hexalite.network.kraken.blocks.customBlocks
+import org.hexalite.network.kraken.blocks.item
+import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus
-import org.hexalite.network.kraken.logging.info
 
 /**
  * The entrypoint for the duels minigame.
@@ -13,10 +16,13 @@ import org.hexalite.network.kraken.logging.info
  */
 class DuelsPlugin : KrakenPlugin(namespace = "duels") {
     override fun up() {
-        log.info { +"All systems in this module have been ${TextColors.brightGreen("enabled")}." }
+        val adapter = +customBlocks(PlaceholderBlock)
+        readEvents<PlayerJoinEvent> {
+            player.inventory.addItem(PlaceholderBlock.item(adapter.ID))
+        }
+        println("yay")
     }
 
     override fun down() {
-        log.info { +"All systems in this module have been ${TextColors.brightRed("disabled")}." }
     }
 }

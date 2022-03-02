@@ -22,6 +22,9 @@ exposed = "0.37.3"
 hikaricp = "5.0.1"
 postgresql = "42.3.3"
 dotenv = "6.2.2"
+google-auto-service = "1.0.1"
+ksp-auto-service = "1.0.0"
+ksp = "1.6.20-M1-1.0.2"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -35,6 +38,7 @@ dotenv = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenv" 
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
 adventure-text-serializer-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
+adventure-text-serializer-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
 purpur-api = { module = "org.purpurmc.purpur:purpur-api", version.ref = "purpur" }
 minedown = { module = "de.themoep:minedown-adventure", version.ref = "minedown" }
 # Testing
@@ -64,10 +68,12 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+auto-service = { module = "com.google.auto.service:auto-service", version.ref = "google-auto-service" }
+ksp-auto-service = { module = "dev.zacsweers.autoservice:auto-service-ksp", version.ref = "ksp-auto-service" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "valiktor-core"]
-adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin"]
+adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
 ktor-server = ["ktor-server-netty", "ktor-server-core", "ktor-server-caching-headers", "ktor-server-call-logging", "ktor-server-default-headers", "ktor-server-content-negotiation", "ktor-serialization-kotlinx-json", "ktor-server-auth", "ktor-server-auth-jwt"]
 ktor-client = ["ktor-serialization-kotlinx-json", "ktor-client-core", "ktor-client-cio", "ktor-client-logging", "ktor-client-content-negotiation"]
 database = ["postgresql", "hikaricp", "exposed-core", "exposed-dao", "exposed-jdbc", "exposed-kotlin-datetime"]
@@ -79,3 +85,4 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

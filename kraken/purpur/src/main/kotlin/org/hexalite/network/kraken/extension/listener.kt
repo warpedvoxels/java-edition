@@ -20,8 +20,9 @@ open class OpenBukkitEventListener(override val plugin: KrakenPlugin) : BukkitEv
 
 inline fun KrakenPlugin.readEvents(listener: Listener) = server.pluginManager.registerEvents(listener, this)
 
-inline operator fun BukkitEventListener.unaryPlus() =
+inline operator fun <T: BukkitEventListener> T.unaryPlus(): T = also {
     plugin.readEvents(this)
+}
 
 @BukkitDsl
 inline fun <reified T : Event> KrakenPlugin.readEvents(
