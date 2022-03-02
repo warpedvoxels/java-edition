@@ -2,6 +2,7 @@
 
 package org.hexalite.network.duels
 
+import com.github.ajalt.mordant.rendering.TextColors
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.unaryPlus
 import org.hexalite.network.kraken.logging.info
@@ -12,10 +13,10 @@ import org.hexalite.network.kraken.logging.info
  */
 class DuelsPlugin : KrakenPlugin(namespace = "duels") {
     override fun up() {
-        log.info { +"All systems in this module have been &rainbow&enabled&reset&." }
+        log.info { +"All systems in this module have been ${TextColors.brightGreen("enabled")}." }
     }
 
     override fun down() {
-        log.info { +"All systems in this module have been &rainbow&disabled&reset&." }
+        log.info { +"All systems in this module have been ${TextColors.brightRed("disabled")}." }
     }
 }

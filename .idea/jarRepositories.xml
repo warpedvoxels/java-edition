@@ -61,5 +61,10 @@
       <option name="name" value="SpigotMC" />
       <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Ktor EAP" />
+      <option name="name" value="Ktor EAP" />
+      <option name="url" value="https://maven.pkg.jetbrains.space/public/p/ktor/eap" />
+    </remote-repository>
   </component>
 </project>

@@ -25,7 +25,9 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/arcade" />
             <option value="$PROJECT_DIR$/arcade/duels" />
+            <option value="$PROJECT_DIR$/arcade/duels/rest-module" />
             <option value="$PROJECT_DIR$/arcade/origins" />
+            <option value="$PROJECT_DIR$/arcade/origins/rest-module" />
             <option value="$PROJECT_DIR$/arcade/origins/skills" />
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/common" />
@@ -34,6 +36,8 @@
             <option value="$PROJECT_DIR$/recyclable" />
             <option value="$PROJECT_DIR$/recyclable/chat" />
             <option value="$PROJECT_DIR$/recyclable/combat" />
+            <option value="$PROJECT_DIR$/rest-webclient" />
+            <option value="$PROJECT_DIR$/rest-webserver" />
           </set>
         </option>
       </GradleProjectSettings>

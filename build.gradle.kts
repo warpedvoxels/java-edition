@@ -30,6 +30,9 @@ allprojects {
         maven(url = "https://repo.minebench.de") {
             name = "Minebench"
         }
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap") {
+            name = "Ktor EAP"
+        }
         mavenCentral()
     }
 

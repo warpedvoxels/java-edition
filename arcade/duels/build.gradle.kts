@@ -12,6 +12,7 @@ applyPurpurLogic()
 dependencies {
     compileOnly(project(":kraken:purpur"))
     compileOnly(rootProject.hexalite.bundles.adventure)
+    api(project(":arcade:duels:rest-module"))
 }
 
 bukkit {

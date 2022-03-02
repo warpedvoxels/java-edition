@@ -1,6 +1,7 @@
 [versions]
 kotlin = "1.6.20-M1"
 kotlinx-serialization = "1.3.2"
+kotlinx-datetime = "0.3.2"
 kaml = "0.40.0"
 minecraft = "1.18.1"
 paperweight-userdev = "1.3.5-SNAPSHOT"
@@ -15,28 +16,61 @@ mockk = "1.12.2"
 valiktor = "0.12.0"
 run-paper = "1.0.6"
 logback = "1.3.0-alpha14"
-slf4j = "2.0.0-alpha6"
 mordant = "2.0.0-beta4"
+ktor = "2.0.0-beta-1"
+exposed = "0.37.3"
+hikaricp = "5.0.1"
+postgresql = "42.3.3"
+dotenv = "6.2.2"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
+dotenv = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenv" }
 # Minecraft
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
 adventure-text-serializer-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
+purpur-api = { module = "org.purpurmc.purpur:purpur-api", version.ref = "purpur" }
 minedown = { module = "de.themoep:minedown-adventure", version.ref = "minedown" }
 # Testing
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 # Logging
 mordant = { module = "com.github.ajalt.mordant:mordant", version.ref = "mordant" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+# Database and Rest Server
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
+ktor-server-default-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-server-caching-headers = { module = "io.ktor:ktor-server-caching-headers", version.ref = "ktor" }
+ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
+ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+# Rest Client
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-core", "kaml", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin"]
+ktor-server = ["ktor-server-netty", "ktor-server-core", "ktor-server-caching-headers", "ktor-server-call-logging", "ktor-server-default-headers", "ktor-server-content-negotiation", "ktor-serialization-kotlinx-json", "ktor-server-auth", "ktor-server-auth-jwt"]
+ktor-client = ["ktor-serialization-kotlinx-json", "ktor-client-core", "ktor-client-cio", "ktor-client-logging", "ktor-client-content-negotiation"]
+database = ["postgresql", "hikaricp", "exposed-core", "exposed-dao", "exposed-jdbc", "exposed-kotlin-datetime"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

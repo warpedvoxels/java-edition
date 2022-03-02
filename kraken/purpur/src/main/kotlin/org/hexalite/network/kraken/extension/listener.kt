@@ -5,6 +5,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.hexalite.network.kraken.KrakenPlugin
+import org.hexalite.network.kraken.bukkit.BukkitDsl
 
 //    __   _     __
 //   / /  (_)__ / /____ ___  ___ ____
@@ -22,6 +23,7 @@ inline fun KrakenPlugin.readEvents(listener: Listener) = server.pluginManager.re
 inline operator fun BukkitEventListener.unaryPlus() =
     plugin.readEvents(this)
 
+@BukkitDsl
 inline fun <reified T : Event> KrakenPlugin.readEvents(
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,
@@ -39,6 +41,7 @@ inline fun <reified T : Event> KrakenPlugin.readEvents(
     return listener
 }
 
+@BukkitDsl
 inline fun <reified T : Event> BukkitEventListener.readEvents(
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,

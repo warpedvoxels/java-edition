@@ -3,42 +3,28 @@ version: '3'
 services:
   database-container:
     image: postgres
-    env_file:
-      - ../.env
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
     volumes:
-      - ~/.hexalite/java-edition/postgresql/data:/var/lib/postgresql/data
+      - ~/.hexalite/postgresql/data:/var/lib/postgresql/data
     networks:
       - postgres-network
   redis-container:
     image: "redis:alpine"
-    env_file:
-      - ../.env
     ports:
       - "6379:6379"
     volumes:
-      - ~/.hexalite/java-edition/redis/data:/data
+      - ~/.hexalite/redis/data:/data
     networks:
       - redis-network
-  rabbitmq-container:
-    image: rabbitmq:3-management-alpine
-    env_file:
-      - ../.env
-    ports:
-      # AMQP protocol port
-      - '5672:5672'
-      # HTTP management UI
-      - '15672:15672'
-    volumes:
-      - ~/.hexalite/java-edition/rabbitmq/data/:/var/lib/rabbitmq
-      - ~/.hexalite/java-edition/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-      - communications-network
 networks:
   postgres-network:
     driver: bridge
   redis-network:
-    driver: bridge
-  communications-network:
     driver: bridge
