@@ -5,7 +5,7 @@ import com.github.ajalt.mordant.rendering.TextColors.brightRed
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.Component
-import org.hexalite.network.chat.roles.EliteRole
+import org.hexalite.network.common.roles.EliteRole
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus

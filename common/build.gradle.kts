@@ -6,3 +6,11 @@ plugins {
 }
 
 applyPurpurLogic()
+
+dependencies {
+    compileOnly(rootProject.hexalite.bundles.kotlin.essential)
+    compileOnly(rootProject.hexalite.bundles.database)
+    compileOnly(rootProject.hexalite.mordant)
+    compileOnly(rootProject.hexalite.kotlinx.serialization.json)
+    compileOnly(rootProject.hexalite.dotenv)
+}

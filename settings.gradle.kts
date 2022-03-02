@@ -19,8 +19,10 @@ include(
     ":common",
     ":kraken:purpur",
     ":arcade:origins",
+    ":arcade:origins:rest-module",
     ":arcade:origins:skills",
     ":arcade:duels",
+    ":arcade:duels:rest-module",
     ":recyclable:chat",
     ":recyclable:combat",
     ":rest-webserver"

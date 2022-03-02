@@ -43,9 +43,9 @@ cli_build() {
   # Build everything then symlink everything
   mkdir -p "$HOME/.hexalite/compiled"
   if [ -z "$1" ]; then
-    (cd "$DIRNAME" && gradle build && ln -s "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
+    (cd "$DIRNAME" && gradle build && ln -sf "$DIRNAME/rest-webserver/build/libs/rest-webserver-shaded.jar" "$HOME/.hexalite/compiled/webserver.jar")
   else
-    (cd "$DIRNAME" && gradle build && run_script "link_plugins" "$1" && ln -s "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
+    (cd "$DIRNAME" && gradle build && run_script "link_plugins" "$1" && ln -sf "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
   fi
 }
 
@@ -77,7 +77,7 @@ cli_minecraft() {
 }
 
 cli_webserver() {
-  (cd "$HOME/.hexalite/compiled" && java -jar webserver.jar)
+  (cd "$HOME/.hexalite/compiled" && java -jar ./webserver.jar)
 }
 
 if [ -z "$1" ]; then

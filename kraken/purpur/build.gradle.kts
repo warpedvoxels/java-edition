@@ -15,6 +15,7 @@ dependencies {
     api(rootProject.hexalite.minedown)
     api(rootProject.hexalite.bundles.adventure)
     api(rootProject.hexalite.mordant)
+    api(rootProject.hexalite.bundles.database)
     api(project(":common"))
     compileOnly(rootProject.hexalite.bundles.adventure)
 }

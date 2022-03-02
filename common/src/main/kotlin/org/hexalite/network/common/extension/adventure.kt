@@ -1,4 +1,4 @@
-package org.hexalite.network.kraken.extension
+package org.hexalite.network.common.extension
 
 import net.kyori.adventure.text.format.TextColor
 

@@ -4,8 +4,8 @@ DIRNAME=$(dirname "$(realpath "$0")")
 cd "$DIRNAME/.."
 
 mkdir -p "$HOME/.hexalite"
-if [ ! -L "$HOME/.hexalite/resource_pack" ]; then
-    ln -nfs "$PWD/resource_pack" "$HOME/.hexalite/resource_pack"
+if [ ! -L "$HOME/.hexalite/resource-pack" ]; then
+    ln -nfs "$PWD/resource-pack" "$HOME/.hexalite/resource-pack"
 fi
 if [ ! -L "$HOME/.hexalite/dev" ]; then
     ln -nfs "$PWD" "$HOME/.hexalite/dev"

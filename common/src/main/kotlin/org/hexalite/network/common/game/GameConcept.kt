@@ -1,3 +1,7 @@
 package org.hexalite.network.common.game
 
-interface GameConcept
+interface GameConcept {
+    val name: String
+}
+
+abstract class AbstractGameConcept(override val name: String): GameConcept
