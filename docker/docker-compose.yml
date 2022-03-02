@@ -23,8 +23,23 @@ services:
       - ~/.hexalite/redis/data:/data
     networks:
       - redis-network
+  rabbitmq-container:
+    image: rabbitmq:3-management-alpine
+    ports:
+      # AMQP protocol port
+      - '5672:5672'
+      # HTTP management UI
+      - '15672:15672'
+    volumes:
+      - ~/.hexalite/rabbitmq/data/:/var/lib/rabbitmq
+      - ~/.hexalite/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - communications-network
+
 networks:
   postgres-network:
     driver: bridge
   redis-network:
+    driver: bridge
+  communications-network:
     driver: bridge
