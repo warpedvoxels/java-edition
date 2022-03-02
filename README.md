@@ -22,7 +22,6 @@ directly accessing the database in multiple servers to avoid unsynchronized or/a
 
 ## Contributors
 
-## Supporting
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -36,6 +35,8 @@ directly accessing the database in multiple servers to avoid unsynchronized or/a
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## Supporting
 
 ### Starring the repository
 
