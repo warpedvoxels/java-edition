@@ -2,7 +2,7 @@
 kotlin = "1.6.20-M1"
 kotlinx-serialization = "1.3.2"
 kotlinx-datetime = "0.3.2"
-kaml = "0.40.0"
+kaml = "0.41.0"
 minecraft = "1.18.1"
 paperweight-userdev = "1.3.5-SNAPSHOT"
 plugin-yml = "0.5.1"
