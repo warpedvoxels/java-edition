@@ -25,7 +25,8 @@ include(
     ":arcade:duels:rest-module",
     ":recyclable:chat",
     ":recyclable:combat",
-    ":rest-webserver"
+    ":rest-webserver",
+    ":rest-webclient"
 )
 
 dependencyResolutionManagement {

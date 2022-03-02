@@ -7,7 +7,7 @@ plugins {
 dependencies {
     api(project(":common"))
     api(rootProject.hexalite.bundles.kotlin.essential)
-    api(rootProject.hexalite.bundles.ktor)
+    api(rootProject.hexalite.bundles.ktor.server)
     api(rootProject.hexalite.bundles.database)
     api(rootProject.hexalite.mordant)
     api(rootProject.hexalite.kotlinx.serialization.json)
