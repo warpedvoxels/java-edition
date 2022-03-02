@@ -8,7 +8,6 @@ The following is a notice to explain what projects are being shaded along with t
 4. [kotlinx.datetime][kotlinx-datetime] - multi-platform date and time library for Kotlin
 5. [Minedown][minedown] - markdown-like syntax for chat formatting in Minecraft
 6. [Exposed][exposed] - SQL framework for Kotlin
-7. [Adventure Extra Kotlin][adventure] - Kotlin extensions for the popular user-interface library Adventure
 8. [PostgreSQL JDBC Driver][postgresql] - JDBC driver for PostgreSQL
 9. [HikariCP][hikaricp] - Connection pool for JDBC
 10. [Ktor][ktor] - Asynchronous multi-platform client and server framework for Kotlin

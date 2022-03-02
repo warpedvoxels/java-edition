@@ -26,7 +26,8 @@ include(
     ":recyclable:chat",
     ":recyclable:combat",
     ":rest-webserver",
-    ":rest-webclient"
+    ":rest-webclient",
+    ":resource-pack-src"
 )
 
 dependencyResolutionManagement {

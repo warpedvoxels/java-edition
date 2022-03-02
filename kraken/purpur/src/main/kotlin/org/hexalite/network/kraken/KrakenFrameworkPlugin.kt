@@ -15,5 +15,7 @@ class KrakenFrameworkPlugin : KrakenPlugin("kraken") {
      */
     val conf = KrakenConfig()
 
-    override fun up() = +BukkitBrigadierCompletion(this)
+    override fun up() {
+        +BukkitBrigadierCompletion(this)
+    }
 }

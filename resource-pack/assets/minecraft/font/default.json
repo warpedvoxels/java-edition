@@ -1,13 +1,13 @@
 {
   "providers": [
     {
-      "type": "bitmap",
       "file": "minecraft:custom/ui/chat/elite.png",
+      "chars": [
+        ""
+      ],
       "ascent": 7,
       "height": 7,
-      "chars": [
-        "\uE000"
-      ]
+      "type": "bitmap"
     }
   ]
 }

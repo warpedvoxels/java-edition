@@ -1,4 +1,4 @@
-package org.hexalite.network.chat
+package org.hexalite.network.combat
 
 import org.hexalite.network.kraken.KrakenPlugin
 

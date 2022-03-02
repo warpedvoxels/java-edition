@@ -25,7 +25,6 @@ class ChatPlugin : KrakenPlugin(namespace = "chat") {
             })
         }
 
-
         log.info { +"All systems in this module have been ${brightGreen("enabled")}." }
     }
 

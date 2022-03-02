@@ -1,5 +1,6 @@
 package org.hexalite.network.kraken.extension
 
+import org.bukkit.FluidCollisionMode
 import org.bukkit.Location
 
 //    __                 __  _
@@ -12,3 +13,14 @@ inline fun Location.component1() = x
 inline fun Location.component2() = y
 
 inline fun Location.component3() = z
+
+inline fun Location.getInteractionPoint(maxDistance: Double, ignorePassableBlocks: Boolean = true): Location? {
+    if (world == null) {
+        return null
+    }
+    val result = world.rayTraceBlocks(this, direction, maxDistance, FluidCollisionMode.NEVER, ignorePassableBlocks)
+    if (result == null || result.hitBlock == null) {
+        return null
+    }
+    return result.hitPosition.subtract(result.hitBlock!!.location.toVector()).toLocation(world)
+}

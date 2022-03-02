@@ -5,6 +5,7 @@ plugins {
     alias(hexalite.plugins.plugin.yml) apply false
     alias(hexalite.plugins.shadow) apply false
     alias(hexalite.plugins.kotlinx.serialization) apply false
+    alias(hexalite.plugins.google.ksp) apply false
     id("hexalite-build-logic") apply false
 }
 
