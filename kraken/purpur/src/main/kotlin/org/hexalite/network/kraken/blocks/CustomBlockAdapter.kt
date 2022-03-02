@@ -31,7 +31,6 @@ class CustomBlockAdapter(internal val getter: (Int) -> CustomBlock?, override va
     @Suppress("DEPRECATION")
     private operator fun get(block: NoteBlock): CustomBlock? {
         val id = (block.instrument.type * 25) + block.note.id + (if (block.isPowered) 400 else 0) - 26
-        println("ID: $id")
         return getter(id)
     }
 
