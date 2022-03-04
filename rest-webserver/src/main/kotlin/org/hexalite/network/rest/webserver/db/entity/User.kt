@@ -1,10 +1,10 @@
-package org.hexalite.network.common.db.entity
+package org.hexalite.network.rest.webserver.db.entity
 
 import org.hexalite.network.common.api.ApiUser
 import org.hexalite.network.common.api.fromDatabaseEntity
-import org.hexalite.network.common.db.table.Users
 import org.hexalite.network.common.util.exposed.BaseRestWebserverUUIDEntity
 import org.hexalite.network.common.util.exposed.BaseRestWebserverUUIDEntityClass
+import org.hexalite.network.rest.webserver.db.table.Users
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SizedIterable
 import java.util.*

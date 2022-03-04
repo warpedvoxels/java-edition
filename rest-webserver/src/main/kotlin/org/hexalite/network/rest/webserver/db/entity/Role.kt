@@ -1,11 +1,11 @@
-package org.hexalite.network.common.db.entity
+package org.hexalite.network.rest.webserver.db.entity
 
 import org.hexalite.network.common.api.ApiRole
 import org.hexalite.network.common.api.fromDatabaseEntity
-import org.hexalite.network.common.db.table.Roles
 import org.hexalite.network.common.roles.CommonRole
 import org.hexalite.network.common.util.exposed.StringEntity
 import org.hexalite.network.common.util.exposed.StringEntityClass
+import org.hexalite.network.rest.webserver.db.table.Roles
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SizedIterable
 
