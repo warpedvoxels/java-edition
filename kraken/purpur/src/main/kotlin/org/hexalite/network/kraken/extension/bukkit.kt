@@ -1,6 +1,8 @@
 package org.hexalite.network.kraken.bukkit
 
 import org.bukkit.Bukkit
+import org.bukkit.plugin.java.JavaPlugin
+import org.hexalite.network.kraken.KrakenPlugin
 
 //    ___       __    __    _ __
 //   / _ )__ __/ /__ / /__ (_) /_
@@ -15,3 +17,7 @@ inline val console get() = server.consoleSender
 
 @DslMarker
 annotation class BukkitDsl
+
+inline fun <reified T: KrakenPlugin> getPlugin(): Lazy<T> = lazy {
+    JavaPlugin.getPlugin(T::class.java)
+}

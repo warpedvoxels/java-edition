@@ -6,7 +6,6 @@ import org.hexalite.network.build.applyPurpurLogic
 plugins {
     id(hexalite.plugins.plugin.yml.get().pluginId)
     id(hexalite.plugins.shadow.get().pluginId)
-    id(hexalite.plugins.google.ksp.get().pluginId)
 }
 
 applyPurpurLogic()
@@ -19,8 +18,6 @@ dependencies {
     api(rootProject.hexalite.bundles.database)
     api(project(":common"))
     compileOnly(rootProject.hexalite.bundles.adventure)
-    implementation(rootProject.hexalite.auto.service)
-    ksp(rootProject.hexalite.ksp.auto.service)
 }
 
 bukkit {

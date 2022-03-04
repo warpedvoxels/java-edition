@@ -2,12 +2,19 @@ package org.hexalite.network.kraken
 
 import kotlinx.coroutines.*
 import org.bukkit.plugin.java.JavaPlugin
+import org.hexalite.network.kraken.configuration.KrakenConfig
 import org.hexalite.network.kraken.logging.BasicLogger
 import java.util.concurrent.ConcurrentLinkedQueue
 
-abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
+abstract class KrakenPlugin(open val namespace: String): JavaPlugin() {
+    /**
+     * The default [KrakenConfig] for this plugin. It can be (de)serialized using kotlinx.serialization
+     * and the KAML plug-in.
+     */
+    val conf = KrakenConfig()
+
     inline val log: BasicLogger
-        get() = BasicLogger.Default
+        get() = BasicLogger { conf.logging }
 
     /**
      * A list of jobs that should be cancelled when the plugin is disabled.

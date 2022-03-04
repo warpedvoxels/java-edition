@@ -5,6 +5,7 @@ import io.netty.channel.ChannelDuplexHandler
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelPromise
 import net.minecraft.network.Connection
+import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.login.ServerboundHelloPacket
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
@@ -46,6 +47,12 @@ val Player.channel: Channel
     get() = playerCustomDuplexChannels[uuid]?.channel ?: connection.channel
 
 /**
+ * Send a packet to player's channel pipeline.
+ * @param packet the packet to send
+ */
+inline fun Player.sendPacket(packet: Packet<*>) = channel.pipeline().writeAndFlush(packet)
+
+/**
  * Inject a packet listener into a player's connection pipeline.
  * @param channel The channel to inject the packet listener into.
  * @param transformIn The transform to apply to incoming packets.
@@ -54,7 +61,7 @@ val Player.channel: Channel
 fun KrakenPlugin.injectNettyPacketListening(
     channel: Channel,
     transformIn: PacketTransformInContext = DefaultPlayerPacketInTransform,
-    transformOut: PacketTransformOutContext = DefaultPlayerPacketOutTransform
+    transformOut: PacketTransformOutContext = DefaultPlayerPacketOutTransform,
 ) = injectNettyPacketListening(channel, pipelineInjectionName, transformIn, transformOut)
 
 /**
