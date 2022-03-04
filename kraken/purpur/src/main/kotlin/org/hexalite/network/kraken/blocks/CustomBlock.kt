@@ -1,54 +1,66 @@
 package org.hexalite.network.kraken.blocks
 
-import net.kyori.adventure.text.Component
-import org.bukkit.*
-import org.bukkit.block.Block
-import org.bukkit.block.data.type.NoteBlock
+import org.bukkit.Sound
+import org.bukkit.entity.Player
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
+import org.hexalite.network.kraken.extension.ToolLevel
+import org.hexalite.network.kraken.extension.ToolType
+import kotlin.math.pow
+
+typealias HardnessDecider = CustomBlock.(Player) -> Int
+typealias DropDecider = BlockBreakEvent.(block: CustomBlock, adapter: CustomBlockAdapter) -> ItemStack?
+
+@DslMarker
+annotation class CustomBlockDsl
 
 open class CustomBlock(
     val textureIndex: Int,
-    val onDrop: BlockBreakEvent.(block: CustomBlock, adapter: CustomBlockAdapter) -> Unit = { custom, adapter ->
-        block.world.dropItemNaturally(block.location.add(.5, .5, .5), custom.item(adapter.ID))
-    },
-    val hardness: Int? = null,
-    val breakSound: String? = null,
-)
+    @CustomBlockDsl var hardness: HardnessDecider? = null,
+    @CustomBlockDsl var onDrop: DropDecider? = { custom, adapter -> custom.item(adapter.namespace) },
+    var placeSound: String? = Sound.BLOCK_SAND_PLACE.key.key,
+    var breakSound: String? = Sound.BLOCK_STONE_BREAK.key.key,
+) {
+    @CustomBlockDsl
+    inline fun hardness(noinline block: HardnessDecider) {
+        hardness = block
+    }
 
-inline fun CustomBlock.item(key: NamespacedKey) = ItemStack(Material.PAPER).apply {
-    val meta = itemMeta ?: return this
-    val container = meta.persistentDataContainer
-    container.set(key, PersistentDataType.INTEGER, textureIndex)
-    meta.setCustomModelData(textureIndex)
-    meta.lore(mutableListOf<Component>(Component.text("§8#$textureIndex")))
-    itemMeta = meta
-}
-
-inline fun CustomBlock.applyMetadataTo(block: Block) {
-    block.setType(Material.NOTE_BLOCK, false)
-    block.blockData = (Bukkit.createBlockData(Material.NOTE_BLOCK) as NoteBlock).apply {
-        val textureIndex = textureIndex + 26
-        instrument = Instrument.getByType((textureIndex / 25 % 400).toByte()) ?: error("Invalid instrument")
-        note = Note(textureIndex % 25)
-        isPowered = textureIndex >= 400
-        println("""
-            |Instrument: ${instrument.name}
-            |Note: ${note.id}
-            |Powered: $isPowered
-        """.trimIndent()
-        )
+    @CustomBlockDsl
+    inline fun drop(noinline block: DropDecider) {
+        onDrop = block
     }
 }
 
-context(CustomBlockAdapter)
 
-fun ItemStack.asCustomBlock(): CustomBlock? {
-    if (type != Material.PAPER) {
-        return null
+inline fun CustomBlock.setToolBasedHardness(
+    base: Int,
+    minimalLevel: ToolLevel?,
+    type: ToolType,
+    noinline drop: DropDecider? = { custom, adapter -> custom.item(adapter.namespace) },
+) {
+    val hierarchy = ToolLevel.Hierarchy
+    val minimumIndex = hierarchy.indexOf(minimalLevel)
+    hardness { player ->
+        val item = player.inventory.itemInMainHand
+        val level = ToolLevel.level(item) ?: return@hardness base
+        val levelIndex = hierarchy.indexOf(level)
+        if (!type.matches(item) || levelIndex < minimumIndex) {
+            return@hardness base
+        }
+        val index = hierarchy.indexOf(level) - minimumIndex.coerceAtLeast(0)
+        val hardness = 0.4 * (if (index >= 1) ((0.9).pow(index)) else 1.0)
+        (base * hardness).toInt()
     }
-    val meta = itemMeta ?: return null
-    val container = meta.persistentDataContainer
-    return getter(container.get(ID, PersistentDataType.INTEGER) ?: return null)
+    if (drop != null) {
+        drop { block, adapter ->
+            val item = player.inventory.itemInMainHand
+            val level = ToolLevel.level(item)
+            val levelIndex = hierarchy.indexOf(level)
+            if (!type.matches(item) || levelIndex < minimumIndex) {
+                return@drop null
+            }
+            drop(block, adapter)
+        }
+    }
 }

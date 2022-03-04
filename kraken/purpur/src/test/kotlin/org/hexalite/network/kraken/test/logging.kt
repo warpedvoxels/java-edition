@@ -9,23 +9,24 @@ import kotlin.test.Test
 
 class LoggingTest {
     val conf = KrakenConfig().logging
+    val logger = BasicLogger { conf }
 
     @Test
-    fun `should print two simple colored messages`() = with(BasicLogger.Default) {
-        system(conf) {
+    fun `should print two simple colored messages`() = with(logger) {
+        system {
             "Hello"
         }
-        debug(conf) {
+        debug {
             "World!"
         }
     }
 
     @Test
-    fun `should print a well formatted exception`() = with(BasicLogger.Default) {
+    fun `should print a well formatted exception`() = with(logger) {
         try {
             throw IllegalArgumentException("[LoggingTest] => Should print a well formatted exception")
         } catch (exception: IllegalArgumentException) {
-            error(conf, exception)
+            error(exception)
         }
     }
 }

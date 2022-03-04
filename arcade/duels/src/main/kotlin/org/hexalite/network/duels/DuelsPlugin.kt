@@ -2,27 +2,42 @@
 
 package org.hexalite.network.duels
 
+import com.github.ajalt.mordant.rendering.TextColors
 import org.bukkit.event.player.PlayerJoinEvent
 import org.hexalite.network.duels.blocks.PlaceholderBlock
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.blocks.customBlocks
+import org.hexalite.network.kraken.blocks.CustomBlock
+import org.hexalite.network.kraken.blocks.CustomBlockAdapter
 import org.hexalite.network.kraken.blocks.item
+import org.hexalite.network.kraken.bukkit.getPlugin
 import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus
+import org.hexalite.network.kraken.logging.info
+import org.hexalite.network.kraken.pipeline.packet.packetPipelineInjectionSystem
 
 /**
  * The entrypoint for the duels minigame.
  * @author @eexsty
  */
-class DuelsPlugin : KrakenPlugin(namespace = "duels") {
+class DuelsPlugin: KrakenPlugin(namespace = "duels") {
     override fun up() {
-        val adapter = +customBlocks(PlaceholderBlock)
+        +packetPipelineInjectionSystem()
+
+        // register custom blocks
+        val blocks = listOf<CustomBlock>(PlaceholderBlock).associateBy { it.textureIndex }
+        val adapter = +CustomBlockAdapter(blocks::get, duels)
+
+        // placeholder event
         readEvents<PlayerJoinEvent> {
-            player.inventory.addItem(PlaceholderBlock.item(adapter.ID))
+            player.inventory.addItem(PlaceholderBlock.item(adapter.namespace))
         }
-        println("yay")
+
+        log.info { +"All systems in this module have been ${TextColors.brightGreen("enabled")}." }
     }
 
     override fun down() {
+        log.info { +"All systems in this module have been ${TextColors.brightRed("disabled")}." }
     }
 }
+
+val duels: DuelsPlugin by getPlugin()

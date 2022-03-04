@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap
 typealias PlayerMapCallback<V> = (player: Player, value: V) -> Unit
 typealias UUIDMapCallback<V> = (identity: UUID, value: V) -> Unit
 
-open class OnlinePlayersConcurrentMap<V>(override val plugin: KrakenPlugin, var onQuitCallback: PlayerMapCallback<V>? = null) : ConcurrentHashMap<Player, V>(),
+open class OnlinePlayersConcurrentMap<V>(override val plugin: KrakenPlugin, var onQuitCallback: PlayerMapCallback<V>? = null): ConcurrentHashMap<Player, V>(),
     BukkitEventListener {
     fun makeSureIfItIsListeningToActiveness() {
         if (size == 0) {
@@ -33,15 +33,15 @@ open class OnlinePlayersConcurrentMap<V>(override val plugin: KrakenPlugin, var 
         makeSureIfItIsListeningToActiveness()
     }
 
-    override fun put(key: Player, value: V): V? = put(key, value).also {
+    override fun put(key: Player, value: V): V? = super.put(key, value).also {
         makeSureIfItIsListeningToActiveness()
     }
 
-    override fun remove(key: Player): V? = remove(key).also {
+    override fun remove(key: Player): V? = super.remove(key).also {
         makeSureIfItIsListeningToActiveness()
     }
 
-    override fun remove(key: Player, value: V): Boolean = remove(key, value).also {
+    override fun remove(key: Player, value: V): Boolean = super.remove(key, value).also {
         makeSureIfItIsListeningToActiveness()
     }
 
@@ -51,8 +51,9 @@ open class OnlinePlayersConcurrentMap<V>(override val plugin: KrakenPlugin, var 
     }
 }
 
-open class OnlineUUIDsConcurrentMap<V : Any>(override val plugin: KrakenPlugin, var onQuitCallback: UUIDMapCallback<V>? = null) : ConcurrentHashMap<UUID, V>(),
-    BukkitEventListener {
+open class OnlineUUIDsConcurrentMap<V: Any>(
+    override val plugin: KrakenPlugin, var onQuitCallback: UUIDMapCallback<V>? = null,
+): ConcurrentHashMap<UUID, V>(), BukkitEventListener {
     fun makeSureIfItIsListeningToActiveness() {
         if (size == 0) {
             unregister()
@@ -97,14 +98,14 @@ open class OnlineUUIDsConcurrentMap<V : Any>(override val plugin: KrakenPlugin, 
     }
 }
 
-fun <V : Any> KrakenPlugin.onlinePlayersMapOf(vararg values: Pair<Player, V>, onQuit: PlayerMapCallback<V>? = null) = OnlinePlayersConcurrentMap<V>(this).apply {
+fun <V: Any> KrakenPlugin.onlinePlayersMapOf(vararg values: Pair<Player, V>, onQuit: PlayerMapCallback<V>? = null) = OnlinePlayersConcurrentMap<V>(this).apply {
     values.forEach {
         put(it.first, it.second)
     }
     this.onQuit(onQuit)
 }
 
-fun <V : Any> KrakenPlugin.onlineUUIDsMapOf(vararg values: Pair<UUID, V>, onQuit: UUIDMapCallback<V>? = null) = OnlineUUIDsConcurrentMap<V>(this).apply {
+fun <V: Any> KrakenPlugin.onlineUUIDsMapOf(vararg values: Pair<UUID, V>, onQuit: UUIDMapCallback<V>? = null) = OnlineUUIDsConcurrentMap<V>(this).apply {
     values.forEach {
         put(it.first, it.second)
     }

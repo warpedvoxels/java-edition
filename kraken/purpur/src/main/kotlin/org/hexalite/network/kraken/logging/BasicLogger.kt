@@ -6,6 +6,8 @@ import com.github.ajalt.mordant.terminal.Terminal
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import net.minecraft.network.chat.TextComponent
+import org.hexalite.network.kraken.KrakenPlugin
+import org.hexalite.network.kraken.bukkit.server
 import org.hexalite.network.kraken.configuration.KrakenLoggingConfig
 import org.hexalite.network.kraken.extension.callerName
 import org.hexalite.network.kraken.kraken
@@ -19,8 +21,9 @@ import org.hexalite.network.kraken.kraken
 val terminal = Terminal(tabWidth = 4, ansiLevel = AnsiLevel.TRUECOLOR)
 typealias LoggingMessage = () -> Any
 
-open class BasicLogger {
-    open fun log(config: KrakenLoggingConfig, level: LoggingLevel, message: LoggingMessage? = null, exception: Throwable? = null) {
+open class BasicLogger(val settings: () -> KrakenLoggingConfig) {
+    open fun log(level: LoggingLevel, message: LoggingMessage? = null, exception: Throwable? = null) {
+        val config = settings()
         if (!when (level) {
                 LoggingLevel.System -> config.enableSystemLogLevel
                 LoggingLevel.Info -> config.enableInfoLogLevel
@@ -61,25 +64,43 @@ open class BasicLogger {
         terminal.println(text)
     }
 
-    companion object Default : BasicLogger()
+    companion object Default: BasicLogger({ kraken.conf.logging }) {
+        @LoggingDsl
+        fun globally(apply: KrakenLoggingConfig.() -> Unit) {
+            for (plugin in server.pluginManager.plugins) {
+                if (plugin is KrakenPlugin) {
+                    plugin.conf.logging.apply()
+                }
+            }
+        }
+    }
 }
+
+@DslMarker
+annotation class LoggingDsl
 
 inline val log get() = BasicLogger.Default
 
-inline fun BasicLogger.debug(config: KrakenLoggingConfig = kraken.conf.logging, exception: Throwable? = null, noinline message: LoggingMessage? = null) =
-    log(config, LoggingLevel.Debug, message, exception)
+@LoggingDsl
+inline fun BasicLogger.debug(exception: Throwable? = null, noinline message: LoggingMessage? = null) =
+    log(LoggingLevel.Debug, message, exception)
 
-inline fun BasicLogger.system(config: KrakenLoggingConfig = kraken.conf.logging, exception: Throwable? = null, noinline message: LoggingMessage? = null) =
-    log(config, LoggingLevel.System, message, exception)
+@LoggingDsl
+inline fun BasicLogger.system(exception: Throwable? = null, noinline message: LoggingMessage? = null) =
+    log(LoggingLevel.System, message, exception)
 
-inline fun BasicLogger.info(config: KrakenLoggingConfig = kraken.conf.logging, exception: Throwable? = null, noinline message: LoggingMessage? = null) =
-    log(config, LoggingLevel.Info, message, exception)
+@LoggingDsl
+inline fun BasicLogger.info(exception: Throwable? = null, noinline message: LoggingMessage? = null) =
+    log(LoggingLevel.Info, message, exception)
 
-inline fun BasicLogger.warning(config: KrakenLoggingConfig = kraken.conf.logging, exception: Throwable? = null, noinline message: LoggingMessage? = null) =
-    log(config, LoggingLevel.Warning, message, exception)
+@LoggingDsl
+inline fun BasicLogger.warning(exception: Throwable? = null, noinline message: LoggingMessage? = null) =
+    log(LoggingLevel.Warning, message, exception)
 
-inline fun BasicLogger.error(config: KrakenLoggingConfig = kraken.conf.logging, exception: Throwable? = null, noinline message: LoggingMessage? = null) =
-    log(config, LoggingLevel.Error, message, exception)
+@LoggingDsl
+inline fun BasicLogger.error(exception: Throwable? = null, noinline message: LoggingMessage? = null) =
+    log(LoggingLevel.Error, message, exception)
 
-inline fun BasicLogger.critical(config: KrakenLoggingConfig = kraken.conf.logging, exception: Throwable? = null, noinline message: LoggingMessage? = null) =
-    log(config, LoggingLevel.Critical, message, exception)
+@LoggingDsl
+inline fun BasicLogger.critical(exception: Throwable? = null, noinline message: LoggingMessage? = null) =
+    log(LoggingLevel.Critical, message, exception)
