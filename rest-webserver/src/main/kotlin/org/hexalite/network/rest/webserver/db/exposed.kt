@@ -1,10 +1,8 @@
 package org.hexalite.network.rest.webserver.db
 
-import org.hexalite.network.common.roles.CommonRole
 import org.hexalite.network.duels.exposed.table.DuelsKits
 import org.hexalite.network.duels.exposed.table.DuelsUserStats
-import org.hexalite.network.rest.webserver.db.entity.Role
-import org.hexalite.network.rest.webserver.db.table.Roles
+import org.hexalite.network.rest.webserver.db.table.UserRoles
 import org.hexalite.network.rest.webserver.db.table.Users
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -17,15 +15,10 @@ fun buildDatabaseFromDataSource(dataSource: DataSource) = Database.connect(dataS
     TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_REPEATABLE_READ
     transaction {
         SchemaUtils.createMissingTablesAndColumns(
-            Roles,
+            UserRoles,
             Users,
             DuelsUserStats,
             DuelsKits
         )
-
-        for (role in CommonRole.types) {
-            val r = Role.findById(role.id()) ?: Role.new(role)
-            r.tabListIndex = role.tabListIndex
-        }
     }
 }
