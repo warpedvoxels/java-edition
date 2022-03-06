@@ -1,4 +1,4 @@
-package org.hexalite.network.rest.webserver.v1
+package org.hexalite.network.rest.webclient.v1
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*

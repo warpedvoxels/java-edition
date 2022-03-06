@@ -116,7 +116,7 @@ buildNumber.properties
 
 # Common working directory
 /run/*
-!/run/.gitkeep
+!/run/.gitignore
 run.zip
 build/
 .gradle

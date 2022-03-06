@@ -1,0 +1,29 @@
+# Pufferfish Configuration
+# Check out Pufferfish Host for maximum performance server hosting: https://pufferfish.host
+# Join our Discord for support: https://discord.gg/reZw4vQV9H
+# Download new builds at https://ci.pufferfish.host/job/Pufferfish
+info:
+  version: '1.0'
+sentry-dsn: ''
+enable-books: true
+enable-suffocation-optimization: true
+enable-async-mob-spawning: true
+# Optimizes projectile settings
+projectile:
+  max-loads-per-tick: 10
+  max-loads-per-projectile: 8
+# Optimizes entity brains when
+# they're far away from the player
+dab:
+  enabled: true
+  start-distance: 12
+  max-tick-freq: 20
+  activation-dist-mod: 7
+  blacklisted-entities: [ ]
+inactive-goal-selector-throttle: true
+# Configures Flare, the built-in profiler
+flare:
+  url: https://flare.airplane.gg
+# Options for connecting to Pufferfish/Airplane's online utilities
+web-services:
+  token: ''
