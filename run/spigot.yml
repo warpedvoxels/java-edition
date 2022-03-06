@@ -59,6 +59,7 @@ players:
   disable-saving: false
 world-settings:
   default:
+    seed-nether: 30084232
     below-zero-generation-in-existing-chunks: true
     verbose: false
     merge-radius:

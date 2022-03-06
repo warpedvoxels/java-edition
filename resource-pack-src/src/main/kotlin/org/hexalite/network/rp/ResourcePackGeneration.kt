@@ -28,12 +28,11 @@ object ResourcePackGeneration {
     val base = Path("${System.getProperty("user.home")}${File.separator}.hexalite${File.separator}dev${File.separator}").toRealPath().resolve("resource-pack")
         .createDirectories()
 
-    fun resource(name: String) = File(this::class.java.classLoader.getResource(name)!!.toURI())
-
     /**
      * Copy the MCMeta to the destination resource pack.
      */
     private fun copyMeta() {
+        println("=> Copying resource pack meta to the root folder...")
         val mcmetaFile = base.resolve("pack.mcmeta").toFile()
         mcmetaFile.writeText(json.encodeToString(mcmeta))
     }
@@ -41,16 +40,22 @@ object ResourcePackGeneration {
     /**
      * Copy all assets to the destination pack.
      */
+    // todo: fix jar being opened from command line instead of IDE
     private fun copyAssets() {
-        val dir = base.resolve("assets").createDirectories()
-        val textures = resource("assets")
-        textures.copyRecursively(dir.toFile()) { _, _ -> OnErrorAction.SKIP }
+        println("=> Copying required assets...")
+        val dir = base.resolve("assets")
+        runCatching {
+            dir.createDirectories()
+        }
+        val jar = File(this::class.java.classLoader.getResource("assets")!!.toURI())
+        jar.copyRecursively(dir.toFile(), true) { _, _ -> OnErrorAction.SKIP }
     }
 
     /**
      * Generate the block state for the note block
      */
     private fun generateBlockState() {
+        println("=> Generating custom block states...")
         val obj = buildJsonObject {
             putJsonObject("variants") {
                 CustomBlocks.map {
@@ -58,7 +63,10 @@ object ResourcePackGeneration {
                 }
             }
         }
-        val dir = base.resolve("assets/minecraft/blockstates").createDirectories()
+        val dir = base.resolve("assets/minecraft/blockstates")
+        runCatching {
+            dir.createDirectories()
+        }
         val noteBlock = dir.resolve("note_block.json").toFile()
         noteBlock.writeText(json.encodeToString(obj))
     }
@@ -67,9 +75,14 @@ object ResourcePackGeneration {
      * Generate the models for all custom blocks
      */
     private fun generateBlockModels() {
+        println("=> Generating custom block models...")
         val paper = PaperItemModel()
-        val blockDir = base.resolve("assets/minecraft/models/block").createDirectories()
-        val itemDir = base.resolve("assets/minecraft/models/item").createDirectories()
+        val itemDir = base.resolve("assets/minecraft/models/item")
+        val blockDir = base.resolve("assets/minecraft/models/block")
+        runCatching {
+            itemDir.createDirectories()
+            blockDir.createDirectories()
+        }
 
         CustomBlocks.forEach {
             val blockJson = json.encodeToString(it)
@@ -85,7 +98,11 @@ object ResourcePackGeneration {
      * Generate the custom font
      */
     private fun generateCustomFont() {
-        val dir = base.resolve("assets/minecraft/font").createDirectories()
+        println("=> Generating custom font...")
+        val dir = base.resolve("assets/minecraft/font")
+        runCatching {
+            dir.createDirectories()
+        }
         val file = dir.resolve("default.json").toFile()
         val json = json.encodeToString(FontCustomProviderCollectionHolder(CustomFontProviders))
         file.writeText(json)

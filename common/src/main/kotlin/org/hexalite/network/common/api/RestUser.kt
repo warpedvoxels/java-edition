@@ -7,11 +7,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import org.hexalite.network.common.db.entity.User
+import org.hexalite.network.common.db.entity.UserRole
 import org.hexalite.network.common.serialization.UUIDSerializer
 import java.util.*
 
 @Serializable
-data class ApiUser(
+data class RestUser(
     @SerialName("unique_id")
     val uniqueId: UUID,
     @SerialName("last_username")
@@ -23,15 +24,17 @@ data class ApiUser(
     val createdAt: LocalDateTime,
     @SerialName("updated_at")
     val updatedAt: LocalDateTime,
-): ApiEntity {
+    val roles: List<String>,
+): RestEntity {
     companion object
 }
 
-fun ApiUser.Companion.fromDatabaseEntity(entity: User) = ApiUser(
+fun RestUser.Companion.fromDatabaseEntity(entity: User) = RestUser(
     uniqueId = entity.id.value,
     lastUsername = entity.lastUsername,
     lastSeen = entity.lastSeen,
     hexes = entity.hexes,
     createdAt = entity.createdAt,
-    updatedAt = entity.updatedAt
+    updatedAt = entity.updatedAt,
+    roles = entity.roles.map(UserRole::roleId)
 )

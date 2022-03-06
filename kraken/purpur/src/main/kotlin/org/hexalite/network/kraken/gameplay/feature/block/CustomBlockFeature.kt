@@ -1,4 +1,4 @@
-package org.hexalite.network.kraken.gameplay.features.blocks
+package org.hexalite.network.kraken.gameplay.feature.block
 
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -11,17 +11,17 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.math.pow
 
-typealias HardnessDecider = CustomBlock.(Player) -> Int
-typealias DropDecider = BlockBreakEvent.(block: CustomBlock, adapter: CustomBlockAdapter) -> ItemStack?
+typealias HardnessDecider = CustomBlockFeature.(Player) -> Int
+typealias DropDecider = BlockBreakEvent.(block: CustomBlockFeature, adapter: CustomBlockAdapter) -> ItemStack?
 
 @DslMarker
 annotation class CustomBlockDslMarker
 
 @OptIn(ExperimentalContracts::class)
-open class CustomBlock(
+open class CustomBlockFeature(
     val textureIndex: Int,
     @CustomBlockDslMarker var hardness: HardnessDecider? = null,
-    @CustomBlockDslMarker var onDrop: DropDecider? = { custom, adapter -> custom.item(adapter.view.id) },
+    @CustomBlockDslMarker var onDrop: DropDecider? = { custom, adapter -> custom.stack(adapter.view) },
     var placeSound: String? = Sound.BLOCK_SAND_PLACE.key.key,
     var breakSound: String? = Sound.BLOCK_STONE_BREAK.key.key,
 ) {
@@ -43,11 +43,11 @@ open class CustomBlock(
 }
 
 @CustomBlockDslMarker
-inline fun CustomBlock.setToolBasedHardness(
+inline fun CustomBlockFeature.setToolBasedHardness(
     base: Int,
     minimalLevel: ToolLevel?,
     type: ToolType,
-    noinline drop: DropDecider? = { custom, adapter -> custom.item(adapter.view.id) },
+    noinline drop: DropDecider? = { custom, adapter -> custom.stack(adapter.view) },
 ) {
     val hierarchy = ToolLevel.Hierarchy
     val minimumIndex = hierarchy.indexOf(minimalLevel)

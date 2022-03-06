@@ -1,4 +1,4 @@
-package org.hexalite.network.kraken.gameplay.features.blocks
+package org.hexalite.network.kraken.gameplay.feature.block
 
 import kotlinx.coroutines.delay
 import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket
@@ -15,7 +15,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.event.block.*
-import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerItemDamageEvent
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.potion.PotionEffect
@@ -29,15 +28,18 @@ import org.hexalite.network.kraken.coroutines.ticks
 import org.hexalite.network.kraken.extension.BukkitEventListener
 import org.hexalite.network.kraken.extension.entityId
 import org.hexalite.network.kraken.extension.findPlayerOrNull
-import org.hexalite.network.kraken.gameplay.features.GameplayFeaturesView
+import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureView
+import org.hexalite.network.kraken.gameplay.feature.item.PlayerCustomItemInteractEvent
+import org.hexalite.network.kraken.gameplay.feature.item.asCustomBlockOrNull
 import org.hexalite.network.kraken.logging.warning
 import org.hexalite.network.kraken.pipeline.packet.BukkitPacketPipelineListener
 import org.hexalite.network.kraken.pipeline.packet.sendPacket
 import org.hexalite.network.kraken.pipeline.packet.transformPacketsIncoming
 import org.hexalite.network.kraken.pipeline.packet.uuidOrNull
 
-class CustomBlockAdapter(override val plugin: KrakenPlugin, val view: GameplayFeaturesView, internal val getter: (Int) -> CustomBlock?): BukkitEventListener {
+class CustomBlockAdapter(override val plugin: KrakenPlugin, val view: GameplayFeatureView, internal val getter: (Int) -> CustomBlockFeature?): BukkitEventListener {
     private val fastPlaceExempt = plugin.onlinePlayersSetOf()
+
     private val breakingBlocks = plugin.onlinePlayersSetOf()
 
     init {
@@ -109,57 +111,56 @@ class CustomBlockAdapter(override val plugin: KrakenPlugin, val view: GameplayFe
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    fun readPlayerInteract(event: PlayerInteractEvent): Unit = with(event) {
-        if (action != Action.RIGHT_CLICK_BLOCK) {
-            return
-        }
-        if (clickedBlock?.type == Material.NOTE_BLOCK && !player.isSneaking) {
-            return event.setCancelled(true)
-        }
+    @EventHandler(priority = EventPriority.LOWEST)
+    fun readPlayerCustomItemInteract(event: PlayerCustomItemInteractEvent): Unit = with(event) {
         if (player in fastPlaceExempt) {
             return
         }
 
-        val custom = player.inventory.itemInMainHand.asCustomBlockOrNull(view.id)?.to(player.inventory.itemInMainHand)
-            ?: player.inventory.itemInOffHand.asCustomBlockOrNull(view.id)?.to(player.inventory.itemInOffHand)
+        val custom = mainHand?.asCustomBlockOrNull(view)?.to(player.inventory.itemInMainHand)
+            ?: offHand?.asCustomBlockOrNull(view)?.to(player.inventory.itemInOffHand)
             ?: return
 
-        val block = clickedBlock?.getRelative(blockFace) ?: return
-        val slot = if (custom.second == player.inventory.itemInMainHand) EquipmentSlot.HAND else EquipmentSlot.OFF_HAND
+        with(original) {
+            val block = clickedBlock?.getRelative(blockFace) ?: return
+            val slot = if (custom.second == player.inventory.itemInMainHand) EquipmentSlot.HAND else EquipmentSlot.OFF_HAND
 
-        runCatching {
-            if (!BlockPlaceEvent(block, block.state, clickedBlock!!, item!!, player, true, slot).callEvent()) {
-                return
+            try {
+                if (!BlockPlaceEvent(block, block.state, clickedBlock!!, item!!, player, true, slot).callEvent()) {
+                    return
+                }
+                if (block.world.getNearbyEntities(block.location.add(.5, .5, .5), .5, .5, .5) { it !is Item && it !is ItemFrame }.isNotEmpty()) {
+                    return
+                }
+
+                if (slot == EquipmentSlot.HAND) {
+                    player.swingMainHand()
+                } else {
+                    player.swingOffHand()
+                }
+                block.setType(Material.NOTE_BLOCK, false)
+                custom.first.applyMetadataTo(block)
+
+                if (custom.first.placeSound != null) {
+                    player.world.playSound(block.location, custom.first.placeSound!!, 10f, 10f)
+                }
+
+                if (player.gameMode != GameMode.CREATIVE) {
+                    item!!.amount--
+                }
+                if (item!!.amount < 0) {
+                    item!!.type = Material.AIR
+                }
+
+                fastPlaceExempt.add(player)
+                plugin.launchCoroutine(BukkitDispatchers::Async) {
+                    delay(2.ticks)
+                    fastPlaceExempt.remove(player)
+                }
+            } catch (exception: NullPointerException) {
+                // This is a bug in the Bukkit API.
+                // For some reason, when we call a event it may throw a null pointer exception.
             }
-        }
-        if (block.world.getNearbyEntities(block.location.add(.5, .5, .5), .5, .5, .5) { it !is Item && it !is ItemFrame }.isNotEmpty()) {
-            return
-        }
-
-        if (slot == EquipmentSlot.HAND) {
-            player.swingMainHand()
-        } else {
-            player.swingOffHand()
-        }
-        block.setType(Material.NOTE_BLOCK, false)
-        custom.first.applyMetadataTo(block)
-
-        if (custom.first.placeSound != null) {
-            player.world.playSound(block.location, custom.first.placeSound!!, 10f, 10f)
-        }
-
-        if (player.gameMode != GameMode.CREATIVE) {
-            item!!.amount--
-        }
-        if (item!!.amount < 0) {
-            item!!.type = Material.AIR
-        }
-
-        fastPlaceExempt.add(player)
-        plugin.launchCoroutine(BukkitDispatchers::Async) {
-            delay(2.ticks)
-            fastPlaceExempt.remove(player)
         }
     }
 

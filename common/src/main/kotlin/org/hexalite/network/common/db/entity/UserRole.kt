@@ -1,7 +1,7 @@
-package org.hexalite.network.rest.webserver.db.entity
+package org.hexalite.network.common.db.entity
 
+import org.hexalite.network.common.db.table.UserRoles
 import org.hexalite.network.common.roles.CommonRole
-import org.hexalite.network.rest.webserver.db.table.UserRoles
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

@@ -11,7 +11,7 @@ import net.minecraft.network.chat.TranslatableComponent
 import org.bukkit.command.CommandSender
 import org.bukkit.command.PluginIdentifiableCommand
 import org.bukkit.command.defaults.BukkitCommand
-import org.bukkit.craftbukkit.v1_18_R1.command.VanillaCommandWrapper
+import org.bukkit.craftbukkit.v1_18_R2.command.VanillaCommandWrapper
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.command.KrakenCommand
 import kotlin.math.min

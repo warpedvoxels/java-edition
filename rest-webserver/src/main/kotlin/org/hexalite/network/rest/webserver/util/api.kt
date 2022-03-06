@@ -1,8 +1,7 @@
 package org.hexalite.network.rest.webserver.util
 
-import org.hexalite.network.rest.webserver.db.entity.Role
-import org.hexalite.network.rest.webserver.db.entity.User
-import org.hexalite.network.rest.webserver.db.entity.api
+import org.hexalite.network.common.db.entity.User
+import org.hexalite.network.common.db.entity.api
 import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import kotlin.contracts.ExperimentalContracts
@@ -17,12 +16,10 @@ suspend fun <T> api(rcv: () -> Any): T {
     }
     return newSuspendedTransaction {
         when (val entity = rcv()) {
-            is Role -> entity.api() as? T? ?: error("Provided incompatible type (T). Expected ApiRole, but ${entity::class.simpleName} was given")
             is User -> entity.api() as? T? ?: error("Provided incompatible type (T). Expected ApiUSer, but ${entity::class.simpleName} was given")
             is SizedIterable<*> -> {
                 entity.map {
                     when (it) {
-                        is Role -> it.api()
                         is User -> it.api()
                         else -> error("[List] Unsupported API type: ${entity::class.simpleName}")
                     }

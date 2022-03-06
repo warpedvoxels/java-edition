@@ -27,9 +27,6 @@ allprojects {
         maven(url = "https://maven.fabricmc.net/") {
             name = "FabricMC"
         }
-        maven(url = "https://repo.minebench.de") {
-            name = "Minebench"
-        }
         maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap") {
             name = "Ktor EAP"
         }

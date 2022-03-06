@@ -7,7 +7,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.arguments.EntityArgument
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_18_R1.CraftServer
+import org.bukkit.craftbukkit.v1_18_R2.CraftServer
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.command.KrakenCommand
 import org.hexalite.network.kraken.command.buildBukkit
@@ -33,7 +33,7 @@ inline fun CommandContext<CommandSourceStack>.reply(text: net.minecraft.network.
 }
 
 inline fun CommandContext<CommandSourceStack>.failure(text: String) = Error.also {
-    source.sendFailure(PaperAdventure.asVanilla(MiniMessage.get().parse(text)))
+    source.sendFailure(PaperAdventure.asVanilla(MiniMessage.miniMessage().deserialize(text)))
 }
 
 inline fun CommandContext<CommandSourceStack>.failure(text: Component) = Error.also {

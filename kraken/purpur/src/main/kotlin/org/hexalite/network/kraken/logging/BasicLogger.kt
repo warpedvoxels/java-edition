@@ -79,7 +79,7 @@ open class BasicLogger(val settings: () -> KrakenLoggingConfig) {
 @DslMarker
 annotation class LoggingDsl
 
-inline val log get() = BasicLogger.Default
+inline val log get() = BasicLogger
 
 @LoggingDsl
 inline fun BasicLogger.debug(exception: Throwable? = null, noinline message: LoggingMessage? = null) =

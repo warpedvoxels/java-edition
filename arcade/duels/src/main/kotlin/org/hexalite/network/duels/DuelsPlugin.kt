@@ -2,15 +2,13 @@
 
 package org.hexalite.network.duels
 
-import com.github.ajalt.mordant.rendering.TextColors
 import org.bukkit.event.player.PlayerJoinEvent
-import org.hexalite.network.duels.blocks.PlaceholderBlock
+import org.hexalite.network.duels.gameplay.feature.block.PlaceholderBlockFeature
+import org.hexalite.network.duels.gameplay.feature.block.PlaceholderBlockItemFeature
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.bukkit.getPlugin
 import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus
-import org.hexalite.network.kraken.gameplay.features.blocks.item
-import org.hexalite.network.kraken.logging.info
 import org.hexalite.network.kraken.pipeline.packet.packetPipelineInjectionSystem
 
 /**
@@ -19,23 +17,19 @@ import org.hexalite.network.kraken.pipeline.packet.packetPipelineInjectionSystem
  */
 class DuelsPlugin: KrakenPlugin(namespace = "duels") {
     override fun up() {
-        +packetPipelineInjectionSystem()
+        +packetPipelineInjectionSystem() // required for custom hardness
 
-        // register custom blocks
         features {
-            +PlaceholderBlock
+            +PlaceholderBlockFeature
+            +PlaceholderBlockItemFeature
         }
 
-        // placeholder event
+        // placeholder event listener
         readEvents<PlayerJoinEvent> {
-            player.inventory.addItem(PlaceholderBlock.item(featuresView.id))
+            player.inventory.addItem(PlaceholderBlockItemFeature.stack(features.id))
         }
 
-        log.info { +"All systems in this module have been ${TextColors.brightGreen("enabled")}." }
-    }
-
-    override fun down() {
-        log.info { +"All systems in this module have been ${TextColors.brightRed("disabled")}." }
+        super.up()
     }
 }
 

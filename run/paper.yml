@@ -284,8 +284,6 @@ world-settings:
       lava-obscures: false
       use-permission: false
       hidden-blocks:
-        # You can add air here such that many holes are generated.
-        # This works well against cave finders but may cause client FPS drops for all players.
         - air
         - copper_ore
         - deepslate_copper_ore
@@ -302,8 +300,6 @@ world-settings:
         - redstone_ore
         - deepslate_redstone_ore
       replacement-blocks:
-        # Chest is a tile entity and can't be added to hidden-blocks in engine-mode: 2.
-        # But adding chest here will hide buried treasures, if max-chunk-section-index is increased.
         - chest
         - amethyst_block
         - andesite
@@ -425,7 +421,6 @@ world-settings:
       max-chunk-section-index: 7
       max-block-height: 128
       hidden-blocks:
-        # See note about air above.
         - air
         - ancient_debris
         - bone_block

@@ -13,6 +13,8 @@ application {
 applyPurpurLogic()
 
 dependencies {
-    implementation(rootProject.hexalite.bundles.kotlin.essential)
-    implementation(project(":common"))
+    api(rootProject.hexalite.bundles.kotlin.essential)
+    api(rootProject.hexalite.commons.io)
+    api(project(":common"))
+    api(rootProject.hexalite.mordant)
 }

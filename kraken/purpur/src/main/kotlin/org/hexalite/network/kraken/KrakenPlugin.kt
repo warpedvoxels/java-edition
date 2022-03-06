@@ -1,11 +1,17 @@
 package org.hexalite.network.kraken
 
+import com.github.ajalt.mordant.rendering.TextColors
 import kotlinx.coroutines.*
+import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import org.hexalite.network.kraken.configuration.KrakenConfig
-import org.hexalite.network.kraken.gameplay.features.GameplayFeatureDsl
-import org.hexalite.network.kraken.gameplay.features.GameplayFeaturesView
+import org.hexalite.network.kraken.extension.unaryPlus
+import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureDsl
+import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureView
+import org.hexalite.network.kraken.gameplay.feature.block.CustomBlockAdapter
+import org.hexalite.network.kraken.gameplay.feature.item.CustomItemAdapter
 import org.hexalite.network.kraken.logging.BasicLogger
+import org.hexalite.network.kraken.logging.info
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -21,15 +27,23 @@ abstract class KrakenPlugin(open val namespace: String): JavaPlugin() {
     inline val log: BasicLogger
         get() = BasicLogger { conf.logging }
 
-    val featuresView = GameplayFeaturesView(this)
+    val features by lazy {
+        GameplayFeatureView(this)
+    }
 
     @OptIn(ExperimentalContracts::class)
     @GameplayFeatureDsl
-    inline fun features(block: GameplayFeaturesView.() -> Unit) {
+    inline fun features(block: GameplayFeatureView.() -> Unit) {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)
         }
-        featuresView.block()
+        if (HandlerList.getRegisteredListeners(this).none { it.listener is CustomItemAdapter }) {
+            +features.itemAdapter
+        }
+        if (HandlerList.getRegisteredListeners(this).none { it.listener is CustomBlockAdapter }) {
+            +features.blockAdapter
+        }
+        features.block()
     }
 
     /**
@@ -44,10 +58,14 @@ abstract class KrakenPlugin(open val namespace: String): JavaPlugin() {
     val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     // Executed when the plugin is enabled.
-    protected open fun up() {}
+    protected open fun up() {
+        log.info { "All systems in this module have been ${TextColors.brightGreen("enabled")}." }
+    }
 
     // Executed when the plugin is disabled.
-    protected open fun down() {}
+    protected open fun down() {
+        log.info { "All systems in this module have been ${TextColors.brightRed("disabled")}." }
+    }
 
 //    lateinit var adventure: BukkitAudiences
 //        private set

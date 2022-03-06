@@ -1,4 +1,4 @@
-package org.hexalite.network.rest.webserver.db.table
+package org.hexalite.network.common.db.table
 
 import kotlinx.datetime.LocalDateTime
 import org.hexalite.network.common.extension.now

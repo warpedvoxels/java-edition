@@ -8,12 +8,11 @@ import net.kyori.adventure.text.Component
 import org.hexalite.network.common.roles.EliteRole
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.readEvents
-import org.hexalite.network.kraken.extension.unaryPlus
 import org.hexalite.network.kraken.logging.info
 
-class ChatPlugin : KrakenPlugin(namespace = "chat") {
+class ChatPlugin: KrakenPlugin(namespace = "chat") {
     override fun up() {
-        // This is placeholder code to test the resource pack funcionality.
+        // This is placeholder code to test the resource pack functionality.
         val role = EliteRole
         readEvents<AsyncChatEvent> {
             isCancelled = true
@@ -25,10 +24,10 @@ class ChatPlugin : KrakenPlugin(namespace = "chat") {
             })
         }
 
-        log.info { +"All systems in this module have been ${brightGreen("enabled")}." }
+        log.info { "All systems in this module have been ${brightGreen("enabled")}." }
     }
 
     override fun down() {
-        log.info { +"All systems in this module have been ${brightRed("disabled")}." }
+        log.info { "All systems in this module have been ${brightRed("disabled")}." }
     }
 }

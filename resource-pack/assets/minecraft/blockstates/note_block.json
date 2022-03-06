@@ -1,6 +1,6 @@
 {
   "variants": {
-    "instrument=basedrum,note=3,powered=false": {
+    "instrument=basedrum,note=2,powered=false": {
       "model": "block/placeholder"
     }
   }

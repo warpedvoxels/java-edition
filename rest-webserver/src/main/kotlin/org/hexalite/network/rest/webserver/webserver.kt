@@ -16,7 +16,7 @@ import io.ktor.server.routing.*
 import io.ktor.util.pipeline.*
 import org.hexalite.network.common.env.Environment
 import org.hexalite.network.rest.webserver.annotations.use
-import org.hexalite.network.rest.webserver.api.v1.listAllRoles
+import org.hexalite.network.rest.webserver.api.v1.listAllUsers
 import org.hexalite.network.rest.webserver.db.buildDatabaseFromDataSource
 import org.hexalite.network.rest.webserver.db.pooling.createPooledDataSource
 import org.hexalite.network.rest.webserver.generic.reply
@@ -24,7 +24,7 @@ import org.hexalite.network.rest.webserver.generic.reply
 private typealias API = PipelineContext<Unit, ApplicationCall>
 
 // Live reload: Pass `-Dio.ktor.development=true` to VM flags.
-fun main(args: Array<String>) {
+fun main() {
     buildDatabaseFromDataSource(createPooledDataSource())
 
     val server = embeddedServer(Netty, port = Environment.WebServer.port) {
@@ -46,7 +46,7 @@ fun main(args: Array<String>) {
                 )
             }
             route("/api/v1") {
-                this use API::listAllRoles
+                this use API::listAllUsers
             }
         }
     }
