@@ -5,7 +5,10 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.bukkit.BukkitDsl
+import org.hexalite.network.kraken.bukkit.BukkitDslMarker
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 //    __   _     __
 //   / /  (_)__ / /____ ___  ___ ____
@@ -24,12 +27,16 @@ inline operator fun <T: BukkitEventListener> T.unaryPlus(): T = also {
     plugin.readEvents(this)
 }
 
-@BukkitDsl
+@OptIn(ExperimentalContracts::class)
+@BukkitDslMarker
 inline fun <reified T : Event> KrakenPlugin.readEvents(
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,
     crossinline callback: T.() -> Unit
 ): BukkitEventListener {
+    contract {
+        callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
+    }
     val listener = OpenBukkitEventListener(this)
     server.pluginManager.registerEvent(
         T::class.java,
@@ -42,12 +49,18 @@ inline fun <reified T : Event> KrakenPlugin.readEvents(
     return listener
 }
 
-@BukkitDsl
-inline fun <reified T : Event> BukkitEventListener.readEvents(
+@OptIn(ExperimentalContracts::class)
+@BukkitDslMarker
+inline fun <reified T: Event> BukkitEventListener.readEvents(
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,
-    crossinline callback: T.() -> Unit
-) = plugin.readEvents(priority, ignoreIfCancelled, callback)
+    crossinline callback: T.() -> Unit,
+): BukkitEventListener {
+    contract {
+        callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
+    }
+    return plugin.readEvents(priority, ignoreIfCancelled, callback)
+}
 
 inline fun Listener.unregister() = HandlerList.unregisterAll(this)
 

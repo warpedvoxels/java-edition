@@ -1,4 +1,4 @@
-package org.hexalite.network.kraken.blocks
+package org.hexalite.network.kraken.gameplay.features.blocks
 
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -6,38 +6,48 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.inventory.ItemStack
 import org.hexalite.network.kraken.extension.ToolLevel
 import org.hexalite.network.kraken.extension.ToolType
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.math.pow
 
 typealias HardnessDecider = CustomBlock.(Player) -> Int
 typealias DropDecider = BlockBreakEvent.(block: CustomBlock, adapter: CustomBlockAdapter) -> ItemStack?
 
 @DslMarker
-annotation class CustomBlockDsl
+annotation class CustomBlockDslMarker
 
+@OptIn(ExperimentalContracts::class)
 open class CustomBlock(
     val textureIndex: Int,
-    @CustomBlockDsl var hardness: HardnessDecider? = null,
-    @CustomBlockDsl var onDrop: DropDecider? = { custom, adapter -> custom.item(adapter.namespace) },
+    @CustomBlockDslMarker var hardness: HardnessDecider? = null,
+    @CustomBlockDslMarker var onDrop: DropDecider? = { custom, adapter -> custom.item(adapter.view.id) },
     var placeSound: String? = Sound.BLOCK_SAND_PLACE.key.key,
     var breakSound: String? = Sound.BLOCK_STONE_BREAK.key.key,
 ) {
-    @CustomBlockDsl
-    inline fun hardness(noinline block: HardnessDecider) {
-        hardness = block
+    @CustomBlockDslMarker
+    inline fun hardness(noinline callback: HardnessDecider) {
+        contract {
+            callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
+        }
+        hardness = callback
     }
 
-    @CustomBlockDsl
-    inline fun drop(noinline block: DropDecider) {
-        onDrop = block
+    @CustomBlockDslMarker
+    inline fun drop(noinline callback: DropDecider) {
+        contract {
+            callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
+        }
+        onDrop = callback
     }
 }
 
-
+@CustomBlockDslMarker
 inline fun CustomBlock.setToolBasedHardness(
     base: Int,
     minimalLevel: ToolLevel?,
     type: ToolType,
-    noinline drop: DropDecider? = { custom, adapter -> custom.item(adapter.namespace) },
+    noinline drop: DropDecider? = { custom, adapter -> custom.item(adapter.view.id) },
 ) {
     val hierarchy = ToolLevel.Hierarchy
     val minimumIndex = hierarchy.indexOf(minimalLevel)

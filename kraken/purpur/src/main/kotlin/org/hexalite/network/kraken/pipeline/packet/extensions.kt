@@ -11,6 +11,9 @@ import org.hexalite.network.kraken.extension.BukkitEventListener
 import org.hexalite.network.kraken.extension.findPlayer
 import org.hexalite.network.kraken.extension.uuid
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 //    ___  _          ___            ____     __               _
 //   / _ \(_)__  ___ / (_)__  ___   / __/_ __/ /____ ___  ___ (_)__  ___  ___
@@ -36,6 +39,7 @@ annotation class PacketDslMarker
 /**
  * Sets the packet in transformation for this player.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
 fun Player.setPacketInTransformation(context: PacketTransformInContext) {
     customDuplexChannel.transformIn = context
@@ -44,16 +48,24 @@ fun Player.setPacketInTransformation(context: PacketTransformInContext) {
 /**
  * Sets the packet out transformation for this player.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
 fun Player.setPacketOutTransformation(context: PacketTransformOutContext) {
+    contract {
+        callsInPlace(context, InvocationKind.AT_LEAST_ONCE)
+    }
     customDuplexChannel.transformOut = context
 }
 
 /**
  * Sets the packet in transformation globally.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
 inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncoming(crossinline reader: PacketTransformInSpecificContext<T, Any?>) {
+    contract {
+        callsInPlace(reader, InvocationKind.AT_LEAST_ONCE)
+    }
     val old = DefaultPlayerPacketInTransform
     setDefaultPacketInTransformation { ctx, packet ->
         if (packet is T) {
@@ -66,30 +78,44 @@ inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncomi
 /**
  * Sets the packet in transformation globally.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
-inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncomingUnit(crossinline reader: PacketTransformInSpecificContext<T, Unit>) =
-    transformPacketsIncoming<T> { ctx, packet ->
+inline fun <reified T: Packet<ServerGamePacketListener>> transformPacketsIncomingUnit(crossinline reader: PacketTransformInSpecificContext<T, Unit>) {
+    contract {
+        callsInPlace(reader, InvocationKind.AT_LEAST_ONCE)
+    }
+    return transformPacketsIncoming<T> { ctx, packet ->
         reader(ctx, packet)
         packet
     }
+}
 
 /**
  * Sets the packet in transformation globally.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
-inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncomingNull(crossinline reader: PacketTransformInSpecificContext<T, Unit>) =
-    transformPacketsIncoming<T> { ctx, packet ->
+inline fun <reified T: Packet<ServerGamePacketListener>> transformPacketsIncomingNull(crossinline reader: PacketTransformInSpecificContext<T, Unit>) {
+    contract {
+        callsInPlace(reader, InvocationKind.AT_LEAST_ONCE)
+    }
+    return transformPacketsIncoming<T> { ctx, packet ->
         reader(ctx, packet)
         null
     }
+}
 
 /**
  * Sets the packet out transformation globally.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
 inline fun <reified T : Packet<ClientGamePacketListener>> transformPacketsOutgoing(crossinline writer: PacketTransformOutSpecificContext<T, Any?>) {
+    contract {
+        callsInPlace(writer, InvocationKind.AT_LEAST_ONCE)
+    }
     val old = DefaultPlayerPacketOutTransform
-    setDefaultPacketOutTransformation { ctx, packet, future ->
+    return setDefaultPacketOutTransformation { ctx, packet, future ->
         if (packet is T) {
             return@setDefaultPacketOutTransformation writer(ctx, packet, future)
         }
@@ -100,20 +126,29 @@ inline fun <reified T : Packet<ClientGamePacketListener>> transformPacketsOutgoi
 /**
  * Sets the packet out transformation globally.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
-inline fun <reified T : Packet<ClientGamePacketListener>> transformPacketsOutgoingUnit(crossinline writer: PacketTransformOutSpecificContext<T, Unit>) =
+inline fun <reified T: Packet<ClientGamePacketListener>> transformPacketsOutgoingUnit(crossinline writer: PacketTransformOutSpecificContext<T, Unit>) {
+    contract {
+        callsInPlace(writer, InvocationKind.AT_LEAST_ONCE)
+    }
     transformPacketsOutgoing<T> { ctx, packet, future ->
         writer(ctx, packet, future)
         packet
     }
+}
 
 /**
  * Sets the packet in transformation for this player.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
 inline fun <reified T : Packet<ServerGamePacketListener>> Player.transformPacketsIncoming(crossinline reader: PacketTransformInSpecificContext<T, Any?>) {
+    contract {
+        callsInPlace(reader, InvocationKind.AT_LEAST_ONCE)
+    }
     val old = customDuplexChannel.transformIn
-    setPacketInTransformation { ctx, packet ->
+    return setPacketInTransformation { ctx, packet ->
         if (packet is T) {
             val player = uuidOrNull?.findPlayer()
             return@setPacketInTransformation if (player == this@transformPacketsIncoming) {
@@ -129,20 +164,29 @@ inline fun <reified T : Packet<ServerGamePacketListener>> Player.transformPacket
 /**
  * Sets the packet in transformation for this player.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
-inline fun <reified T : Packet<ServerGamePacketListener>> Player.transformPacketsIncomingUnit(crossinline reader: PacketTransformInSpecificContext<T, Unit>) =
-    transformPacketsIncoming<T> { ctx, packet ->
+inline fun <reified T: Packet<ServerGamePacketListener>> Player.transformPacketsIncomingUnit(crossinline reader: PacketTransformInSpecificContext<T, Unit>) {
+    contract {
+        callsInPlace(reader, InvocationKind.AT_LEAST_ONCE)
+    }
+    return transformPacketsIncoming<T> { ctx, packet ->
         reader(ctx, packet)
         packet
     }
+}
 
 /**
  * Sets the packet out transformation for this player.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
 inline fun <reified T : Packet<ClientGamePacketListener>> Player.transformPacketsOutgoing(crossinline writer: PacketTransformOutSpecificContext<T, Any?>) {
+    contract {
+        callsInPlace(writer, InvocationKind.AT_LEAST_ONCE)
+    }
     val old = customDuplexChannel.transformOut
-    setPacketOutTransformation { ctx, packet, future ->
+    return setPacketOutTransformation { ctx, packet, future ->
         if (packet is T) {
             val player = uuidOrNull?.findPlayer()
             return@setPacketOutTransformation if (player == this@transformPacketsOutgoing) {
@@ -158,12 +202,17 @@ inline fun <reified T : Packet<ClientGamePacketListener>> Player.transformPacket
 /**
  * Sets the packet out transformation for this player.
  */
+@OptIn(ExperimentalContracts::class)
 @PacketDslMarker
-inline fun <reified T : Packet<ClientGamePacketListener>> Player.transformPacketsOutgoingUnit(crossinline writer: PacketTransformOutSpecificContext<T, Unit>) =
-    transformPacketsOutgoing<T> { ctx, packet, future ->
+inline fun <reified T: Packet<ClientGamePacketListener>> Player.transformPacketsOutgoingUnit(crossinline writer: PacketTransformOutSpecificContext<T, Unit>) {
+    contract {
+        callsInPlace(writer, InvocationKind.AT_LEAST_ONCE)
+    }
+    return transformPacketsOutgoing<T> { ctx, packet, future ->
         writer(ctx, packet, future)
         packet
     }
+}
 
 /**
  * Set up the entire packet pipeline injection system.

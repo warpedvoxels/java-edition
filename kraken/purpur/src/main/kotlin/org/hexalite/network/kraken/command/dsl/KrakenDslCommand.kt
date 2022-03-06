@@ -9,10 +9,14 @@ import net.minecraft.commands.CommandSourceStack
 import org.hexalite.network.kraken.command.KrakenArgument
 import org.hexalite.network.kraken.command.KrakenCommand
 import org.hexalite.network.kraken.command.annotations.CommandDslMarker
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 typealias KrakenCommandDsl = KrakenDslCommand.() -> Unit
+typealias BrigadierExecuteDsl = CommandContext<CommandSourceStack>.() -> Int
 
 class KrakenDslCommand(
     override var labels: MutableList<String> = mutableListOf(),
@@ -33,8 +37,8 @@ class KrakenDslCommand(
 
     @Suppress("NAME_SHADOWING")
     override fun buildLiteral(): LiteralCommandNode<CommandSourceStack> {
-        val exec: (CommandContext<CommandSourceStack>) -> Int = {
-            rootCommand.run(it)
+        val exec: BrigadierExecuteDsl = {
+            rootCommand.run(this)
         }
         val brigadier = LiteralArgumentBuilder.literal<CommandSourceStack>(name).apply {
             children.forEach {
@@ -85,8 +89,12 @@ class KrakenDslCommand(
         return root
     }
 
+    @OptIn(ExperimentalContracts::class)
     @CommandDslMarker
-    fun executes(root: Boolean = registerAtRoot, command: CommandContext<CommandSourceStack>.() -> Int) {
+    fun executes(root: Boolean = registerAtRoot, command: BrigadierExecuteDsl) {
+        contract {
+            callsInPlace(command, InvocationKind.AT_LEAST_ONCE)
+        }
         registerAtRoot = root
         rootCommand = Command<CommandSourceStack> {
             currentContext = it
@@ -94,10 +102,16 @@ class KrakenDslCommand(
         }
     }
 
+    @OptIn(ExperimentalContracts::class)
     @CommandDslMarker
-    fun runs(root: Boolean = registerAtRoot, command: CommandContext<CommandSourceStack>.() -> Unit) = executes(root) {
-        command()
-        Command.SINGLE_SUCCESS
+    fun runs(root: Boolean = registerAtRoot, command: BrigadierExecuteDsl) {
+        contract {
+            callsInPlace(command, InvocationKind.AT_LEAST_ONCE)
+        }
+        return executes(root) {
+            command()
+            Command.SINGLE_SUCCESS
+        }
     }
 
     @CommandDslMarker

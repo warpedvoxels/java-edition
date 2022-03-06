@@ -6,12 +6,10 @@ import com.github.ajalt.mordant.rendering.TextColors
 import org.bukkit.event.player.PlayerJoinEvent
 import org.hexalite.network.duels.blocks.PlaceholderBlock
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.blocks.CustomBlock
-import org.hexalite.network.kraken.blocks.CustomBlockAdapter
-import org.hexalite.network.kraken.blocks.item
 import org.hexalite.network.kraken.bukkit.getPlugin
 import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus
+import org.hexalite.network.kraken.gameplay.features.blocks.item
 import org.hexalite.network.kraken.logging.info
 import org.hexalite.network.kraken.pipeline.packet.packetPipelineInjectionSystem
 
@@ -24,12 +22,13 @@ class DuelsPlugin: KrakenPlugin(namespace = "duels") {
         +packetPipelineInjectionSystem()
 
         // register custom blocks
-        val blocks = listOf<CustomBlock>(PlaceholderBlock).associateBy { it.textureIndex }
-        val adapter = +CustomBlockAdapter(blocks::get, duels)
+        features {
+            +PlaceholderBlock
+        }
 
         // placeholder event
         readEvents<PlayerJoinEvent> {
-            player.inventory.addItem(PlaceholderBlock.item(adapter.namespace))
+            player.inventory.addItem(PlaceholderBlock.item(featuresView.id))
         }
 
         log.info { +"All systems in this module have been ${TextColors.brightGreen("enabled")}." }

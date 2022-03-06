@@ -3,8 +3,13 @@ package org.hexalite.network.kraken
 import kotlinx.coroutines.*
 import org.bukkit.plugin.java.JavaPlugin
 import org.hexalite.network.kraken.configuration.KrakenConfig
+import org.hexalite.network.kraken.gameplay.features.GameplayFeatureDsl
+import org.hexalite.network.kraken.gameplay.features.GameplayFeaturesView
 import org.hexalite.network.kraken.logging.BasicLogger
 import java.util.concurrent.ConcurrentLinkedQueue
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 abstract class KrakenPlugin(open val namespace: String): JavaPlugin() {
     /**
@@ -15,6 +20,17 @@ abstract class KrakenPlugin(open val namespace: String): JavaPlugin() {
 
     inline val log: BasicLogger
         get() = BasicLogger { conf.logging }
+
+    val featuresView = GameplayFeaturesView(this)
+
+    @OptIn(ExperimentalContracts::class)
+    @GameplayFeatureDsl
+    inline fun features(block: GameplayFeaturesView.() -> Unit) {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
+        featuresView.block()
+    }
 
     /**
      * A list of jobs that should be cancelled when the plugin is disabled.

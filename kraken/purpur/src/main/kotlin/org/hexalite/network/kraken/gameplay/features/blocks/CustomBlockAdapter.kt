@@ -1,4 +1,4 @@
-package org.hexalite.network.kraken.blocks
+package org.hexalite.network.kraken.gameplay.features.blocks
 
 import kotlinx.coroutines.delay
 import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket
@@ -6,7 +6,6 @@ import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
 import org.bukkit.GameMode
 import org.bukkit.Instrument
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.type.NoteBlock
@@ -30,15 +29,14 @@ import org.hexalite.network.kraken.coroutines.ticks
 import org.hexalite.network.kraken.extension.BukkitEventListener
 import org.hexalite.network.kraken.extension.entityId
 import org.hexalite.network.kraken.extension.findPlayerOrNull
+import org.hexalite.network.kraken.gameplay.features.GameplayFeaturesView
 import org.hexalite.network.kraken.logging.warning
 import org.hexalite.network.kraken.pipeline.packet.BukkitPacketPipelineListener
 import org.hexalite.network.kraken.pipeline.packet.sendPacket
 import org.hexalite.network.kraken.pipeline.packet.transformPacketsIncoming
 import org.hexalite.network.kraken.pipeline.packet.uuidOrNull
 
-class CustomBlockAdapter(internal val getter: (Int) -> CustomBlock?, override val plugin: KrakenPlugin): BukkitEventListener {
-
-    val namespace = NamespacedKey(plugin, "id")
+class CustomBlockAdapter(override val plugin: KrakenPlugin, val view: GameplayFeaturesView, internal val getter: (Int) -> CustomBlock?): BukkitEventListener {
     private val fastPlaceExempt = plugin.onlinePlayersSetOf()
     private val breakingBlocks = plugin.onlinePlayersSetOf()
 
@@ -123,8 +121,9 @@ class CustomBlockAdapter(internal val getter: (Int) -> CustomBlock?, override va
             return
         }
 
-        val custom = player.inventory.itemInMainHand.asCustomBlock()?.to(player.inventory.itemInMainHand) ?: player.inventory.itemInOffHand.asCustomBlock()
-            ?.to(player.inventory.itemInOffHand) ?: return
+        val custom = player.inventory.itemInMainHand.asCustomBlockOrNull(view.id)?.to(player.inventory.itemInMainHand)
+            ?: player.inventory.itemInOffHand.asCustomBlockOrNull(view.id)?.to(player.inventory.itemInOffHand)
+            ?: return
 
         val block = clickedBlock?.getRelative(blockFace) ?: return
         val slot = if (custom.second == player.inventory.itemInMainHand) EquipmentSlot.HAND else EquipmentSlot.OFF_HAND

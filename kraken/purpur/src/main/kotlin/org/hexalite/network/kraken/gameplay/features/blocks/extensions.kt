@@ -1,4 +1,4 @@
-package org.hexalite.network.kraken.blocks
+package org.hexalite.network.kraken.gameplay.features.blocks
 
 import net.kyori.adventure.text.Component
 import org.bukkit.*
@@ -7,21 +7,6 @@ import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.type.NoteBlock
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import org.hexalite.network.kraken.KrakenPlugin
-
-inline fun KrakenPlugin.customBlocks(vararg blocks: CustomBlock): CustomBlockAdapter {
-    val blocks = blocks.map { it.textureIndex to it }.toMap()
-    return CustomBlockAdapter({ blocks[it] }, this)
-}
-
-inline fun KrakenPlugin.customBlocks(blocks: Collection<CustomBlock>): CustomBlockAdapter {
-    val blocks = blocks.map { it.textureIndex to it }.toMap()
-    return CustomBlockAdapter({ blocks[it] }, this)
-}
-
-inline fun KrakenPlugin.customBlocks(noinline getter: (Int) -> CustomBlock?): CustomBlockAdapter {
-    return CustomBlockAdapter(getter, this)
-}
 
 fun BlockData.textureIndex() = if (this is NoteBlock) ((instrument.type * 25) + note.id + (if (isPowered) 400 else 0) - 26) else null
 
@@ -46,7 +31,7 @@ inline fun CustomBlock.applyMetadataTo(block: Block) {
 
 context(CustomBlockAdapter)
 
-fun ItemStack.asCustomBlock(): CustomBlock? {
+fun ItemStack.asCustomBlockOrNull(namespace: NamespacedKey): CustomBlock? {
     if (type != Material.PAPER) {
         return null
     }

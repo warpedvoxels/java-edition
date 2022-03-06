@@ -16,7 +16,7 @@ inline val server get() = Bukkit.getServer()
 inline val console get() = server.consoleSender
 
 @DslMarker
-annotation class BukkitDsl
+annotation class BukkitDslMarker
 
 inline fun <reified T: KrakenPlugin> getPlugin(): Lazy<T> = lazy {
     JavaPlugin.getPlugin(T::class.java)
