@@ -27,7 +27,7 @@ include(
     ":recyclable:combat",
     ":rest-webserver",
     ":rest-webclient",
-    ":resource-pack-src"
+    ":resource-pack-generator"
 )
 
 dependencyResolutionManagement {

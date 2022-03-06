@@ -18,3 +18,9 @@ dependencies {
     api(project(":common"))
     api(rootProject.hexalite.mordant)
 }
+
+tasks {
+    shadowJar {
+        archiveFileName.set("rp-shaded.jar")
+    }
+}

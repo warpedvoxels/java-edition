@@ -26,6 +26,7 @@ cli_help() {
       echo "  -s, --symlink: Symlink the CLI to the /usr/bin directory"
       echo "  -m, --minecraft: Start the testing Minecraft server with only 1GB of RAM"
       echo "  -w, --webserver: Run the compiled webserver"
+      echo "  -r, --resource-pack: Run the Kotlin-based resource pack generator"
 }
 
 cli_build() {
@@ -43,9 +44,9 @@ cli_build() {
   # Build everything then symlink everything
   mkdir -p "$HOME/.hexalite/compiled"
   if [ -z "$1" ]; then
-    (cd "$DIRNAME" && gradle build && ln -sf "$DIRNAME/rest-webserver/build/libs/rest-webserver-shaded.jar" "$HOME/.hexalite/compiled/webserver.jar")
+    (cd "$DIRNAME" && gradle build && ln -sf "$DIRNAME/rest-webserver/build/libs/rest-webserver-shaded.jar" "$HOME/.hexalite/compiled/webserver.jar" && ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar")
   else
-    (cd "$DIRNAME" && gradle build && run_script "link_plugins" "$1" && ln -sf "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar")
+    (cd "$DIRNAME" && gradle build && run_script "link_plugins" "$1" && ln -sf "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar"  && ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar")
   fi
 }
 
@@ -80,6 +81,10 @@ cli_webserver() {
   (cd "$HOME/.hexalite/compiled" && java -jar ./webserver.jar)
 }
 
+cli_resource_pack() {
+  (cd "$HOME/.hexalite/compiled" && java -jar ./resource-pack-generator.jar)
+}
+
 if [ -z "$1" ]; then
     cli_help
     exit 1
@@ -106,6 +111,9 @@ case "$1" in
     ;;
   -w|--webserver)
     cli_webserver
+    ;;
+  -r|--resource-pack)
+    cli_resource_pack
     ;;
   *)
     cli_help
