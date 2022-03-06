@@ -6,12 +6,12 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.putJsonObject
-import org.hexalite.network.rp.block.PaperItemModel
 import org.hexalite.network.rp.block.base.field
 import org.hexalite.network.rp.block.base.state
 import org.hexalite.network.rp.block.model.CustomBlocks
 import org.hexalite.network.rp.font.CustomFontProviders
 import org.hexalite.network.rp.font.FontCustomProviderCollectionHolder
+import org.hexalite.network.rp.item.PaperItemModel
 import java.io.File
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
@@ -28,6 +28,8 @@ object ResourcePackGeneration {
     val base = Path("${System.getProperty("user.home")}${File.separator}.hexalite${File.separator}dev${File.separator}").toRealPath().resolve("resource-pack")
         .createDirectories()
 
+    val paper = PaperItemModel()
+
     /**
      * Copy the MCMeta to the destination resource pack.
      */
@@ -35,20 +37,6 @@ object ResourcePackGeneration {
         println("=> Copying resource pack meta to the root folder...")
         val mcmetaFile = base.resolve("pack.mcmeta").toFile()
         mcmetaFile.writeText(json.encodeToString(mcmeta))
-    }
-
-    /**
-     * Copy all assets to the destination pack.
-     */
-    // todo: fix jar being opened from command line instead of IDE
-    private fun copyAssets() {
-        println("=> Copying required assets...")
-        val dir = base.resolve("assets")
-        runCatching {
-            dir.createDirectories()
-        }
-        val jar = File(this::class.java.classLoader.getResource("assets")!!.toURI())
-        jar.copyRecursively(dir.toFile(), true) { _, _ -> OnErrorAction.SKIP }
     }
 
     /**
@@ -76,11 +64,8 @@ object ResourcePackGeneration {
      */
     private fun generateBlockModels() {
         println("=> Generating custom block models...")
-        val paper = PaperItemModel()
-        val itemDir = base.resolve("assets/minecraft/models/item")
         val blockDir = base.resolve("assets/minecraft/models/block")
         runCatching {
-            itemDir.createDirectories()
             blockDir.createDirectories()
         }
 
@@ -91,7 +76,6 @@ object ResourcePackGeneration {
             blockFile.writeText(blockJson)
             paper.overrides.add(PaperItemModel.Override(PaperItemModel.Override.Predicate(customModelData = it.index), "block/$name"))
         }
-        itemDir.resolve("paper.json").toFile().writeText(json.encodeToString(paper))
     }
 
     /**
@@ -108,12 +92,24 @@ object ResourcePackGeneration {
         file.writeText(json)
     }
 
+    /**
+     * Generate the custom item models
+     */
+    private fun generateItemModels() {
+        println("=> Generating custom item models...")
+        val itemDir = base.resolve("assets/minecraft/models/item")
+        runCatching {
+            itemDir.createDirectories()
+        }
+        itemDir.resolve("paper.json").toFile().writeText(json.encodeToString(paper))
+    }
+
     @JvmStatic
     fun main(args: Array<String>) {
         copyMeta()
-        copyAssets()
         generateBlockState()
         generateBlockModels()
         generateCustomFont()
+        generateItemModels()
     }
 }

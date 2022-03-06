@@ -1,4 +1,4 @@
-package org.hexalite.network.rp.block
+package org.hexalite.network.rp.item
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

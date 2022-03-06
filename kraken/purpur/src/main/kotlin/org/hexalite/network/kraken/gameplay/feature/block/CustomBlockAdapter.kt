@@ -50,23 +50,20 @@ class CustomBlockAdapter(override val plugin: KrakenPlugin, val view: GameplayFe
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    fun readBlockPhysics(event: BlockPhysicsEvent) = with(event) {
+    private tailrec fun BlockPhysicsEvent.update(block: Block) {
         val above = block.getRelative(BlockFace.UP)
         if (above.type == Material.NOTE_BLOCK) {
-            tailrec fun update(above: Block) {
-                above.state.update(true, true)
-                val next = above.location.block.getRelative(BlockFace.UP)
-                if (next.type == Material.NOTE_BLOCK) {
-                    update(next)
-                }
-            }
-            update(above)
             isCancelled = true
+            above.state.update(true, true)
+            update(above)
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun readBlockPhysics(event: BlockPhysicsEvent) = with(event) {
+        update(block)
         if (block.type == Material.NOTE_BLOCK) {
             isCancelled = true
-            block.state.update(true, false)
         }
     }
 
