@@ -74,7 +74,7 @@ object ResourcePackGeneration {
             val name = it.textures.all.substringAfterLast('/')
             val blockFile = blockDir.resolve("$name.json").toFile()
             blockFile.writeText(blockJson)
-            paper.overrides.add(PaperItemModel.Override(PaperItemModel.Override.Predicate(customModelData = it.index), "block/$name"))
+            paper.overrides.add(PaperItemModel.Override(PaperItemModel.Override.Predicate(customModelData = it.index + 1000), "block/$name"))
         }
     }
 

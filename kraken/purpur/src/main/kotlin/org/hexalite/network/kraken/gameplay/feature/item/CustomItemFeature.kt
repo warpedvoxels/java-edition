@@ -12,13 +12,16 @@ open class CustomItemFeature(
     val textureIndex: Int,
     val translatableKey: TranslatableComponent? = null,
 ) {
+    inline val customModelData: Int
+        get() = textureIndex + 1000
+
     fun stack(namespace: NamespacedKey, amount: Int = 1, showTextureIndexInLore: Boolean = true): ItemStack {
         val stack = ItemStack(Material.PAPER, amount)
         with(stack) {
             val meta = itemMeta ?: return stack
             val container = meta.persistentDataContainer
             container.set(namespace, PersistentDataType.INTEGER, textureIndex)
-            meta.setCustomModelData(textureIndex)
+            meta.setCustomModelData(this@CustomItemFeature.customModelData)
             if (showTextureIndexInLore) {
                 meta.lore(mutableListOf<Component>(Component.text("§8#$textureIndex")))
             }
