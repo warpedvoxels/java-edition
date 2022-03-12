@@ -34,6 +34,7 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/kraken" />
             <option value="$PROJECT_DIR$/kraken/purpur" />
+            <option value="$PROJECT_DIR$/kraken/velocity" />
             <option value="$PROJECT_DIR$/recyclable" />
             <option value="$PROJECT_DIR$/recyclable/chat" />
             <option value="$PROJECT_DIR$/recyclable/combat" />

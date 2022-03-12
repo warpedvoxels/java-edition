@@ -4,7 +4,7 @@ This file is responsible for explaining every license that is used in the projec
 
 The [Kraken Framework][kraken] project is licensed under the [MIT license][mit], so you can use it for any purpose.
 
-All of our Purpur and/or Waterfall plugins in this repository, and our rest server are licensed under the [GNU Affero General Public License][agpl].
+All of our Purpur and/or Velocity plugins in this repository, and our rest server are licensed under the [GNU Affero General Public License][agpl].
 
 [kraken]: https://github.com/HexaliteNetwork/java-edition-network/tree/main/kraken
 

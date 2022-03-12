@@ -5,6 +5,7 @@ plugins {
     alias(hexalite.plugins.plugin.yml) apply false
     alias(hexalite.plugins.shadow) apply false
     alias(hexalite.plugins.kotlinx.serialization) apply false
+    alias(hexalite.plugins.kapt) apply false
     id("hexalite-build-logic") apply false
 }
 
@@ -23,6 +24,9 @@ allprojects {
         }
         maven(url = "https://repo.purpurmc.org/snapshots/") {
             name = "PurpurMC"
+        }
+        maven(url = "https://nexus.velocitypowered.com/repository/maven-public/") {
+            name = "Velocity"
         }
         maven(url = "https://maven.fabricmc.net/") {
             name = "FabricMC"

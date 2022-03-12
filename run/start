@@ -6,7 +6,8 @@
 # will be able to use less memory and provide a much better performance.
 #
 # This script is initially intended to be used in development environment, but with some
-# modifications in the environment variables it can be used in production as well.
+# modifications in the environment variables it can be used in production as well. This
+# can also work with Velocity out of the box just by changing the jar filename.
 #
 # This script is adapted/modified from the original script made by Astei:
 # https://steinborn.me/posts/tuning-minecraft-openj9/
@@ -42,7 +43,7 @@ MAX_NURSERY_SIZE=${MAX_NURSERY_SIZE:-$((HEAP_SIZE * 2 / 5))}
 #                      By default, there is only a few flags set to optimize
 #                      the Minecraft server.
 ADDITIONAL_JVM_FLAGS=${ADDITIONAL_JVM_FLAGS:-"-Xgcpolicy:balanced -Xdisableexplicitgc"}
-                                             # For Minecraft 1.12.2 and below, "-Xgcpolicy:gencon" is recommend
+                                             # For Minecraft 1.12.2 and below (or if you are using Velocity), "-Xgcpolicy:gencon" is recommend
                                              # If you are using a VPS or dedicated server, adding "-Xtune:virtualized" is recommended
 
 # Additional arguments: Additional arguments that you want to pass to the

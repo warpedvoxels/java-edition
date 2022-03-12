@@ -18,6 +18,7 @@ pluginManagement {
 include(
     ":common",
     ":kraken:purpur",
+    ":kraken:velocity",
     ":arcade:origins",
     ":arcade:origins:rest-module",
     ":arcade:origins:skills",

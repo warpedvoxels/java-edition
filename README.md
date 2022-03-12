@@ -16,9 +16,9 @@ experience possible to players without the need of mods.
 
 ## Technologies
 
-All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [FlameCord][flamecord] (a fork of Waterfall focusing on security improvements). We
-also use [PostgreSQL][postgresql] as our database, and use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of
-directly accessing the database in multiple servers to avoid unsynchronized or/and loss of data, and for communications we use [RabbitMQ][rabbitmq].
+All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [Velocity][velocity]. We also use [PostgreSQL][postgresql] as our database, and
+use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of directly accessing the database in multiple servers to avoid
+unsynchronized or/and loss of data, and for communications we use [RabbitMQ][rabbitmq].
 
 ## Contributors
 
@@ -66,7 +66,7 @@ To know more about the license of this project, you can read the [LICENSE.md][li
 
 [purpur]: https://purpurmc.org
 
-[flamecord]: https://github.com/2lstudios-mc/FlameCord
+[velocity]: https://github.com/PaperMC/Velocity
 
 [rabbitmq]: https://www.rabbitmq.com
 

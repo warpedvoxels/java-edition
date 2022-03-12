@@ -18,7 +18,7 @@ fi
 mkdir -p ./run/plugins
 
 # This is self-explanatory.
-# * purpur | waterfall
+# * purpur | velocity
 SERVER_TYPE="purpur"
 
 # Check if the first argument is a valid choice
@@ -56,7 +56,7 @@ case $SERVER_TYPE in
         ln -nfs "$PWD/arcade/$GAME/build/libs/$GAME-reobf.jar" "$PWD/run/plugins/"
         ln -nfs "$PWD/kraken/purpur/build/libs/purpur-reobf.jar" "$PWD/run/plugins/"
         ;;
-    waterfall|flamecord)
+    velocity)
         echo "Not yet supported."
         exit -1
         ;;
