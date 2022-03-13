@@ -12,4 +12,9 @@ object PlaceholderBlockFeature: CustomBlockFeature(1) {
     }
 }
 
-object PlaceholderBlockItemFeature: CustomItemFeature(1)
+object PlaceholderBlockItemFeature: CustomItemFeature(1) {
+    init {
+        name(key = "block.hexalite.placeholder")
+        attack(speed = 1.0, damage = 7.0)
+    }
+}

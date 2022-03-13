@@ -74,7 +74,11 @@ cli_symlink() {
 }
 
 cli_minecraft() {
-  (cd "$DIRNAME/run" && bash ./start)
+  if [ "$1" != "hotspot" ]; then
+    (cd "$DIRNAME/run" && ./start)
+  else
+    (cd "$DIRNAME/run" && ./start-hotspot)
+  fi
 }
 
 cli_webserver() {
@@ -107,7 +111,7 @@ case "$1" in
     cli_symlink
     ;;
   -m|--minecraft)
-    cli_minecraft
+    cli_minecraft "$2"
     ;;
   -w|--webserver)
     cli_webserver

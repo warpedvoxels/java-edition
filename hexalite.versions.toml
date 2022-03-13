@@ -4,7 +4,8 @@ kotlinx-serialization = "1.3.2"
 kotlinx-datetime = "0.3.2"
 kaml = "0.41.0"
 minecraft = "1.18.1"
-velocity = "3.0.1"
+velocity = "3.1.0"
+velocity-annotation-processor = "4.0.0-SNAPSHOT"
 paperweight-userdev = "1.3.5-SNAPSHOT"
 plugin-yml = "0.5.1"
 purpur = "1.18.2-R0.1-SNAPSHOT"
@@ -41,7 +42,7 @@ adventure-text-serializer-gson = { module = "net.kyori:adventure-text-serializer
 purpur-api = { module = "org.purpurmc.purpur:purpur-api", version.ref = "purpur" }
 # Minecraft - Velocity [Proxy]
 velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
-velocity-annotation-processor = { module = "com.velocitypowered:velocity-annotation-processor", version.ref = "velocity" }
+velocity-annotation-processor = { module = "com.velocitypowered:velocity-annotation-processor", version.ref = "velocity-annotation-processor" }
 # Testing
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 # Logging
