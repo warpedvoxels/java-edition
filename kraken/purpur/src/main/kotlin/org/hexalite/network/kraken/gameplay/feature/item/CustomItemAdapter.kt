@@ -16,7 +16,7 @@ class CustomItemAdapter(override val plugin: KrakenPlugin, val view: GameplayFea
         if (action != Action.RIGHT_CLICK_BLOCK) {
             return
         }
-        if (clickedBlock?.type == Material.NOTE_BLOCK && !player.isSneaking) {
+        if (clickedBlock?.type == Material.NOTE_BLOCK) {
             return setCancelled(true)
         }
         val main = player.inventory.itemInMainHand.asCustomOrNull(view)

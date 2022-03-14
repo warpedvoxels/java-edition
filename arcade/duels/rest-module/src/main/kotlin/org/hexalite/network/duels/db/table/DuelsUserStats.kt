@@ -1,4 +1,4 @@
-package org.hexalite.network.duels.exposed.table
+package org.hexalite.network.duels.db.table
 
 import org.jetbrains.exposed.dao.id.UUIDTable
 

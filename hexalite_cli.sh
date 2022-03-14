@@ -70,7 +70,7 @@ cli_docker() {
 
 cli_symlink() {
   echo "Linking '$REALPATH' to /usr/bin/hexalite"
-  sudo ln -s "$REALPATH" /usr/bin/hexalite
+  sudo ln -sf "$REALPATH" /usr/bin/hexalite
 }
 
 cli_minecraft() {

@@ -2,8 +2,8 @@ package org.hexalite.network.rest.webserver.db
 
 import org.hexalite.network.common.db.table.UserRoles
 import org.hexalite.network.common.db.table.Users
-import org.hexalite.network.duels.exposed.table.DuelsKits
-import org.hexalite.network.duels.exposed.table.DuelsUserStats
+import org.hexalite.network.duels.db.table.DuelsKits
+import org.hexalite.network.duels.db.table.DuelsUserStats
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.TransactionManager

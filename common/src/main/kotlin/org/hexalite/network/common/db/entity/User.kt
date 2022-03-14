@@ -1,9 +1,8 @@
 package org.hexalite.network.common.db.entity
 
-import org.hexalite.network.common.api.RestUser
-import org.hexalite.network.common.api.fromDatabaseEntity
 import org.hexalite.network.common.db.table.UserRoles
 import org.hexalite.network.common.db.table.Users
+import org.hexalite.network.common.rest.entity.RestUser
 import org.hexalite.network.common.util.exposed.BaseRestWebserverUUIDEntity
 import org.hexalite.network.common.util.exposed.BaseRestWebserverUUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -22,6 +21,14 @@ class User(id: EntityID<UUID>): BaseRestWebserverUUIDEntity(id, Users) {
     }
 }
 
-inline fun User.api() = RestUser.fromDatabaseEntity(this)
+inline fun User.rest() = RestUser(
+    uniqueId = id.value,
+    lastUsername = lastUsername,
+    lastSeen = lastSeen,
+    hexes = hexes,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    roles = roles.map(UserRole::rest)
+)
 
-inline fun SizedIterable<User>.api() = map(User::api)
+inline fun SizedIterable<User>.rest() = map(User::rest)

@@ -1,9 +1,11 @@
-package org.hexalite.network.duels.exposed.entity
+package org.hexalite.network.duels.db.entity
 
-import org.hexalite.network.duels.exposed.table.DuelsUserStats
+import org.hexalite.network.duels.db.table.DuelsUserStats
+import org.hexalite.network.duels.rest.entity.RestDuelsUserStats
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SizedIterable
 import java.util.*
 
 class DuelsUserStatsEntity(id: EntityID<UUID>): UUIDEntity(id) {
@@ -16,3 +18,12 @@ class DuelsUserStatsEntity(id: EntityID<UUID>): UUIDEntity(id) {
         fun new(userId: UUID) = new(userId) {}
     }
 }
+
+inline fun DuelsUserStatsEntity.rest(): RestDuelsUserStats = RestDuelsUserStats(
+    wins = wins,
+    losses = losses,
+    draws = draws,
+    winStreak = winStreak
+)
+
+inline fun SizedIterable<DuelsUserStatsEntity>.rest(): List<RestDuelsUserStats> = map(DuelsUserStatsEntity::rest)

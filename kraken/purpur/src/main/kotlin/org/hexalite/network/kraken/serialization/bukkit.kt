@@ -43,3 +43,4 @@ object LocationSerializer: BaseBukkitSerializer<Location>(Location::class)
 object PotionMetaSerializer: BaseBukkitSerializer<PotionMeta>(PotionMeta::class)
 
 object SkullMetaSerializer: BaseBukkitSerializer<SkullMeta>(SkullMeta::class)
+
