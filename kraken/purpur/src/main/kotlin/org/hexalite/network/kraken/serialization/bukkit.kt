@@ -16,7 +16,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream
 import java.io.ByteArrayOutputStream
 import kotlin.reflect.KClass
 
-abstract class BaseBukkitSerializer<T: ConfigurationSerializable>(private val kotlinClass: KClass<T>): KSerializer<T> {
+abstract class BaseBukkitSerializer<T: ConfigurationSerializable>(private val type: KClass<T>): KSerializer<T> {
     private val serializer = ByteArraySerializer()
 
     override val descriptor: SerialDescriptor = serializer.descriptor

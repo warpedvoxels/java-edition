@@ -9,6 +9,7 @@ import org.hexalite.network.kraken.bukkit.BukkitDslMarker
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.reflect.KClass
 
 //    __   _     __
 //   / /  (_)__ / /____ ___  ___ ____
@@ -19,7 +20,7 @@ interface BukkitEventListener : Listener {
     val plugin: KrakenPlugin
 }
 
-open class OpenBukkitEventListener(override val plugin: KrakenPlugin) : BukkitEventListener
+open class OpenBukkitEventListener(override val plugin: KrakenPlugin): BukkitEventListener
 
 inline fun KrakenPlugin.readEvents(listener: Listener) = server.pluginManager.registerEvents(listener, this)
 
@@ -27,22 +28,25 @@ inline operator fun <T: BukkitEventListener> T.unaryPlus(): T = also {
     plugin.readEvents(this)
 }
 
+typealias EventCallback<T> = T.(listener: BukkitEventListener) -> Unit
+
 @OptIn(ExperimentalContracts::class)
 @BukkitDslMarker
-inline fun <reified T : Event> KrakenPlugin.readEvents(
+inline fun <T: Event> KrakenPlugin.readEvents(
+    type: KClass<T>,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,
-    crossinline callback: T.() -> Unit
+    listener: BukkitEventListener = OpenBukkitEventListener(this),
+    crossinline callback: EventCallback<T>,
 ): BukkitEventListener {
     contract {
         callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
     }
-    val listener = OpenBukkitEventListener(this)
     server.pluginManager.registerEvent(
-        T::class.java,
+        type.java,
         listener,
         priority,
-        { _, event -> if (event is T) callback(event) },
+        { _, event -> if (type.isInstance(event)) callback(event as T, listener) },
         this,
         ignoreIfCancelled
     )
@@ -51,15 +55,43 @@ inline fun <reified T : Event> KrakenPlugin.readEvents(
 
 @OptIn(ExperimentalContracts::class)
 @BukkitDslMarker
-inline fun <reified T: Event> BukkitEventListener.readEvents(
+inline fun <reified T: Event> KrakenPlugin.readEvents(
     priority: EventPriority = EventPriority.NORMAL,
     ignoreIfCancelled: Boolean = true,
-    crossinline callback: T.() -> Unit,
+    listener: BukkitEventListener = OpenBukkitEventListener(this),
+    crossinline callback: EventCallback<T>,
 ): BukkitEventListener {
     contract {
         callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
     }
-    return plugin.readEvents(priority, ignoreIfCancelled, callback)
+    return readEvents(T::class, priority, ignoreIfCancelled, listener, callback)
+}
+
+@OptIn(ExperimentalContracts::class)
+@BukkitDslMarker
+inline fun <T: Event> BukkitEventListener.readEvents(
+    type: KClass<T>,
+    priority: EventPriority = EventPriority.NORMAL,
+    ignoreIfCancelled: Boolean = true,
+    crossinline callback: EventCallback<T>,
+): BukkitEventListener {
+    contract {
+        callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
+    }
+    return plugin.readEvents(type, priority, ignoreIfCancelled, this, callback)
+}
+
+@OptIn(ExperimentalContracts::class)
+@BukkitDslMarker
+inline fun <reified T: Event> BukkitEventListener.readEvents(
+    priority: EventPriority = EventPriority.NORMAL,
+    ignoreIfCancelled: Boolean = true,
+    crossinline callback: EventCallback<T>,
+): BukkitEventListener {
+    contract {
+        callsInPlace(callback, InvocationKind.AT_LEAST_ONCE)
+    }
+    return readEvents(T::class, priority, ignoreIfCancelled, callback)
 }
 
 inline fun Listener.unregister() = HandlerList.unregisterAll(this)
