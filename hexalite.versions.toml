@@ -59,6 +59,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-server-caching-headers = { module = "io.ktor:ktor-server-caching-headers", version.ref = "ktor" }
 ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
 ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
+ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "hikaricp" }
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
@@ -79,7 +80,7 @@ commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
-ktor-server = ["ktor-server-netty", "ktor-server-core", "ktor-server-caching-headers", "ktor-server-call-logging", "ktor-server-default-headers", "ktor-server-content-negotiation", "ktor-serialization-kotlinx-json", "ktor-server-auth", "ktor-server-auth-jwt"]
+ktor-server = ["ktor-server-netty", "ktor-server-core", "ktor-server-caching-headers", "ktor-server-call-logging", "ktor-server-default-headers", "ktor-server-resources", "ktor-server-content-negotiation", "ktor-serialization-kotlinx-json", "ktor-server-auth", "ktor-server-auth-jwt"]
 ktor-client = ["ktor-serialization-kotlinx-json", "ktor-client-core", "ktor-client-cio", "ktor-client-logging", "ktor-client-content-negotiation"]
 database = ["postgresql", "hikaricp", "exposed-core", "exposed-dao", "exposed-jdbc", "exposed-kotlin-datetime"]
 caffeine = ["caffeine", "caffeine-guava"]
