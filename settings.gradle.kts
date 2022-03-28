@@ -26,7 +26,6 @@ include(
     ":arcade:duels:rest-module",
     ":recyclable:chat",
     ":recyclable:combat",
-    ":rest-webserver",
     ":rest-webclient",
     ":resource-pack-generator"
 )

@@ -26,10 +26,10 @@ timings:
   url: https://timings.aikar.co/
   server-name-privacy: false
   hidden-config-entries:
-    - database
-    - settings.bungeecord-addresses
-    - settings.velocity-support.secret
-    - settings.seed
+  - database
+  - settings.bungeecord-addresses
+  - settings.velocity-support.secret
+  - settings.seed
   history-interval: 300
   history-length: 3600
   server-name: Unknown Server
@@ -75,6 +75,7 @@ settings:
     page-max: 2560
     total-multiplier: 0.98
   loggers:
+    use-rgb-for-named-text-colors: true
     deobfuscate-stacktraces: true
   item-validation:
     display-name: 8192
@@ -171,10 +172,10 @@ world-settings:
       spawn-chance-max: 75
     door-breaking-difficulty:
       zombie:
-        - HARD
+      - HARD
       vindicator:
-        - NORMAL
-        - HARD
+      - NORMAL
+      - HARD
     max-growth-height:
       cactus: 3
       reeds: 3
@@ -284,40 +285,40 @@ world-settings:
       lava-obscures: false
       use-permission: false
       hidden-blocks:
-        - air
-        - copper_ore
-        - deepslate_copper_ore
-        - raw_copper_block
-        - diamond_ore
-        - deepslate_diamond_ore
-        - gold_ore
-        - deepslate_gold_ore
-        - iron_ore
-        - deepslate_iron_ore
-        - raw_iron_block
-        - lapis_ore
-        - deepslate_lapis_ore
-        - redstone_ore
-        - deepslate_redstone_ore
+      - air
+      - copper_ore
+      - deepslate_copper_ore
+      - raw_copper_block
+      - diamond_ore
+      - deepslate_diamond_ore
+      - gold_ore
+      - deepslate_gold_ore
+      - iron_ore
+      - deepslate_iron_ore
+      - raw_iron_block
+      - lapis_ore
+      - deepslate_lapis_ore
+      - redstone_ore
+      - deepslate_redstone_ore
       replacement-blocks:
-        - chest
-        - amethyst_block
-        - andesite
-        - budding_amethyst
-        - calcite
-        - coal_ore
-        - deepslate_coal_ore
-        - deepslate
-        - diorite
-        - dirt
-        - emerald_ore
-        - deepslate_emerald_ore
-        - granite
-        - gravel
-        - oak_planks
-        - smooth_basalt
-        - stone
-        - tuff
+      - chest
+      - amethyst_block
+      - andesite
+      - budding_amethyst
+      - calcite
+      - coal_ore
+      - deepslate_coal_ore
+      - deepslate
+      - diorite
+      - dirt
+      - emerald_ore
+      - deepslate_emerald_ore
+      - granite
+      - gravel
+      - oak_planks
+      - smooth_basalt
+      - stone
+      - tuff
     armor-stands-do-collision-entity-lookups: false
     disable-thunder: false
     skeleton-horse-thunder-spawn-chance: 0.01
@@ -421,22 +422,22 @@ world-settings:
       max-chunk-section-index: 7
       max-block-height: 128
       hidden-blocks:
-        - air
-        - ancient_debris
-        - bone_block
-        - glowstone
-        - magma_block
-        - nether_bricks
-        - nether_gold_ore
-        - nether_quartz_ore
-        - polished_blackstone_bricks
+      - air
+      - ancient_debris
+      - bone_block
+      - glowstone
+      - magma_block
+      - nether_bricks
+      - nether_gold_ore
+      - nether_quartz_ore
+      - polished_blackstone_bricks
       replacement-blocks:
-        - basalt
-        - blackstone
-        - gravel
-        - netherrack
-        - soul_sand
-        - soul_soil
+      - basalt
+      - blackstone
+      - gravel
+      - netherrack
+      - soul_sand
+      - soul_soil
   # world_the_end: needs to be changed if your world is named differently.
   world_the_end:
     anti-xray:

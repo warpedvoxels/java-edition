@@ -42,15 +42,15 @@ messages:
 advancements:
   disable-saving: false
   disabled:
-    - minecraft:story/disabled
+  - minecraft:story/disabled
 commands:
   replace-commands:
-    - setblock
-    - summon
-    - testforblock
-    - tellraw
+  - setblock
+  - summon
+  - testforblock
+  - tellraw
   spam-exclusions:
-    - /skill
+  - /skill
   silent-commandblock-console: false
   log: true
   tab-complete: 0
@@ -168,4 +168,4 @@ world-settings:
 config-version: 12
 stats:
   disable-saving: false
-  forced-stats: { }
+  forced-stats: {}

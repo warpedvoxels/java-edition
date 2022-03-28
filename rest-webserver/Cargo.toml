@@ -1,0 +1,23 @@
+[package]
+name = "rest-webserver"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+chrono = "0.4"
+log = "0.4"
+fast_log = "1.5"
+rbatis = { version = "3.0", default-features = false, features = [
+    "postgres",
+    "runtime-tokio-rustls",
+] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+#bson = { version = "2.0", features = ["chrono-0_4", "serde_with"] }
+tokio = "1.17"
+lapin = "2.1"
+redis = "0.21"
+jwt = "0.16"

@@ -31,8 +31,11 @@ allprojects {
         maven(url = "https://maven.fabricmc.net/") {
             name = "FabricMC"
         }
-        maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap") {
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap/") {
             name = "Ktor EAP"
+        }
+        maven(url = "https://jitpack.io/") {
+            name = "JitPack"
         }
         mavenCentral()
     }

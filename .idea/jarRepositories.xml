@@ -71,5 +71,45 @@
       <option name="name" value="Velocity" />
       <option name="url" value="https://nexus.velocitypowered.com/repository/maven-public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="JitPack" />
+      <option name="name" value="JitPack" />
+      <option name="url" value="https://jitpack.io/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Velocity" />
+      <option name="name" value="Velocity" />
+      <option name="url" value="https://nexus.velocitypowered.com/repository/maven-public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="JitPack" />
+      <option name="name" value="JitPack" />
+      <option name="url" value="https://jitpack.io" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="PaperMC" />
+      <option name="name" value="PaperMC" />
+      <option name="url" value="https://papermc.io/repo/repository/maven-public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="SpigotMC" />
+      <option name="name" value="SpigotMC" />
+      <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="FabricMC" />
+      <option name="name" value="FabricMC" />
+      <option name="url" value="https://maven.fabricmc.net" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Ktor EAP" />
+      <option name="name" value="Ktor EAP" />
+      <option name="url" value="https://maven.pkg.jetbrains.space/public/p/ktor/eap/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Aikar" />
+      <option name="name" value="Aikar" />
+      <option name="url" value="https://ci.emc.gs/nexus/content/groups/aikar/" />
+    </remote-repository>
   </component>
 </project>

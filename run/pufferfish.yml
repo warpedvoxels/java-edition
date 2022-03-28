@@ -19,7 +19,7 @@ dab:
   start-distance: 12
   max-tick-freq: 20
   activation-dist-mod: 7
-  blacklisted-entities: [ ]
+  blacklisted-entities: []
 inactive-goal-selector-throttle: true
 # Configures Flare, the built-in profiler
 flare:
