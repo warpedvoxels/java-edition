@@ -100,7 +100,12 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Rust/Cargo files
+debug/
 target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
 
 pom.xml.tag
 pom.xml.releaseBackup
