@@ -10,10 +10,11 @@ actix-web = "4"
 chrono = "0.4"
 log = "0.4"
 fast_log = "1.5"
-rbatis = { version = "3.0", default-features = false, features = [
-    "postgres",
-    "runtime-tokio-rustls",
-] }
+# rbatis = { version = "3.1.6", default-features = false, features = [
+#     "postgres",
+#     "runtime-async-std-rustls",
+# ] }
+rbson = { version = "2.0.3", features = ["uuid-0_8", "chrono-0_4"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 #bson = { version = "2.0", features = ["chrono-0_4", "serde_with"] }
@@ -21,3 +22,4 @@ tokio = "1.17"
 lapin = "2.1"
 redis = "0.21"
 jwt = "0.16"
+toml = "0.5.8"
