@@ -65,8 +65,10 @@ lazy_static! {
     pub static ref SETTINGS: Mutex<WebserverSettings> =
         Mutex::new(WebserverSettings::read(&()).expect("Failed to read the settings."));
     static ref PATH: String = {
-        let home = home::home_dir().expect("Failed to get the home directory.")
-            .to_str().expect("Failed to get the home directory as string.")
+        let home = home::home_dir()
+            .expect("Failed to get the home directory.")
+            .to_str()
+            .expect("Failed to get the home directory as string.")
             .to_owned();
         format!("{}/.hexalite/webserver.toml", home)
     };
