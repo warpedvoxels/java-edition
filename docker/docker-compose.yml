@@ -12,7 +12,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ~/.hexalite/postgresql/data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - postgres-network
   redis-container:
@@ -20,7 +20,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ~/.hexalite/redis/data:/data
+      - redis-data:/data
     networks:
       - redis-network
   rabbitmq-container:
@@ -31,10 +31,16 @@ services:
       # HTTP management UI
       - '15672:15672'
     volumes:
-      - ~/.hexalite/rabbitmq/data/:/var/lib/rabbitmq
-      - ~/.hexalite/rabbitmq/log/:/var/log/rabbitmq
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-log:/var/log/rabbitmq
     networks:
       - communications-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  rabbitmq-log:
+  rabbitmq-data:
 
 networks:
   postgres-network:

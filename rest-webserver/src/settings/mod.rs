@@ -2,7 +2,6 @@ use std::{
     fs,
     net::{Ipv4Addr, SocketAddr},
     path::Path,
-    sync::{Mutex, MutexGuard},
 };
 
 use crate::io::*;
@@ -11,7 +10,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct WebserverSettings {
+    #[serde(default)]
     pub root: WebServerRootSettings,
+    #[serde(default)]
     pub services: WebServerServicesSettings,
 }
 
@@ -58,7 +59,7 @@ impl Default for WebServerDatabaseServiceSettings {
 
 impl WebServerDatabaseServiceSettings {
     pub fn url(&self) -> String {
-        format!("postgresql://{}:{}/{}?user={}&password={}&ssl=true", self.host.to_string(), self.port, self.database, self.user, self.password)
+        format!("postgresql://{}:{}/{}?user={}&password={}", self.host, self.port, self.database, self.user, self.password)
     }
 }
 
@@ -83,7 +84,7 @@ impl Reader<WebserverSettings, ()> for WebserverSettings {
         let path = path();
         if !path.exists() {
             let default = WebserverSettings::default();
-            if let Err(_) = default.write(&()) {
+            if default.write(&()).is_err() {
                 return Err("Failed to write the default settings.");
             }
         }
@@ -100,8 +101,6 @@ impl WebserverSettings {
 }
 
 lazy_static! {
-    static ref SETTINGS: Mutex<WebserverSettings> =
-        Mutex::new(WebserverSettings::read(&()).expect("Failed to read the settings."));
     static ref PATH: String = {
         let home = home::home_dir()
             .expect("Failed to get the home directory.")
@@ -112,14 +111,8 @@ lazy_static! {
     };
 }
 
-pub fn read() -> MutexGuard<'static, WebserverSettings> {
-    SETTINGS
-        .lock()
-        .expect("Couldn't unlock the settings mutex.")
-}
-
-pub fn write() {
-    read().write(&()).expect("Failed to write the settings.");
+pub fn read() -> Result<WebserverSettings, &'static str> {
+    WebserverSettings::read(&())
 }
 
 pub fn path() -> &'static Path {
