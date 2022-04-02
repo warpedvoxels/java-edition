@@ -11,11 +11,7 @@ actix-web = "4"
 chrono = "0.4"
 log = "0.4"
 fast_log = "1.5"
-rbatis = { version = "3.1", default-features = false, features = [
-    "postgres",
-    "runtime-async-std-rustls",
-] }
-rbson = { version = "2.0", features = ["uuid-0_8", "chrono-0_4"] }
+sea-orm = { version = "0.7", features = [ "sqlx-postgres", "runtime-actix-native-tls", "debug-print", "macros" ], default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tokio = "1.17"

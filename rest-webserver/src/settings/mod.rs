@@ -9,18 +9,56 @@ use crate::io::*;
 use lazy_static::lazy_static;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct WebserverSettings {
+    pub root: WebServerRootSettings,
+    pub services: WebServerServicesSettings,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct WebServerRootSettings {
     pub ip: Ipv4Addr,
     pub port: u16,
 }
 
-impl Default for WebserverSettings {
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
+pub struct WebServerServicesSettings {
+    pub database: WebServerDatabaseServiceSettings,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct WebServerDatabaseServiceSettings {
+    pub host: Ipv4Addr,
+    pub port: u16,
+    pub user: String,
+    pub password: String,
+    pub database: String,
+}
+
+impl Default for WebServerRootSettings {
     fn default() -> Self {
-        WebserverSettings {
+        WebServerRootSettings {
             ip: Ipv4Addr::new(127, 0, 0, 1),
             port: 8080,
         }
+    }
+}
+
+impl Default for WebServerDatabaseServiceSettings {
+    fn default() -> Self {
+        WebServerDatabaseServiceSettings {
+            host: Ipv4Addr::new(127, 0, 0, 1),
+            port: 5432,
+            user: String::from("johndoe"),
+            password: String::from("mysecretpassword"),
+            database: String::from("hexalite"),
+        }
+    }
+}
+
+impl WebServerDatabaseServiceSettings {
+    pub fn url(&self) -> String {
+        format!("postgresql://{}:{}/{}?user={}&password={}&ssl=true", self.host.to_string(), self.port, self.database, self.user, self.password)
     }
 }
 
@@ -57,12 +95,12 @@ impl Reader<WebserverSettings, ()> for WebserverSettings {
 
 impl WebserverSettings {
     pub fn ip(&self) -> SocketAddr {
-        SocketAddr::new(self.ip.into(), self.port)
+        SocketAddr::new(self.root.ip.into(), self.root.port)
     }
 }
 
 lazy_static! {
-    pub static ref SETTINGS: Mutex<WebserverSettings> =
+    static ref SETTINGS: Mutex<WebserverSettings> =
         Mutex::new(WebserverSettings::read(&()).expect("Failed to read the settings."));
     static ref PATH: String = {
         let home = home::home_dir()
