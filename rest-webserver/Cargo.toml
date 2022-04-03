@@ -8,16 +8,17 @@ edition = "2021"
 
 [dependencies]
 actix-web = "^4"
-chrono = "^0.4"
-log = "^0.4"
-fast_log = "^1.5"
-sea-orm = { version = "^0.7", features = [ "sqlx-postgres", "runtime-actix-native-tls", "debug-print", "macros" ], default-features = false }
+sea-query = "^0"
+chrono = "^0"
+log = "^0"
+fast_log = "^1"
+sea-orm = { version = "^0", features = [ "sqlx-postgres", "runtime-actix-native-tls", "debug-print", "macros" ], default-features = false }
 serde = { version = "^1", features = ["derive"] }
 serde_json = "^1"
-tokio = "^1.17"
-lapin = "^2.1"
-redis = "^0.21"
-jwt = "^0.16" 
-toml = "^0.5"
-lazy_static = "^1.4"
-home = "^0.5"
+tokio = "^1"
+lapin = "^2"
+redis = "^0"
+jwt = "^0" 
+toml = "^0"
+lazy_static = "^1"
+home = "^0"
