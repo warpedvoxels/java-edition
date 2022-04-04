@@ -9,7 +9,14 @@ async fn main() -> std::io::Result<()> {
     let settings = settings::build();
     let database = database::build(&settings).await;
 
-    let state = WebserverState { database, settings };
+    if let Some(error) = database.as_ref().err() {
+        panic!("{}", error);
+    }
+
+    let state = WebserverState {
+        database: database.unwrap(),
+        settings,
+    };
     let ip = state.settings.ip();
     server::build(state, ip).await
 }
