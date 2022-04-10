@@ -10,6 +10,7 @@ edition = "2021"
 actix-web = "^4"
 sea-query = { version = "^0", default-features = false, features = [
     "derive",
+    "attr",
     "thread-safe",
     "backend-postgres",
     "with-chrono",
@@ -20,7 +21,8 @@ sea-query = { version = "^0", default-features = false, features = [
     "postgres-json",
     "postgres-chrono",
     "postgres-uuid",
-] }
+    "postgres-array"
+], git = "https://github.com/eexsty/sea-query", branch = "features/proc-macro/type-definition-generator" }
 sqlx = { version = "^0", default-features = false, features = [
     "runtime-actix-rustls",
     "macros",
@@ -31,7 +33,6 @@ sqlx = { version = "^0", default-features = false, features = [
     "postgres",
     "tls",
 ] }
-squtils = "^0"
 uuid = "^0"
 chrono = "^0"
 log = "^0"
