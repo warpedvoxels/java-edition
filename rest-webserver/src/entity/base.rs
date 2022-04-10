@@ -3,7 +3,7 @@ use uuid::Uuid;
 use crate::app::WebserverState;
 
 pub trait Entity<T> where T: Entity<T> {
-    fn up(state: &WebserverState) -> T;
+    fn up(state: &WebserverState) -> Result<(), &str>;
 
     fn find(state: &WebserverState, id: Uuid) -> Option<T>;
 
