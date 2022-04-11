@@ -2,6 +2,7 @@ extern crate lazy_static;
 
 use hexalite::app::WebserverStateData;
 use hexalite::bootstrap::*;
+use hexalite::entity::{Player, Entity};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -17,6 +18,8 @@ async fn main() -> std::io::Result<()> {
         pool: pool.unwrap(),
         settings,
     };
+
+    Player::up(&state).await.expect("Failed to create the player table.");
     
     let ip = state.settings.ip();
     server::build(state, ip).await

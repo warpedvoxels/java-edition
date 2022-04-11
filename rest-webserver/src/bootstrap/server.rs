@@ -4,6 +4,7 @@ use crate::app::WebserverStateData;
 use actix_web::{middleware::Logger, web::Data as AppData, App, HttpServer};
 
 pub async fn build(state: WebserverStateData, ip: SocketAddr) -> Result<(), Error> {
+
     let server = HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())

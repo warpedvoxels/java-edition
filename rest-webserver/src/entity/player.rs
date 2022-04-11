@@ -1,4 +1,4 @@
-use crate::app::WebserverState;
+use crate::app::WebserverStateData;
 use async_trait::async_trait;
 use chrono::NaiveDateTime;
 use sea_query::{gen_type_def, ColumnDef, Expr, Order, PostgresQueryBuilder, Query, Table};
@@ -50,7 +50,7 @@ impl ColumnsDef<PlayerTypeDef> for PlayerTypeDef {
 
 #[async_trait]
 impl Entity<Player, Uuid> for Player {
-    async fn up(state: &crate::app::WebserverState) -> Result<PgQueryResult, sqlx::Error> {
+    async fn up(state: &crate::app::WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
         let mut sql = Table::create();
         sql.table(PlayerTypeDef::Table).if_not_exists();
         for column in PlayerTypeDef::columns() {
@@ -61,7 +61,7 @@ impl Entity<Player, Uuid> for Player {
             .await
     }
 
-    async fn find(state: &WebserverState, id: Uuid) -> Option<Player> {
+    async fn find(state: &WebserverStateData, id: Uuid) -> Option<Player> {
         let (sql, values) = Query::select()
             .columns(PlayerTypeDef::columns())
             .from(PlayerTypeDef::Table)
@@ -74,7 +74,7 @@ impl Entity<Player, Uuid> for Player {
         player.ok()
     }
 
-    async fn find_all(state: &WebserverState) -> Vec<Player> {
+    async fn find_all(state: &WebserverStateData) -> Vec<Player> {
         let (sql, values) = Query::select()
             .columns(PlayerTypeDef::columns())
             .from(PlayerTypeDef::Table)
