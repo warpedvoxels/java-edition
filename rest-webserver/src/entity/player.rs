@@ -40,8 +40,8 @@ impl ColumnsDef<PlayerTypeDef> for PlayerTypeDef {
             PlayerTypeDef::Hexes => column.integer().not_null().default(0),
             PlayerTypeDef::LastUsername => column.string_len(16),
             PlayerTypeDef::LastSeen => column.date_time(),
-            PlayerTypeDef::CreatedAt => column.date_time(),
-            PlayerTypeDef::UpdatedAt => column.date_time(),
+            PlayerTypeDef::CreatedAt => column.date_time().extra("DEFAULT NOW()".to_string()),
+            PlayerTypeDef::UpdatedAt => column.date_time().extra("DEFAULT NOW()".to_string()),
             PlayerTypeDef::Table => unreachable!(),
         };
         column
