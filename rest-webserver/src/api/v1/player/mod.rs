@@ -30,7 +30,7 @@ pub async fn find_all(pagination: Query<PageInfo>, state: WebserverState) -> imp
     let players: Vec<RestV1Player> = Player::find_all_with_offset(&state, offset, limit)
         .await
         .iter()
-        .map(|player| RestV1Player::from(player))
+        .map(RestV1Player::from)
         .collect();
     
     HttpResponse::Ok().json(players)
@@ -72,8 +72,11 @@ pub async fn delete(id: web::Path<String>, state: WebserverState) -> impl Respon
     match player {
         None => HttpResponse::NotFound().finish(),
         Some(player) => {
-            Player::delete(&state, Either::Left(player.uuid)).await;
-            HttpResponse::NoContent().finish()
+            if Player::delete(&state, Either::Left(player.uuid)).await.is_err() {
+                HttpResponse::InternalServerError().body("Failed to delete a player.")
+            } else {
+                HttpResponse::Ok().finish()
+            }
         }
     }
 }
