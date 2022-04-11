@@ -5,3 +5,4 @@ pub mod app;
 pub mod bootstrap;
 pub mod entity;
 pub mod util;
+pub mod api;

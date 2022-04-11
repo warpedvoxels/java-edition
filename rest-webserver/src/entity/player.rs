@@ -1,4 +1,5 @@
 use crate::app::WebserverStateData;
+use actix_web::Either;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use sea_query::{
@@ -65,7 +66,7 @@ impl ColumnsDef<PlayerTypeDef> for PlayerTypeDef {
 }
 
 #[async_trait]
-impl Entity<Player, Uuid> for Player {
+impl Entity<Player, Either<Uuid, String>> for Player {
     async fn up(state: &crate::app::WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
         let mut sql = Table::create();
         sql.table(PlayerTypeDef::Table).if_not_exists();
@@ -77,12 +78,16 @@ impl Entity<Player, Uuid> for Player {
             .await
     }
 
-    async fn find(state: &WebserverStateData, id: Uuid) -> Option<Player> {
+    async fn find(state: &WebserverStateData, id: Either<Uuid, String>) -> Option<Player> {
+        let expr = match id {
+            Either::Left(uuid) => Expr::col(PlayerTypeDef::Uuid).eq(uuid),
+            Either::Right(username) => Expr::col(PlayerTypeDef::LastUsername).eq(username),
+        };
         let (sql, values) = Query::select()
             .columns(PlayerTypeDef::columns())
             .from(PlayerTypeDef::Table)
             .limit(1)
-            .and_where(Expr::col(PlayerTypeDef::Uuid).eq(id))
+            .and_where(expr)
             .build(PostgresQueryBuilder);
         let player = bind_query_as(sqlx::query_as::<_, Player>(&sql), &values)
             .fetch_one(&state.pool)
