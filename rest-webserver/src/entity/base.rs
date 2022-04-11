@@ -1,15 +1,12 @@
-use uuid::Uuid;
-
+use sqlx::postgres::PgQueryResult;
+use async_trait::async_trait;
 use crate::app::WebserverState;
 
-pub trait Entity<T> where T: Entity<T> {
-    fn up(state: &WebserverState) -> Result<(), &str>;
+#[async_trait]
+pub trait Entity<T, I> where T: Entity<T, I> {
+    async fn up(state: &WebserverState) -> Result<PgQueryResult, sqlx::Error>;
 
-    fn find(state: &WebserverState, id: Uuid) -> Option<T>;
+    async fn find(state: &WebserverState, id: I) -> Option<T>;
 
-    fn find_all(state: &WebserverState) -> Vec<T>;
-
-    fn create(&self, state: &WebserverState) -> T;
-
-    fn update(&self, state: &WebserverState) -> T;
+    async fn find_all(state: &WebserverState) -> Vec<T>;
 }

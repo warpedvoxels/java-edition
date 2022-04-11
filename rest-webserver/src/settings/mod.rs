@@ -66,13 +66,11 @@ impl WebServerDatabaseServiceSettings {
 impl Writer<()> for WebserverSettings {
     fn write(&self, _: &()) -> Result<(), &str> {
         let path = path();
-        if !path.exists() {
-            if let Err(_) = fs::create_dir_all(path.parent().unwrap()) {
-                return Err("Failed to create the settings directories.");
-            }
+        if !path.exists() && fs::create_dir_all(path.parent().unwrap()).is_err() {
+            return Err("Failed to create the settings directories.");
         }
         let toml = toml::to_string_pretty(self).expect("Failed to serialize the settings.");
-        if let Err(_) = fs::write(path, toml) {
+        if fs::write(path, toml).is_err() {
             return Err("Failed to write the settings file.");
         };
         Ok(())

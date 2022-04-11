@@ -4,3 +4,4 @@ pub mod io;
 pub mod app;
 pub mod bootstrap;
 pub mod entity;
+pub mod util;

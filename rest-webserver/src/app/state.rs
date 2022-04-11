@@ -1,10 +1,15 @@
 use std::sync::Arc;
 
-use sqlx::{pool::PoolConnection, Postgres};
 use crate::settings::WebserverSettings;
 
+pub type SqlPool = sqlx::PgPool;
+pub type PoolOptions = sqlx::postgres::PgPoolOptions;
+
+pub type WebserverStateRaw = std::sync::Arc<WebserverStateData>;
+pub type WebserverState = actix_web::web::Data<WebserverStateRaw>;
+
 #[derive(Debug, Clone)]
-pub struct WebserverState {
-    pub database: Arc<PoolConnection<Postgres>>,
+pub struct WebserverStateData {
+    pub pool: SqlPool,
     pub settings: Arc<WebserverSettings>,
 }

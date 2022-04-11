@@ -1,20 +1,22 @@
-use std::sync::Arc;
+use std::{time::Duration};
 
-use crate::settings::WebserverSettings;
-use sqlx::{PgPool, Postgres, pool::PoolConnection};
+use crate::{app::{SqlPool, PoolOptions}, settings::WebserverSettings};
+use sqlx::PgPool;
 
 sea_query::sea_query_driver_postgres!();
 
-pub async fn build(settings: &WebserverSettings) -> Result<Arc<PoolConnection<Postgres>>, String> {
+pub async fn build(settings: &WebserverSettings) -> Result<SqlPool, String> {
     let url = settings.services.database.url();
+
+    let options = PoolOptions::new()
+        .connect_timeout(Duration::from_nanos(30));
+        
+    let _pool = options.connect(&url);
     let connection = PgPool::connect(url.as_str()).await;
+
     if let Err(e) = connection {
         return Err(format!("Could not connect to database: {}", e));
     }
-    let pool = connection.unwrap().try_acquire();
-    if pool.is_none() {
-        return Err("No idle connections available for the database".to_string());
-    }
     log::info!("Connected to the database succesfully!");
-    Ok(Arc::new(pool.unwrap()))
+    Ok(connection.unwrap())
 }

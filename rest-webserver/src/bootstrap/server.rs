@@ -1,16 +1,18 @@
-use std::{io::Error, net::SocketAddr};
+use std::{io::Error, net::SocketAddr, sync::Arc};
 
-use crate::app::WebserverState;
+use crate::app::WebserverStateData;
 use actix_web::{middleware::Logger, web::Data as AppData, App, HttpServer};
 
-pub async fn build(state: WebserverState, ip: SocketAddr) -> Result<(), Error> {
-    HttpServer::new(move || {
+pub async fn build(state: WebserverStateData, ip: SocketAddr) -> Result<(), Error> {
+    let server = HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
-            .app_data(AppData::new(state.to_owned()))
+            .app_data(AppData::new(Arc::new(state.to_owned())))
     })
     .bind(ip)
     .expect("Failed to bind the server.")
     .run()
-    .await
+    .await;
+    log::info!("Successfully started the server on {}!", ip);
+    server
 }
