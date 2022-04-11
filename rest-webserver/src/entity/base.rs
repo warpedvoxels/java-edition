@@ -14,9 +14,13 @@ where
 
     async fn find_all(state: &WebserverStateData) -> Vec<T>;
 
+    async fn find_all_with_offset(state: &WebserverStateData, offset: u64, limit: u64) -> Vec<T>;
+
     async fn create(&self, state: &WebserverStateData) -> Result<PgQueryResult, sqlx::Error>;
 
     async fn update(&self, state: &WebserverStateData) -> Result<PgQueryResult, sqlx::Error>;
+
+    async fn delete(state: &WebserverStateData, id: I) -> Result<PgQueryResult, sqlx::Error>;
 }
 
 pub trait ColumnsDef<T> {

@@ -1,85 +1,79 @@
 use std::str::FromStr;
 
-use actix_web::{get, post, web, Either, HttpResponse, Responder};
-use chrono::{DateTime, Utc};
-use serde::{Deserialize, Serialize};
+use actix_web::{
+    delete, get, post,
+    web::{self, Query},
+    Either, HttpResponse, Responder,
+};
 use uuid::Uuid;
 
 use crate::{
+    api::PageInfo,
     app::WebserverState,
     entity::{Entity, Player},
+    util::try_either,
 };
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
-pub struct RestV1Player {
-    pub uuid: Uuid,
-    pub hexes: u32,
-    pub last_username: String,
-    pub last_seen: DateTime<Utc>,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
-}
+mod dto;
+mod entity;
+pub use dto::*;
+pub use entity::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
-pub struct RestV1PlayerCreationData {
-    pub uuid: Uuid,
-    pub last_username: Option<String>,
-}
-
-impl RestV1Player {
-    fn from(db: &Player) -> RestV1Player {
-        RestV1Player {
-            uuid: db.uuid,
-            hexes: db.hexes,
-            last_username: db.last_username.clone(),
-            last_seen: db.last_seen,
-            created_at: db.created_at,
-            updated_at: db.updated_at,
-        }
+#[get("/")]
+pub async fn find_all(pagination: Query<PageInfo>, state: WebserverState) -> impl Responder {
+    let limit = pagination.limit.unwrap_or(5);
+    if limit > 10 {
+        return HttpResponse::BadRequest().body("Pagination limit must be less than 10.");
     }
+    let offset = (pagination.page.unwrap_or(1) - 1) * limit;
+
+    let players: Vec<RestV1Player> = Player::find_all_with_offset(&state, offset, limit)
+        .await
+        .iter()
+        .map(|player| RestV1Player::from(player))
+        .collect();
+    
+    HttpResponse::Ok().json(players)
 }
 
 #[get("/{id}")]
 pub async fn find(id: web::Path<String>, state: WebserverState) -> impl Responder {
-    match id.as_str() {
-        "all" => {
-            let players: Vec<RestV1Player> = Player::find_all(&state)
-                .await
-                .iter()
-                .map(RestV1Player::from)
-                .collect();
-            HttpResponse::Ok().json(players)
-        }
-        id => {
-            let either = if let Ok(uuid) = Uuid::from_str(id) {
-                Either::Left(uuid)
-            } else {
-                Either::Right(id.to_owned())
-            };
-            let player = Player::find(&state, either).await;
-            match player {
-                Some(p) => HttpResponse::Ok().json(RestV1Player::from(&p)),
-                None => HttpResponse::NotFound().finish(),
-            }
-        }
+    let id = try_either(|| Uuid::from_str(id.trim()), id.to_owned());
+    let player = Player::find(&state, id).await;
+    match player {
+        Some(player) => HttpResponse::Ok().json(RestV1Player::from(&player)),
+        None => HttpResponse::NotFound().finish(),
     }
 }
 
 #[post("/")]
-pub async fn create(
-    player: web::Json<RestV1Player>,
-    state: WebserverState,
-) -> impl Responder {
-    let player = Player {
-        uuid: player.uuid,
-        last_username: player.last_username.clone(),
-        ..Default::default()
-    };
-    let result = player.create(&state).await;
-    if result.is_err() {
-        log::error!("{:?}", result.err().unwrap());
-        HttpResponse::InternalServerError().body("Failed to create a new player.")
-    } else {
-        HttpResponse::Ok().json(RestV1Player::from(&player))
+pub async fn create(data: RestV1PlayerCreation, state: WebserverState) -> impl Responder {
+    let query = Player::find(&state, Either::Left(data.uuid)).await;
+    if query.is_some() {
+        return HttpResponse::Conflict().finish();
+    }
+    let player = Player::from(data);
+    match player.create(&state).await {
+        Err(error) => {
+            log::error!(
+                "An error occurred while processing a player creation request: {:?}",
+                error
+            );
+            HttpResponse::InternalServerError().body("Failed to create a new player.")
+        }
+        Ok(_) => HttpResponse::Ok().json(RestV1Player::from(&player)),
+    }
+}
+
+#[delete("/{id}")]
+pub async fn delete(id: web::Path<String>, state: WebserverState) -> impl Responder {
+    let id = try_either(|| Uuid::from_str(id.trim()), id.to_owned());
+    let player = Player::find(&state, id).await;
+    match player {
+        None => HttpResponse::NotFound().finish(),
+        Some(player) => {
+            Player::delete(&state, Either::Left(player.uuid)).await;
+            HttpResponse::NoContent().finish()
+        }
     }
 }

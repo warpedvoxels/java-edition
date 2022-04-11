@@ -15,7 +15,7 @@ use self::sea_query_driver_postgres::bind_query;
 
 use super::{ColumnsDef, Entity};
 
-#[derive(sqlx::FromRow, Debug)]
+#[derive(sqlx::FromRow, Debug, Clone)]
 #[gen_type_def]
 pub struct Player {
     pub uuid: Uuid,
@@ -128,6 +128,48 @@ impl Entity<Player, Either<Uuid, String>> for Player {
                     .update_columns(PlayerTypeDef::columns())
                     .to_owned(),
             )
+            .build(PostgresQueryBuilder);
+        bind_query(sqlx::query(&sql), &values)
+            .execute(&state.pool)
+            .await
+    }
+
+    async fn find_all_with_offset(
+        state: &WebserverStateData,
+        offset: u64,
+        limit: u64,
+    ) -> Vec<Player> {
+        let (sql, values) = Query::select()
+            .columns(PlayerTypeDef::columns())
+            .from(PlayerTypeDef::Table)
+            .order_by(PlayerTypeDef::Uuid, Order::Asc)
+            .limit(limit)
+            .offset(offset)
+            .build(PostgresQueryBuilder);
+        let players = bind_query_as(sqlx::query_as::<_, Player>(&sql), &values)
+            .fetch_all(&state.pool)
+            .await;
+        if players.is_err() {
+            log::error!(
+                "An error occurred while fetching players: {}",
+                players.err().unwrap()
+            );
+            return vec![];
+        }
+        players.ok().unwrap()
+    }
+
+    async fn delete(
+        state: &WebserverStateData,
+        id: Either<Uuid, String>,
+    ) -> Result<PgQueryResult, sqlx::Error> {
+        let expr = match id {
+            Either::Left(uuid) => Expr::col(PlayerTypeDef::Uuid).eq(uuid),
+            Either::Right(username) => Expr::col(PlayerTypeDef::LastUsername).eq(username),
+        };
+        let (sql, values) = Query::delete()
+            .from_table(PlayerTypeDef::Table)
+            .and_where(expr)
             .build(PostgresQueryBuilder);
         bind_query(sqlx::query(&sql), &values)
             .execute(&state.pool)
