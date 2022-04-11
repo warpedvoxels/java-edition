@@ -1,10 +1,8 @@
-use std::str::FromStr;
-
 use crate::app::WebserverStateData;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use sea_query::{
-    gen_type_def, ColumnDef, Expr, IntoIden, OnConflict, Order, PostgresQueryBuilder, Query, Table,
+    gen_type_def, ColumnDef, Expr, OnConflict, Order, PostgresQueryBuilder, Query, Table,
 };
 use sqlx::postgres::PgQueryResult;
 use uuid::Uuid;
@@ -132,7 +130,7 @@ impl Entity<Player, Uuid> for Player {
     }
 }
 
-fn create_internally(entity: &Player, state: &WebserverStateData) -> sea_query::InsertStatement {
+fn create_internally(entity: &Player, _state: &WebserverStateData) -> sea_query::InsertStatement {
     let mut statement = Query::insert();
     statement
         .into_table(PlayerTypeDef::Table)
