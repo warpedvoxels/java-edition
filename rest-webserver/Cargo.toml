@@ -21,7 +21,7 @@ sea-query = { version = "^0", default-features = false, features = [
     "postgres-json",
     "postgres-chrono",
     "postgres-uuid",
-    "postgres-array"
+    "postgres-array",
 ], git = "https://github.com/eexsty/sea-query", branch = "features/proc-macro/type-definition-generator" }
 sqlx = { version = "^0", default-features = false, features = [
     "runtime-actix-rustls",
@@ -33,8 +33,8 @@ sqlx = { version = "^0", default-features = false, features = [
     "postgres",
     "tls",
 ] }
-uuid = "^0"
-chrono = "^0"
+uuid = { version = "^0", features = ["v4", "serde"] }
+chrono = { version = "^0", features = ["serde"] }
 log = "^0"
 fast_log = "^1"
 serde = { version = "^1", features = ["derive"] }
