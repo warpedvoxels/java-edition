@@ -4,13 +4,11 @@
 
 <sub>⚠️ **The Hexalite project is highly experimental, so bugs and possibly codebase and texture changes are expected. Contributions and bug tracking are welcome and gladly accepted. You can also join our [Discord community][discord] to interact with the art and development teams.**<sub>
 
-<div align="center">
-  <strong>
-    <ins>Summary</ins> 
-  </strong>
-</div>
 
 <div align="center">
+  <h3>
+    <ins>Summary</ins>
+  </h3>
   <strong>
     Hexalite Network is an open-source modular network of Minecraft: Java Edition servers inspired by Mineclub, Wynncraft and Origin Realms.
   </strong>
