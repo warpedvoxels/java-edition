@@ -1,26 +1,37 @@
-# Hexalite Network
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<img src="./branding/logo-with-font.svg">
 
-**Hexalite Network is an open-source modular network of Minecraft: Java Edition servers inspired by Mineclub, Wynncraft and Origin Realms**. This project aims to bring the best
-experience possible to players without the need of mods.
+<sub>⚠️ **The Hexalite project is highly experimental, so bugs and possibly codebase and texture changes are expected. Contributions and bug tracking are welcome and gladly accepted. You can also join our [Discord community][discord] to interact with the art and development teams.**<sub>
 
-## Table of contents
+<div align="center">
+  <strong>
+    <ins>Summary</ins> 
+  </strong>
+</div>
 
-* [Technologies](#technologies)
-* [Contributors](#contributors)
-* [Supporting](#supporting)
-* [Third party](#third-party)
-* [Licensing](#licensing)
+<div align="center">
+  <strong>
+    Hexalite Network is an open-source modular network of Minecraft: Java Edition servers inspired by Mineclub, Wynncraft and Origin Realms.
+  </strong>
+  This project aims to bring the best experience possible to players without the need of mods.
+</div>
 
-## Technologies
+## 📚 Table of contents
+
+* [💻 Technologies](#-technologies)
+* [✨ Contributors](#-contributors)
+* [💸  Supporting](#-supporting)
+* [🎉 Third party](#-third-party)
+* [📜 Licensing](#-licensing)
+
+## 💻 Technologies
 
 All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [Velocity][velocity]. We also use [PostgreSQL][postgresql] as our database, and
 use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of directly accessing the database in multiple servers to avoid
 unsynchronized or/and loss of data, and for communications we use [RabbitMQ][rabbitmq].
 
-## Contributors
+You can view a notice file of shaded libraries [here](shaded).
+
+## ✨ Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -39,7 +50,8 @@ unsynchronized or/and loss of data, and for communications we use [RabbitMQ][rab
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Supporting
+
+## 💸 Supporting
 
 ### Starring the repository
 
@@ -49,20 +61,22 @@ If you do not want to help us with money, you can just star the repository, it s
 
 You can support us by the GitHub sponsors program (**pending**) or on [OpenCollective][opencollective].
 
-## Third party
+
+## 🎉 Third party
 
 We depend on many third party libraries and applications, a complete list can be found [here][third-party].
 
-## Licensing
 
-To know more about the license of this project, you can read the [LICENSE.md][license] file.
+## 📜 Licensing
+
+To know about the license of this project, you can read the [LICENSE.md][license] file.
 
 
 [opencollective]: https://opencollective.com/hexalite
 
-[third-party]: https://github.com/HexaliteNetwork/java-edition-network/blob/main/third-party/NOTICE.md
+[third-party]: https://git.hexalite.org/java-edition-network/blob/main/third-party/NOTICE.md
 
-[license]: https://github.com/HexaliteNetwork/java-edition-network/blob/main/LICENSE.md
+[license]: https://git.hexalite.org/java-edition-network/blob/main/LICENSE.md
 
 [purpur]: https://purpurmc.org
 
@@ -71,3 +85,7 @@ To know more about the license of this project, you can read the [LICENSE.md][li
 [rabbitmq]: https://www.rabbitmq.com
 
 [postgresql]: https://www.postgresql.org
+
+[shaded]: https://git.hexalite.org/java-edition/blob/dev/next/third-party/NOTICE.md
+
+[discord]: https://discord.hexalite.org
