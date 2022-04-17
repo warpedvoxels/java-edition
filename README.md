@@ -1,4 +1,6 @@
-<img src="./branding/logo-with-font.svg">
+<div align="center">
+  <img src="./branding/logo-with-font.svg">
+</div>
 
 <sub>⚠️ **The Hexalite project is highly experimental, so bugs and possibly codebase and texture changes are expected. Contributions and bug tracking are welcome and gladly accepted. You can also join our [Discord community][discord] to interact with the art and development teams.**<sub>
 
