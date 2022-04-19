@@ -22,7 +22,7 @@
 * [💸 Supporting](#-supporting)
 * * [Starring the repository](#starring-the-repository)
 * * [Donations](#donations)
-* [✨ Contributing / Running locally](-running-locally)
+* [✨ Contributing / Running locally](#-running-locally)
 * * [UNIX-based systems](#unix-based-systems)
 * * [Windows](#windows)
 * [🎉 Third party](#-third-party)
