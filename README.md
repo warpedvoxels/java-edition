@@ -95,7 +95,8 @@ and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both t
 5. For preparing the server software and its configuration, you can run `hexalite -p`.
 6. For building everything you'll need, you can simply run `hexalite -b`. For building and symlink the Minecraft plugins to 
 their respective directories, you can run `hexalite -b name`, whereas `name` is one of the modules located at `arcade/`.
-7. For starting the webserver, you can simply run `hexalite -w`.
+7. For starting the webserver, you can simply run `hexalite -w`. But it is worth mentioning that the rest webserver requires the
+complete stack (PostgresQL, Redis, RabbitMQ) to be running though.
 8. For running the Minecraft server, you can simply run `hexalite -m`. But it is worth mentioning that the rest webserver and
 the complete stack (PostgresQL, Redis, RabbitMQ) are required to be running though.
 
