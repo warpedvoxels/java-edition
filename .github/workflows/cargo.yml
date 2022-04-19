@@ -43,4 +43,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: cargo-artifacts
-          path: ./**/target/release/*
+          path: |
+            ./rest-webserver/target/release/rest-webserver 
+            ./cli/target/release/hexalite
