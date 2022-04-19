@@ -1,0 +1,35 @@
+name: Rust CI with Cargo
+
+on:
+  push:
+    branches: [ 'dev/next' ]
+  pull_request:
+    branches: [ 'dev/next' ]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Cache
+        uses: actions/cache@v2
+        with: 
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            rest-webserver/target/
+            cli/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+            toolchain: nightly
+            override: true
+        run: ./gradlew build
+      - name: Upload Cargo artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cargo-artifacts
+          path: ./**/target/release/*
