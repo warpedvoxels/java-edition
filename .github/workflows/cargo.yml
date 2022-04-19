@@ -29,6 +29,16 @@ jobs:
         with:
           toolchain: nightly
           override: true
+      - name: Build the webserver
+        uses: actions-rs/cargo@v1
+        with:
+          command: build 
+          args: --release --manifest-path rest-webserver/Cargo.toml 
+      - name: Build the command-line interface
+        uses: actions-rs/cargo@v1
+        with:
+          command: build 
+          args: --release --manifest-path cli/Cargo.toml
       - name: Upload Cargo artifacts
         uses: actions/upload-artifact@v3
         with:
