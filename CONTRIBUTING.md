@@ -22,6 +22,7 @@ For better management of issues, we separate issues into the following labels:
 * `structuring`: This issue or pull request is related in how we can improve the project structure
 * `rest server`: This issue or pull request is related to our Rest API 
 * `security`: This issue or pull request is related to security
+* `cli`: This issue or pull request is related to our command-line interface
 
 ## Guidelines
 
