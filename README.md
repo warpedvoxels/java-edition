@@ -17,9 +17,14 @@
 
 ## 📚 Table of contents
 
-* [💻 Technologies](#-technologies)
+* [💻 Technologies / Project stack](#-technologies)
 * [✨ Contributors](#-contributors)
-* [💸  Supporting](#-supporting)
+* [💸 Supporting](#-supporting)
+* * [> Starring the repository](#starring-the-repository)
+* * [> Donations](#donations)
+* [✨ Contributing / Running locally](-running-locally)
+* * [> UNIX-based systems](#unix-based-systems)
+* * [> Windows](#windows)
 * [🎉 Third party](#-third-party)
 * [📜 Licensing](#-licensing)
 
@@ -71,6 +76,45 @@ We depend on many third party libraries and applications, a complete list can be
 
 To know about the license of this project, you can read the [LICENSE.md][license] file.
 
+
+## ✨ Running running 
+
+If you are interesting in contributing, please make sure to read our [contribution guide][contribution-guide] and join
+our Discord community for further information and interaction with the developers and artists, and whoever knows what 
+they are doing.
+
+## UNIX-based systems
+
+On UNIX-based systems the installation process is as follows:
+1. Install the [Java Development Kit][jdk]. We recommend using the [IBM's Semeru][jdk-semeru] for the OpenJ9 virtual machine
+and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both though.
+2. Install the latest nightly build of [Rust][rust].
+2. Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
+3. Install our command-line interface by running `./hexalite_cli.sh -s`, simple as that and it will be added to the PATH.
+4. For composing the docker containers, you can simply run `hexalite -d`.
+5. For preparing the server software and its configuration, you can run `hexalite -p`.
+6. For building everything you'll need, you can simply run `hexalite -b`. For building and symlink the Minecraft plugins to 
+their respective directories, you can run `hexalite -b name`, whereas `name` is one of the modules located at `arcade/`.
+7. For starting the webserver, you can simply run `hexalite -w`.
+8. For running the Minecraft server, you can simply run `hexalite -m`. But it is worth mentioning that the rest webserver and
+the complete stack (PostgresQL, Redis, RabbitMQ) are required to be running though.
+
+## Windows 
+
+The way this project is structured is by using mainly the symlinking technique, on Linux or any other UNIX-based system,
+you can just use a bunch of scripts for the installation, but on Windows those are not available yet, so you may need to 
+symlink manually or just move/copy the files.
+
+
+[rust]: https://www.rust-lang.org/
+
+[docker]: https://www.docker.com/
+
+[docker-compose]: https://docs.docker.com/compose/
+
+[jdk]: https://projects.eclipse.org/projects/adoptium.temurin
+
+[jdk-semeru]: https://developer.ibm.com/languages/java/semeru-runtimes/downloads
 
 [opencollective]: https://opencollective.com/hexalite
 
