@@ -49,7 +49,7 @@ cli_build() {
   else 
       run_script "link_plugins" "$1" && ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar"
   fi
-  (cd "$DIRNAME/rest-webserver" && cargo build --release && ln -sf "./target/release/hexalite" "$HOME/.hexalite/compiled/webserver")
+  (cd "$DIRNAME/rest-webserver" && cargo build --release && ln -sf "./target/release/webserver" "$HOME/.hexalite/compiled/webserver")
 }
 
 cli_purpur() {

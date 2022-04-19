@@ -1,8 +1,8 @@
 extern crate lazy_static;
 
-use hexalite::app::WebserverStateData;
-use hexalite::bootstrap::*;
-use hexalite::entity::{Player, Entity};
+use webserver::app::WebserverStateData;
+use webserver::bootstrap::*;
+use webserver::entity::{Player, Entity};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

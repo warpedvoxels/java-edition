@@ -1076,31 +1076,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
-name = "hexalite"
-version = "0.1.0"
-dependencies = [
- "actix-cors",
- "actix-web",
- "async-trait",
- "chrono",
- "fast_log",
- "futures-util",
- "home",
- "jsonwebtoken",
- "lapin",
- "lazy_static",
- "log",
- "redis",
- "sea-query",
- "serde",
- "serde_json",
- "sqlx",
- "tokio",
- "toml",
- "uuid",
-]
-
-[[package]]
 name = "hkdf"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2661,6 +2636,31 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aabe153544e473b775453675851ecc86863d2a81d786d741f6b76778f2a48940"
 dependencies = [
  "webpki 0.21.4",
+]
+
+[[package]]
+name = "webserver"
+version = "0.1.0"
+dependencies = [
+ "actix-cors",
+ "actix-web",
+ "async-trait",
+ "chrono",
+ "fast_log",
+ "futures-util",
+ "home",
+ "jsonwebtoken",
+ "lapin",
+ "lazy_static",
+ "log",
+ "redis",
+ "sea-query",
+ "serde",
+ "serde_json",
+ "sqlx",
+ "tokio",
+ "toml",
+ "uuid",
 ]
 
 [[package]]
