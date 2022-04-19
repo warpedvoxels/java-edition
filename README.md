@@ -91,13 +91,13 @@ and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both t
 2. Install the latest nightly build of [Rust][rust].
 2. Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
 3. Install our command-line interface by running `./hexalite_cli.sh -s`, simple as that and it will be added to the PATH.
-4. For composing the docker containers, you can simply run `hexalite -d`.
+4. For composing the docker containers, you can run `hexalite -d`.
 5. For preparing the server software and its configuration, you can run `hexalite -p`.
-6. For building everything you'll need, you can simply run `hexalite -b`. For building and symlink the Minecraft plugins to 
+6. For building everything you'll need, you can run `hexalite -b`. For building and symlink the Minecraft plugins to 
 their respective directories, you can run `hexalite -b name`, whereas `name` is one of the modules located at `arcade/`.
-7. For starting the webserver, you can simply run `hexalite -w`. But it is worth mentioning that the rest webserver requires the
+7. For starting the webserver, you can run `hexalite -w`. But it is worth mentioning that the rest webserver requires the
 complete stack (PostgresQL, Redis, RabbitMQ) to be running though.
-8. For running the Minecraft server, you can simply run `hexalite -m`. But it is worth mentioning that the rest webserver and
+8. For running the Minecraft server, you can run `hexalite -m`. But it is worth mentioning that the rest webserver and
 the complete stack (PostgresQL, Redis, RabbitMQ) are required to be running though.
 
 ## Windows 
