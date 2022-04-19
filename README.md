@@ -77,7 +77,7 @@ We depend on many third party libraries and applications, a complete list can be
 To know about the license of this project, you can read the [LICENSE.md][license] file.
 
 
-## ✨ Running running 
+## ✨ Running locally
 
 If you are interesting in contributing, please make sure to read our [contribution guide][contribution-guide] and join
 our Discord community for further information and interaction with the developers and artists, and whoever knows what 
