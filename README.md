@@ -32,7 +32,7 @@
 
 All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [Velocity][velocity]. We also use [PostgreSQL][postgresql] as our database, and
 use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of directly accessing the database in multiple servers to avoid
-unsynchronized or/and loss of data, and for communications we use [RabbitMQ][rabbitmq].
+unsynchronization or/and loss of data, and for communications we use [RabbitMQ][rabbitmq].
 
 You can view a notice file of shaded libraries [here](shaded).
 
