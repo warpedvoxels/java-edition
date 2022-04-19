@@ -43,11 +43,13 @@ cli_build() {
 
   # Build everything then symlink everything
   mkdir -p "$HOME/.hexalite/compiled"
+  (cd "$DIRNAME" && ./gradlew build)
   if [ -z "$1" ]; then
-    (cd "$DIRNAME" && gradle build && ln -sf "$DIRNAME/rest-webserver/build/libs/rest-webserver-shaded.jar" "$HOME/.hexalite/compiled/webserver.jar" && ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar")
-  else
-    (cd "$DIRNAME" && gradle build && run_script "link_plugins" "$1" && ln -sf "$DIRNAME/rest-webserver/build/libs/*-all.jar" "$HOME/.hexalite/compiled/webserver.jar"  && ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar")
+      ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar"
+  else 
+      run_script "link_plugins" "$1" && ln -sf "$DIRNAME/resource-pack-generator/build/libs/rp-shaded.jar" "$HOME/.hexalite/compiled/resource-pack-generator.jar"
   fi
+  (cd "$DIRNAME/rest-webserver" && cargo build --release && ln -sf "./target/release/hexalite" "$HOME/.hexalite/compiled/webserver")
 }
 
 cli_purpur() {
@@ -82,7 +84,7 @@ cli_minecraft() {
 }
 
 cli_webserver() {
-  (cd "$HOME/.hexalite/compiled" && java -jar ./webserver.jar)
+  (cd "$HOME/.hexalite/compiled" && ./webserver)
 }
 
 cli_resource_pack() {
