@@ -18,8 +18,8 @@ jobs:
           distribution: 'temurin'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - uses: actions/cache@v2
-        name: Use Cache
+      - name: Use Cache
+        uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
@@ -29,3 +29,9 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Upload Gradle artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: gradle-artifacts
+          path: ./**/build/libs/*.jar
+
