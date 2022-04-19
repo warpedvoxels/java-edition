@@ -22,12 +22,13 @@ jobs:
             rest-webserver/target/
             cli/target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
       - name: Install latest nightly
         uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
           override: true
-        run: ./gradlew build
       - name: Upload Cargo artifacts
         uses: actions/upload-artifact@v3
         with:
