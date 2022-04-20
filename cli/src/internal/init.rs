@@ -1,6 +1,7 @@
 use std::fs;
 use std::io::Error;
 use std::io::ErrorKind;
+use std::path::Path;
 use std::path::PathBuf;
 
 lazy_static::lazy_static! {
@@ -24,33 +25,38 @@ fn handle_error(err: Error) {
     }
 }
 
+fn use_handling<F>(src_path: &PathBuf, path: &str, func: F)
+where
+    F: FnOnce(PathBuf, &Path) -> Result<(), Error>,
+{
+    let src = src_path.join(path);
+    let dest = &*PATH.join(path);
+    func(src, dest).unwrap_or_else(handle_error);
+}
+
 pub fn init(src_path: PathBuf) {
     if let Err(err) = fs::create_dir_all(&*PATH) {
         handle_error(err);
     }
     let src_path = fs::canonicalize(src_path).expect("Failed to get the canonical source path.");
     for file in &*FILES {
-        let src = src_path.join(file);
-        let dest = &*PATH.join(file);
-        if let Err(err) = symlink::symlink_file(&src, &dest) {
-            handle_error(err);
-        }
-        println!(
-            "Created symbolic link {} to {}",
-            src.to_str().unwrap(),
-            dest.to_str().unwrap()
-        );
+        use_handling(&src_path, file, |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_file(src, dest)
+        });
     }
     for dir in &*DIRS {
-        let src = src_path.join(dir);
-        let dest = &*PATH.join(dir);
-        if let Err(err) = symlink::symlink_dir(&src, &dest) {
-            handle_error(err);
-        }
-        println!(
-            "Created symbolic link {} to {}",
-            src.to_str().unwrap(),
-            dest.to_str().unwrap()
-        );
+        use_handling(&src_path, dir, |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_dir(src, dest)
+        });
     }
 }
