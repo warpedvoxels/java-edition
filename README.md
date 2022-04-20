@@ -4,7 +4,6 @@
 
 <sub>⚠️ **The Hexalite project is highly experimental, so bugs and possibly codebase and texture changes are expected. Contributions and bug tracking are welcome and gladly accepted. You can also join our [Discord community][discord] to interact with the art and development teams.**<sub>
 
-
 <div align="center">
   <h3>
     <ins>Summary</ins>
@@ -97,8 +96,8 @@ and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both t
 their respective directories, you can run `hexalite -b name`, whereas `name` is one of the modules located at `arcade/`.
 7. For starting the webserver, you can run `hexalite -w`. But it is worth mentioning that the rest webserver requires the
 complete stack (PostgresQL, Redis, RabbitMQ) to be running though.
-8. For running the Minecraft server, you can run `hexalite -m`. But it is worth mentioning that the rest webserver and
-the complete stack (PostgresQL, Redis, RabbitMQ) are required to be running though.
+8. For running the Minecraft server, you can run `hexalite -m`. But it is worth mentioning that the rest webserver is 
+required to be running though.
 
 ## Windows 
 

@@ -1,3 +1,6 @@
+use clap::StructOpt;
+use hexalite::CommandLineOptions;
+
 fn main() {
-    println!("Hello, world!");
+    let options = CommandLineOptions::parse();
 }
