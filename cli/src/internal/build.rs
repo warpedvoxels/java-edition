@@ -66,6 +66,24 @@ pub fn build(module: Option<String>) {
             .expect("Could not get the gradle path as string."),
         &["build", "--project-dir", src_path.to_str().unwrap()],
     );
+    use_handling(
+        &src_path
+            .join("rest-webserver/target/release")
+            .join(if cfg!(target_os = "windows") {
+                "webserver.exe"
+            } else {
+                "webserver"
+            }),
+        &compiled_path.join("webserver.jar"),
+        |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_file(src, dest)
+        },
+    );
 
     if let Some(module) = module {
         let module = module.trim().to_lowercase();
