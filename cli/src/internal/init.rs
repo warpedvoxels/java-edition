@@ -11,8 +11,7 @@ lazy_static::lazy_static! {
             .to_owned()
             .join(".hexalite")
     };
-    static ref DIRS: Vec<&'static str> = vec!["resource-pack",  "run"];
-    static ref FILES: Vec<&'static str> = vec![".env"];
+    static ref FILES: Vec<&'static str> = vec![".env", "resource-pack", "run"];
 }
 
 fn handle_error(err: Error) {
@@ -46,17 +45,7 @@ pub fn init(src_path: PathBuf) {
                 src.to_str().unwrap(),
                 dest.to_str().unwrap()
             );
-            symlink::symlink_file(src, dest)
-        });
-    }
-    for dir in &*DIRS {
-        use_handling(&src_path, dir, |src, dest| {
-            println!(
-                "Creating symbolic link {} to {}",
-                src.to_str().unwrap(),
-                dest.to_str().unwrap()
-            );
-            symlink::symlink_dir(src, dest)
+            symlink::symlink_auto(src, dest)
         });
     }
 }
