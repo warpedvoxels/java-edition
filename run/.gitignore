@@ -8,3 +8,6 @@
 !/eula.txt
 !/server.properties
 !/logo.txt
+!/plugins
+/plugins/*
+!/plugins/.gitkeep

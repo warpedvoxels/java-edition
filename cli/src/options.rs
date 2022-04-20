@@ -7,11 +7,11 @@ use clap::{Parser, Subcommand};
 #[clap(propagate_version = true)]
 pub struct CommandLineOptions {
     #[clap(subcommand)]
-    pub command: HexaliteCommands,
+    pub command: HexaliteCommand,
 }
 
 #[derive(Subcommand, Debug)]
-pub enum HexaliteCommands {
+pub enum HexaliteCommand {
     /// Create all necessary symbolic links for development and production environments
     Init {
         // The path to the Hexalite Network source code.
