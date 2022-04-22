@@ -1,0 +1,6 @@
+---
+font:
+  - char: "\uE000"
+    ascent: 7
+    height: 7
+    file: minecraft:custom/ui/chat/elite.png

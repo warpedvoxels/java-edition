@@ -1,14 +1,13 @@
 [package]
-name = "hexalite"
+name = "resource-pack"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
 publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-symlink = { git = "https://gitlab.com/chris-morgan/symlink" }
-clap = { version = "^3.1", features = ["derive"] }
-lazy_static = "^1"
+serde = { version = "^1", features = ["derive"] }
+serde_json = "^1"
+serde_yaml = "^0.8"
 home = "^0"

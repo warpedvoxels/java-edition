@@ -1,8 +1,9 @@
-use crate::internal::*;
 use std::{fs, path::Path};
 
+use crate::internal::*;
+
 lazy_static::lazy_static! {
-    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml"]; //, "rest-webserver/Cargo.toml"];
+    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml", "resource-pack/Cargo.toml"]; //, "rest-webserver/Cargo.toml"];
     static ref WATERFALL_MODULES: Vec<&'static str> = vec![];
 }
 

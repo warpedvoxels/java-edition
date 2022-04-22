@@ -19,6 +19,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
+            resource-pack/target/
             rest-webserver/target/
             cli/target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
@@ -39,6 +40,11 @@ jobs:
         with:
           command: build 
           args: --release --manifest-path cli/Cargo.toml
+      - name: Build the resource pack generator
+        uses: actions-rs/cargo@v1
+        with:
+          command: build 
+          args: --release --manifest-path resource-pack/Cargo.toml
       - name: Upload Cargo artifacts
         uses: actions/upload-artifact@v3
         with:

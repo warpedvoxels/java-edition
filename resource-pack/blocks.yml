@@ -1,0 +1,7 @@
+---
+blocks:
+  - parent: block/cube_all
+    texture:
+      name: custom/blocks/placeholder
+      index: 1
+  

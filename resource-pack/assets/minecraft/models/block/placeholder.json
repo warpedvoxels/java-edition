@@ -1,6 +1,0 @@
-{
-    "textures": {
-        "all": "custom/blocks/placeholder"
-    },
-    "parent": "block/cube_all"
-}
