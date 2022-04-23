@@ -1681,7 +1681,7 @@ dependencies = [
  "postgres-protocol",
  "serde",
  "serde_json",
- "uuid 0.8.2",
+ "uuid",
 ]
 
 [[package]]
@@ -1965,8 +1965,8 @@ dependencies = [
 
 [[package]]
 name = "sea-query"
-version = "0.24.0"
-source = "git+https://github.com/eexsty/sea-query?branch=features/proc-macro/type-definition-generator#cef8ce080aceb3f62f078fa95821d513869bb9c7"
+version = "0.24.2"
+source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
 dependencies = [
  "bytes",
  "chrono",
@@ -1975,13 +1975,13 @@ dependencies = [
  "sea-query-derive",
  "sea-query-driver",
  "serde_json",
- "uuid 0.8.2",
+ "uuid",
 ]
 
 [[package]]
 name = "sea-query-attr"
 version = "0.1.0"
-source = "git+https://github.com/eexsty/sea-query?branch=features/proc-macro/type-definition-generator#cef8ce080aceb3f62f078fa95821d513869bb9c7"
+source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
 dependencies = [
  "darling",
  "heck",
@@ -1992,7 +1992,7 @@ dependencies = [
 [[package]]
 name = "sea-query-derive"
 version = "0.2.0"
-source = "git+https://github.com/eexsty/sea-query?branch=features/proc-macro/type-definition-generator#cef8ce080aceb3f62f078fa95821d513869bb9c7"
+source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2004,7 +2004,7 @@ dependencies = [
 [[package]]
 name = "sea-query-driver"
 version = "0.1.0"
-source = "git+https://github.com/eexsty/sea-query?branch=features/proc-macro/type-definition-generator#cef8ce080aceb3f62f078fa95821d513869bb9c7"
+source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2259,7 +2259,7 @@ dependencies = [
  "thiserror",
  "tokio-stream",
  "url",
- "uuid 0.8.2",
+ "uuid",
  "webpki 0.21.4",
  "webpki-roots",
  "whoami",
@@ -2564,12 +2564,6 @@ name = "uuid"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc5cf98d8186244414c848017f0e2676b3fcb46807f6668a97dfe67359a3c4b7"
-
-[[package]]
-name = "uuid"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8cfcd319456c4d6ea10087ed423473267e1a071f3bc0aa89f80d60997843c6f0"
 dependencies = [
  "getrandom",
  "serde",
@@ -2698,7 +2692,6 @@ version = "0.1.0"
 dependencies = [
  "actix-cors",
  "actix-web",
- "async-trait",
  "chrono",
  "fast_log",
  "futures-util",
@@ -2714,7 +2707,26 @@ dependencies = [
  "sqlx",
  "tokio",
  "toml",
- "uuid 1.0.0",
+ "uuid",
+ "webserver-common",
+ "webserver-proc-macros",
+]
+
+[[package]]
+name = "webserver-common"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "sqlx",
+]
+
+[[package]]
+name = "webserver-proc-macros"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+ "webserver-common",
 ]
 
 [[package]]
