@@ -1,0 +1,30 @@
+# Third Party
+
+This project wouldn't be possible without the open source software and community. We want to really 
+thank them for their work and support.
+
+* [Kotlin](https://kotlinlang.org/)
+* * [Valiktor](https://github.com/valiktor/valiktor)
+* * [Ktor](https://ktor.io/)
+* * [Caffeine](https://github.com/ben-manes/caffeine)
+* [Rust](https://www.rust-lang.org/)
+* * [Serde](https://serde.rs/)
+* * [symlink](https://gitlab.com/chris-morgan/symlink)
+* * [rust-analyzer](https://rust-analyzer.github.io/)
+* * [SeaQL Software](https://sea-ql.org)
+* * [clap](https://crates.io/crates/clap)
+* * [home](https://crates.io/crates/home)
+* * [Actix Web](https://actix.rs)
+* * [tokio](https://tokio.rs)
+* * [sqlx](https://github.com/launchbadge/sqlx)
+* * [jsonwebtoken](https://crates.io/crates/jsonwebtoken)
+* * [lapin](https://crates.io/crates/lapin)
+* * [redis](https://crates.io/crates/redis)
+* * [lazy_static](https://crates.io/crates/lazy_static)
+* [Redis](https://redis.io/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [RabbitMQ](https://www.rabbitmq.com/)
+* [Docker](https://www.docker.com/)
+* [SvelteKit](https://kit.svelte.dev/)
+* [Purpur](https://github.com/PurpurMC/Purpur)
+* [Velocity](https://github.com/PaperMC/Velocity)

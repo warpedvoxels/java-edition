@@ -31,9 +31,7 @@
 
 All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [Velocity][velocity]. We also use [PostgreSQL][postgresql] as our database, and
 use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of directly accessing the database in multiple servers to avoid
-unsynchronization or/and loss of data, and for communications we use [RabbitMQ][rabbitmq].
-
-You can view a notice file of shaded libraries [here](shaded).
+unsynchronization or/and loss of data, and for communications we use [RabbitMQ][rabbitmq]. We also appreciate the work and we are very grateful to the various open source libraries used in the project which you can find [here][third-party].
 
 ## ✨ Contributors
 
@@ -118,9 +116,9 @@ symlink manually or just move/copy the files.
 
 [opencollective]: https://opencollective.com/hexalite
 
-[third-party]: https://git.hexalite.org/java-edition-network/blob/main/third-party/NOTICE.md
+[third-party]: https://git.hexalite.org/java-edition-network/blob/dev/next/THIRD_PARTY.md
 
-[license]: https://git.hexalite.org/java-edition-network/blob/main/LICENSE.md
+[license]: https://git.hexalite.org/java-edition-network/blob/dev/next/LICENSE.md
 
 [purpur]: https://purpurmc.org
 
@@ -129,7 +127,5 @@ symlink manually or just move/copy the files.
 [rabbitmq]: https://www.rabbitmq.com
 
 [postgresql]: https://www.postgresql.org
-
-[shaded]: https://git.hexalite.org/java-edition/blob/dev/next/third-party/NOTICE.md
 
 [discord]: https://discord.hexalite.org
