@@ -20,12 +20,10 @@ include(
     ":kraken:purpur",
     ":kraken:velocity",
     ":arcade:origins",
-    ":arcade:origins:rest-module",
     ":arcade:origins:skills",
     ":arcade:duels",
-    ":arcade:duels:rest-module",
-    ":recyclable:chat",
-    ":recyclable:combat",
+    ":reusable-plugins:chat",
+    ":reusable-plugins:combat",
     ":rest-webclient",
     ":resource-pack-generator"
 )

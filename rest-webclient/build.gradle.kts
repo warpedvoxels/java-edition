@@ -6,7 +6,4 @@ dependencies {
     api(rootProject.hexalite.kotlinx.serialization.json)
     api(rootProject.hexalite.dotenv)
     api(rootProject.hexalite.logback.classic)
-
-    // API modules
-    api(project(":arcade:duels:rest-module"))
 }
