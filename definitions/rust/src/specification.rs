@@ -9,21 +9,27 @@ use serde::Deserialize;
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SpecificationRoot {
+    pub entities: Vec<SpecificationEntity>
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct SpecificationEntity {
     pub name: String,
-    pub location: RustAndKotlinType,
+    #[serde(rename = "package")]
+    pub kotlin_package: String,
     pub feature_flag: String,
     pub fields: HashMap<String, SpecificationField>
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct RustAndKotlinType {
-    pub rust: String,
-    pub kotlin: String
+pub struct SpecificationField {
+    pub kind: SpecificationFieldKind,
+    #[serde(default)]
+    pub sql: Option<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct SpecificationField {
-    pub kind: RustAndKotlinType,
-    #[serde(default)]
-    pub sql: Option<String>,
+pub struct SpecificationFieldKind {
+    pub rust: String,
+    pub kotlin: String
 }

@@ -1,0 +1,21 @@
+---
+entities:
+  - name: Player
+    package: org.hexalite.generation.entity
+    feature_flag: example
+    fields:
+      a:
+        kind:
+          kotlin: java.util.UUID
+          rust: String
+        sql: 'uuid().not_null().primary_key()'
+      test_c:
+        kind:
+          kotlin: Int
+          rust: u32
+        sql: 'integer().not_null().default(0)'
+      hello_d:
+        kind:
+          kotlin: String
+          rust: String
+        sql: 'varchar(255).not_null().default("")'
