@@ -24,8 +24,7 @@ pub fn generate_entity_definitions(item: TokenStream) -> TokenStream {
                 .expect("Could not find ~/.hexalite/dev directory");
 
             let file = root.join(path);
-            let file = fs::read_to_string(&file)
-                .expect(format!("Nao achou em {}", file.display()).as_str());
+            let file = fs::read_to_string(&file).unwrap();
 
             let specification: SpecificationRoot =
                 serde_yaml::from_str(file.as_str()).expect("Could not parse specification");
