@@ -29,9 +29,7 @@ properties:
 ---
 entities:
   - name: Player
-    location:
-      rust: entity
-      kotlin: org.hexalite.generation.entity
+    package: org.hexalite.generation.entity
     fields:
        uuid:
          kotlin: java.util.UUID
