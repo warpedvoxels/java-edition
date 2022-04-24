@@ -17,3 +17,4 @@ sqlx = { version = "^0", default-features = false, features = [
     "postgres",
     "tls",
 ] }
+sea-query = { version = "^0", default-features = false, git = "https://github.com/eexsty/sea-query" }

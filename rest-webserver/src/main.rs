@@ -2,7 +2,8 @@ extern crate lazy_static;
 
 use webserver::app::WebserverStateData;
 use webserver::bootstrap::*;
-use webserver::entity::{Player, Entity};
+use webserver::entity::Player;
+use webserver::Entity;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -19,8 +20,10 @@ async fn main() -> std::io::Result<()> {
         settings,
     };
 
-    Player::up(&state).await.expect("Failed to create the player table.");
-    
+    Player::up(&state)
+        .await
+        .expect("Failed to create the player table.");
+
     let ip = state.settings.ip();
     server::build(state, ip).await
 }

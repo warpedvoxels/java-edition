@@ -3,8 +3,6 @@ use std::{time::Duration};
 use crate::{app::{SqlPool, PoolOptions}, settings::WebserverSettings};
 use sqlx::PgPool;
 
-sea_query::sea_query_driver_postgres!();
-
 pub async fn build(settings: &WebserverSettings) -> Result<SqlPool, String> {
     let url = settings.services.database.url();
 

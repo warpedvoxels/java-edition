@@ -1,4 +1,4 @@
-use crate::app::WebserverStateData;
+use crate::{app::WebserverStateData, ColumnsDef, Entity};
 use actix_web::Either;
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
@@ -9,11 +9,9 @@ use sqlx::postgres::PgQueryResult;
 use uuid::Uuid;
 
 sea_query::sea_query_driver_postgres!();
-use sea_query_driver_postgres::bind_query_as;
 
 use self::sea_query_driver_postgres::bind_query;
-
-use super::{ColumnsDef, Entity};
+use sea_query_driver_postgres::bind_query_as;
 
 #[derive(sqlx::FromRow, Debug, Clone)]
 #[gen_type_def]
@@ -66,8 +64,8 @@ impl ColumnsDef<PlayerTypeDef> for PlayerTypeDef {
 }
 
 #[async_trait]
-impl Entity<Player, Either<Uuid, String>> for Player {
-    async fn up(state: &crate::app::WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
+impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
+    async fn up(state: &WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
         let mut sql = Table::create();
         sql.table(PlayerTypeDef::Table).if_not_exists();
         for column in PlayerTypeDef::columns() {

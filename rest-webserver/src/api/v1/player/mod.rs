@@ -7,12 +7,7 @@ use actix_web::{
 };
 use uuid::Uuid;
 
-use crate::{
-    api::PageInfo,
-    app::WebserverState,
-    entity::{Entity, Player},
-    util::try_either,
-};
+use crate::{api::PageInfo, app::WebserverState, entity::Player, util::try_either, Entity};
 
 mod dto;
 mod entity;
@@ -32,7 +27,7 @@ pub async fn find_all(pagination: Query<PageInfo>, state: WebserverState) -> imp
         .iter()
         .map(RestV1Player::from)
         .collect();
-    
+
     HttpResponse::Ok().json(players)
 }
 
@@ -72,7 +67,10 @@ pub async fn delete(id: web::Path<String>, state: WebserverState) -> impl Respon
     match player {
         None => HttpResponse::NotFound().finish(),
         Some(player) => {
-            if Player::delete(&state, Either::Left(player.uuid)).await.is_err() {
+            if Player::delete(&state, Either::Left(player.uuid))
+                .await
+                .is_err()
+            {
                 HttpResponse::InternalServerError().body("Failed to delete a player.")
             } else {
                 HttpResponse::Ok().finish()
