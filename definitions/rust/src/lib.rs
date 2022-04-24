@@ -41,7 +41,7 @@ pub fn generate_entity_definitions(item: TokenStream) -> TokenStream {
                     let struct_fields_kind = specification
                         .fields
                         .iter()
-                        .map(|(_, field)| format_ident!("{}", field.kind.rust.trim().to_string()))
+                        .map(|(_, field)| format_ident!("{}", field.rust.trim().to_string()))
                         .collect::<Vec<_>>();
                     let name = format_ident!("{}", specification.name.trim());
 

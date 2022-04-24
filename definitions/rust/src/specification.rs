@@ -17,19 +17,11 @@ pub struct SpecificationEntity {
     pub name: String,
     #[serde(rename = "package")]
     pub kotlin_package: String,
-    pub feature_flag: String,
     pub fields: HashMap<String, SpecificationField>
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SpecificationField {
-    pub kind: SpecificationFieldKind,
-    #[serde(default)]
-    pub sql: Option<String>,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-pub struct SpecificationFieldKind {
     pub rust: String,
     pub kotlin: String
 }

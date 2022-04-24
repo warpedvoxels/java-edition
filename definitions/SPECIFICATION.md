@@ -32,21 +32,13 @@ entities:
     location:
       rust: entity
       kotlin: org.hexalite.generation.entity
-    feature_flag: database
     fields:
        uuid:
-         kind:
-           kotlin: java.util.UUID
-           rust: uuid::Uuid
-         sql: 'uuid().not_null().primary_key()'
+         kotlin: java.util.UUID
+         rust: uuid::Uuid
        hexes:
-         kind:
-           kotlin: Int
-           rust: u32
-         sql: 'integer().not_null().default(0)'
+         kotlin: Int
+         rust: u32
        created_at:
-         kind:
-           kotlin: kotlinx.datetime.Instant
-           rust: chrono::DateTime<chrono::Utc>
-         sql: 'date_time().extra("DEFAULT NOW()".to_string())'
-```
+         kotlin: kotlinx.datetime.Instant
+         rust: chrono::DateTime<chrono::Utc>
