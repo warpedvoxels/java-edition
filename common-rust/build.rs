@@ -3,7 +3,11 @@ use std::path::PathBuf;
 use prost_build::Config;
 
 fn main() {
-    let working_directory = std::env::current_dir().unwrap().join("../").canonicalize().unwrap();
+    let working_directory = std::env::current_dir()
+        .unwrap()
+        .join("../")
+        .canonicalize()
+        .unwrap();
 
     let mut files: Vec<PathBuf> = Vec::new();
     for receiver in ["", "entity/", "protocol/", "rest/"] {
@@ -15,11 +19,11 @@ fn main() {
     }
     println!("Files: {}", files.len());
 
-    let mut config = Config::new();
-    config.type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]");
-    config.type_attribute(".", "#[serde(rename_all = \"snake_case\")]");
-    config.out_dir("src/definitions");
-    config
+    Config::new()
+        .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
+        .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")
+        .out_dir("src/definitions")
+
         .compile_protos(&files, &[working_directory])
         .unwrap();
 }

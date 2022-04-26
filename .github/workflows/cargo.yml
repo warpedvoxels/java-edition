@@ -31,6 +31,10 @@ jobs:
         with:
           toolchain: nightly
           override: true
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          version: '3.x'
       - name: Build the webserver
         uses: actions-rs/cargo@v1
         with:
