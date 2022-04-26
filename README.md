@@ -21,9 +21,11 @@
 * [💸 Supporting](#-supporting)
 * * [Starring the repository](#starring-the-repository)
 * * [Donations](#donations)
-* [✨ Contributing / Running locally](#-running-locally)
-* * [UNIX-based systems](#unix-based-systems)
-* * [Windows](#windows)
+* [🏟️ Contributing / Running locally](#-running-locally)
+* * [Prerequisites](#prerequisites)
+* * [Building the applications](#building-the-applications)
+* * [Command-line tool explanation](#command-line-tool-explanation)
+* [🏗️ Project structure](#-project-structure)
 * [🎉 Third party](#-third-party)
 * [📜 Licensing](#-licensing)
 
@@ -53,6 +55,51 @@ unsynchronization or/and loss of data, and for communications we use [RabbitMQ][
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 
+## 🏟️ Running locally
+
+If you are interesting in contributing, please make sure to read our [contribution guide][contribution-guide] and join
+our Discord community for further information and interaction with the developers and artists, and whoever knows what 
+they are doing.
+
+### Prerequisites
+
+* Install the [Java Development Kit][jdk]. We recommend using the [IBM's Semeru][jdk-semeru] for the OpenJ9 virtual machine
+and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both though.
+* Install the latest nightly build of [Rust][rust].
+* Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
+* Install ProtoBuf's `protoc` locally and add it to the $PATH.
+
+### Building the applications
+
+* **Compile the command-line interface first by going to the `cli` directory then running `cargo build --release`.** This will
+generate a binary in `cli/target/release/hexalite` that will be referenced soon as `hexalite` for simplicity. You can add it
+to the $PATH on UNIX-like environments by running the `scripts/apply_cli.sh` script.
+* **Link the required components to the ~/.hexalite folder by running `hexalite init`.** This is required for getting all
+server resources internally without any dumb workarounds.
+
+### Command-line tool explanation
+
+A explanation of every subcommand in the command-line tool can be obtained by running the `hexalite help` command.
+
+
+## 🏗️ Project structure
+
+This section will cover the project structure and the files that are used in the project.
+
+* `arcade/*` - Every single game the Minecraft server has.
+* `cli/*` - The command-line interface.
+* `branding` - Assets related to the Hexalite branding.
+* `common*` - Common files that are used by multiple components.
+* `docker` - Compose files for Docker, for an easier setup of the development environment.
+* `docs` - Documentation for features used in this project.
+* `kraken` - A library for easier Minecraft development.
+* `resource-pack` - The source code for the resource pack generator. Output is located at `resource-pack/out`.
+* `rest-webserver` - The REST webserver for the server.
+* `rest-webclient` - A consumer library for the REST webserver.
+* `reusable-plugins` - A collection of reusable plugins for the server.
+* `web` - The web interface for the server.
+* `run` - A development environment for a Purpur setup.
+
 ## 💸 Supporting
 
 ### Starring the repository
@@ -72,36 +119,6 @@ We depend on many third party libraries and applications, a complete list can be
 ## 📜 Licensing
 
 To know about the license of this project, you can read the [LICENSE.md][license] file.
-
-
-## ✨ Running locally
-
-If you are interesting in contributing, please make sure to read our [contribution guide][contribution-guide] and join
-our Discord community for further information and interaction with the developers and artists, and whoever knows what 
-they are doing.
-
-## UNIX-based systems
-
-On UNIX-based systems the installation process is as follows:
-1. Install the [Java Development Kit][jdk]. We recommend using the [IBM's Semeru][jdk-semeru] for the OpenJ9 virtual machine
-and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both though.
-2. Install the latest nightly build of [Rust][rust].
-2. Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
-3. Install our command-line interface by running `./hexalite_cli.sh -s`, simple as that and it will be added to the PATH.
-4. For composing the docker containers, you can run `hexalite -d`.
-5. For preparing the server software and its configuration, you can run `hexalite -p`.
-6. For building everything you'll need, you can run `hexalite -b`. For building and symlink the Minecraft plugins to 
-their respective directories, you can run `hexalite -b name`, whereas `name` is one of the modules located at `arcade/`.
-7. For starting the webserver, you can run `hexalite -w`. But it is worth mentioning that the rest webserver requires the
-complete stack (PostgresQL, Redis, RabbitMQ) to be running though.
-8. For running the Minecraft server, you can run `hexalite -m`. But it is worth mentioning that the rest webserver is 
-required to be running though.
-
-## Windows 
-
-The way this project is structured is by using mainly the symlinking technique, on Linux or any other UNIX-based system,
-you can just use a bunch of scripts for the installation, but on Windows those are not available yet, so you may need to 
-symlink manually or just move/copy the files.
 
 
 [rust]: https://www.rust-lang.org/
