@@ -1,5 +1,7 @@
 use std::{fs, path::Path};
 
+use hexalite_common::dirs::{get_hexalite_dir_path, get_source_path};
+
 use crate::internal::*;
 
 lazy_static::lazy_static! {
@@ -24,9 +26,10 @@ fn link_plugin(src: &Path, symlinked_plugins_directory: &Path) {
 }
 
 pub fn build(module: Option<String>) {
-    let compiled_path = &*HEXALITE.join("compiled");
+    let hexalite = get_hexalite_dir_path();
+    let compiled_path = hexalite.join("compiled");
     if let Err(err) = fs::create_dir_all(&compiled_path) {
-        handle_dir_error(compiled_path, compiled_path, err);
+        handle_dir_error(&compiled_path, &compiled_path, err);
     }
     let src_path = get_source_path();
     if !src_path.exists() {

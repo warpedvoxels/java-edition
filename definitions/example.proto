@@ -1,0 +1,5 @@
+message Example {
+  required string name = 1;
+  required int32 id = 2;
+  required string email = 3;
+}

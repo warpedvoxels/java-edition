@@ -1,12 +1,10 @@
 use std::{
-    fs,
     io::Error,
     io::{BufRead, BufReader, ErrorKind},
-    path::{Path, PathBuf},
+    path::Path,
     process::Stdio,
 };
-
-use super::HEXALITE;
+use hexalite_common::prelude::get_hexalite_dir_path;
 
 pub fn handle_dir_error(src: &Path, dest: &Path, err: Error) {
     if err.kind() != ErrorKind::AlreadyExists {
@@ -30,13 +28,10 @@ pub fn use_handling_auto<F>(src_path: &Path, path: &str, func: F)
 where
     F: FnOnce(&Path, &Path) -> Result<(), Error>,
 {
+    let hexalite = get_hexalite_dir_path();
     let src = src_path.join(path);
-    let dest = &*crate::internal::HEXALITE.join(path);
-    use_handling(&src, dest, func)
-}
-
-pub fn get_source_path() -> PathBuf {
-    fs::canonicalize(&*HEXALITE.join("dev")).expect("Failed to get the canonical source path.")
+    let dest = hexalite.join(path);
+    use_handling(&src, &dest, func)
 }
 
 pub fn run_command(command: &str, args: &[&str]) {

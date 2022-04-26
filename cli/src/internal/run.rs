@@ -1,7 +1,10 @@
+use hexalite_common::dirs::get_hexalite_dir_path;
+
 use super::*;
 
 pub fn webserver() {
-    let compiled = &*HEXALITE.join("compiled");
+    let hexalite = get_hexalite_dir_path();
+    let compiled = hexalite.join("compiled");
     // webserver on unix-like systems and webserver.exe on windows
     let path = if cfg!(target_os = "windows") {
         compiled.join("webserver.exe")
@@ -16,7 +19,8 @@ pub fn webserver() {
 }
 
 pub fn resource_pack() {
-    let compiled = &*HEXALITE.join("compiled");
+    let hexalite = get_hexalite_dir_path();
+    let compiled = hexalite.join("compiled");
     let path = compiled.join("resource-pack-generator.jar");
     let path = path
         .to_str()
@@ -25,7 +29,8 @@ pub fn resource_pack() {
 }
 
 pub fn minecraft() {
-    let run = &*HEXALITE.join("run");
+    let hexalite = get_hexalite_dir_path();
+    let run = hexalite.join("run");
     let path = run.join("purpur.jar");
     let path = path
         .to_str()

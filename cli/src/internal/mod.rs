@@ -1,12 +1,9 @@
 use crate::HexaliteCommand;
 
 mod build;
-mod constants;
 mod init;
 mod utils;
 mod run;
-
-pub use constants::*;
 pub use utils::*;
 
 pub fn run(command: HexaliteCommand) {

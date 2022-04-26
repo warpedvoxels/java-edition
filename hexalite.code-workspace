@@ -10,7 +10,7 @@
 			"path": "rest-webserver"
 		},
 		{
-			"path": "definitions/rust"
+			"path": "common-rust"
 		}
 	],
 	"settings": {}

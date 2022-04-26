@@ -12,3 +12,4 @@ symlink = { git = "https://gitlab.com/chris-morgan/symlink" }
 clap = { version = "^3.1", features = ["derive"] }
 lazy_static = "^1"
 home = "^0"
+hexalite_common = { path = "../common-rust" }
