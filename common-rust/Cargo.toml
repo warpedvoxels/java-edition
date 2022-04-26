@@ -5,13 +5,20 @@ edition = "2021"
 publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = []
+entity = []
+rest = []
+protocol = []
 
 [dependencies]
 home = "^0"
 lazy_static = "^1"
-protobuf = "^3.0.0-alpha"
+prost = { version = "^0.10", features = ["prost-derive"] }
+prost-types = "0.10"
+bytes = "^1.1"
+serde = { version = "^1", features = ["derive"] }
 
 [build-dependencies]
-protoc-bin-vendored = "^3"
-protoc-rust = "^3.0.0-alpha"
-glob = "^0.3"
+prost-build = "^0.10"
+glob = "^0"

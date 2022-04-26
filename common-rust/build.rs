@@ -1,21 +1,25 @@
-extern crate glob;
-extern crate protoc_bin_vendored;
-extern crate protoc_rust;
+use std::path::PathBuf;
+
+use prost_build::Config;
 
 fn main() {
-    let bin = protoc_bin_vendored::protoc_bin_path().unwrap();
-    let hexalite = std::env::current_dir().unwrap().join("../").canonicalize().unwrap();
+    let working_directory = std::env::current_dir().unwrap().join("../").canonicalize().unwrap();
 
-    let input = glob::glob("../definitions/*.proto").expect("Failed to find definitions.");
-    let input: Vec<_> = input
-        .filter_map(|value| value.unwrap().canonicalize().ok())
-        .collect();
+    let mut files: Vec<PathBuf> = Vec::new();
+    for receiver in ["", "entity/", "protocol/", "rest/"] {
+        let path = format!("../definitions/{}*.proto", receiver);
+        if let Ok(input) = glob::glob(&path) {
+            let input = input.filter_map(|value| value.unwrap().canonicalize().ok());
+            files.extend(input);
+        }
+    }
+    println!("Files: {}", files.len());
 
-    protoc_rust::Codegen::new()
-        .protoc_path(bin)
-        .out_dir("src/definitions")
-        .inputs(input)
-        .include(hexalite.join("definitions"))
-        .run()
-        .expect("Failed to generate protobuf bindings.");
+    let mut config = Config::new();
+    config.type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]");
+    config.type_attribute(".", "#[serde(rename_all = \"snake_case\")]");
+    config.out_dir("src/definitions");
+    config
+        .compile_protos(&files, &[working_directory])
+        .unwrap();
 }
