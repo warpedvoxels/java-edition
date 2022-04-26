@@ -7,7 +7,7 @@ on:
     branches: [ main, 'dev/next' ]
 
 jobs:
-  build:
+  gradle-ubuntu-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
