@@ -14,7 +14,7 @@ dependencies {
     api(rootProject.hexalite.bundles.kotlin.essential)
     api(rootProject.hexalite.bundles.adventure)
     api(rootProject.hexalite.mordant)
-    api(project(":common"))
+    api(project(":common-kotlin"))
     api(rootProject.hexalite.bundles.caffeine)
     compileOnly(rootProject.hexalite.bundles.adventure)
 }

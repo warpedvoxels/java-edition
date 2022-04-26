@@ -16,7 +16,7 @@ pluginManagement {
 }
 
 include(
-    ":common",
+    ":common-kotlin",
     ":kraken:purpur",
     ":kraken:velocity",
     ":arcade:origins",

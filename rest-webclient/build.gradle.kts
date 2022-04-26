@@ -1,5 +1,5 @@
 dependencies {
-    api(project(":common"))
+    api(project(":common-kotlin"))
     api(rootProject.hexalite.bundles.kotlin.essential)
     api(rootProject.hexalite.bundles.ktor.client)
     api(rootProject.hexalite.mordant)

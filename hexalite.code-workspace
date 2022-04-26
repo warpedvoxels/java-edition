@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "cli"
+		},
+		{
+			"path": "rest-webserver"
+		},
+		{
+			"path": "definitions/rust"
+		}
+	],
+	"settings": {}
+}
