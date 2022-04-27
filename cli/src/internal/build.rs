@@ -22,10 +22,15 @@ fn link_plugin(src: &Path, symlinked_plugins_directory: &Path) {
     let file = src.join("build").join("libs").join(reobf_name);
     let file_name = file.file_name().unwrap().to_str().unwrap();
     let dest = symlinked_plugins_directory.join(format!("linked-{}", file_name));
+    println!(
+        "Creating symbolic link {} to {}",
+        src.to_str().unwrap(),
+        dest.to_str().unwrap()
+    );
     use_handling(&file, &dest, |src, dest| symlink::symlink_file(src, dest));
 }
 
-pub fn build(module: Option<String>) {
+pub async fn build(module: Option<String>) {
     let hexalite = get_hexalite_dir_path();
     let compiled_path = hexalite.join("compiled");
     if let Err(err) = fs::create_dir_all(&compiled_path) {
@@ -56,7 +61,8 @@ pub fn build(module: Option<String>) {
         run_command(
             "cargo",
             &["build", "--release", "--manifest-path", manifest_path],
-        );
+        )
+        .await;
     }
     run_command(
         // gradlew if unix or gradlew.bat if windows
@@ -69,7 +75,8 @@ pub fn build(module: Option<String>) {
             .to_str()
             .expect("Could not get the gradle path as string."),
         &["build", "--project-dir", src_path.to_str().unwrap()],
-    );
+    )
+    .await;
     use_handling(
         &src_path
             .join("rest-webserver/target/release")

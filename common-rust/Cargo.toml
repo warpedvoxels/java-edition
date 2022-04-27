@@ -12,6 +12,8 @@ rest = []
 protocol = []
 
 [dependencies]
+tokio = { version = "^1.17", features = ["full"] }
+futures = "^0.3"
 home = "^0"
 lazy_static = "^1"
 prost = { version = "^0.10", features = ["prost-derive"] }

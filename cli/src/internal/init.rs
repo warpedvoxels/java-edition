@@ -1,4 +1,4 @@
-use std::fs;
+use tokio::fs;
 use std::path::PathBuf;
 
 use hexalite_common::dirs::get_hexalite_dir_path;
@@ -11,12 +11,12 @@ lazy_static::lazy_static! {
     static ref FILES: Vec<&'static str> = vec![".env", "resource-pack", "run"];
 }
 
-pub fn init(src_path: PathBuf) {
+pub async fn init(src_path: PathBuf) {
     let hexalite = get_hexalite_dir_path();
-    if let Err(err) = fs::create_dir_all(&hexalite) {
+    if let Err(err) = fs::create_dir(&hexalite).await {
         handle_dir_error(&hexalite, &hexalite, err);
     }
-    let src_path = fs::canonicalize(src_path).expect("Failed to get the canonical source path.");
+    let src_path = fs::canonicalize(src_path).await.expect("Failed to get the canonical source path.");
     use_handling(&src_path, &hexalite.join("dev"), |src, dest| {
         symlink::symlink_dir(src, dest)
     });

@@ -1,10 +1,14 @@
 use std::{
-    io::Error,
-    io::{BufRead, BufReader, ErrorKind},
+    io::{Error, ErrorKind},
     path::Path,
     process::Stdio,
 };
+
 use hexalite_common::prelude::get_hexalite_dir_path;
+use tokio::{
+    io::{AsyncBufReadExt, BufReader},
+    process::Command,
+};
 
 pub fn handle_dir_error(src: &Path, dest: &Path, err: Error) {
     if err.kind() != ErrorKind::AlreadyExists {
@@ -34,26 +38,36 @@ where
     use_handling(&src, &dest, func)
 }
 
-pub fn run_command(command: &str, args: &[&str]) {
-    let output = std::process::Command::new(command)
+#[allow(unused_must_use)]
+pub async fn run_command(command: &str, args: &[&str]) {
+    async fn read_lines<T>(lines: &mut tokio::io::Lines<T>)
+    where
+        T: tokio::io::AsyncBufRead + Unpin,
+    {
+        loop {
+            let line = lines.next_line().await;
+            if line.is_err() {
+                break;
+            }
+            if let Some(line) = line.unwrap() {
+                println!("{}", line);
+            } else {
+                break;
+            };
+        }
+    }
+
+    let mut command = Command::new(command)
         .args(args)
-        .stdout(Stdio::inherit())
-        .stderr(Stdio::inherit())
-        .spawn();
-    if output.is_err() {
-        panic!("Failed to run command: {}", output.unwrap_err());
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .expect("Failed to spawn command.");
+
+    if let Some(stdout) = command.stdout.take() {
+        read_lines(&mut BufReader::new(stdout).lines()).await;
     }
-    let output = output.unwrap();
-    if let Some(stdout) = output.stdout {
-        let reader = BufReader::new(stdout);
-        for line in reader.lines() {
-            println!("{}", line.unwrap());
-        }
-    }
-    if let Some(stderr) = output.stderr {
-        let reader = BufReader::new(stderr);
-        for line in reader.lines() {
-            println!("{}", line.unwrap());
-        }
+    if let Some(stderr) = command.stderr.take() {
+        read_lines(&mut BufReader::new(stderr).lines()).await;
     }
 }

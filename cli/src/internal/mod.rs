@@ -6,12 +6,13 @@ mod utils;
 mod run;
 pub use utils::*;
 
-pub fn run(command: HexaliteCommand) {
+pub async fn run(command: HexaliteCommand) -> Result<(), Box<dyn std::error::Error>> {
     match command {
-        HexaliteCommand::Init { path } => init::init(path),
-        HexaliteCommand::Build { module } => build::build(module),
-        HexaliteCommand::Purpur => run::minecraft(),
-        HexaliteCommand::Webserver => run::webserver(),
-        HexaliteCommand::ResourcePack => run::resource_pack(),
-    }
+        HexaliteCommand::Init { path } => init::init(path).await,
+        HexaliteCommand::Build { module } => build::build(module).await,
+        HexaliteCommand::Purpur => run::minecraft().await,
+        HexaliteCommand::Webserver => run::webserver().await,
+        HexaliteCommand::ResourcePack => run::resource_pack().await,
+    };
+    Ok(())
 }

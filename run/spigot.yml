@@ -12,8 +12,8 @@
 
 settings:
   debug: false
-  bungeecord: false
   sample-count: 12
+  bungeecord: false
   player-shuffle: 0
   user-cache-size: 1000
   save-user-cache-on-stop-only: false
@@ -43,28 +43,27 @@ advancements:
   disable-saving: false
   disabled:
   - minecraft:story/disabled
+players:
+  disable-saving: false
 commands:
+  spam-exclusions:
+  - /skill
+  silent-commandblock-console: false
   replace-commands:
   - setblock
   - summon
   - testforblock
   - tellraw
-  spam-exclusions:
-  - /skill
-  silent-commandblock-console: false
   log: true
   tab-complete: 0
   send-namespaced: true
-players:
-  disable-saving: false
 world-settings:
   default:
-    seed-nether: 30084232
     below-zero-generation-in-existing-chunks: true
     verbose: false
     merge-radius:
-      item: 3.5
-      exp: 4.0
+      exp: 3.0
+      item: 2.5
     growth:
       cactus-modifier: 100
       cane-modifier: 100
@@ -87,13 +86,13 @@ world-settings:
       cavevines-modifier: 100
       glowberry-modifier: 100
     entity-activation-range:
-      animals: 16
-      monsters: 24
+      animals: 32
+      monsters: 32
       raiders: 48
-      misc: 8
-      water: 8
-      villagers: 16
-      flying-monsters: 48
+      misc: 16
+      water: 16
+      villagers: 32
+      flying-monsters: 32
       wake-up-inactive:
         animals-max-per-tick: 4
         animals-every: 1200
@@ -110,7 +109,7 @@ world-settings:
       villagers-work-immunity-after: 100
       villagers-work-immunity-for: 20
       villagers-active-for-panic: true
-      tick-inactive-villagers: false
+      tick-inactive-villagers: true
       ignore-spectators: false
     entity-tracking-range:
       players: 48
@@ -120,8 +119,9 @@ world-settings:
       other: 64
     ticks-per:
       hopper-transfer: 8
-      hopper-check: 8
+      hopper-check: 1
     hopper-amount: 1
+    dragon-death-sound-radius: 0
     seed-village: 10387312
     seed-desert: 14357617
     seed-igloo: 14357618
@@ -133,8 +133,7 @@ world-settings:
     seed-outpost: 165745296
     seed-endcity: 10387313
     seed-slime: 987234911
-    seed-bastion: 30084232
-    seed-fortress: 30084232
+    seed-nether: 30084232
     seed-mansion: 10387319
     seed-fossil: 14357921
     seed-portal: 34222645
@@ -151,20 +150,19 @@ world-settings:
     max-tick-time:
       tile: 50
       entity: 50
-    enable-zombie-pigmen-portal-spawns: true
-    item-despawn-rate: 6000
     view-distance: default
     simulation-distance: default
     thunder-chance: 100000
+    item-despawn-rate: 6000
+    enable-zombie-pigmen-portal-spawns: true
     wither-spawn-sound-radius: 0
     arrow-despawn-rate: 1200
     trident-despawn-rate: 1200
     hanging-tick-frequency: 100
     zombie-aggressive-towards-villager: true
     nerf-spawner-mobs: false
-    mob-spawn-range: 6
+    mob-spawn-range: 8
     end-portal-sound-radius: 0
-    dragon-death-sound-radius: 0
 config-version: 12
 stats:
   disable-saving: false

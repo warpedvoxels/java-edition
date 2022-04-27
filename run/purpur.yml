@@ -10,7 +10,7 @@
 
 verbose: false
 settings:
-  use-alternate-keepalive: true
+  use-alternate-keepalive: false
   messages:
     death-message:
       stonecutter: <player> has sawed themself in half
@@ -64,7 +64,7 @@ settings:
       requires-specific-permission: false
     fill:
       max-area: 32768
-    hide-hidden-players-from-entity-selector: true
+    hide-hidden-players-from-entity-selector: false
     uptime:
       format: <days><hours><minutes><seconds>
       day: '%02d day, '
@@ -82,7 +82,7 @@ settings:
       six-rows: false
       use-permissions-for-rows: false
     crying_obsidian:
-      valid-for-portal-frame: true
+      valid-for-portal-frame: false
     beehive:
       max-bees-inside: 3
     anvil:
@@ -95,7 +95,7 @@ settings:
       - minecraft:vanishing_curse
       remove-attributes: false
       remove-name-and-lore: false
-    disable-mushroom-updates: true
+    disable-mushroom-updates: false
     disable-note-block-updates: false
     disable-chorus-plant-updates: false
   enchantment:
@@ -132,7 +132,7 @@ world-settings:
         attributes:
           max_health: 40.0
         allow-griefing: true
-        can-despawn-with-held-block: true
+        can-despawn-with-held-block: false
         bypass-mob-griefing: false
         takes-damage-from-water: true
         aggressive-towards-endermites: true
@@ -194,7 +194,7 @@ world-settings:
             max: -1
         burn-in-light: 0
         burn-in-daylight: true
-        ignore-players-with-torch: true
+        ignore-players-with-torch: false
         flames-on-swoop: false
         takes-damage-from-water: false
         always-drop-exp: false
@@ -227,10 +227,10 @@ world-settings:
           max_health: 10.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
-        can-work-at-night: true
-        can-work-in-rain: true
+        can-work-at-night: false
+        can-work-in-rain: false
         always-drop-exp: false
-        dies-after-sting: false
+        dies-after-sting: true
       blaze:
         ridable: false
         ridable-in-water: false
@@ -315,7 +315,7 @@ world-settings:
           damage: 2.0
         attributes:
           max_health: 10.0
-        disable-treasure-searching: true
+        disable-treasure-searching: false
         takes-damage-from-water: false
         naturally-aggressive-to-players-chance: 0.0
         always-drop-exp: false
@@ -346,7 +346,7 @@ world-settings:
           chance: 0.05
           try-existing-chickens: true
         takes-damage-from-water: false
-        can-break-doors: true
+        can-break-doors: false
         always-drop-exp: false
       elder_guardian:
         ridable: false
@@ -362,7 +362,7 @@ world-settings:
         ridable-max-y: 320.0
         attributes:
           max_health: 200.0
-        always-drop-full-exp: true
+        always-drop-full-exp: false
         bypass-mob-griefing: false
         takes-damage-from-water: false
         can-ride-vehicles: false
@@ -832,7 +832,7 @@ world-settings:
         controllable: true
         attributes:
           max_health: 20.0
-        brain-ticks: 2
+        brain-ticks: 1
         use-brain-ticks-only-when-lagging: true
         follow-emerald-blocks: false
         can-be-leashed: false
@@ -849,7 +849,7 @@ world-settings:
         always-drop-exp: false
         minimum-demand: 0
         lobotomize:
-          enabled: true
+          enabled: false
           check-interval: 100
         display-trade-item: true
       vindicator:
@@ -924,7 +924,7 @@ world-settings:
           only-babies: true
           chance: 0.05
           try-existing-chickens: true
-        aggressive-towards-villager-when-lagging: false
+        aggressive-towards-villager-when-lagging: true
         bypass-mob-griefing: false
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1085,8 +1085,7 @@ world-settings:
         break-individual-slabs-when-sneaking: false
       spawner:
         deactivate-by-redstone: false
-        fix-mc-50647: true
-        fix-mc-238526: true
+        fix-mc-238526: false
       sponge:
         absorption:
           area: 64
@@ -1119,19 +1118,13 @@ world-settings:
         - minecraft:dark_prismarine
       cauldron:
         fill-chances:
-          dripstone-water: 0.17578125
-          dripstone-lava: 0.05859375
           rain: 0.05000000074505806
           powder-snow: 0.10000000149011612
+          dripstone-water: 0.17578125
+          dripstone-lava: 0.05859375
     tools:
       axe:
         strippables:
-          minecraft:warped_hyphae:
-            into: minecraft:stripped_warped_hyphae
-            drops: {}
-          minecraft:crimson_hyphae:
-            into: minecraft:stripped_crimson_hyphae
-            drops: {}
           minecraft:spruce_wood:
             into: minecraft:stripped_spruce_wood
             drops: {}
@@ -1174,19 +1167,13 @@ world-settings:
           minecraft:crimson_stem:
             into: minecraft:stripped_crimson_stem
             drops: {}
+          minecraft:warped_hyphae:
+            into: minecraft:stripped_warped_hyphae
+            drops: {}
+          minecraft:crimson_hyphae:
+            into: minecraft:stripped_crimson_hyphae
+            drops: {}
         waxables:
-          minecraft:waxed_exposed_copper:
-            into: minecraft:exposed_copper
-            drops: {}
-          minecraft:waxed_weathered_cut_copper_slab:
-            into: minecraft:weathered_cut_copper_slab
-            drops: {}
-          minecraft:waxed_oxidized_cut_copper_slab:
-            into: minecraft:oxidized_cut_copper_slab
-            drops: {}
-          minecraft:waxed_exposed_cut_copper_stairs:
-            into: minecraft:exposed_cut_copper_stairs
-            drops: {}
           minecraft:waxed_weathered_cut_copper:
             into: minecraft:weathered_cut_copper
             drops: {}
@@ -1222,6 +1209,18 @@ world-settings:
             drops: {}
           minecraft:waxed_cut_copper_stairs:
             into: minecraft:cut_copper_stairs
+            drops: {}
+          minecraft:waxed_exposed_copper:
+            into: minecraft:exposed_copper
+            drops: {}
+          minecraft:waxed_weathered_cut_copper_slab:
+            into: minecraft:weathered_cut_copper_slab
+            drops: {}
+          minecraft:waxed_oxidized_cut_copper_slab:
+            into: minecraft:oxidized_cut_copper_slab
+            drops: {}
+          minecraft:waxed_exposed_cut_copper_stairs:
+            into: minecraft:exposed_cut_copper_stairs
             drops: {}
         weatherables:
           minecraft:oxidized_cut_copper_stairs:
@@ -1283,8 +1282,8 @@ world-settings:
               minecraft:hanging_roots: 1.0
             condition: always
             into: minecraft:dirt
-        replant-crops: true
-        replant-nether-warts: true
+        replant-crops: false
+        replant-nether-warts: false
     ridable-settings:
       babies-are-ridable: true
       untamed-tamables-are-ridable: true
@@ -1292,20 +1291,6 @@ world-settings:
     hunger:
       starvation-damage: 1.0
     gameplay-mechanics:
-      projectile-despawn-rates:
-        dragon_fireball: -1
-        egg: -1
-        ender_pearl: -1
-        experience_bottle: -1
-        firework_rocket: -1
-        fishing_bobber: -1
-        fireball: -1
-        llama_spit: -1
-        potion: -1
-        shulker_bullet: -1
-        small_fireball: -1
-        snowball: -1
-        wither_skull: -1
       entity-lifespan: 0
       entity-left-handed-chance: 0.05000000074505806
       armorstand:
@@ -1327,9 +1312,9 @@ world-settings:
       fireballs-bypass-mob-griefing: false
       impose-teleport-restrictions-on-gateways: false
       milk-cures-bad-omen: true
-      note-block-ignore-above: true
-      persistent-tileentity-display-names-and-lore: true
-      persistent-droppable-entity-display-names: true
+      note-block-ignore-above: false
+      persistent-tileentity-display-names-and-lore: false
+      persistent-droppable-entity-display-names: false
       projectiles-bypass-mob-griefing: false
       tick-fluids: true
       entity-blindness-multiplier: 1.0
@@ -1418,9 +1403,9 @@ world-settings:
         exp-dropped-on-death:
           equation: expLevel * 7
           maximum: 100
-        teleport-if-outside-border: true
+        teleport-if-outside-border: false
         totem-of-undying-works-in-inventory: false
-        fix-stuck-in-portal: true
+        fix-stuck-in-portal: false
         one-punch-in-creative: false
         sleep-ignore-nearby-mobs: false
         can-skip-night: true
@@ -1437,6 +1422,20 @@ world-settings:
         allow-void-trading: false
       projectile-damage:
         snowball: -1
+      projectile-despawn-rates:
+        dragon_fireball: -1
+        egg: -1
+        ender_pearl: -1
+        experience_bottle: -1
+        firework_rocket: -1
+        fishing_bobber: -1
+        fireball: -1
+        llama_spit: -1
+        potion: -1
+        shulker_bullet: -1
+        small_fireball: -1
+        snowball: -1
+        wither_skull: -1
       projectile-offset:
         bow: 1.0
         crossbow: 1.0
