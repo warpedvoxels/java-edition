@@ -10,7 +10,7 @@
 
 verbose: false
 settings:
-  use-alternate-keepalive: false
+  use-alternate-keepalive: true
   messages:
     death-message:
       stonecutter: <player> has sawed themself in half
@@ -64,7 +64,7 @@ settings:
       requires-specific-permission: false
     fill:
       max-area: 32768
-    hide-hidden-players-from-entity-selector: false
+    hide-hidden-players-from-entity-selector: true
     uptime:
       format: <days><hours><minutes><seconds>
       day: '%02d day, '
@@ -95,15 +95,15 @@ settings:
       - minecraft:vanishing_curse
       remove-attributes: false
       remove-name-and-lore: false
-    disable-mushroom-updates: false
-    disable-note-block-updates: false
+    disable-mushroom-updates: true
+    disable-note-block-updates: true
     disable-chorus-plant-updates: false
   enchantment:
     allow-infinity-and-mending-together: false
     allow-infinity-on-crossbow: false
     allow-looting-on-shears: false
     allow-unsafe-enchants: false
-    allow-unsafe-enchant-command: false
+    allow-unsafe-enchant-command: true
   entity:
     enderman:
       short-height: false
@@ -217,7 +217,7 @@ world-settings:
         attributes:
           max_health: 6.0
         takes-damage-from-water: false
-        always-drop-exp: false
+        always-drop-exp: true
       bee:
         ridable: false
         ridable-in-water: false
@@ -291,7 +291,7 @@ world-settings:
         naturally-aggressive-to-players:
           chance: 0.0
           damage: 2.0
-        always-drop-exp: false
+        always-drop-exp: true
       creeper:
         ridable: false
         ridable-in-water: false
@@ -304,7 +304,7 @@ world-settings:
         takes-damage-from-water: false
         explode-when-killed: false
         health-impacts-explosion: false
-        always-drop-exp: false
+        always-drop-exp: true
         head-visibility-percent: 0.5
       dolphin:
         ridable: false
@@ -832,9 +832,9 @@ world-settings:
         controllable: true
         attributes:
           max_health: 20.0
-        brain-ticks: 1
+        brain-ticks: 2
         use-brain-ticks-only-when-lagging: true
-        follow-emerald-blocks: false
+        follow-emerald-blocks: true
         can-be-leashed: false
         spawn-iron-golem:
           radius: 0
@@ -924,10 +924,10 @@ world-settings:
           only-babies: true
           chance: 0.05
           try-existing-chickens: true
-        aggressive-towards-villager-when-lagging: true
+        aggressive-towards-villager-when-lagging: false
         bypass-mob-griefing: false
         takes-damage-from-water: false
-        always-drop-exp: false
+        always-drop-exp: true
         head-visibility-percent: 0.5
       zombie_horse:
         ridable-in-water: false
@@ -1302,7 +1302,7 @@ world-settings:
         can-move-in-water-over-fence: true
         place-with-arms-visible: false
       use-better-mending: false
-      always-tame-in-creative: false
+      always-tame-in-creative: true
       boat:
         eject-players-on-land: false
         do-fall-damage: true
@@ -1312,7 +1312,7 @@ world-settings:
       fireballs-bypass-mob-griefing: false
       impose-teleport-restrictions-on-gateways: false
       milk-cures-bad-omen: true
-      note-block-ignore-above: false
+      note-block-ignore-above: true
       persistent-tileentity-display-names-and-lore: false
       persistent-droppable-entity-display-names: false
       projectiles-bypass-mob-griefing: false
@@ -1403,7 +1403,7 @@ world-settings:
         exp-dropped-on-death:
           equation: expLevel * 7
           maximum: 100
-        teleport-if-outside-border: false
+        teleport-if-outside-border: true
         totem-of-undying-works-in-inventory: false
         fix-stuck-in-portal: false
         one-punch-in-creative: false

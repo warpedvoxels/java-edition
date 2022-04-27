@@ -48,7 +48,7 @@ dab:
   # tick frequency. freq = (distanceToPlayer^2) / (2^value)
   # If you want further away entities to tick less often, use 7.
   # If you want further away entities to tick more often, try 9.
-  activation-dist-mod: 8
+  activation-dist-mod: 7
   # A list of entities to ignore for activation
   blacklisted-entities: []
 # Throttles the AI goal selector in entity inactive ticks.

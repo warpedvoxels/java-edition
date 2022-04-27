@@ -126,9 +126,9 @@ world-settings:
     delay-chunk-unloads-by: 10s
     piglins-guard-chests: true
     should-remove-dragon: false
-    max-auto-save-chunks-per-tick: 24
+    max-auto-save-chunks-per-tick: 8
     baby-zombie-movement-modifier: 0.5
-    optimize-explosions: false
+    optimize-explosions: true
     use-vanilla-world-scoreboard-name-coloring: false
     game-mechanics:
       scan-for-legacy-ender-dragon: true
@@ -151,7 +151,7 @@ world-settings:
       disable-unloaded-chunk-enderpearl-exploit: true
       disable-relative-projectile-velocity: false
       disable-mob-spawner-spawn-egg-transformation: false
-    prevent-moving-into-unloaded-chunks: false
+    prevent-moving-into-unloaded-chunks: true
     count-all-mobs-for-spawning: false
     spawn-limits:
       monster: -1
@@ -187,28 +187,28 @@ world-settings:
       MaximumTicks: 600
     despawn-ranges:
       monster:
-        soft: 32
+        soft: 30
         hard: 128
       creature:
-        soft: 32
+        soft: 30
         hard: 128
       ambient:
-        soft: 32
+        soft: 30
         hard: 128
       axolotls:
-        soft: 32
+        soft: 30
         hard: 128
       underground_water_creature:
-        soft: 32
+        soft: 30
         hard: 128
       water_creature:
-        soft: 32
+        soft: 30
         hard: 128
       water_ambient:
-        soft: 32
+        soft: 30
         hard: 64
       misc:
-        soft: 32
+        soft: 30
         hard: 128
     falling-block-height-nerf: 0
     tnt-entity-height-nerf: 0
@@ -231,21 +231,21 @@ world-settings:
       refresh-min: 12h
       refresh-max: 2d
     filter-nbt-data-from-spawn-eggs-and-related: true
-    max-entity-collisions: 8
+    max-entity-collisions: 5
     disable-creeper-lingering-effect: false
     duplicate-uuid-resolver: saferegen
     duplicate-uuid-saferegen-delete-range: 32
     hopper:
       cooldown-when-full: true
-      disable-move-event: false
-      ignore-occluding-blocks: false
+      disable-move-event: true
+      ignore-occluding-blocks: true
     mob-effects:
       undead-immune-to-certain-effects: true
       spiders-immune-to-poison-effect: true
       immune-to-wither-effect:
         wither: true
         wither-skeleton: true
-    update-pathfinding-on-block-update: true
+    update-pathfinding-on-block-update: false
     phantoms-do-not-spawn-on-creative-players: true
     phantoms-only-attack-insomniacs: true
     mobs-can-always-pick-up-loot:
@@ -305,23 +305,23 @@ world-settings:
       - stone
       - oak_planks
       - deepslate
-    armor-stands-do-collision-entity-lookups: true
+    armor-stands-do-collision-entity-lookups: false
     disable-thunder: false
     skeleton-horse-thunder-spawn-chance: 0.01
     disable-ice-and-snow: false
-    fix-climbing-bypassing-cramming-rule: false
+    fix-climbing-bypassing-cramming-rule: true
     container-update-tick-rate: 1
     water-over-lava-flow-speed: 5
-    grass-spread-tick-rate: 1
-    use-faster-eigencraft-redstone: false
+    grass-spread-tick-rate: 3
+    use-faster-eigencraft-redstone: true
     fixed-chunk-inhabited-time: -1
     prevent-tnt-from-moving-in-water: false
     show-sign-click-command-failure-msgs-to-player: false
     iron-golems-can-spawn-in-air: false
     max-leash-distance: 10.0
-    armor-stands-tick: true
-    non-player-arrow-despawn-rate: -1
-    creative-arrow-despawn-rate: -1
+    armor-stands-tick: false
+    non-player-arrow-despawn-rate: 20
+    creative-arrow-despawn-rate: 20
     spawner-nerfed-mobs-should-jump: false
     entities-target-with-follow-range: false
     wateranimal-spawn-height:
@@ -331,7 +331,7 @@ world-settings:
     unsupported-settings:
       fix-invulnerable-end-crystal-exploit: true
     zombie-villager-infection-chance: -1.0
-    mob-spawner-tick-rate: 1
+    mob-spawner-tick-rate: 2
     all-chunks-are-slime-chunks: false
     map-item-frame-cursor-limit: 128
     light-queue-size: 20
@@ -343,22 +343,63 @@ world-settings:
       flat-bedrock: false
     split-overstacked-loot: true
     entity-per-chunk-save-limit:
-      experience_orb: -1
-      snowball: -1
-      ender_pearl: -1
-      arrow: -1
-      fireball: -1
-      small_fireball: -1
+      experience_orb: 16
+      arrow: 16
+      dragon_fireball: 3
+      egg: 8
+      ender_pearl: 8
+      eye_of_ender: 8
+      fireball: 8
+      small_fireball: 8
+      firework_rocket: 8
+      potion: 8
+      llama_spit: 3
+      shulker_bullet: 8
+      snowball: 8
+      spectral_arrow: 16
+      experience_bottle: 3
+      trident: 16
+      wither_skull: 4
+      area_effect_cloud: 8
     alt-item-despawn-rate:
-      enabled: false
+      enabled: true
       items:
-        COBBLESTONE: 300
+          COBBLESTONE: 300
+          NETHERRACK: 300
+          SAND: 300
+          RED_SAND: 300
+          GRAVEL: 300
+          DIRT: 300
+          GRASS: 300
+          PUMPKIN: 300
+          MELON_SLICE: 300
+          KELP: 300
+          BAMBOO: 300
+          SUGAR_CANE: 300
+          TWISTING_VINES: 300
+          WEEPING_VINES: 300
+          OAK_LEAVES: 300
+          SPRUCE_LEAVES: 300
+          BIRCH_LEAVES: 300
+          JUNGLE_LEAVES: 300
+          ACACIA_LEAVES: 300
+          DARK_OAK_LEAVES: 300
+          CACTUS: 300
+          DIORITE: 300
+          GRANITE: 300
+          ANDESITE: 300
+          SCAFFOLDING: 600
     tick-rates:
       sensor:
         villager:
-          secondarypoisensor: 40
+          secondarypoisensor: 80
+          nearestbedsensor: 80
+          villagerbabiessensor: 40
+          playersensor: 40
+          nearestlivingentitysensor: 40
       behavior:
         villager:
-          validatenearbypoi: -1
+          validatenearbypoi: 60
+          acquirepoi: 120
     feature-seeds:
       generate-random-seeds-for-all: false
