@@ -46,17 +46,13 @@ protobuf {
 
 sourceSets {
     main {
-        proto {
-            val paths = mutableListOf<String>()
-            // walk in directory and add all subdirectories path to the list
-            val base = rootProject.projectDir.absolutePath + File.separator + "definitions"
-            paths.add(base)
-            File(base).walkTopDown().forEach {
-                if (it.isDirectory) {
-                    paths.add(it.absolutePath)
-                }
+        proto @ExperimentalStdlibApi {
+            // walk all directories and subdirectories recursively and add them to a list
+            fun File.retrievePaths(): List<String> {
+                if (!isDirectory) return emptyList()
+                return listOf(absolutePath) + (listFiles()?.flatMap { it.retrievePaths() } ?: emptyList())
             }
-            srcDirs(*paths.toTypedArray())
+            srcDirs(*File(rootProject.projectDir.absolutePath + File.separator + "definitions").retrievePaths().toTypedArray())
         }
     }
 }
