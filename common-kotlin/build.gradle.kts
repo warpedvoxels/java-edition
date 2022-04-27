@@ -5,6 +5,7 @@ import org.hexalite.network.build.applyPurpurLogic
 plugins {
     alias(hexalite.plugins.shadow)
     alias(hexalite.plugins.protobuf)
+    java
 }
 
 applyPurpurLogic()
@@ -54,6 +55,12 @@ sourceSets {
             }
             srcDirs(*File(rootProject.projectDir.absolutePath + File.separator + "definitions").retrievePaths().toTypedArray())
         }
+        java {
+            srcDirs("${buildDir}/generated/source/proto/main/java")
+        }
     }
 }
 
+tasks.compileJava {
+    onlyIf { false }
+}
