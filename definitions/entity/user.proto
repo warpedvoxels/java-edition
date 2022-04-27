@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package entity;
+
+import "definitions/datatypes/uuid.proto";
+import "google/protobuf/timestamp.proto";
+
+message User {
+    datatypes.Uuid uuid = 1;
+    int32 hexes = 2;
+    string last_username = 3;
+    google.protobuf.Timestamp last_seen = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+    repeated UserRank ranks = 7;
+}
+
+enum UserRank {
+    Elite = 0;
+    Spectacle = 1;
+    Sentinel = 2;
+    Guardian = 3;
+    Artist = 4;
+    Developer = 5;
+}

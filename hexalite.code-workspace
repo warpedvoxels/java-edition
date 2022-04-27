@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "common-rust"
+		},
+		{
+			"path": "definitions"
 		}
 	],
 	"settings": {}
