@@ -46,6 +46,7 @@ unsynchronization or/and loss of data, and for communications we use [RabbitMQ][
     <td align="center"><a href="https://github.com/SrGaabriel"><img src="https://avatars.githubusercontent.com/u/58668092?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriel</b></sub></a><br /><a href="https://github.com/HexaliteNetwork/java-edition/commits?author=SrGaabriel" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/santosbpd"><img src="https://avatars.githubusercontent.com/u/89719009?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Breno S.</b></sub></a><br /><a href="https://github.com/HexaliteNetwork/java-edition/commits?author=santosbpd" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/herocrife"><img src="https://avatars.githubusercontent.com/u/59402242?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Herocrife</b></sub></a><br /><a href="#design-Herocrife" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/luissfx"><img src="https://avatars.githubusercontent.com/u/40919071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Luis</b></sub></a><br /><a href="https://github.com/HexaliteNetwork/java-edition/commits?author=luissfx" title="Code">💻</a></td>
   </tr>
 </table>
 
