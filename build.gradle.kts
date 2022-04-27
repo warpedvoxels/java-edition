@@ -1,10 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
     alias(hexalite.plugins.kotlin.jvm)
-    alias(hexalite.plugins.paperweight.userdev) apply false
-    alias(hexalite.plugins.plugin.yml) apply false
-    alias(hexalite.plugins.shadow) apply false
     alias(hexalite.plugins.kotlinx.serialization) apply false
+    alias(hexalite.plugins.paperweight.userdev) apply false
     alias(hexalite.plugins.kapt) apply false
     id("hexalite-build-logic") apply false
 }
@@ -33,6 +31,9 @@ allprojects {
         }
         maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap/") {
             name = "Ktor EAP"
+        }
+        maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+            name = "Sonatype"
         }
         maven(url = "https://jitpack.io/") {
             name = "JitPack"

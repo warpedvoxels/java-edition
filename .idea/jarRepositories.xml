@@ -111,5 +111,10 @@
       <option name="name" value="Aikar" />
       <option name="url" value="https://ci.emc.gs/nexus/content/groups/aikar/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Sonatype" />
+      <option name="name" value="Sonatype" />
+      <option name="url" value="https://s01.oss.sonatype.org/content/repositories/snapshots/" />
+    </remote-repository>
   </component>
 </project>

@@ -1,7 +1,7 @@
 dependencyResolutionManagement {
     versionCatalogs {
         create("hexalite") {
-            from(files("../hexalite.versions.toml"))
+            from(files("../../hexalite.versions.toml"))
         }
     }
 }

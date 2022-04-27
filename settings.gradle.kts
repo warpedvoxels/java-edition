@@ -12,6 +12,7 @@ pluginManagement {
             name = "FabricMC"
         }
         gradlePluginPortal()
+        google()
     }
 }
 

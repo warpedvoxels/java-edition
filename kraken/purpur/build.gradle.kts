@@ -4,8 +4,8 @@ import org.hexalite.network.build.applyPurpurLogic
 
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
-    id(hexalite.plugins.plugin.yml.get().pluginId)
-    id(hexalite.plugins.shadow.get().pluginId)
+    alias(hexalite.plugins.plugin.yml)
+    alias(hexalite.plugins.shadow)
 }
 
 applyPurpurLogic()

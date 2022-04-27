@@ -4,6 +4,5 @@ dependencies {
     api(rootProject.hexalite.bundles.ktor.client)
     api(rootProject.hexalite.mordant)
     api(rootProject.hexalite.kotlinx.serialization.json)
-    api(rootProject.hexalite.dotenv)
     api(rootProject.hexalite.logback.classic)
 }

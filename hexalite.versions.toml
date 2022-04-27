@@ -1,36 +1,38 @@
 [versions]
-kotlin = "1.6.20-RC2"
+kotlin = "1.6.21"
 kotlinx-serialization = "1.3.2"
 kotlinx-datetime = "0.3.2"
-kaml = "0.41.0"
-minecraft = "1.18.1"
+kaml = "0.43.0"
+minecraft = "1.18.2"
 velocity = "3.1.0"
 velocity-annotation-processor = "4.0.0-SNAPSHOT"
-paperweight-userdev = "1.3.6-SNAPSHOT"
+paperweight-userdev = "1.3.7-SNAPSHOT"
 plugin-yml = "0.5.1"
 purpur = "1.18.2-R0.1-SNAPSHOT"
-coroutines = "1.6.0"
+coroutines = "1.6.1"
 shadow = "7.1.2"
-adventure = "4.9.3"
+adventure = "4.10.1"
 kotest = "5.1.0"
-mockk = "1.12.2"
+mockk = "1.12.3"
 valiktor = "0.12.0"
 run-paper = "1.0.6"
 logback = "1.3.0-alpha14"
-mordant = "2.0.0-beta4"
-ktor = "2.0.0-beta-1"
-dotenv = "6.2.2"
+mordant = "2.0.0-beta5"
+ktor = "2.0.0"
 caffeine = "3.0.5"
 commons-io = "2.11.0"
+protobuf-plugin = "0.8.18"
+protoc = "3.20.1"
+pbandk = "0.13.1-SNAPSHOT"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
-dotenv = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenv" }
 # Minecraft - Purpur [Server]
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
@@ -56,6 +58,8 @@ caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "c
 caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref = "caffeine" }
 # IO
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+# Protobuf
+pbandk-runtime = { module = "pro.streem.pbandk:pbandk-runtime", version.ref = "pbandk" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "valiktor-core"]
@@ -71,3 +75,4 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }

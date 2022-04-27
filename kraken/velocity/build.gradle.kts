@@ -2,7 +2,7 @@ import org.hexalite.network.build.Hexalite
 
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
-    id(hexalite.plugins.shadow.get().pluginId)
+    alias(hexalite.plugins.shadow)
     id(hexalite.plugins.kapt.get().pluginId)
 }
 
