@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package datatypes;
-
-message Uuid {
-    bytes value = 1;
-}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package entity;
+
+message Role {
+    string id = 1;
+    string unicode_characters = 2;
+    string color = 3;
+    string tab_list_index = 4;
+    repeated string permissions = 5;
+}

@@ -41,7 +41,7 @@ where
     type Future = LocalBoxFuture<'static, Result<Self::Response, Self::Error>>;
 
     forward_ready!(service);
-
+     // temo  q gerar a chave jwt e verificar aq o cargo da pessoa
     fn call(&self, request: ServiceRequest) -> Self::Future {
         let authenticated = true;
         if !authenticated {

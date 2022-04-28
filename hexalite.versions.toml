@@ -21,9 +21,6 @@ mordant = "2.0.0-beta5"
 ktor = "2.0.0"
 caffeine = "3.0.5"
 commons-io = "2.11.0"
-protobuf-plugin = "0.8.18"
-protoc = "3.20.1"
-pbandk = "0.13.1-SNAPSHOT"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -58,8 +55,6 @@ caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "c
 caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref = "caffeine" }
 # IO
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
-# Protobuf
-pbandk-runtime = { module = "pro.streem.pbandk:pbandk-runtime", version.ref = "pbandk" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "valiktor-core"]
@@ -75,4 +70,3 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
