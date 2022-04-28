@@ -12,6 +12,7 @@ members = ["./", "./proc-macros", "./common"]
 [dependencies]
 actix-web = "^4"
 actix-cors = "^0.6"
+actix-identity = "^0.4"
 webserver-proc-macros = { path = "./proc-macros" }
 webserver-common = { path = "./common" }
 sea-query = { version = "^0", default-features = false, features = [
@@ -40,17 +41,17 @@ sqlx = { version = "^0", default-features = false, features = [
     "tls",
 ] }
 uuid = { version = "^0", features = ["v4", "serde"] }
-chrono = { version = "^0", features = ["serde"] }
-log = "^0"
-fast_log = "^1"
+chrono = { version = "^0.4", features = ["serde"] }
+log = "^0.4"
+fast_log = "^1.5"
 serde = { version = "^1", features = ["derive"] }
 serde_json = "^1"
-tokio = "^1"
-lapin = "^2"
-redis = "^0"
-jsonwebtoken = "^8"
-toml = "^0"
-lazy_static = "^1"
-home = "^0"
+tokio = "^1.18"
+lapin = "^2.1"
+redis = "^0.21"
+jsonwebtoken = "^8.1"
+toml = "^0.5"
+lazy_static = "^1.4"
+home = "^0.5"
 futures-util = "^0.3"
-async-trait = "^0"
+async-trait = "^0.1"

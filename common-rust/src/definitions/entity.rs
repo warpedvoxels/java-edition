@@ -17,8 +17,8 @@ pub struct Role {
 #[serde(rename_all = "snake_case")]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct User {
-    #[prost(string, tag="1")]
-    pub uuid: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="1")]
+    pub uuid: ::core::option::Option<::uuid::Uuid>,
     #[prost(int32, tag="2")]
     pub hexes: i32,
     #[prost(string, tag="3")]

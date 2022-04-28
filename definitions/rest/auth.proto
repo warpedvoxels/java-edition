@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package rest;
+
+import "datatype/uuid.proto";
+import "rest/user.proto";
+import "discord/auth.proto";
+import "google/protobuf/timestamp.proto";
+
+message Authorization {
+    optional datatype.Uuid sub = 1;
+    google.protobuf.Timestamp exp = 2;
+    bool is_internal = 3;
+}
