@@ -1,6 +1,17 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
 #[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Authorization {
+    #[prost(message, optional, tag="1")]
+    pub sub: ::core::option::Option<::uuid::Uuid>,
+    #[prost(message, optional, tag="2")]
+    pub exp: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(bool, tag="3")]
+    pub is_internal: bool,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RestRole {
     #[prost(string, tag="1")]
     pub id: ::prost::alloc::string::String,
@@ -29,15 +40,4 @@ pub struct RestUser {
     pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(message, repeated, tag="7")]
     pub roles: ::prost::alloc::vec::Vec<RestRole>,
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[serde(rename_all = "snake_case")]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Authorization {
-    #[prost(message, optional, tag="1")]
-    pub sub: ::core::option::Option<::uuid::Uuid>,
-    #[prost(message, optional, tag="2")]
-    pub exp: ::core::option::Option<::prost_types::Timestamp>,
-    #[prost(bool, tag="3")]
-    pub is_internal: bool,
 }

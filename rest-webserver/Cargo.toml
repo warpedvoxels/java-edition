@@ -15,6 +15,7 @@ actix-cors = "^0.6"
 actix-identity = "^0.4"
 webserver-proc-macros = { path = "./proc-macros" }
 webserver-common = { path = "./common" }
+hexalite-common = { path = "../common-rust", features = ["rest", "protocol", "entity"] }
 sea-query = { version = "^0", default-features = false, features = [
     "derive",
     "attr",
