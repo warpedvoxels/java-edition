@@ -14,6 +14,12 @@
 		},
 		{
 			"path": "definitions"
+		},
+		{
+			"path": "discord/bot"
+		},
+		{
+			"path": "discord/oauth2"
 		}
 	],
 	"settings": {}
