@@ -1,17 +1,17 @@
 use std::sync::Arc;
 
-use crate::settings::WebserverSettings;
+use bb8_postgres::{PostgresConnectionManager, bb8::Pool};
+use tokio_postgres::NoTls;
 
-pub type SqlPool = sqlx::PgPool;
-pub type SqlQueryResult = sqlx::postgres::PgQueryResult;
+use crate::settings::HexaliteSettings;
 
-pub type PoolOptions = sqlx::postgres::PgPoolOptions;
+pub type WebServerStateRaw = std::sync::Arc<WebServerStateData>;
+pub type WebServerState = actix_web::web::Data<WebServerStateRaw>;
 
-pub type WebserverStateRaw = std::sync::Arc<WebserverStateData>;
-pub type WebserverState = actix_web::web::Data<WebserverStateRaw>;
+pub type SqlPool = Pool<PostgresConnectionManager<NoTls>>;
 
 #[derive(Debug, Clone)]
-pub struct WebserverStateData {
+pub struct WebServerStateData {
     pub pool: SqlPool,
-    pub settings: Arc<WebserverSettings>,
+    pub settings: Arc<HexaliteSettings>,
 }

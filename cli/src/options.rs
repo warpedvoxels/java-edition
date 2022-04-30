@@ -25,7 +25,7 @@ pub enum HexaliteCommand {
     },
 
     /// Run a compiled binary of the rest webserver. Build command is required to be ran first.
-    Webserver,
+    WebServer,
 
     /// Run a Minecraft server named 'purpur.jar' at the `run` directory with 2GB of ram allocated.
     Purpur,

@@ -1,6 +1,5 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(sqlx::FromRow)]
 #[sea_query::enum_def(suffix = "TypeDef")]
 #[derive(Clone, PartialEq)]
 pub struct Role {
@@ -12,7 +11,6 @@ pub struct Role {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(sqlx::FromRow)]
 #[sea_query::enum_def(suffix = "TypeDef")]
 #[derive(Clone, PartialEq)]
 pub struct Player {

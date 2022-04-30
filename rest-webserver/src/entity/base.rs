@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 pub trait ColumnsDef<T>
 where
     T: sea_query::Iden,
@@ -8,21 +10,21 @@ where
 }
 
 #[async_trait::async_trait]
-pub trait Entity<T, I, S, R, E>
+pub trait Entity<T, I, S>
 where
-    T: Entity<T, I, S, R, E>,
+    T: Entity<T, I, S>,
 {
-    async fn up(state: &S) -> Result<R, E>;
+    async fn up(state: &S) -> Result<()>;
 
-    async fn find(state: &S, id: I) -> Option<T>;
+    async fn find(state: &S, id: I) -> Result<Option<T>>;
 
-    async fn find_all(state: &S) -> Vec<T>;
+    async fn find_all(state: &S) -> Result<Vec<T>>;
 
-    async fn find_all_with_offset(state: &S, offset: u64, limit: u64) -> Vec<T>;
+    async fn find_all_with_offset(state: &S, offset: u64, limit: u64) -> Result<Vec<T>>;
 
-    async fn create(&self, state: &S) -> Result<R, E>;
+    async fn create(&self, state: &S) -> Result<()>;
 
-    async fn update(&self, state: &S) -> Result<R, E>;
+    async fn update(&self, state: &S) -> Result<()>;
 
-    async fn delete(state: &S, id: I) -> Result<R, E>;
+    async fn delete(state: &S, id: I) -> Result<()>;
 }

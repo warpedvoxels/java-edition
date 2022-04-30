@@ -1,13 +1,22 @@
 use std::future::{ready, Ready};
 
+use actix_identity::{CookieIdentityPolicy, IdentityService, RequestIdentity};
 use actix_web::{
     body::EitherBody,
+    cookie::time::Duration,
     dev::{forward_ready, Service, ServiceRequest, ServiceResponse, Transform},
     Error, HttpResponse,
 };
 use futures_util::future::LocalBoxFuture;
 
-pub struct Authentication;
+use crate::{
+    app::{WebServerState, WebServerStateData},
+    definitions::rest::Authorization,
+};
+
+pub struct Authentication {
+    pub needs_internal: bool,
+}
 
 impl<S, B> Transform<S, ServiceRequest> for Authentication
 where
@@ -22,12 +31,16 @@ where
     type Future = Ready<Result<Self::Transform, Self::InitError>>;
 
     fn new_transform(&self, service: S) -> Self::Future {
-        ready(Ok(AuthenticationMiddleware { service }))
+        ready(Ok(AuthenticationMiddleware {
+            service,
+            needs_internal: self.needs_internal,
+        }))
     }
 }
 
 pub struct AuthenticationMiddleware<S> {
     service: S,
+    needs_internal: bool,
 }
 
 impl<S, B> Service<ServiceRequest> for AuthenticationMiddleware<S>
@@ -41,18 +54,56 @@ where
     type Future = LocalBoxFuture<'static, Result<Self::Response, Self::Error>>;
 
     forward_ready!(service);
-     // temo  q gerar a chave jwt e verificar aq o cargo da pessoa
+
     fn call(&self, request: ServiceRequest) -> Self::Future {
-        let authenticated = true;
-        if !authenticated {
+        let state = request.app_data::<WebServerState>().unwrap();
+        let identity = RequestIdentity::get_identity(&request).unwrap_or_default();
+        let authorization = Authorization::decode(&identity, state);
+
+        if authorization.is_err()
+            || (self.needs_internal && !authorization.unwrap().claims.is_internal)
+        {
             let (request, _) = request.into_parts();
             let response = HttpResponse::Unauthorized().finish().map_into_right_body();
-
             return Box::pin(async { Ok(ServiceResponse::new(request, response)) });
         }
+
         let response = self.service.call(request);
-        Box::pin(async move {
-            response.await.map(ServiceResponse::map_into_left_body)
-        })
+        Box::pin(async move { response.await.map(ServiceResponse::map_into_left_body) })
     }
+}
+
+pub fn create_identity_service(
+    state: &WebServerStateData,
+) -> IdentityService<CookieIdentityPolicy> {
+    IdentityService::new(
+        CookieIdentityPolicy::new(
+            state
+                .settings
+                .webserver
+                .services
+                .identity
+                .secret_key
+                .as_ref(),
+        )
+        .name(
+            state
+                .settings
+                .webserver
+                .services
+                .identity
+                .cookie_name
+                .clone(),
+        )
+        .secure(state.settings.webserver.services.identity.is_secure)
+        .max_age(Duration::seconds(
+            state
+                .settings
+                .webserver
+                .services
+                .identity
+                .expiration
+                .num_seconds(),
+        )),
+    )
 }

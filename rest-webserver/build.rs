@@ -21,7 +21,6 @@ fn main() {
     prost_build::Config::new()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")
-        .type_attribute(".entity", "#[derive(sqlx::FromRow)]")
         .type_attribute(".entity", "#[sea_query::enum_def(suffix = \"TypeDef\")]")
         .extern_path(
             ".google.protobuf.Timestamp",

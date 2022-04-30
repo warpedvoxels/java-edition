@@ -1,13 +1,14 @@
 use std::{io::Error, net::SocketAddr, sync::Arc};
 
-use crate::api;
-use crate::app::WebserverStateData;
+use crate::app::WebServerStateData;
+use crate::{api, middleware::create_identity_service};
 use actix_cors::Cors;
 use actix_web::{http::header, middleware::Logger, web::Data as AppData, App, HttpServer};
 
-pub async fn build(state: WebserverStateData, ip: SocketAddr) -> Result<(), Error> {
+pub async fn build(state: WebServerStateData, ip: SocketAddr) -> Result<(), Error> {
     let server = HttpServer::new(move || {
         App::new()
+            .wrap(create_identity_service(&state))
             .wrap(
                 Cors::default()
                     .allowed_origin(format!("http://localhost:{}", ip.port()).as_str())
@@ -28,6 +29,6 @@ pub async fn build(state: WebserverStateData, ip: SocketAddr) -> Result<(), Erro
     .expect("Failed to bind the server.")
     .run()
     .await;
-    log::info!("Successfully started the server on {}!", ip);
+    log::debug!("Successfully started the server on {}!", ip);
     server
 }
