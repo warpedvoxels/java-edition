@@ -7,23 +7,23 @@ build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [features]
-default = []
+default = ["example"]
+example = []
 entity = []
 rest = []
 protocol = []
 
 [dependencies]
-tokio = { version = "^1.17", features = ["full"] }
+tokio = { version = "^1.18", features = ["full"] }
 futures = "^0.3"
 home = "^0"
 lazy_static = "^1"
-prost = { version = "^0.10", features = ["prost-derive"] }
-prost-types = "0.10"
+prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait", features = ["prost-derive"] }
 bytes = "^1.1"
 serde = { version = "^1", features = ["derive"] }
-uuid = { version = "^0", features = ["v4", "serde"] }
-chrono = { version = "^0.4", features  = ["serde"] }
+uuid = { version = "^1", features = ["v4", "serde"] }
+chrono = { version = "^0.4", features = ["serde"] }
 
 [build-dependencies]
-prost-build = "^0.10"
+prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 glob = "^0"

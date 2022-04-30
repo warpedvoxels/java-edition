@@ -1,9 +1,8 @@
 use std::path::PathBuf;
 
-use prost_build::Config;
-
 fn main() {
-    println!("> Generating entities by ProtoBuf definitions...");
+    println!("cargo:rerun-if-changed=../definitions");
+    println!("cargo:rerun-if-changed=build.rs");
 
     let working_directory = std::env::current_dir()
         .unwrap()
@@ -19,9 +18,13 @@ fn main() {
     }
     println!("Files: {}", files.len());
 
-    Config::new()
+    prost_build::Config::new()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")
+        .extern_path(
+            ".google.protobuf.Timestamp",
+            "::chrono::DateTime<::chrono::Utc>",
+        )
         .extern_path(".datatype.Uuid", "::uuid::Uuid")
         .out_dir("src/definitions")
         .compile_protos(&files, &[working_directory])

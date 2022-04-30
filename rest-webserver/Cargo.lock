@@ -649,9 +649,9 @@ dependencies = [
 
 [[package]]
 name = "combine"
-version = "4.6.3"
+version = "4.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "50b727aacc797f9fc28e355d21f34709ac4fc9adecfe470ad07b8f4464f53062"
+checksum = "2a604e93b79d1808327a6fca85a6f2d69de66461e7620f5a4cbf5fb4d1d7c948"
 dependencies = [
  "bytes",
  "memchr",
@@ -820,9 +820,9 @@ dependencies = [
 
 [[package]]
 name = "darling"
-version = "0.14.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f1a5d2e8b5a94b2261efb20e99a01255b9c5293797d69bbf04600567b2f9b8d7"
+checksum = "4529658bdda7fd6769b8614be250cdcfc3aeb0ee72fe66f9e41e5e5eb73eac02"
 dependencies = [
  "darling_core",
  "darling_macro",
@@ -830,9 +830,9 @@ dependencies = [
 
 [[package]]
 name = "darling_core"
-version = "0.14.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f1c7d56716be82d9c6adb967cfe700955179ea88806e898483dad6987330a54"
+checksum = "649c91bc01e8b1eac09fb91e8dbc7d517684ca6be8ebc75bb9cafc894f9fdb6f"
 dependencies = [
  "fnv",
  "ident_case",
@@ -844,9 +844,9 @@ dependencies = [
 
 [[package]]
 name = "darling_macro"
-version = "0.14.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64dd7e5a75a00cb6799ae9fbbfc3bba0134def6579a9e27564e72c839c837bed"
+checksum = "ddfc69c5bfcbd2fc09a0f38451d2daf0e372e367986a83906d1b0dbc88134fb5"
 dependencies = [
  "darling_core",
  "quote",
@@ -1263,10 +1263,9 @@ dependencies = [
  "lazy_static",
  "prost",
  "prost-build",
- "prost-types",
  "serde",
  "tokio",
- "uuid",
+ "uuid 1.0.0",
 ]
 
 [[package]]
@@ -1298,9 +1297,9 @@ dependencies = [
 
 [[package]]
 name = "http"
-version = "0.2.6"
+version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "31f4c6746584866f0feabcc69893c5b51beef3831656a968ed7ae254cdc4fd03"
+checksum = "ff8670570af52249509a86f5e3e18a08c60b177071826898fde8997cf5f6bfbb"
 dependencies = [
  "bytes",
  "fnv",
@@ -1309,9 +1308,9 @@ dependencies = [
 
 [[package]]
 name = "httparse"
-version = "1.7.0"
+version = "1.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6330e8a36bd8c859f3fa6d9382911fbb7147ec39807f63b923933a247240b9ba"
+checksum = "496ce29bb5a52785b44e0f7ca2847ae0bb839c9bd28f69acac9b99d461c0c04c"
 
 [[package]]
 name = "httpdate"
@@ -1796,9 +1795,9 @@ dependencies = [
 
 [[package]]
 name = "pin-project-lite"
-version = "0.2.8"
+version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e280fbe77cc62c91527259e9442153f4688736748d24660126286329742b4c6c"
+checksum = "e0a7ae3ac2f1173085d398531c705756c94a4c56843785df85a60c1a0afac116"
 
 [[package]]
 name = "pin-utils"
@@ -1874,7 +1873,7 @@ dependencies = [
  "postgres-protocol",
  "serde",
  "serde_json",
- "uuid",
+ "uuid 0.8.2",
 ]
 
 [[package]]
@@ -1895,8 +1894,7 @@ dependencies = [
 [[package]]
 name = "prost"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a07b0857a71a8cb765763950499cae2413c3f9cede1133478c43600d9e146890"
+source = "git+https://github.com/eexsty/prost?branch=no-message-trait#12d28006bfe54b8bda694d3e9d7a9aa4d11a8f06"
 dependencies = [
  "bytes",
  "prost-derive",
@@ -1905,8 +1903,7 @@ dependencies = [
 [[package]]
 name = "prost-build"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "120fbe7988713f39d780a58cf1a7ef0d7ef66c6d87e5aa3438940c05357929f4"
+source = "git+https://github.com/eexsty/prost?branch=no-message-trait#12d28006bfe54b8bda694d3e9d7a9aa4d11a8f06"
 dependencies = [
  "bytes",
  "cfg-if",
@@ -1927,8 +1924,7 @@ dependencies = [
 [[package]]
 name = "prost-derive"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b670f45da57fb8542ebdbb6105a925fe571b67f9e7ed9f47a06a84e72b4e7cc"
+source = "git+https://github.com/eexsty/prost?branch=no-message-trait#12d28006bfe54b8bda694d3e9d7a9aa4d11a8f06"
 dependencies = [
  "anyhow",
  "itertools",
@@ -1940,8 +1936,7 @@ dependencies = [
 [[package]]
 name = "prost-types"
 version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2d0a014229361011dc8e69c8a1ec6c2e8d0f2af7c91e3ea3f5b2170298461e68"
+source = "git+https://github.com/eexsty/prost?branch=no-message-trait#12d28006bfe54b8bda694d3e9d7a9aa4d11a8f06"
 dependencies = [
  "bytes",
  "prost",
@@ -2223,7 +2218,7 @@ dependencies = [
 [[package]]
 name = "sea-query"
 version = "0.24.2"
-source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
+source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
 dependencies = [
  "bytes",
  "chrono",
@@ -2232,13 +2227,13 @@ dependencies = [
  "sea-query-derive",
  "sea-query-driver",
  "serde_json",
- "uuid",
+ "uuid 0.8.2",
 ]
 
 [[package]]
 name = "sea-query-attr"
 version = "0.1.0"
-source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
+source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
 dependencies = [
  "darling",
  "heck",
@@ -2249,7 +2244,7 @@ dependencies = [
 [[package]]
 name = "sea-query-derive"
 version = "0.2.0"
-source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
+source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2261,7 +2256,7 @@ dependencies = [
 [[package]]
 name = "sea-query-driver"
 version = "0.1.0"
-source = "git+https://github.com/eexsty/sea-query#b603e6a4b79b6477bb94453258b2ab607aeb70f7"
+source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2516,7 +2511,7 @@ dependencies = [
  "thiserror",
  "tokio-stream",
  "url",
- "uuid",
+ "uuid 0.8.2",
  "webpki 0.21.4",
  "webpki-roots",
  "whoami",
@@ -2663,9 +2658,9 @@ checksum = "42657b1a6f4d817cda8e7a0ace261fe0cc946cf3a80314390b22cc61ae080792"
 
 [[package]]
 name = "tinyvec"
-version = "1.5.1"
+version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c1c1d5a42b6245520c249549ec267180beaffcc0615401ac8e31853d4b6d8d2"
+checksum = "87cc5ceb3875bb20c2890005a4e226a4651264a5c75edb2421b52861a0a0cb50"
 dependencies = [
  "tinyvec_macros",
 ]
@@ -2767,9 +2762,9 @@ dependencies = [
 
 [[package]]
 name = "tracing-attributes"
-version = "0.1.20"
+version = "0.1.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2e65ce065b4b5c53e73bb28912318cb8c9e9ad3921f1d669eb0e68b4c8143a2b"
+checksum = "cc6b8ad3567499f98a1db7a752b07a7c8c7c7c34c332ec00effb2b0027974b7c"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2793,9 +2788,9 @@ checksum = "dcf81ac59edc17cc8697ff311e8f5ef2d99fcbd9817b34cec66f90b6c3dfd987"
 
 [[package]]
 name = "unicode-bidi"
-version = "0.3.7"
+version = "0.3.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a01404663e3db436ed2746d9fefef640d868edae3cceb81c3b8d5732fda678f"
+checksum = "099b7128301d285f79ddd55b9a83d5e6b9e97c92e0ea0daebee7263e932de992"
 
 [[package]]
 name = "unicode-normalization"
@@ -2857,6 +2852,16 @@ name = "uuid"
 version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc5cf98d8186244414c848017f0e2676b3fcb46807f6668a97dfe67359a3c4b7"
+dependencies = [
+ "getrandom",
+ "serde",
+]
+
+[[package]]
+name = "uuid"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8cfcd319456c4d6ea10087ed423473267e1a071f3bc0aa89f80d60997843c6f0"
 dependencies = [
  "getrandom",
  "serde",
@@ -3003,7 +3008,7 @@ dependencies = [
  "sqlx",
  "tokio",
  "toml",
- "uuid",
+ "uuid 0.8.2",
  "webserver-common",
  "webserver-proc-macros",
 ]

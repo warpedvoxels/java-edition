@@ -6,3 +6,6 @@ pub mod protocol;
 
 #[cfg(feature = "rest")]
 pub mod rest;
+
+#[cfg(feature = "example")]
+pub mod example;

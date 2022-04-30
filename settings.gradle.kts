@@ -26,7 +26,6 @@ include(
     ":reusable-plugins:chat",
     ":reusable-plugins:combat",
     ":rest-webclient",
-    ":resource-pack-generator"
 )
 
 dependencyResolutionManagement {
