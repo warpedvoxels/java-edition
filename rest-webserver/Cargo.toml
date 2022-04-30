@@ -4,18 +4,15 @@ publish = false
 version = "0.1.0"
 edition = "2021"
 license = "AGPL-3.0"
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[workspace]
-members = ["./", "./proc-macros", "./common"]
 
 [dependencies]
 actix-web = "^4"
 actix-cors = "^0.6"
 actix-identity = "^0.4"
-webserver-proc-macros = { path = "./proc-macros" }
-webserver-common = { path = "./common" }
-hexalite-common = { path = "../common-rust", features = ["rest", "protocol", "entity"] }
+hexalite-common = { path = "../common-rust" }
 sea-query = { version = "^0", default-features = false, features = [
     "derive",
     "attr",
@@ -53,6 +50,13 @@ redis = "^0.21"
 jsonwebtoken = "^8.1"
 toml = "^0.5"
 lazy_static = "^1.4"
-home = "^0.5"
 futures-util = "^0.3"
+anyhow = "^1.0"
 async-trait = "^0.1"
+prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait", features = [
+    "prost-derive",
+] } 
+
+[build-dependencies]
+prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
+glob = "^0"

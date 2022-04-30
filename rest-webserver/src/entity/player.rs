@@ -1,11 +1,7 @@
-use crate::{app::WebserverStateData, ColumnsDef, Entity};
+use crate::{app::{SqlPool, SqlQueryResult}, definitions::rest::RestPlayer};
+pub use crate::definitions::entity::{Player, PlayerTypeDef};
 use actix_web::Either;
-use async_trait::async_trait;
-use chrono::{DateTime, Utc};
-use sea_query::{
-    gen_type_def, ColumnDef, Expr, OnConflict, Order, PostgresQueryBuilder, Query, Table,
-};
-use sqlx::postgres::PgQueryResult;
+use sea_query::{ColumnDef, Expr, OnConflict, Order, PostgresQueryBuilder, Query, Table};
 use uuid::Uuid;
 
 sea_query::sea_query_driver_postgres!();
@@ -13,26 +9,30 @@ sea_query::sea_query_driver_postgres!();
 use self::sea_query_driver_postgres::bind_query;
 use sea_query_driver_postgres::bind_query_as;
 
-#[derive(sqlx::FromRow, Debug, Clone)]
-#[gen_type_def]
-pub struct Player {
-    pub uuid: Uuid,
-    pub hexes: u32,
-    pub last_username: String,
-    pub last_seen: DateTime<Utc>,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
-}
+use super::{ColumnsDef, Entity};
 
 impl Default for Player {
     fn default() -> Self {
         Self {
             uuid: Uuid::new_v4(),
             hexes: 0,
-            last_username: String::from(""),
-            last_seen: Utc::now(),
-            created_at: Utc::now(),
-            updated_at: Utc::now(),
+            last_username: "".to_string(),
+            last_seen: chrono::Utc::now(),
+            created_at: chrono::Utc::now(),
+            updated_at: chrono::Utc::now(),
+        }
+    }
+}
+
+impl From<&Player> for RestPlayer {
+    fn from(player: &Player) -> Self {
+        Self {
+            uuid: player.uuid,
+            hexes: player.hexes,
+            last_username: player.last_username.clone(),
+            last_seen: player.last_seen,
+            created_at: player.created_at,
+            updated_at: player.updated_at,
         }
     }
 }
@@ -53,30 +53,39 @@ impl ColumnsDef<PlayerTypeDef> for PlayerTypeDef {
         match *self {
             PlayerTypeDef::Uuid => column.uuid().not_null().primary_key(),
             PlayerTypeDef::Hexes => column.integer().not_null().default(0),
-            PlayerTypeDef::LastUsername => column.string_len(16),
-            PlayerTypeDef::LastSeen => column.date_time(),
-            PlayerTypeDef::CreatedAt => column.date_time().extra("DEFAULT NOW()".to_string()),
-            PlayerTypeDef::UpdatedAt => column.date_time().extra("DEFAULT NOW()".to_string()),
-            PlayerTypeDef::Table => unreachable!(),
+            PlayerTypeDef::LastUsername => column.string_len(16).not_null(),
+            PlayerTypeDef::LastSeen => column
+                .date_time()
+                .not_null()
+                .extra("DEFAULT NOW()".to_string()),
+            PlayerTypeDef::CreatedAt => column
+                .date_time()
+                .not_null()
+                .extra("DEFAULT NOW()".to_string()),
+            PlayerTypeDef::UpdatedAt => column
+                .date_time()
+                .not_null()
+                .extra("DEFAULT NOW()".to_string()),
+            _ => unreachable!(),
         };
         column
     }
 }
 
-#[async_trait]
-impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
-    async fn up(state: &WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
+#[async_trait::async_trait]
+impl Entity<Player, Either<Uuid, String>, SqlPool, SqlQueryResult, sqlx::Error> for Player {
+    async fn up(pool: &SqlPool) -> Result<SqlQueryResult, sqlx::Error> {
         let mut sql = Table::create();
         sql.table(PlayerTypeDef::Table).if_not_exists();
         for column in PlayerTypeDef::columns() {
             sql.col(&mut column.def());
         }
         sqlx::query(&sql.build(PostgresQueryBuilder))
-            .execute(&state.pool)
+            .execute(pool)
             .await
     }
 
-    async fn find(state: &WebserverStateData, id: Either<Uuid, String>) -> Option<Player> {
+    async fn find(pool: &SqlPool, id: Either<Uuid, String>) -> Option<Player> {
         let expr = match id {
             Either::Left(uuid) => Expr::col(PlayerTypeDef::Uuid).eq(uuid),
             Either::Right(username) => Expr::col(PlayerTypeDef::LastUsername).eq(username),
@@ -88,19 +97,19 @@ impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
             .and_where(expr)
             .build(PostgresQueryBuilder);
         let player = bind_query_as(sqlx::query_as::<_, Player>(&sql), &values)
-            .fetch_one(&state.pool)
+            .fetch_one(pool)
             .await;
         player.ok()
     }
 
-    async fn find_all(state: &WebserverStateData) -> Vec<Player> {
+    async fn find_all(pool: &SqlPool) -> Vec<Player> {
         let (sql, values) = Query::select()
             .columns(PlayerTypeDef::columns())
             .from(PlayerTypeDef::Table)
             .order_by(PlayerTypeDef::Uuid, Order::Asc)
             .build(PostgresQueryBuilder);
         let players = bind_query_as(sqlx::query_as::<_, Player>(&sql), &values)
-            .fetch_all(&state.pool)
+            .fetch_all(pool)
             .await;
         if players.is_err() {
             log::error!(
@@ -112,31 +121,23 @@ impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
         players.ok().unwrap()
     }
 
-    async fn create(&self, state: &WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
-        let (sql, values) = create_internally(self, state).build(PostgresQueryBuilder);
-        bind_query(sqlx::query(&sql), &values)
-            .execute(&state.pool)
-            .await
+    async fn create(&self, pool: &SqlPool) -> Result<SqlQueryResult, sqlx::Error> {
+        let (sql, values) = create_internally(self).build(PostgresQueryBuilder);
+        bind_query(sqlx::query(&sql), &values).execute(pool).await
     }
 
-    async fn update(&self, state: &WebserverStateData) -> Result<PgQueryResult, sqlx::Error> {
-        let (sql, values) = create_internally(self, state)
+    async fn update(&self, pool: &SqlPool) -> Result<SqlQueryResult, sqlx::Error> {
+        let (sql, values) = create_internally(self)
             .on_conflict(
                 OnConflict::column(PlayerTypeDef::Uuid)
                     .update_columns(PlayerTypeDef::columns())
                     .to_owned(),
             )
             .build(PostgresQueryBuilder);
-        bind_query(sqlx::query(&sql), &values)
-            .execute(&state.pool)
-            .await
+        bind_query(sqlx::query(&sql), &values).execute(pool).await
     }
 
-    async fn find_all_with_offset(
-        state: &WebserverStateData,
-        offset: u64,
-        limit: u64,
-    ) -> Vec<Player> {
+    async fn find_all_with_offset(pool: &SqlPool, offset: u64, limit: u64) -> Vec<Player> {
         let (sql, values) = Query::select()
             .columns(PlayerTypeDef::columns())
             .from(PlayerTypeDef::Table)
@@ -145,7 +146,7 @@ impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
             .offset(offset)
             .build(PostgresQueryBuilder);
         let players = bind_query_as(sqlx::query_as::<_, Player>(&sql), &values)
-            .fetch_all(&state.pool)
+            .fetch_all(pool)
             .await;
         if players.is_err() {
             log::error!(
@@ -158,9 +159,9 @@ impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
     }
 
     async fn delete(
-        state: &WebserverStateData,
+        pool: &SqlPool,
         id: Either<Uuid, String>,
-    ) -> Result<PgQueryResult, sqlx::Error> {
+    ) -> Result<SqlQueryResult, sqlx::Error> {
         let expr = match id {
             Either::Left(uuid) => Expr::col(PlayerTypeDef::Uuid).eq(uuid),
             Either::Right(username) => Expr::col(PlayerTypeDef::LastUsername).eq(username),
@@ -169,13 +170,11 @@ impl Entity<Player, Either<Uuid, String>, WebserverStateData> for Player {
             .from_table(PlayerTypeDef::Table)
             .and_where(expr)
             .build(PostgresQueryBuilder);
-        bind_query(sqlx::query(&sql), &values)
-            .execute(&state.pool)
-            .await
+        bind_query(sqlx::query(&sql), &values).execute(pool).await
     }
 }
 
-fn create_internally(entity: &Player, _state: &WebserverStateData) -> sea_query::InsertStatement {
+fn create_internally(entity: &Player) -> sea_query::InsertStatement {
     let mut statement = Query::insert();
     statement
         .into_table(PlayerTypeDef::Table)

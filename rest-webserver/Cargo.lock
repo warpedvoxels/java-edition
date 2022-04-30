@@ -1255,17 +1255,12 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 name = "hexalite-common"
 version = "0.1.0"
 dependencies = [
- "bytes",
- "chrono",
+ "anyhow",
+ "async-trait",
  "futures",
- "glob",
  "home",
  "lazy_static",
- "prost",
- "prost-build",
- "serde",
  "tokio",
- "uuid 1.0.0",
 ]
 
 [[package]]
@@ -1453,9 +1448,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
-version = "0.2.124"
+version = "0.2.125"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "21a41fed9d98f27ab1c6d161da622a4fa35e8a54a8adc24bbf3ddd0ef70b0e50"
+checksum = "5916d2ae698f6de9bfb891ad7a8d65c09d232dc58cc4ac433c7da3b2fd84bc2b"
 
 [[package]]
 name = "local-channel"
@@ -1617,9 +1612,9 @@ dependencies = [
 
 [[package]]
 name = "num-integer"
-version = "0.1.44"
+version = "0.1.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d2cc698a63b549a70bc047073d2949cce27cd1c7b0a4a862d08a8031bc2801db"
+checksum = "225d3389fb3509a24c93f5c29eb6bde2586b98d9f016636dff58d7c6f7569cd9"
 dependencies = [
  "autocfg",
  "num-traits",
@@ -1873,7 +1868,7 @@ dependencies = [
  "postgres-protocol",
  "serde",
  "serde_json",
- "uuid 0.8.2",
+ "uuid",
 ]
 
 [[package]]
@@ -2217,8 +2212,8 @@ dependencies = [
 
 [[package]]
 name = "sea-query"
-version = "0.24.2"
-source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
+version = "0.24.4"
+source = "git+https://github.com/eexsty/sea-query#9d502cae83bb1a5461eb205b33ee714ac5fb4e57"
 dependencies = [
  "bytes",
  "chrono",
@@ -2227,13 +2222,13 @@ dependencies = [
  "sea-query-derive",
  "sea-query-driver",
  "serde_json",
- "uuid 0.8.2",
+ "uuid",
 ]
 
 [[package]]
 name = "sea-query-attr"
 version = "0.1.0"
-source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
+source = "git+https://github.com/eexsty/sea-query#9d502cae83bb1a5461eb205b33ee714ac5fb4e57"
 dependencies = [
  "darling",
  "heck",
@@ -2244,7 +2239,7 @@ dependencies = [
 [[package]]
 name = "sea-query-derive"
 version = "0.2.0"
-source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
+source = "git+https://github.com/eexsty/sea-query#9d502cae83bb1a5461eb205b33ee714ac5fb4e57"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -2255,8 +2250,8 @@ dependencies = [
 
 [[package]]
 name = "sea-query-driver"
-version = "0.1.0"
-source = "git+https://github.com/eexsty/sea-query#ec0ced7f8e9949f89df81bb6407e5a5fd25bd212"
+version = "0.1.1"
+source = "git+https://github.com/eexsty/sea-query#9d502cae83bb1a5461eb205b33ee714ac5fb4e57"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2511,7 +2506,7 @@ dependencies = [
  "thiserror",
  "tokio-stream",
  "url",
- "uuid 0.8.2",
+ "uuid",
  "webpki 0.21.4",
  "webpki-roots",
  "whoami",
@@ -2572,9 +2567,9 @@ checksum = "6bdef32e8150c2a081110b42772ffe7d7c9032b606bc226c8260fd97e0976601"
 
 [[package]]
 name = "syn"
-version = "1.0.91"
+version = "1.0.92"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b683b2b825c8eef438b77c36a06dc262294da3d5a5813fac20da149241dcd44d"
+checksum = "7ff7c592601f11445996a06f8ad0c27f094a58857c2f89e97974ab9235b92c52"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2858,16 +2853,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "uuid"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8cfcd319456c4d6ea10087ed423473267e1a071f3bc0aa89f80d60997843c6f0"
-dependencies = [
- "getrandom",
- "serde",
-]
-
-[[package]]
 name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2991,16 +2976,19 @@ dependencies = [
  "actix-cors",
  "actix-identity",
  "actix-web",
+ "anyhow",
  "async-trait",
  "chrono",
  "fast_log",
  "futures-util",
+ "glob",
  "hexalite-common",
- "home",
  "jsonwebtoken",
  "lapin",
  "lazy_static",
  "log",
+ "prost",
+ "prost-build",
  "redis",
  "sea-query",
  "serde",
@@ -3008,27 +2996,7 @@ dependencies = [
  "sqlx",
  "tokio",
  "toml",
- "uuid 0.8.2",
- "webserver-common",
- "webserver-proc-macros",
-]
-
-[[package]]
-name = "webserver-common"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "sea-query",
- "sqlx",
-]
-
-[[package]]
-name = "webserver-proc-macros"
-version = "0.1.0"
-dependencies = [
- "quote",
- "syn",
- "webserver-common",
+ "uuid",
 ]
 
 [[package]]

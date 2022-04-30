@@ -1,11 +1,11 @@
 use std::{
     fs,
     net::{Ipv4Addr, SocketAddr},
-    path::Path,
+    path::{PathBuf},
 };
 
 use crate::io::*;
-use lazy_static::lazy_static;
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -98,21 +98,10 @@ impl WebserverSettings {
     }
 }
 
-lazy_static! {
-    static ref PATH: String = {
-        let home = home::home_dir()
-            .expect("Failed to get the home directory.")
-            .to_str()
-            .expect("Failed to get the home directory as string.")
-            .to_owned();
-        format!("{}/.hexalite/webserver.toml", home)
-    };
-}
-
 pub fn read() -> Result<WebserverSettings, &'static str> {
     WebserverSettings::read(&())
 }
 
-pub fn path() -> &'static Path {
-    Path::new(&*PATH)
+pub fn path() -> PathBuf {
+    hexalite_common::dirs::get_hexalite_dir_path().join("settings.toml")
 }

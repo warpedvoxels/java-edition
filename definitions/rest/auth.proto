@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package rest;
 
@@ -7,6 +7,6 @@ import "google/protobuf/timestamp.proto";
 
 message Authorization {
     optional datatype.Uuid sub = 1;
-    google.protobuf.Timestamp exp = 2;
-    bool is_internal = 3;
+    required google.protobuf.Timestamp exp = 2;
+    required bool is_internal = 3;
 }
