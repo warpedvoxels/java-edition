@@ -24,13 +24,14 @@ impl Authorization {
 
     pub fn decode(token: &str, state: &WebServerState) -> Result<TokenData<Self>> {
         let decoding_key = DecodingKey::from_secret(state.settings.webserver.services.identity.secret_key.as_ref());
-        decode::<Authorization>(token, &decoding_key, &Validation::default())
+        decode::<Authorization>(token, &decoding_key, &Validation::new(jsonwebtoken::Algorithm::HS512))
             .context("Couldn't decode the provided JWT authorization.")
     }
 
     pub fn encode(&self, settings: &WebServerSettings) -> Result<String> {
+        let header = Header::new(jsonwebtoken::Algorithm::HS512);
         let encoding_key = EncodingKey::from_secret(settings.services.identity.secret_key.as_ref());
-        encode::<Authorization>(&Header::default(), self, &encoding_key)
+        encode::<Authorization>(&header, self, &encoding_key)
             .context("Couldn't encode the provided JWT authorization.")
     }
 }

@@ -35,10 +35,10 @@ pub async fn build(settings: &WebServerSettings) -> Result<RedisConnection> {
 
 pub async fn loop_into_key_generation(settings: &WebServerSettings, connection: &Mutex<Connection>) {
     let delay = Duration::from_secs(5 * 60);
-    let authorization = Authorization::new_internal();
     let mut connection = connection.lock().await;
 
     loop {
+        let authorization = Authorization::new_internal();
         let identity = authorization
             .encode(settings)
             .expect("Failed to encode the internal identity.");
