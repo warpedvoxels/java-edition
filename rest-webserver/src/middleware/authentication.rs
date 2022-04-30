@@ -76,6 +76,9 @@ where
 pub fn create_identity_service(
     state: &WebServerStateData,
 ) -> IdentityService<CookieIdentityPolicy> {
+    if state.settings.webserver.services.identity.secret_key.len() < 32 {
+        panic!("The secret key for the identity service must have at least 32 characters.");
+    }
     IdentityService::new(
         CookieIdentityPolicy::new(
             state

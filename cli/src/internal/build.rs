@@ -6,7 +6,7 @@ use hexalite_common::dirs::{get_hexalite_dir_path, get_source_path};
 use crate::internal::*;
 
 lazy_static::lazy_static! {
-    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml", "resource-pack/Cargo.toml"]; //, "rest-webserver/Cargo.toml"];
+    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml", "resource-pack/Cargo.toml", "rest-webserver/Cargo.toml"];
     static ref WATERFALL_MODULES: Vec<&'static str> = vec![];
 }
 
@@ -42,9 +42,37 @@ pub async fn build(module: Option<String>) -> Result<()> {
     if !src_path.exists() {
         panic!("The source path does not exist. Please make sure to populate the command-line interface first by using `hexalite init`.");
     }
+
+    let is_windows = cfg!(target_os = "windows");
+    let resource_pack_name = if is_windows {
+        "resource-pack.exe"
+    } else {
+        "resource-pack"
+    };
+    let webserver_name = if is_windows {
+        "webserver.exe"
+    } else {
+        "webserver"
+    };
     use_handling(
-        &src_path.join("resource-pack-generator/build/libs/rp-shaded.jar"),
-        &compiled_path.join("resource-pack-generator.jar"),
+        &src_path
+            .join("rest-webserver/target/release")
+            .join(webserver_name),
+        &compiled_path.join(webserver_name),
+        |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_file(src, dest)
+        },
+    );
+    use_handling(
+        &src_path
+            .join("resource-pack/target/release")
+            .join(resource_pack_name),
+        &compiled_path.join(resource_pack_name),
         |src, dest| {
             println!(
                 "Creating symbolic link {} to {}",
@@ -79,24 +107,6 @@ pub async fn build(module: Option<String>) -> Result<()> {
         &["build", "--project-dir", src_path.to_str().unwrap()],
     )
     .await;
-    use_handling(
-        &src_path
-            .join("rest-webserver/target/release")
-            .join(if cfg!(target_os = "windows") {
-                "webserver.exe"
-            } else {
-                "webserver"
-            }),
-        &compiled_path.join("webserver.jar"),
-        |src, dest| {
-            println!(
-                "Creating symbolic link {} to {}",
-                src.to_str().unwrap(),
-                dest.to_str().unwrap()
-            );
-            symlink::symlink_file(src, dest)
-        },
-    );
 
     if let Some(module) = module {
         let module = module.trim().to_lowercase();

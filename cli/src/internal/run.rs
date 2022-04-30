@@ -1,9 +1,9 @@
 use hexalite_common::dirs::get_hexalite_dir_path;
 
 use super::*;
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 
-pub async fn webserver()  -> Result<()> {
+pub async fn webserver() -> Result<()> {
     let hexalite = get_hexalite_dir_path();
     let compiled = hexalite.join("compiled");
     // webserver on unix-like systems and webserver.exe on windows
@@ -24,11 +24,11 @@ pub async fn webserver()  -> Result<()> {
 pub async fn resource_pack() -> Result<()> {
     let hexalite = get_hexalite_dir_path();
     let compiled = hexalite.join("compiled");
-    let path = compiled.join("resource-pack-generator.jar");
+    let path = compiled.join("resource-pack");
     let path = path
         .to_str()
         .context("Failed to retrieve the compiled resource pack path.")?;
-    run_command("java", &["-jar", path]).await;
+    run_command(path, &[]).await;
     Ok(())
 }
 

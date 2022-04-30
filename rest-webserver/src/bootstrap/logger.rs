@@ -1,7 +1,6 @@
-use fast_log::{config::Config, init as fast_log_init};
+use env_logger::builder;
 
 pub fn init() {
-    let config = Config::new().console();
-    fast_log_init(config).expect("Failed to initialize the logging system.");
+    builder().filter_level(log::LevelFilter::Debug).try_init().expect("Failed to initialize the logging system.");
     log::debug!("Successfully initialized the logging system!");
 }
