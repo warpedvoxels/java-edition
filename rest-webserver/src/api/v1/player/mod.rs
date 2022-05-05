@@ -20,7 +20,7 @@ pub use dto::*;
 
 #[post("/")]
 pub async fn create(data: RestPlayerCreation, state: WebServerState) -> RestResult<RestPlayer> {
-    let query = Player::find(&state.pool, Either::Left(data.uuid)).await
+    let query = Player::find(&state.postgres, Either::Left(data.uuid)).await
         .http_internal_error("Failed to find the player.")?;
     if query.is_some() {
         return Ok(Either::Left(HttpResponse::Conflict().finish()));
@@ -28,7 +28,7 @@ pub async fn create(data: RestPlayerCreation, state: WebServerState) -> RestResu
 
     let player = Player::from(data);
     player
-        .create(&state.pool)
+        .create(&state.postgres)
         .await
         .http_internal_error("Failed to create a new player")?;
 
@@ -48,7 +48,7 @@ pub async fn find_all(
     }
     let offset = (pagination.page.unwrap_or(1) - 1) * limit;
 
-    let players: Vec<RestPlayer> = Player::find_all_with_offset(&state.pool, offset, limit)
+    let players: Vec<RestPlayer> = Player::find_all_with_offset(&state.postgres, offset, limit)
         .await
         .http_internal_error("Failed to find all the players.")?
         .iter()
@@ -61,7 +61,7 @@ pub async fn find_all(
 #[get("/{id}")]
 pub async fn find(id: web::Path<String>, state: WebServerState) -> RestResult<RestPlayer> {
     let id = try_either(|| Uuid::from_str(id.trim()), id.to_owned());
-    let player = Player::find(&state.pool, id)
+    let player = Player::find(&state.postgres, id)
         .await
         .http_internal_error("Failed to retrieve the player data.")?
         .http_not_found("Player not found.")?;
@@ -72,12 +72,12 @@ pub async fn find(id: web::Path<String>, state: WebServerState) -> RestResult<Re
 #[delete("/{id}")]
 pub async fn delete(id: web::Path<String>, state: WebServerState) -> RestResult<RestPlayer> {
     let id = try_either(|| Uuid::from_str(id.trim()), id.to_owned());
-    let player = Player::find(&state.pool, id)
+    let player = Player::find(&state.postgres, id)
         .await
         .http_internal_error("Failed to retrieve the player data.")?
         .http_not_found("Player not found.")?;
 
-    Player::delete(&state.pool, Either::Left(player.uuid))
+    Player::delete(&state.postgres, Either::Left(player.uuid))
         .await
         .http_internal_error("Failed to delete this player.")?;
     let player = RestPlayer::from(&player);

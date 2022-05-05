@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+option java_multiple_files = true;
+option java_package = "org.hexalite.network.protobuf.protocol";
+option java_outer_classname = "KeysProto";
+
+package protocol;
+
+enum RedisKey {
+    INTERNAL_IDENTITY = 1;
+}
+
+enum CommunicationsKey {
+    DATA_QUEUE = 1;
+}

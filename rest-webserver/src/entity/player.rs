@@ -50,15 +50,16 @@ impl From<&Player> for RestPlayer {
 }
 
 impl ColumnsDef<PlayerTypeDef> for PlayerTypeDef {
-    fn columns() -> Vec<PlayerTypeDef> {
-        vec![
+    fn columns() -> std::slice::Iter<'static, Self> {
+        static COLUMNS: [PlayerTypeDef; 6] = [
             PlayerTypeDef::Uuid,
             PlayerTypeDef::Hexes,
             PlayerTypeDef::LastUsername,
             PlayerTypeDef::LastSeen,
             PlayerTypeDef::CreatedAt,
             PlayerTypeDef::UpdatedAt,
-        ]
+        ];
+        COLUMNS.iter()
     }
     fn def(&self) -> ColumnDef {
         let mut column = ColumnDef::new(*self);
@@ -88,7 +89,7 @@ fn create_internally(entity: &Player) -> sea_query::InsertStatement {
     let mut statement = Query::insert();
     statement
         .into_table(PlayerTypeDef::Table)
-        .columns(PlayerTypeDef::columns())
+        .columns(PlayerTypeDef::columns().copied().collect::<Vec<_>>())
         .values_panic(vec![
             entity.uuid.into(),
             entity.hexes.into(),
@@ -125,7 +126,7 @@ impl Entity<Player, Either<Uuid, String>, SqlPool> for Player {
             Either::Right(username) => Expr::col(PlayerTypeDef::LastUsername).eq(username),
         };
         let (sql, values) = Query::select()
-            .columns(PlayerTypeDef::columns())
+            .columns(PlayerTypeDef::columns().copied().collect::<Vec<_>>())
             .from(PlayerTypeDef::Table)
             .limit(1)
             .and_where(expr)
@@ -143,7 +144,7 @@ impl Entity<Player, Either<Uuid, String>, SqlPool> for Player {
 
     async fn find_all(pool: &SqlPool) -> Result<Vec<Player>> {
         let (sql, values) = Query::select()
-            .columns(PlayerTypeDef::columns())
+            .columns(PlayerTypeDef::columns().copied().collect::<Vec<_>>())
             .from(PlayerTypeDef::Table)
             .order_by(PlayerTypeDef::Uuid, Order::Asc)
             .build(PostgresQueryBuilder);
@@ -178,7 +179,7 @@ impl Entity<Player, Either<Uuid, String>, SqlPool> for Player {
         let (sql, values) = create_internally(self)
             .on_conflict(
                 OnConflict::column(PlayerTypeDef::Uuid)
-                    .update_columns(PlayerTypeDef::columns())
+                    .update_columns(PlayerTypeDef::columns().copied().collect::<Vec<_>>())
                     .to_owned(),
             )
             .build(PostgresQueryBuilder);
@@ -195,7 +196,7 @@ impl Entity<Player, Either<Uuid, String>, SqlPool> for Player {
 
     async fn find_all_with_offset(pool: &SqlPool, offset: u64, limit: u64) -> Result<Vec<Player>> {
         let (sql, values) = Query::select()
-            .columns(PlayerTypeDef::columns())
+            .columns(PlayerTypeDef::columns().copied().collect::<Vec<_>>())
             .from(PlayerTypeDef::Table)
             .order_by(PlayerTypeDef::Uuid, Order::Asc)
             .limit(limit)

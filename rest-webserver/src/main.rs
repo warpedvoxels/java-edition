@@ -9,15 +9,11 @@ use webserver::bootstrap::*;
 async fn main() -> std::io::Result<()> {
     logger::init();
     let settings = settings::build();
-    let pool = database::build(&settings.webserver).await;
-    let _redis = redis::build(&settings.webserver).await;
-
-    if let Some(error) = pool.as_ref().err() {
-        panic!("{}", error);
-    }
 
     let state = WebServerStateData {
-        pool: pool.unwrap(),
+        postgres: postgres::build(&settings.webserver).await.unwrap(),
+        redis: redis::build(&settings.webserver).await.unwrap(),
+        rabbitmq: rabbitmq::build(&settings.webserver).await.unwrap(),
         settings,
     };
 

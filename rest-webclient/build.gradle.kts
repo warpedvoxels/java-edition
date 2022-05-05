@@ -1,8 +1,0 @@
-dependencies {
-    api(project(":common-kotlin"))
-    api(rootProject.hexalite.bundles.kotlin.essential)
-    api(rootProject.hexalite.bundles.ktor.client)
-    api(rootProject.hexalite.mordant)
-    api(rootProject.hexalite.kotlinx.serialization.json)
-    api(rootProject.hexalite.logback.classic)
-}

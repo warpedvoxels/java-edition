@@ -22,6 +22,7 @@ jobs:
             common-rust/target/
             resource-pack/target/
             rest-webserver/target/
+            grpc-server/target/
             cli/target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
@@ -35,6 +36,11 @@ jobs:
         uses: arduino/setup-protoc@v1
         with:
           version: '3.x'
+      - name: Build the gRPC server
+        uses: actions-rs/cargo@v1
+        with:
+          command: build 
+          args: --release --manifest-path grpc-server/Cargo.toml 
       - name: Build the webserver
         uses: actions-rs/cargo@v1
         with:

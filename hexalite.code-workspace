@@ -20,6 +20,9 @@
 		},
 		{
 			"path": "discord/oauth2"
+		},
+		{
+			"path": "grpc-server"
 		}
 	],
 	"settings": {}

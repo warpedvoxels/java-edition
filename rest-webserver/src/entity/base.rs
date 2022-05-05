@@ -4,7 +4,7 @@ pub trait ColumnsDef<T>
 where
     T: sea_query::Iden,
 {
-    fn columns() -> Vec<T>;
+    fn columns() -> std::slice::Iter<'static, T>;
 
     fn def(&self) -> sea_query::ColumnDef;
 }

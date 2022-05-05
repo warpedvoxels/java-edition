@@ -1,13 +1,13 @@
-use std::{
-    sync::Arc,
-    time::Duration,
-};
+use std::{sync::Arc, time::Duration};
 
 use anyhow::{Context, Result};
 use redis::{aio::Connection, AsyncCommands, Client};
-use tokio::{time::sleep, sync::Mutex};
+use tokio::{sync::Mutex, time::sleep};
 
-use crate::{definitions::rest::Authorization, settings::WebServerSettings};
+use crate::{
+    definitions::{protocol::RedisKey, rest::Authorization},
+    settings::WebServerSettings,
+};
 
 pub type RedisConnection = Arc<Mutex<Connection>>;
 
@@ -33,22 +33,24 @@ pub async fn build(settings: &WebServerSettings) -> Result<RedisConnection> {
     Ok(connection)
 }
 
-pub async fn loop_into_key_generation(settings: &WebServerSettings, connection: &Mutex<Connection>) {
+pub async fn loop_into_key_generation(
+    settings: &WebServerSettings,
+    connection: &Mutex<Connection>,
+) {
     let delay = Duration::from_secs(5 * 60);
     let mut connection = connection.lock().await;
+    let key = RedisKey::InternalIdentity.to_string();
 
     loop {
         let authorization = Authorization::new_internal();
         let identity = authorization
             .encode(settings)
             .expect("Failed to encode the internal identity.");
-        let _: () = connection
-            .set("INTERNAL_IDENTITY", &identity)
-            .await
-            .unwrap();
+        let _: () = connection.set(&key, &identity).await.unwrap();
         log::debug!(
-            "Successfully altered the internal identity to {}.",
-            identity
+            "Successfully altered the internal identity ({key}) to {id}.",
+            key = key,
+            id = identity
         );
         sleep(delay).await;
     }

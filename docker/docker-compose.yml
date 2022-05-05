@@ -16,15 +16,19 @@ services:
     networks:
       - postgres-network
   redis-container:
-    image: "redis:alpine"
+    image: bitnami/redis:latest
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL,CONFIG
+      ALLOW_EMPTY_PASSWORD: no
     ports:
       - "6379:6379"
     volumes:
-      - redis-data:/data
+      - redis-data:/bitnami/redis/data
     networks:
       - redis-network
   rabbitmq-container:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:latest
     ports:
       # AMQP protocol port
       - '5672:5672'
@@ -34,7 +38,7 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq
       - rabbitmq-log:/var/log/rabbitmq
     networks:
-      - communications-network
+      - rabbitmq-network
 
 volumes:
   postgres-data:
@@ -47,5 +51,5 @@ networks:
     driver: bridge
   redis-network:
     driver: bridge
-  communications-network:
+  rabbitmq-network:
     driver: bridge

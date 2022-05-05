@@ -33,8 +33,9 @@ pub struct WebServerRootSettings {
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct WebServerServicesSettings {
-    pub database: WebServerDatabaseServiceSettings,
+    pub postgres: WebServerPostgresServiceSettings,
     pub identity: WebServerIdentityServiceSettings,
+    pub rabbitmq: WebServerRabbitMQServiceSettings,
     pub redis: WebServerRedisServiceSettings,
 }
 
@@ -53,21 +54,30 @@ pub struct WebServerIdentityServiceSettings {
 pub struct WebServerRedisServiceSettings {
     pub host: Ipv4Addr,
     pub port: u16,
+    pub password: String,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerDatabaseServiceSettings {
+pub struct WebServerRabbitMQServiceSettings {
+    pub host: Ipv4Addr,
+    pub port: u16,
+    pub username: String,
+    pub password: String,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct WebServerPostgresServiceSettings {
     pub host: Ipv4Addr,
     pub port: u16,
     pub user: String,
     pub password: String,
     pub database: String,
-    pub pool: WebServerDatabasePoolServiceSettings
+    pub pool: WebServerPostgresPoolServiceSettings
 }
 
 #[serde_as]
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerDatabasePoolServiceSettings {
+pub struct WebServerPostgresPoolServiceSettings {
      /// The maximum number of connections allowed.
      pub max_size: u32,
      /// The minimum idle connection count the pool will attempt to maintain.
@@ -90,7 +100,7 @@ pub struct WebServerDatabasePoolServiceSettings {
      pub reaper_rate: Duration,
 }
 
-impl Default for WebServerDatabasePoolServiceSettings {
+impl Default for WebServerPostgresPoolServiceSettings {
     fn default() -> Self {
         Self {
             max_size: 10,
@@ -112,7 +122,7 @@ impl Default for WebServerRootSettings {
     }
 }
 
-impl Default for WebServerDatabaseServiceSettings {
+impl Default for WebServerPostgresServiceSettings {
     fn default() -> Self {
         Self {
             host: Ipv4Addr::LOCALHOST,
@@ -120,7 +130,7 @@ impl Default for WebServerDatabaseServiceSettings {
             user: String::from("johndoe"),
             password: String::from("mysecretpassword"),
             database: String::from("hexalite"),
-            pool: WebServerDatabasePoolServiceSettings::default(),
+            pool: WebServerPostgresPoolServiceSettings::default(),
         }
     }
 }
@@ -141,21 +151,40 @@ impl Default for WebServerRedisServiceSettings {
         Self {
             host: Ipv4Addr::LOCALHOST,
             port: 6379,
+            password: String::from("mysecretpassword")
         }
+    }
+}
+
+impl Default for WebServerRabbitMQServiceSettings {
+    fn default() -> Self {
+        Self {
+            host: Ipv4Addr::LOCALHOST,
+            port: 5672,
+            username: String::from("johndoe"),
+            password: String::from("mysecretpassword"),
+        }
+    }
+}
+
+impl WebServerRabbitMQServiceSettings {
+    pub fn url(&self) -> String {
+        format!("amqp://{}:{}@{}:{}", self.username, self.password, self.host, self.port)
     }
 }
 
 impl WebServerRedisServiceSettings {
     pub fn url(&self) -> String {
         format!(
-            "redis://{}:{}",
+            "redis://:{}@{}:{}",
+            self.password,
             self.host,
             self.port
         )
     }
 }
 
-impl WebServerDatabaseServiceSettings {
+impl WebServerPostgresServiceSettings {
     pub fn url(&self) -> String {
         format!("postgresql://{}:{}/{}?user={}&password={}", self.host, self.port, self.database, self.user, self.password)
     }
