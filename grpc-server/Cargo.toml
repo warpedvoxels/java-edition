@@ -1,8 +1,38 @@
 [package]
-name = "rpc-server"
+name = "grpc-server"
+publish = false
 version = "0.1.0"
 edition = "2021"
+license = "AGPL-3.0"
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+hexalite-common = { path = "../common-rust" }
+tonic = { version = "^0.7", features = ["tls", "compression"] }
+uuid = { version = "^1", features = ["v4", "serde"] }
+chrono = { version = "^0.4", features = ["serde"] }
+log = "^0.4"
+env_logger = "^0.9"
+bytes = "^1"
+serde = { version = "^1", features = ["derive"] }
+serde_json = "^1"
+tokio = "^1.18"
+lapin = "^2.1"
+toml = "^0.5"
+anyhow = "^1.0"
+async-trait = "^0.1"
+sqlx = { version = "^0.5", features = ["postgres", "runtime-tokio-rustls", "uuid", "chrono"] }
+ormx = { version = "^0.10", features = ["postgres"] }
+cbor4ii = { version = "^0.2", features = ["serde1", "use_std"] }
+
+[build-dependencies]
+tonic-build = "^0.7"
+glob = "^0"
+
+[patch.crates-io]
+prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
+
+[profile.release]
+lto = true
