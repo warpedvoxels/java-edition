@@ -10,11 +10,8 @@ pub struct HelloRequest {
 pub struct HelloResponse {
     pub message: ::prost::alloc::string::String,
 }
-/// Generated server implementations.
-pub mod greeter_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+pub mod greeter {
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with GreeterServer.
     #[async_trait]
     pub trait Greeter: Send + Sync + 'static {
         async fn say_hello(
@@ -25,21 +22,20 @@ pub mod greeter_server {
     #[derive(Debug)]
     pub struct GreeterServer<T: Greeter> {
         inner: _Inner<T>,
-        accept_compression_encodings: (),
-        send_compression_encodings: (),
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Greeter> GreeterServer<T> {
-        pub fn new(inner: T) -> Self {
-            Self::from_arc(Arc::new(inner))
-        }
         pub fn from_arc(inner: Arc<T>) -> Self {
-            let inner = _Inner(inner);
             Self {
-                inner,
+                inner: _Inner(inner),
                 accept_compression_encodings: Default::default(),
                 send_compression_encodings: Default::default(),
             }
+        }
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
         }
         pub fn with_interceptor<F>(
             inner: T,
@@ -49,6 +45,16 @@ pub mod greeter_server {
             F: tonic::service::Interceptor,
         {
             InterceptedService::new(Self::new(inner), interceptor)
+        }
+        #[must_use]
+        pub fn accept_gzip(mut self) -> Self {
+            self.accept_compression_encodings.enable_gzip();
+            self
+        }
+        #[must_use]
+        pub fn send_gzip(mut self) -> Self {
+            self.send_compression_encodings.enable_gzip();
+            self
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for GreeterServer<T>
@@ -67,9 +73,8 @@ pub mod greeter_server {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
-            let inner = self.inner.clone();
             match req.uri().path() {
-                "/protocol.Greeter/SayHello" => {
+                "/protocol.Greeter/say_hello" => {
                     #[allow(non_camel_case_types)]
                     struct SayHelloSvc<T: Greeter>(pub Arc<T>);
                     impl<T: Greeter> tonic::server::UnaryService<super::HelloRequest>
@@ -84,7 +89,7 @@ pub mod greeter_server {
                             request: tonic::Request<super::HelloRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).say_hello(request).await };
+                            let fut = async move { inner.say_hello(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -94,7 +99,7 @@ pub mod greeter_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = SayHelloSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = crate::codec::CborCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -122,11 +127,10 @@ pub mod greeter_server {
     }
     impl<T: Greeter> Clone for GreeterServer<T> {
         fn clone(&self) -> Self {
-            let inner = self.inner.clone();
             Self {
-                inner,
-                accept_compression_encodings: self.accept_compression_encodings,
-                send_compression_encodings: self.send_compression_encodings,
+                inner: self.inner.clone(),
+                accept_compression_encodings: self.accept_compression_encodings.clone(),
+                send_compression_encodings: self.send_compression_encodings.clone(),
             }
         }
     }

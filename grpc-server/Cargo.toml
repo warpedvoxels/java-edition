@@ -23,15 +23,24 @@ lapin = "^2.1"
 toml = "^0.5"
 anyhow = "^1.0"
 async-trait = "^0.1"
-sqlx = { version = "^0.5", features = ["postgres", "runtime-tokio-rustls", "uuid", "chrono"] }
 ormx = { version = "^0.10", features = ["postgres"] }
 cbor4ii = { version = "^0.2", features = ["serde1", "use_std"] }
+prost = "^0.10"
+
+[dependencies.sqlx]
+version = "^0.5"
+features = ["postgres", "runtime-tokio-rustls", "uuid", "chrono"]
 
 [build-dependencies]
-tonic-build = "^0.7"
+prost-build = "^0.10"
+syn = "^1"
+prettyplease = "^0.1"
+tonic-build = { version = "^0.7", features = ["compression"] }
 glob = "^0"
+heck = "^0.4"
 
 [patch.crates-io]
+prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 
 [profile.release]

@@ -1,6 +1,5 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[sea_query::enum_def(suffix = "TypeDef")]
 #[derive(Clone, PartialEq)]
 pub struct Role {
     pub id: ::prost::alloc::string::String,
@@ -11,7 +10,6 @@ pub struct Role {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[sea_query::enum_def(suffix = "TypeDef")]
 #[derive(Clone, PartialEq)]
 pub struct Player {
     pub uuid: ::uuid::Uuid,

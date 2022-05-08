@@ -1,2 +1,2 @@
-pub mod definitions;
+pub mod definition;
 pub mod codec;
