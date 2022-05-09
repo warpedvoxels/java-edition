@@ -6,7 +6,7 @@ use hexalite_common::dirs::{get_hexalite_dir_path, get_source_path};
 use crate::internal::*;
 
 lazy_static::lazy_static! {
-    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml", "resource-pack/Cargo.toml", "rest-webserver/Cargo.toml"];
+    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml", "resource-pack/Cargo.toml", "rest-webserver/Cargo.toml", "grpc-server/Cargo.toml"];
     static ref WATERFALL_MODULES: Vec<&'static str> = vec![];
 }
 
