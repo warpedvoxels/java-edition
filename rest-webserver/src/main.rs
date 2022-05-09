@@ -11,12 +11,12 @@ async fn main() -> std::io::Result<()> {
     let settings = settings::build();
 
     let state = WebServerStateData {
-        postgres: postgres::build(&settings.webserver).await.unwrap(),
-        redis: redis::build(&settings.webserver).await.unwrap(),
-        rabbitmq: rabbitmq::build(&settings.webserver).await.unwrap(),
+        postgres: postgres::build(&settings.grpc).await.unwrap(),
+        redis: redis::build(&settings.grpc).await.unwrap(),
+        rabbitmq: rabbitmq::build(&settings.grpc).await.unwrap(),
         settings,
     };
 
-    let ip = state.settings.webserver.ip();
+    let ip = state.settings.grpc.ip();
     server::build(state, ip).await
 }

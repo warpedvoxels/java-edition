@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use crate::{settings::{self, HexaliteSettings}, io::Writer};
+use hexalite_common::{settings::{HexaliteSettings, self}, io::Writer};
 
 pub fn build() -> Arc<HexaliteSettings> {
     let settings = settings::read().expect("Failed to read the settings.");

@@ -1,6 +1,7 @@
-pub use crate::definitions::{entity::Role, rest::RestRole};
+use crate::definitions::returned::ReturnedRole;
+pub use crate::definitions::entity::Role;
 
-impl From<&Role> for RestRole {
+impl From<&Role> for ReturnedRole {
     fn from(role: &Role) -> Self {
         Self {
             id: role.id.clone(),

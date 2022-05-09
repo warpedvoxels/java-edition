@@ -1,3 +1,4 @@
+use std::fmt::Write;
 use std::path::PathBuf;
 
 use heck::ToSnakeCase;
@@ -38,10 +39,7 @@ impl GrpcServiceGenerator {
     fn generate_server_start_trait(&self, service: &Service, buf: &mut String) {
         buf.push_str("\nuse tonic::codegen::*;\n");
         buf.push_str("\n#[async_trait]\n");
-        buf.push_str(&format!(
-            "pub trait {}: Send + Sync + 'static {{\n",
-            service.name
-        ));
+        writeln!(buf, "pub trait {}: Send + Sync + 'static {{", service.name).unwrap();
     }
 
     fn generate_server_trait_method(&self, method: &Method, buf: &mut String) {
@@ -49,57 +47,75 @@ impl GrpcServiceGenerator {
         let (req_name, res_name) = self.request_names(method);
         match (method.client_streaming, method.server_streaming) {
             (false, false) => {
-                buf.push_str(&format!(
+                write!(
+                    buf,
                     "async fn {}(&self, request: tonic::Request<{}>) ",
                     method.name, req_name
-                ));
-                buf.push_str(&format!(
+                )
+                .unwrap();
+                write!(
+                    buf,
                     " -> Result<tonic::Response<{}>, tonic::Status>;",
                     res_name
-                ));
+                )
+                .unwrap();
             }
             (true, false) => {
-                buf.push_str(&format!(
+                write!(
+                    buf,
                     "async fn {}(&self, request: tonic::Request<tonic::Streaming<{}>>) ",
                     method.name, req_name
-                ));
-                buf.push_str(&format!(
+                )
+                .unwrap();
+                write!(
+                    buf,
                     " -> Result<tonic::Response<tonic::Streaming<{}>>, tonic::Status>;",
                     res_name
-                ));
+                )
+                .unwrap();
             }
             (false, true) => {
-                buf.push_str(&format!("type {}Stream = futures_core::Stream<Item = Result<{}, tonic::Status>> + Send + 'static;\n", name, res_name));
-                buf.push_str(&format!(
+                writeln!(buf,"type {}Stream = futures_core::Stream<Item = Result<{}, tonic::Status>> + Send + 'static;", name, res_name).unwrap();
+                write!(
+                    buf,
                     "async fn {}(&self, request: tonic::Request<{}>) ",
                     method.name, req_name
-                ));
-                buf.push_str(&format!(
+                )
+                .unwrap();
+                write!(
+                    buf,
                     " -> Result<tonic::Response<Self::{}Stream>, tonic::Status>;",
                     name
-                ));
+                )
+                .unwrap();
             }
             (true, true) => {
-                buf.push_str(&format!("type {}Stream = futures_core::Stream<Item = Result<{}, tonic::Status>> + Send + 'static;\n", name, res_name));
-                buf.push_str(&format!(
+                writeln!(buf,"type {}Stream = futures_core::Stream<Item = Result<{}, tonic::Status>> + Send + 'static;", name, res_name).unwrap();
+                write!(
+                    buf,
                     "async fn {}(&self, request: tonic::Request<tonic::Streaming<{}>>) ",
                     method.name, req_name
-                ));
-                buf.push_str(&format!(
+                )
+                .unwrap();
+                write!(
+                    buf,
                     " -> Result<tonic::Response<Self::{}Stream>, tonic::Status>;",
                     name
-                ));
+                )
+                .unwrap();
             }
         }
-        buf.push_str("\n");
+        buf.push('\n');
     }
 
     fn generate_server_trait_impl_struct(&self, service: &Service, buf: &mut String) {
         buf.push_str("#[derive(Debug)]\n");
-        buf.push_str(&format!(
-            "pub struct {}Server<T: {}> {{\n",
+        writeln!(
+            buf,
+            "pub struct {}Server<T: {}> {{",
             service.name, service.name
-        ));
+        )
+        .unwrap();
         buf.push_str("inner: _Inner<T>,\n");
         buf.push_str("accept_compression_encodings: EnabledCompressionEncodings,\n");
         buf.push_str("send_compression_encodings: EnabledCompressionEncodings,\n");
@@ -108,10 +124,12 @@ impl GrpcServiceGenerator {
     }
 
     fn generate_server_trait_impl_builder(&self, service: &Service, buf: &mut String) {
-        buf.push_str(&format!(
-            "impl <T: {}> {}Server<T> {{\n",
+        writeln!(
+            buf,
+            "impl <T: {}> {}Server<T> {{",
             service.name, service.name
-        ));
+        )
+        .unwrap();
         buf.push_str("pub fn from_arc(inner: Arc<T>) -> Self {\n");
         buf.push_str("Self {\n");
         buf.push_str("inner: _Inner(inner),\n");
@@ -150,13 +168,15 @@ impl GrpcServiceGenerator {
         method: &Method,
         buf: &mut String,
     ) {
-        buf.push_str(&format!(
-            "fn call(&mut self, request: tonic::Request<{}>) -> Self::Future {{\n",
+        writeln!(
+            buf,
+            "fn call(&mut self, request: tonic::Request<{}>) -> Self::Future {{",
             request
-        ));
+        )
+        .unwrap();
         buf.push_str("let inner = self.0.clone();\n");
         buf.push_str("let fut = async move {");
-        buf.push_str(&format!("inner.{}(request).await\n", method.name));
+        writeln!(buf, "inner.{}(request).await", method.name).unwrap();
         buf.push_str("};\n");
         buf.push_str("Box::pin(fut)\n");
         buf.push_str("}\n");
@@ -166,16 +186,13 @@ impl GrpcServiceGenerator {
         buf.push_str("let inner = self.inner.clone();\n");
         buf.push_str("let fut = async move {\n");
         buf.push_str("let inner = inner.0;\n");
-        buf.push_str(&format!("let method = {}Svc(inner);\n", method.proto_name));
-        buf.push_str(&format!("let codec = {}::default();\n", self.codec_name));
+        writeln!(buf, "let method = {}Svc(inner);", method.proto_name).unwrap();
+        writeln!(buf, "let codec = {}::default();", self.codec_name).unwrap();
         buf.push_str("let mut grpc = tonic::server::Grpc::new(codec)");
         buf.push_str(
             ".apply_compression_config(accept_compression_encodings, send_compression_encodings);",
         );
-        buf.push_str(&format!(
-            "let res = grpc.{}(method, req).await;\n",
-            function_name
-        ));
+        writeln!(buf, "let res = grpc.{}(method, req).await;", function_name).unwrap();
         buf.push_str("Ok(res)\n");
         buf.push_str("};\n");
         buf.push_str("Box::pin(fut)\n");
@@ -183,12 +200,14 @@ impl GrpcServiceGenerator {
 
     fn generate_server_trait_impl_service(&self, service: &Service, buf: &mut String) {
         let package2 = if service.package.is_empty() { "" } else { "." };
-        buf.push_str(&format!(
-            "impl<T, B> tonic::codegen::Service<http::Request<B>> for {}Server<T>\n",
+        writeln!(
+            buf,
+            "impl<T, B> tonic::codegen::Service<http::Request<B>> for {}Server<T>",
             service.name
-        ));
+        )
+        .unwrap();
         buf.push_str("where\n");
-        buf.push_str(&format!("T: {},\n", service.name));
+        writeln!(buf, "T: {},", service.name).unwrap();
         buf.push_str("B: Body + Send + 'static,\n");
         buf.push_str("B::Error: Into<StdError> + Send + 'static,\n");
         buf.push_str("{\n");
@@ -209,54 +228,58 @@ impl GrpcServiceGenerator {
             );
 
             let (req_name, res_name) = self.request_names(method);
-            buf.push_str(&format!("{} => {{\n", grpc_path));
+            writeln!(buf, "{} => {{", grpc_path).unwrap();
             buf.push_str("#[allow(non_camel_case_types)]\n");
-            buf.push_str(&format!(
-                "struct {}Svc<T: {}>(pub Arc<T>);\n",
+            writeln!(
+                buf,
+                "struct {}Svc<T: {}>(pub Arc<T>);",
                 method.proto_name, service.name
-            ));
+            )
+            .unwrap();
             match (method.client_streaming, method.server_streaming) {
                 (false, false) => {
-                    buf.push_str(&format!(
-                        "impl<T: {}> tonic::server::UnaryService<{}> for {}Svc<T> {{\n",
+                    writeln!(
+                        buf,
+                        "impl<T: {}> tonic::server::UnaryService<{}> for {}Svc<T> {{",
                         service.name, req_name, method.proto_name
-                    ));
-                    buf.push_str(&format!("type Response = {};\n", res_name));
+                    )
+                    .unwrap();
+                    writeln!(buf, "type Response = {};", res_name).unwrap();
                     buf.push_str("type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;\n");
                     self.apply_streaming_to_buf("unary", &req_name, method, buf);
                 }
                 (false, true) => {
-                    buf.push_str(&format!(
-                        "impl<T: {}> tonic::server::ServerStreamingService<{}> for {}Svc<T> {{\n",
+                    writeln!(
+                        buf,
+                        "impl<T: {}> tonic::server::ServerStreamingService<{}> for {}Svc<T> {{",
                         service.name, req_name, method.proto_name
-                    ));
-                    buf.push_str(&format!("type Response = {};\n", res_name));
-                    buf.push_str(&format!(
-                        "type ResponseStream = T::{}Stream;\n",
-                        method.name
-                    ));
+                    )
+                    .unwrap();
+                    writeln!(buf, "type Response = {};", res_name).unwrap();
+                    writeln!(buf, "type ResponseStream = T::{}Stream;", method.name).unwrap();
                     buf.push_str("type Future = BoxFuture<tonic::Response<Self::ResponseStream>, tonic::Status>;\n");
                     self.apply_streaming_to_buf("server_streaming", &req_name, method, buf);
                 }
                 (true, false) => {
-                    buf.push_str(&format!(
-                        "impl<T: {}> tonic::server::ClientStreamingService<{}> for {}Svc<T> {{\n",
+                    writeln!(
+                        buf,
+                        "impl<T: {}> tonic::server::ClientStreamingService<{}> for {}Svc<T> {{",
                         service.name, req_name, method.proto_name
-                    ));
-                    buf.push_str(&format!("type Response = {};\n", res_name));
+                    )
+                    .unwrap();
+                    writeln!(buf, "type Response = {};", res_name).unwrap();
                     buf.push_str("type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;\n");
                     self.apply_streaming_to_buf("client_streaming", &req_name, method, buf);
                 }
                 (true, true) => {
-                    buf.push_str(&format!(
-                        "impl<T: {}> tonic::server::StreamingService<{}> for {}Svc<T> {{\n",
+                    writeln!(
+                        buf,
+                        "impl<T: {}> tonic::server::StreamingService<{}> for {}Svc<T> {{",
                         service.name, req_name, method.proto_name
-                    ));
-                    buf.push_str(&format!("type Response = {};\n", res_name));
-                    buf.push_str(&format!(
-                        "type ResponseStream = T::{}Stream;\n",
-                        method.name
-                    ));
+                    )
+                    .unwrap();
+                    writeln!(buf, "type Response = {};", res_name).unwrap();
+                    writeln!(buf, "type ResponseStream = T::{}Stream;", method.name).unwrap();
                     buf.push_str("type Future = BoxFuture<tonic::Response<Self::ResponseStream>, tonic::Status>;\n");
                     self.apply_streaming_to_buf("streaming", &req_name, method, buf);
                 }
@@ -274,10 +297,12 @@ impl GrpcServiceGenerator {
         buf.push_str("}\n");
         buf.push_str("}\n");
         buf.push_str("}\n");
-        buf.push_str(&format!(
-            "impl<T: {}> Clone for {}Server<T> {{\n",
+        writeln!(
+            buf,
+            "impl<T: {}> Clone for {}Server<T> {{",
             service.name, service.name
-        ));
+        )
+        .unwrap();
 
         buf.push_str("fn clone(&self) -> Self {\n");
         buf.push_str("Self {\n");
@@ -287,10 +312,7 @@ impl GrpcServiceGenerator {
         buf.push_str("}\n");
         buf.push_str("}\n");
         buf.push_str("}\n");
-        buf.push_str(&format!(
-            "impl<T: {}> Clone for _Inner<T> {{\n",
-            service.name
-        ));
+        writeln!(buf, "impl<T: {}> Clone for _Inner<T> {{", service.name).unwrap();
         buf.push_str("fn clone(&self) -> Self { Self(self.0.clone()) }\n");
         buf.push_str("}\n");
         buf.push_str("impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {\n");
@@ -298,20 +320,19 @@ impl GrpcServiceGenerator {
         buf.push_str("write!(f, \"{:?}\", self.0)\n");
         buf.push_str("}\n");
         buf.push_str("}\n");
-        buf.push_str(&format!(
-            "impl<T: {}> tonic::transport::NamedService for {}Server<T> {{\n",
+        writeln!(
+            buf,
+            "impl<T: {}> tonic::transport::NamedService for {}Server<T> {{",
             service.name, service.name
-        ));
+        )
+        .unwrap();
         let path = format!("{}{}{}", service.package, package2, service.name);
-        buf.push_str(&format!("const NAME: &'static str = \"{}\";\n", path));
+        writeln!(buf, "const NAME: &'static str = \"{}\";", path).unwrap();
         buf.push_str("}\n");
     }
 
     fn generate_server(&self, service: &Service, buf: &mut String) {
-        buf.push_str(&format!(
-            "pub mod {} {{\n",
-            service.proto_name.to_snake_case()
-        ));
+        writeln!(buf, "pub mod {} {{", service.proto_name.to_snake_case()).unwrap();
         self.generate_server_start_trait(service, buf);
         for method in service.methods.iter() {
             self.generate_server_trait_method(method, buf);
@@ -324,16 +345,18 @@ impl GrpcServiceGenerator {
 
     fn generate_client_start_struct(&self, service: &Service, buf: &mut String) {
         buf.push_str("#[derive(Clone, Debug)]\n");
-        buf.push_str(&format!("pub struct {}Client<T> {{\n", service.name));
+        writeln!(buf, "pub struct {}Client<T> {{", service.name).unwrap();
         buf.push_str("inner: tonic::client::Grpc<T>,\n");
         buf.push_str("}\n");
     }
 
     fn generate_client_struct_connect_impl(&self, service: &Service, buf: &mut String) {
-        buf.push_str(&format!(
-            "impl {}Client<tonic::transport::Channel> {{\n",
+        writeln!(
+            buf,
+            "impl {}Client<tonic::transport::Channel> {{",
             service.name
-        ));
+        )
+        .unwrap();
         buf.push_str("pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>\n");
         buf.push_str("where D: std::convert::TryInto<tonic::transport::Endpoint>, D::Error: Into<StdError>, {\n");
         buf.push_str("let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;\n");
@@ -342,6 +365,7 @@ impl GrpcServiceGenerator {
         buf.push_str("}\n");
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn generate_client_struct_impl_method(
         &self,
         service: &Service,
@@ -370,49 +394,55 @@ impl GrpcServiceGenerator {
         } else {
             format!("tonic::Response<{}>", res_name)
         };
-        buf.push_str(&format!(
+        write!(
+            buf,
             "pub async fn {}(&mut self, request: {})",
-            method.name, req_type
-        ));
-        buf.push_str(&format!(" -> Result<{}, tonic::Status> {{\n", res_type));
+            &method.name, req_type
+        )
+        .unwrap();
+        writeln!(buf, " -> Result<{}, tonic::Status> {{", res_type).unwrap();
         buf.push_str("self.inner.ready().await.map_err(|e| {\n");
         buf.push_str("tonic::Status::new(tonic::Code::Unknown, format!(\"Service was not ready: {}\", e.into()))\n");
         buf.push_str("})?;\n");
-        buf.push_str(&format!("let codec = {}::default();\n", self.codec_name));
-        buf.push_str(&format!(
-            "let path = http::uri::PathAndQuery::from_static({});\n",
+        writeln!(buf, "let codec = {}::default();", self.codec_name).unwrap();
+        writeln!(
+            buf,
+            "let path = http::uri::PathAndQuery::from_static({});",
             grpc_path
-        ));
+        )
+        .unwrap();
         let into = if into_streaming {
             "into_streaming_request"
         } else {
             "into_request"
         };
-        buf.push_str(&format!(
-            "self.inner.{}(request.{}(), path, codec).await\n",
+        writeln!(
+            buf,
+            "self.inner.{}(request.{}(), path, codec).await",
             func_name, into
-        ));
-        buf.push_str("}");
+        )
+        .unwrap();
+        buf.push('}');
     }
 
     fn generate_client_struct_impl(&self, service: &Service, buf: &mut String) {
-        buf.push_str(&format!("impl<T> {}Client<T>\n", service.name));
+        writeln!(buf, "impl<T> {}Client<T>", service.name).unwrap();
         buf.push_str("where T: tonic::client::GrpcService<tonic::body::BoxBody>, T::Error: Into<StdError>,\n");
         buf.push_str("T::ResponseBody: Body<Data = Bytes> + Send + 'static, <T::ResponseBody as Body>::Error: Into<StdError> + Send, {\n");
         buf.push_str("pub fn new(inner: T) -> Self {\n");
         buf.push_str("Self { inner: tonic::client::Grpc::new(inner) }\n");
         buf.push_str("}\n");
-        buf.push_str(
-            &format!("pub fn with_interceptor<F>(inner: T, interceptor: F) -> {}Client<InterceptedService<T, F>>\n", service.name)
-        );
+        writeln!(buf, "pub fn with_interceptor<F>(inner: T, interceptor: F) -> {}Client<InterceptedService<T, F>>", service.name).unwrap();
         buf.push_str("where F: tonic::service::Interceptor, T::ResponseBody: Default, T: tonic::codegen::Service<\n");
         buf.push_str("http::Request<tonic::body::BoxBody>,\n");
         buf.push_str("Response = http::Response<<T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody>>,\n");
         buf.push_str("<T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error: Into<StdError> + Send + Sync, {\n");
-        buf.push_str(&format!(
-            "{}Client::new(InterceptedService::new(inner, interceptor))\n",
+        writeln!(
+            buf,
+            "{}Client::new(InterceptedService::new(inner, interceptor))",
             service.name
-        ));
+        )
+        .unwrap();
         buf.push_str("}\n");
         buf.push_str("#[must_use]\n");
         buf.push_str("pub fn send_gzip(mut self) -> Self {\n");

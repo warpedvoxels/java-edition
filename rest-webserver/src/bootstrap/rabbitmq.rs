@@ -5,7 +5,8 @@ use lapin::{
     options::QueueDeclareOptions, types::FieldTable, Channel, Connection, ConnectionProperties,
 };
 
-use crate::{definitions::protocol::CommunicationsKey, settings::WebServerSettings};
+use crate::definitions::protocol::CommunicationsKey;
+use hexalite_common::settings::GrpcSettings;
 
 #[derive(Clone)]
 pub struct RabbitMQService {
@@ -13,7 +14,7 @@ pub struct RabbitMQService {
     pub channel: Channel,
 }
 
-pub async fn build(settings: &WebServerSettings) -> Result<RabbitMQService> {
+pub async fn build(settings: &GrpcSettings) -> Result<RabbitMQService> {
     let url = settings.services.rabbitmq.url();
     let connection = Connection::connect(&url, ConnectionProperties::default())
         .await

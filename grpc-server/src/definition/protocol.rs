@@ -1,13 +1,13 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct HelloRequest {
     pub name: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Clone, PartialEq)]
-pub struct HelloResponse {
+#[derive(Debug, Clone, PartialEq)]
+pub struct HelloReply {
     pub message: ::prost::alloc::string::String,
 }
 pub mod greeter {
@@ -17,7 +17,7 @@ pub mod greeter {
         async fn say_hello(
             &self,
             request: tonic::Request<super::HelloRequest>,
-        ) -> Result<tonic::Response<super::HelloResponse>, tonic::Status>;
+        ) -> Result<tonic::Response<super::HelloReply>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct GreeterServer<T: Greeter> {
@@ -79,7 +79,7 @@ pub mod greeter {
                     struct SayHelloSvc<T: Greeter>(pub Arc<T>);
                     impl<T: Greeter> tonic::server::UnaryService<super::HelloRequest>
                     for SayHelloSvc<T> {
-                        type Response = super::HelloResponse;
+                        type Response = super::HelloReply;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -205,7 +205,7 @@ pub mod greeter {
         pub async fn say_hello(
             &mut self,
             request: impl tonic::IntoRequest<super::HelloRequest>,
-        ) -> Result<tonic::Response<super::HelloResponse>, tonic::Status> {
+        ) -> Result<tonic::Response<super::HelloReply>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -225,14 +225,14 @@ pub mod greeter {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 #[repr(i32)]
 pub enum RedisKey {
     InternalIdentity = 1,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 #[repr(i32)]
 pub enum CommunicationsKey {
     DataQueue = 1,

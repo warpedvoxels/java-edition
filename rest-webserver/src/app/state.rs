@@ -3,7 +3,8 @@ use std::sync::Arc;
 use bb8_postgres::{PostgresConnectionManager, bb8::Pool};
 use tokio_postgres::NoTls;
 
-use crate::{settings::HexaliteSettings, bootstrap::{redis::RedisConnection, rabbitmq::RabbitMQService}};
+use hexalite_common::settings::HexaliteSettings;
+use crate::bootstrap::{redis::RedisConnection, rabbitmq::RabbitMQService};
 
 pub type WebServerStateRaw = std::sync::Arc<WebServerStateData>;
 pub type WebServerState = actix_web::web::Data<WebServerStateRaw>;

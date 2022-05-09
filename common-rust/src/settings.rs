@@ -14,34 +14,46 @@ use serde_with::DurationSeconds;
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct HexaliteSettings {
     #[serde(default)]
+    pub grpc: GrpcSettings,
+    #[serde(default)]
     pub webserver: WebServerSettings,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct WebServerSettings {
     #[serde(default)]
-    pub root: WebServerRootSettings,
+    pub root: IpSettings
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
+pub struct GrpcSettings {
     #[serde(default)]
-    pub services: WebServerServicesSettings,
+    pub root: IpSettings,
+    #[serde(default)]
+    pub services: GrpcServicesSettings,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerRootSettings {
+pub struct IpSettings {
     pub ip: Ipv4Addr,
     pub port: u16,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
-pub struct WebServerServicesSettings {
-    pub postgres: WebServerPostgresServiceSettings,
-    pub identity: WebServerIdentityServiceSettings,
-    pub rabbitmq: WebServerRabbitMQServiceSettings,
-    pub redis: WebServerRedisServiceSettings,
+pub struct GrpcServicesSettings {
+    #[serde(default)]
+    pub postgres: GrpcPostgresServiceSettings,
+    #[serde(default)]
+    pub identity: GrpcIdentityServiceSettings,
+    #[serde(default)]
+    pub rabbitmq: GrpcRabbitMQServiceSettings,
+    #[serde(default)]
+    pub redis: GrpcRedisServiceSettings,
 }
 
 #[serde_as]
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerIdentityServiceSettings {
+pub struct GrpcIdentityServiceSettings {
     pub secret_key: String,
     #[serde_as(as = "DurationSeconds<i64>")]
     #[serde(rename = "expiration_in_seconds")]
@@ -51,14 +63,14 @@ pub struct WebServerIdentityServiceSettings {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerRedisServiceSettings {
+pub struct GrpcRedisServiceSettings {
     pub host: Ipv4Addr,
     pub port: u16,
     pub password: String,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerRabbitMQServiceSettings {
+pub struct GrpcRabbitMQServiceSettings {
     pub host: Ipv4Addr,
     pub port: u16,
     pub username: String,
@@ -66,18 +78,18 @@ pub struct WebServerRabbitMQServiceSettings {
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerPostgresServiceSettings {
+pub struct GrpcPostgresServiceSettings {
     pub host: Ipv4Addr,
     pub port: u16,
     pub user: String,
     pub password: String,
     pub database: String,
-    pub pool: WebServerPostgresPoolServiceSettings
+    pub pool: GrpcPostgresPoolServiceSettings
 }
 
 #[serde_as]
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct WebServerPostgresPoolServiceSettings {
+pub struct GrpcPostgresPoolServiceSettings {
      /// The maximum number of connections allowed.
      pub max_size: u32,
      /// The minimum idle connection count the pool will attempt to maintain.
@@ -100,7 +112,7 @@ pub struct WebServerPostgresPoolServiceSettings {
      pub reaper_rate: Duration,
 }
 
-impl Default for WebServerPostgresPoolServiceSettings {
+impl Default for GrpcPostgresPoolServiceSettings {
     fn default() -> Self {
         Self {
             max_size: 10,
@@ -113,7 +125,7 @@ impl Default for WebServerPostgresPoolServiceSettings {
     }
 }
 
-impl Default for WebServerRootSettings {
+impl Default for IpSettings {
     fn default() -> Self {
         Self {
             ip: Ipv4Addr::new(127, 0, 0, 1),
@@ -122,7 +134,7 @@ impl Default for WebServerRootSettings {
     }
 }
 
-impl Default for WebServerPostgresServiceSettings {
+impl Default for GrpcPostgresServiceSettings {
     fn default() -> Self {
         Self {
             host: Ipv4Addr::LOCALHOST,
@@ -130,12 +142,12 @@ impl Default for WebServerPostgresServiceSettings {
             user: String::from("johndoe"),
             password: String::from("mysecretpassword"),
             database: String::from("hexalite"),
-            pool: WebServerPostgresPoolServiceSettings::default(),
+            pool: GrpcPostgresPoolServiceSettings::default(),
         }
     }
 }
 
-impl Default for WebServerIdentityServiceSettings {
+impl Default for GrpcIdentityServiceSettings {
     fn default() -> Self {
         Self {
             secret_key: String::from("mysecretkey"),
@@ -146,7 +158,7 @@ impl Default for WebServerIdentityServiceSettings {
     }
 }
 
-impl Default for WebServerRedisServiceSettings {
+impl Default for GrpcRedisServiceSettings {
     fn default() -> Self {
         Self {
             host: Ipv4Addr::LOCALHOST,
@@ -156,7 +168,7 @@ impl Default for WebServerRedisServiceSettings {
     }
 }
 
-impl Default for WebServerRabbitMQServiceSettings {
+impl Default for GrpcRabbitMQServiceSettings {
     fn default() -> Self {
         Self {
             host: Ipv4Addr::LOCALHOST,
@@ -167,13 +179,13 @@ impl Default for WebServerRabbitMQServiceSettings {
     }
 }
 
-impl WebServerRabbitMQServiceSettings {
+impl GrpcRabbitMQServiceSettings {
     pub fn url(&self) -> String {
         format!("amqp://{}:{}@{}:{}", self.username, self.password, self.host, self.port)
     }
 }
 
-impl WebServerRedisServiceSettings {
+impl GrpcRedisServiceSettings {
     pub fn url(&self) -> String {
         format!(
             "redis://:{}@{}:{}",
@@ -184,7 +196,7 @@ impl WebServerRedisServiceSettings {
     }
 }
 
-impl WebServerPostgresServiceSettings {
+impl GrpcPostgresServiceSettings {
     pub fn url(&self) -> String {
         format!("postgresql://{}:{}/{}?user={}&password={}", self.host, self.port, self.database, self.user, self.password)
     }
@@ -219,7 +231,7 @@ impl Reader<HexaliteSettings, ()> for HexaliteSettings {
     }
 }
 
-impl WebServerSettings {
+impl GrpcSettings {
     pub fn ip(&self) -> SocketAddr {
         SocketAddr::new(self.root.ip.into(), self.root.port)
     }
@@ -230,5 +242,5 @@ pub fn read() -> Result<HexaliteSettings, &'static str> {
 }
 
 pub fn path() -> PathBuf {
-    hexalite_common::dirs::get_hexalite_dir_path().join("settings.toml")
+    crate::dirs::get_hexalite_dir_path().join("settings.toml")
 }

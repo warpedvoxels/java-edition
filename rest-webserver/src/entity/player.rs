@@ -1,5 +1,5 @@
 pub use crate::definitions::entity::{Player, PlayerTypeDef};
-use crate::{app::SqlPool, definitions::rest::RestPlayer};
+use crate::{app::SqlPool, definitions::returned::ReturnedPlayer};
 use actix_web::Either;
 use anyhow::{Context, Result};
 use sea_query::{
@@ -36,7 +36,7 @@ impl From<Row> for Player {
     }
 }
 
-impl From<&Player> for RestPlayer {
+impl From<&Player> for ReturnedPlayer {
     fn from(player: &Player) -> Self {
         Self {
             uuid: player.uuid,

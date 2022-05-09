@@ -1,17 +1,15 @@
 use std::{sync::Arc, time::Duration};
 
 use anyhow::{Context, Result};
+use hexalite_common::settings::GrpcSettings;
 use redis::{aio::Connection, AsyncCommands, Client};
 use tokio::{sync::Mutex, time::sleep};
 
-use crate::{
-    definitions::{protocol::RedisKey, rest::Authorization},
-    settings::WebServerSettings,
-};
+use crate::definitions::{protocol::RedisKey, rest::Authorization};
 
 pub type RedisConnection = Arc<Mutex<Connection>>;
 
-pub async fn build(settings: &WebServerSettings) -> Result<RedisConnection> {
+pub async fn build(settings: &GrpcSettings) -> Result<RedisConnection> {
     let client = Client::open(settings.services.redis.url())
         .context("Failed to connect to open a connection to Redis.")?;
 
@@ -34,7 +32,7 @@ pub async fn build(settings: &WebServerSettings) -> Result<RedisConnection> {
 }
 
 pub async fn loop_into_key_generation(
-    settings: &WebServerSettings,
+    settings: &GrpcSettings,
     connection: &Mutex<Connection>,
 ) {
     let delay = Duration::from_secs(5 * 60);

@@ -4,15 +4,15 @@ use uuid::Uuid;
 use crate::entity::Player;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
-pub struct RestPlayerCreationData {
+pub struct ReturnedPlayerCreationData {
     pub uuid: Uuid,
     pub last_username: String,
 }
 
-pub type RestPlayerCreation = actix_web::web::Json<RestPlayerCreationData>;
+pub type ReturnedPlayerCreation = actix_web::web::Json<ReturnedPlayerCreationData>;
 
-impl From<RestPlayerCreation> for Player {
-    fn from(data: RestPlayerCreation) -> Player {
+impl From<ReturnedPlayerCreation> for Player {
+    fn from(data: ReturnedPlayerCreation) -> Player {
         Player {
             uuid: data.uuid,
             last_username: data.last_username.clone(),

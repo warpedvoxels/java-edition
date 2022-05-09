@@ -12,14 +12,14 @@ use crate::{
     api::PageInfo,
     app::WebServerState,
     entity::{Entity, Player},
-    util::{try_either, IntoHttpError}, definitions::rest::RestPlayer,
+    util::{try_either, IntoHttpError}, definitions::returned::ReturnedPlayer,
 };
 
 mod dto;
 pub use dto::*;
 
 #[post("/")]
-pub async fn create(data: RestPlayerCreation, state: WebServerState) -> RestResult<RestPlayer> {
+pub async fn create(data: ReturnedPlayerCreation, state: WebServerState) -> RestResult<ReturnedPlayer> {
     let query = Player::find(&state.postgres, Either::Left(data.uuid)).await
         .http_internal_error("Failed to find the player.")?;
     if query.is_some() {
@@ -32,14 +32,14 @@ pub async fn create(data: RestPlayerCreation, state: WebServerState) -> RestResu
         .await
         .http_internal_error("Failed to create a new player")?;
 
-    Ok(Either::Right(web::Json(RestPlayer::from(&player))))
+    Ok(Either::Right(web::Json(ReturnedPlayer::from(&player))))
 }
 
 #[get("/")]
 pub async fn find_all(
     pagination: Query<PageInfo>,
     state: WebServerState,
-) -> RestResult<Vec<RestPlayer>> {
+) -> RestResult<Vec<ReturnedPlayer>> {
     let limit = pagination.limit.unwrap_or(5);
     if limit > 10 {
         return Ok(Either::Left(
@@ -48,29 +48,29 @@ pub async fn find_all(
     }
     let offset = (pagination.page.unwrap_or(1) - 1) * limit;
 
-    let players: Vec<RestPlayer> = Player::find_all_with_offset(&state.postgres, offset, limit)
+    let players: Vec<ReturnedPlayer> = Player::find_all_with_offset(&state.postgres, offset, limit)
         .await
         .http_internal_error("Failed to find all the players.")?
         .iter()
-        .map(RestPlayer::from)
+        .map(ReturnedPlayer::from)
         .collect();
 
     Ok(Either::Right(web::Json(players)))
 }
 
 #[get("/{id}")]
-pub async fn find(id: web::Path<String>, state: WebServerState) -> RestResult<RestPlayer> {
+pub async fn find(id: web::Path<String>, state: WebServerState) -> RestResult<ReturnedPlayer> {
     let id = try_either(|| Uuid::from_str(id.trim()), id.to_owned());
     let player = Player::find(&state.postgres, id)
         .await
         .http_internal_error("Failed to retrieve the player data.")?
         .http_not_found("Player not found.")?;
-    let player = RestPlayer::from(&player);
+    let player = ReturnedPlayer::from(&player);
     Ok(Either::Right(web::Json(player)))
 }
 
 #[delete("/{id}")]
-pub async fn delete(id: web::Path<String>, state: WebServerState) -> RestResult<RestPlayer> {
+pub async fn delete(id: web::Path<String>, state: WebServerState) -> RestResult<ReturnedPlayer> {
     let id = try_either(|| Uuid::from_str(id.trim()), id.to_owned());
     let player = Player::find(&state.postgres, id)
         .await
@@ -80,7 +80,7 @@ pub async fn delete(id: web::Path<String>, state: WebServerState) -> RestResult<
     Player::delete(&state.postgres, Either::Left(player.uuid))
         .await
         .http_internal_error("Failed to delete this player.")?;
-    let player = RestPlayer::from(&player);
+    let player = ReturnedPlayer::from(&player);
     
     Ok(Either::Right(web::Json(player)))
 }

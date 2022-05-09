@@ -1220,8 +1220,12 @@ name = "hexalite-common"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "chrono",
  "home",
  "lazy_static",
+ "serde",
+ "serde_with",
+ "toml",
 ]
 
 [[package]]

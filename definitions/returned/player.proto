@@ -4,13 +4,12 @@ option java_multiple_files = true;
 option java_package = "org.hexalite.network.protobuf.rest";
 option java_outer_classname = "PlayerProto";
 
-package rest;
+package returned;
 
-import "rest/role.proto";
 import "datatype/uuid.proto";
 import "google/protobuf/timestamp.proto";
 
-message RestPlayer {
+message ReturnedPlayer {
     required datatype.Uuid uuid = 1;
     required int32 hexes = 2;
     required string last_username = 3;

@@ -7,7 +7,7 @@ pub struct HelloRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
 #[derive(Clone, PartialEq)]
-pub struct HelloResponse {
+pub struct HelloReply {
     pub message: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
