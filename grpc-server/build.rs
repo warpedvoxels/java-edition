@@ -205,7 +205,7 @@ impl GrpcServiceGenerator {
         for method in &service.methods {
             let grpc_path = format!(
                 "\"/{}{}{}/{}\"",
-                service.package, package2, service.name, method.name
+                service.package, package2, service.name, method.proto_name
             );
 
             let (req_name, res_name) = self.request_names(method);
@@ -352,7 +352,7 @@ impl GrpcServiceGenerator {
         into_streaming: bool,
         buf: &mut String,
     ) {
-        let path = format!(
+        let grpc_path = format!(
             "\"/{}{}{}/{}\"",
             service.package,
             if service.package.is_empty() { "" } else { "." },
@@ -381,7 +381,7 @@ impl GrpcServiceGenerator {
         buf.push_str(&format!("let codec = {}::default();\n", self.codec_name));
         buf.push_str(&format!(
             "let path = http::uri::PathAndQuery::from_static({});\n",
-            path
+            grpc_path
         ));
         let into = if into_streaming {
             "into_streaming_request"

@@ -32,15 +32,11 @@ version = "^0.5"
 features = ["postgres", "runtime-tokio-rustls", "uuid", "chrono"]
 
 [build-dependencies]
-prost-build = "^0.10"
-tonic-build = "^0.7"
+prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 syn = "^1"
 prettyplease = "^0.1"
 glob = "^0"
 heck = "^0.4"
-
-[patch.crates-io]
-prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 
 [profile.release]
 lto = true

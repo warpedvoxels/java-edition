@@ -74,7 +74,7 @@ pub mod greeter {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/protocol.Greeter/say_hello" => {
+                "/protocol.Greeter/SayHello" => {
                     #[allow(non_camel_case_types)]
                     struct SayHelloSvc<T: Greeter>(pub Arc<T>);
                     impl<T: Greeter> tonic::server::UnaryService<super::HelloRequest>
