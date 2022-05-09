@@ -22,7 +22,9 @@ pub struct HexaliteSettings {
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct WebServerSettings {
     #[serde(default)]
-    pub root: IpSettings
+    pub root: IpSettings,
+    #[serde(default)]
+    pub grpc_client: IpSettings
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]

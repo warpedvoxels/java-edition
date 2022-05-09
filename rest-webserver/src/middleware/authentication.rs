@@ -83,7 +83,7 @@ pub fn create_identity_service(
         CookieIdentityPolicy::new(
             state
                 .settings
-                .webserver
+                .grpc
                 .services
                 .identity
                 .secret_key
@@ -92,7 +92,7 @@ pub fn create_identity_service(
         .name(
             state
                 .settings
-                .webserver
+                .grpc
                 .services
                 .identity
                 .cookie_name
@@ -102,7 +102,7 @@ pub fn create_identity_service(
         .max_age(Duration::seconds(
             state
                 .settings
-                .webserver
+                .grpc
                 .services
                 .identity
                 .expiration
