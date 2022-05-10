@@ -14,23 +14,23 @@ pub async fn build(settings: &GrpcSettings) -> Result<SqlPool> {
         .context("Failed to create a Postgres connection manager.")?;
 
     let pool = Pool::builder()
-        .max_size(settings.services.postgres.pool.max_size)
-        .min_idle(settings.services.postgres.pool.min_idle)
         .max_lifetime(
-            settings
+            Some(settings
                 .services
                 .postgres
                 .pool
                 .max_lifetime
-                .map(|duration| duration.to_std().unwrap()),
+                .to_std()
+                .unwrap()),
         )
         .idle_timeout(
-            settings
+            Some(settings
                 .services
                 .postgres
                 .pool
                 .idle_timeout
-                .map(|duration| duration.to_std().unwrap()),
+                .to_std()
+                .unwrap()),
         )
         .connection_timeout(
             settings
@@ -38,15 +38,6 @@ pub async fn build(settings: &GrpcSettings) -> Result<SqlPool> {
                 .postgres
                 .pool
                 .connection_timeout
-                .to_std()
-                .unwrap(),
-        )
-        .reaper_rate(
-            settings
-                .services
-                .postgres
-                .pool
-                .reaper_rate
                 .to_std()
                 .unwrap(),
         )
