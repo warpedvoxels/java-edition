@@ -1,3 +1,3 @@
 pub mod entity;
 pub mod protocol;
-pub mod returned;
+pub mod rest;

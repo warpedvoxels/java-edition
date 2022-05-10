@@ -6,9 +6,22 @@ on:
   pull_request:
     branches: [ 'dev/next' ]
 
+env:
+  CARGO_TERM_COLOR: always
+  DATABASE_URL: postgres://johndoe:mysecretpassword@localhost:5432/hexalite
+
 jobs:
   cargo-ubuntu-build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: johndoe
+          POSTGRES_PASSWORD: mysecretpassword
+          POSTGRES_DB: hexalite
+        ports:
+          - "5432:5432"
     steps:
       - uses: actions/checkout@v2
       - name: Use Cache

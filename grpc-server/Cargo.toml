@@ -23,9 +23,10 @@ lapin = "^2.1"
 toml = "^0.5"
 anyhow = "^1.0"
 async-trait = "^0.1"
-ormx = { version = "^0.10", features = ["postgres"] }
 cbor4ii = { version = "^0.2", features = ["serde1", "use_std"] }
 prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
+rustls = "^0.20"
+field_names = "^0.2"
 
 [dependencies.sqlx]
 version = "^0.5"
@@ -40,3 +41,5 @@ heck = "^0.4"
 
 [profile.release]
 lto = true
+opt-level = 3
+codegen-units = 1

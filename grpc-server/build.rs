@@ -533,15 +533,17 @@ fn main() {
     }
     println!("Files: {}", files.len());
 
+    
+
     prost_build::Config::new()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")
-        //.type_attribute(".entity", "#[sea_query::enum_def(suffix = \"TypeDef\")]")
         .extern_path(
             ".google.protobuf.Timestamp",
             "::chrono::DateTime<::chrono::Utc>",
         )
         .extern_path(".datatype.Uuid", "::uuid::Uuid")
+        .type_attribute(".entity", "#[derive(field_names::FieldNames)]")
         .out_dir("src/definition")
         .service_generator(Box::new(GrpcServiceGenerator::cbor()))
         .compile_protos(&files, &[working_directory])

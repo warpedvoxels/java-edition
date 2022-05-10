@@ -1,8 +1,8 @@
 syntax = "proto2";
 
 option java_multiple_files = true;
-option java_package = "org.hexalite.network.protobuf.rest";
-option java_outer_classname = "PlayerProto";
+option java_package = "org.hexalite.network.protobuf.returned";
+option java_outer_classname = "ReturnedProto";
 
 package returned;
 
