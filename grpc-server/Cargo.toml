@@ -26,7 +26,7 @@ async-trait = "^0.1"
 cbor4ii = { version = "^0.2", features = ["serde1", "use_std"] }
 prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 rustls = "^0.20"
-field_names = "^0.2"
+phf = { version = "^0.10", features = ["macros"] }
 
 [dependencies.sqlx]
 version = "^0.5"

@@ -703,6 +703,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "common-macros"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "concurrent-queue"
 version = "1.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1221,6 +1229,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "chrono",
+ "common-macros",
  "home",
  "lazy_static",
  "serde",

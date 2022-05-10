@@ -543,7 +543,7 @@ fn main() {
             "::chrono::DateTime<::chrono::Utc>",
         )
         .extern_path(".datatype.Uuid", "::uuid::Uuid")
-        .type_attribute(".entity", "#[derive(field_names::FieldNames)]")
+        .type_attribute(".entity", "#[derive(hexalite_common::ExportFields)]")
         .out_dir("src/definition")
         .service_generator(Box::new(GrpcServiceGenerator::cbor()))
         .compile_protos(&files, &[working_directory])
