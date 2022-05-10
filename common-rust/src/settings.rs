@@ -4,8 +4,7 @@ use std::{
     path::{PathBuf},
 };
 
-use crate::io::*;
-
+use anyhow::{Result, Context};
 use chrono::Duration;
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
@@ -22,21 +21,27 @@ pub struct HexaliteSettings {
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct WebServerSettings {
     #[serde(default)]
-    pub root: IpSettings,
+    pub root: WebServerRootSettings,
     #[serde(default)]
-    pub grpc_client: IpSettings
+    pub grpc_client: GrpcRootSettings
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct WebServerRootSettings {
+    pub ip: Ipv4Addr,
+    pub port: u16,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct GrpcSettings {
     #[serde(default)]
-    pub root: IpSettings,
+    pub root: GrpcRootSettings,
     #[serde(default)]
     pub services: GrpcServicesSettings,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct IpSettings {
+pub struct GrpcRootSettings {
     pub ip: Ipv4Addr,
     pub port: u16,
 }
@@ -114,6 +119,15 @@ pub struct GrpcPostgresPoolServiceSettings {
      pub reaper_rate: Duration,
 }
 
+impl Default for WebServerRootSettings {
+    fn default() -> Self {
+        Self {
+            ip: Ipv4Addr::LOCALHOST,
+            port: 8080,
+        }
+    }
+}
+
 impl Default for GrpcPostgresPoolServiceSettings {
     fn default() -> Self {
         Self {
@@ -127,11 +141,11 @@ impl Default for GrpcPostgresPoolServiceSettings {
     }
 }
 
-impl Default for IpSettings {
+impl Default for GrpcRootSettings {
     fn default() -> Self {
         Self {
-            ip: Ipv4Addr::new(127, 0, 0, 1),
-            port: 8080,
+            ip: Ipv4Addr::LOCALHOST,
+            port: 50051,
         }
     }
 }
@@ -204,31 +218,31 @@ impl GrpcPostgresServiceSettings {
     }
 }
 
-impl Writer<()> for HexaliteSettings {
-    fn write(&self, _: &()) -> Result<(), &str> {
+impl HexaliteSettings {
+    pub fn write(&self) -> Result<()> {
         let path = path();
         if !path.exists() && fs::create_dir_all(path.parent().unwrap()).is_err() {
-            return Err("Failed to create the settings directories.");
+            anyhow::bail!("Failed to create the settings directories.");
         }
         let toml = toml::to_string_pretty(self).expect("Failed to serialize the settings.");
         if fs::write(path, toml).is_err() {
-            return Err("Failed to write the settings file.");
+            anyhow::bail!("Failed to write the settings file.");
         };
         Ok(())
     }
 }
 
-impl Reader<HexaliteSettings, ()> for HexaliteSettings {
-    fn read(_: &()) -> Result<HexaliteSettings, &str> {
+impl HexaliteSettings {
+    pub fn read() -> Result<HexaliteSettings> {
         let path = path();
         if !path.exists() {
             let default = HexaliteSettings::default();
-            if default.write(&()).is_err() {
-                return Err("Failed to write the default settings.");
+            if default.write().is_err() {
+                anyhow::bail!("Failed to write the default settings.");
             }
         }
-        let content = fs::read_to_string(path).expect("Failed to read the settings file.");
-        let settings = toml::from_str(&content).expect("Failed to deserialize the settings.");
+        let content = fs::read_to_string(path).context("Failed to read the settings file.")?;
+        let settings = toml::from_str(&content).context("Failed to deserialize the settings.")?;
         Ok(settings)
     }
 }
@@ -239,8 +253,8 @@ impl GrpcSettings {
     }
 }
 
-pub fn read() -> Result<HexaliteSettings, &'static str> {
-    HexaliteSettings::read(&())
+pub fn read() -> Result<HexaliteSettings> {
+    HexaliteSettings::read()
 }
 
 pub fn path() -> PathBuf {
