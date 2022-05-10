@@ -62,4 +62,5 @@ jobs:
           name: cargo-artifacts
           path: |
             ./rest-webserver/target/release/rest-webserver 
+            ./grpc-server/target/release/grpc-server 
             ./cli/target/release/hexalite
