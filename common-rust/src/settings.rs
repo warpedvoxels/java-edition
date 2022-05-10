@@ -98,25 +98,19 @@ pub struct GrpcPostgresServiceSettings {
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct GrpcPostgresPoolServiceSettings {
      /// The maximum number of connections allowed.
-     pub max_size: u32,
-     /// The minimum idle connection count the pool will attempt to maintain.
-     pub min_idle: Option<u32>,
+     pub max_connections: u32,
      /// The maximum lifetime, if any, that a connection is allowed.
-     #[serde_as(as = "Option<DurationSeconds<i64>>")]
+     #[serde_as(as = "DurationSeconds<i64>")]
      #[serde(rename = "max_lifetime_in_seconds")]
-     pub max_lifetime: Option<Duration>,
+     pub max_lifetime: Duration,
      /// The duration, if any, after which idle_connections in excess of `min_idle` are closed.
-     #[serde_as(as = "Option<DurationSeconds<i64>>")]
+     #[serde_as(as = "DurationSeconds<i64>")]
      #[serde(rename = "idle_timeout_in_seconds")]
-     pub idle_timeout: Option<Duration>,
+     pub idle_timeout: Duration,
      /// The duration to wait to start a connection before giving up.
      #[serde_as(as = "DurationSeconds<i64>")]
      #[serde(rename = "connection_timeout_in_seconds")]
      pub connection_timeout: Duration,
-     /// The time interval used to wake up and reap connections.
-     #[serde_as(as = "DurationSeconds<i64>")]
-     #[serde(rename = "reaper_rate_in_seconds")]
-     pub reaper_rate: Duration,
 }
 
 impl Default for WebServerRootSettings {
@@ -131,12 +125,10 @@ impl Default for WebServerRootSettings {
 impl Default for GrpcPostgresPoolServiceSettings {
     fn default() -> Self {
         Self {
-            max_size: 10,
-            min_idle: None,
-            max_lifetime: Some(Duration::minutes(30)),
-            idle_timeout: Some(Duration::minutes(10)),
+            max_connections: 10,
+            max_lifetime: Duration::minutes(30),
+            idle_timeout: Duration::minutes(10),
             connection_timeout: Duration::seconds(30),
-            reaper_rate: Duration::seconds(30),
         }
     }
 }
