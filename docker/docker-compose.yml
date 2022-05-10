@@ -20,7 +20,6 @@ services:
     environment:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL,CONFIG
-      ALLOW_EMPTY_PASSWORD: no
     ports:
       - "6379:6379"
     volumes:

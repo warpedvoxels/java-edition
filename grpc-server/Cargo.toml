@@ -29,7 +29,7 @@ prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 
 [dependencies.sqlx]
 version = "^0.5"
-features = ["postgres", "runtime-tokio-rustls", "uuid", "chrono"]
+features = ["offline", "postgres", "runtime-tokio-rustls", "uuid", "chrono"]
 
 [build-dependencies]
 prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
