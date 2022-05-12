@@ -5,34 +5,57 @@ but there are just a few guidelines and our [code of conduct][coc] to follow in 
 
 ## Issue tracking
 
-You can find the issue tracker on [GitHub][issues]. If you've found a bug or have a feature request, please open an issue and we'll get back to you as soon as possible.
-For better management of issues, we separate issues into the following labels:
-* `bug`: Bug fixes and other issues that break the project
-* `feature request`: New features and other improvements to the project
-* `discussion`: Questions and comments about the project
-* `docs`: Documentation related issues
-* `help wanted`: Contributor help is appreciated for faster resolution
-* `duplicate`: This issue or pull request already exists
-* `on hold`: This issue or pull request is not ready to be worked on 
-* `wontfix`: This issue or pull request can not be fixed
-* `priority: <>`: This issue or pull request has a priority of <>
-* `performance`: This issue or pull request is related to performance
-* `proxy plugins`: This issue or pull request is related to our Waterfall plugins
-* `purpur plugins`: This issue or pull request is related to our Purpur plugins
-* `structuring`: This issue or pull request is related in how we can improve the project structure
-* `rest server`: This issue or pull request is related to our Rest API 
-* `security`: This issue or pull request is related to security
-* `cli`: This issue or pull request is related to our command-line interface
+You can find the issue tracker on [GitHub][issues]. This is used to track everything that happens in the project and to help us keep
+tracking of anything that is better for the project itself.
 
-## Guidelines
+### Feature requests
 
-1. Discuss your ideas in the issue tracking section of the project before submitting a pull request.
+If you have any ideas of features or how to improve the project, please let us know. We are always looking those and hearing it from
+the community is always great. You can submit feature requests by opening an issue in the issue tracker, make sure to provide detailed
+information if possible and describe any use cases if applicable.
 
-1. Suggestions are welcome in the issues or in our Discord community, where you can find in the project's README.md file.
+Feature requests are tagged as `✨ feature request` and their status will be updated by GitHub Projects, labels and the comments of
+the issue.
 
-1. Specify what issue you are addressing in the pull request description if applicable.
+### Bugs
 
-1. We recommend taking a look at the way we structure Kotlin and Rust code and the way we use it for having a better understanding of the project.
+If you found a bug or unexpected behaviour in anything Hexalite, please let us know by submitting a bug report in the issue tracker.
+Make sure to provide detailed information and describing steps to reproduce the behaviour and any error message that you get.
+
+Those are tagged as `🐛 bug` and their status will be updated by GitHub Projects, labels and the comments of the issue.
+
+### Wontfix
+
+Some tracked issues will be closed and marked as `🛠️ wontfix` if we decide they're not going to be implemented or fixed, usually
+due to being misaligned with the project goals or out of scope. In most cases, we will comment on the issue with more detailed
+reasoning.
+
+### Priority and state
+
+Some issues are tagged with priority labels, which are used to decide which issue should be worked on first and how critical or
+important it is. An example of priority or state labels are the following:
+* `🏷️ in progress` - the issue is already being worked on
+* `❗ priority: low` - the issue is low priority and will be worked on by last
+* `❗ priority: medium` - this issue is neither low or high priority and will have normal priority
+* `❗ priority: high` - the issue is high priority and will be worked on first
+
+## Category
+
+Issues are categorized by some labels that indicate the module an feature or bug belong to. An example of category labels are 
+the following:
+* `💜 purpur plugins` -the performance of the project the issue is related to the proxy plugins
+* `😴 rest` - the issue is related to the rest server
+* `🔌 grpc` - the issue is related to the grpc server
+* `🏗️ structuring` - the issue is related to the structuring of the project
+* `🔒 security` - the issue is related to the security of the project
+* `🚀 performance` - the issue is related to performance improvements on one of the modules above
+
+## Guidelines and contribution workflow
+
+### Open issues
+
+If you are ready to contribute to our project, start by looking at issues tagged as [`🤷 good first issue`](https://git.hexalite.org/java-edition/labels/%F0%9F%A4%B7%20good%20first%20issue) and [`help wanted`](https://github.com/playhexalite/java-edition/labels/help%20wanted). Please make
+sure to fork the project and working in features in a separate branch if possible and ensure that there are no build errors by running everything with your local changes. We also recommend taking a look at the way we structure Kotlin and Rust code and the way we use it for having a better understanding of the project.
 
 ### Kotlin
 
