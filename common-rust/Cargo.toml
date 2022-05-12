@@ -18,3 +18,4 @@ serde = { version = "^1", features = ["derive"] }
 serde_with = { version = "^1.13", features = ["chrono"] }
 toml = "^0.5"
 chrono = { version = "^0.4", features = ["serde"] }
+phf = { version = "^0.10" }

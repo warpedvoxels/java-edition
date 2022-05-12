@@ -1,7 +1,5 @@
-use std::any::Any;
-
 use proc_macro::TokenStream;
-use syn::{parse_macro_input, DataStruct, Fields, Type, Ident, LitStr};
+use syn::{parse_macro_input, DataStruct, Fields, LitStr};
 
 #[proc_macro_derive(ExportFields)]
 pub fn derive_export_fields(input: TokenStream) -> TokenStream {
@@ -19,15 +17,13 @@ pub fn derive_export_fields(input: TokenStream) -> TokenStream {
         let ident = f.ident.as_ref().unwrap();
         LitStr::new(&ident.to_string(), ident.span())
     });
-    let field_type  = fields.iter().map(|f| &f.ty);
+    let field_type = fields.iter().map(|f| &f.ty);
 
     quote::quote! {
         impl #struct_name {
             pub fn fields() -> &'static phf::Map<&'static str, &'static str> {
                 static FIELDS: phf::Map<&'static str, &'static str> = phf::phf_map! {
-                    #(
-                        #field_name => stringify!(#field_type)
-                    ),*
+                    #(#field_name => std::any::type_name::<#field_type>()),*
                 };
                 &FIELDS
             }
