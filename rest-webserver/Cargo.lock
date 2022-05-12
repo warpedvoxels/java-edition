@@ -1232,6 +1232,7 @@ dependencies = [
  "common-macros",
  "home",
  "lazy_static",
+ "phf",
  "serde",
  "serde_with",
  "toml",
