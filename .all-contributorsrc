@@ -12,7 +12,10 @@
       "profile": "http://www.exst.fun",
       "contributions": [
         "code",
-        "infra"
+        "infra",
+        "review",
+        "doc",
+        "translation"
       ]
     },
     {
