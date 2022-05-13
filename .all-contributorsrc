@@ -11,7 +11,11 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/45243386?v=4",
       "profile": "http://www.exst.fun",
       "contributions": [
-        "code"
+        "code",
+        "infra",
+        "review",
+        "doc",
+        "translation"
       ]
     },
     {
@@ -20,7 +24,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/58668092?v=4",
       "profile": "https://github.com/SrGaabriel",
       "contributions": [
-        "code"
+        "code",
+        "translation"
       ]
     },
     {
@@ -29,7 +34,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/89719009?v=4",
       "profile": "https://github.com/santosbpd",
       "contributions": [
-        "code"
+        "code",
+        "translation"
       ]
     },
     {
