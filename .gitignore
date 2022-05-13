@@ -132,3 +132,7 @@ build/
 !.env*.example
 
 !build-logic/src/main/kotlin/org/hexalite/network/build
+
+# Added by cargo
+
+/target

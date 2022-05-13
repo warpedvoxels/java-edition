@@ -237,3 +237,240 @@ pub enum RedisKey {
 pub enum CommunicationsKey {
     DataQueue = 1,
 }
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[derive(Debug, Clone, PartialEq)]
+pub struct PlayerDataRequest {
+    pub id: ::core::option::Option<player_data_request::Id>,
+}
+/// Nested message and enum types in `PlayerDataRequest`.
+pub mod player_data_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[serde(rename_all = "snake_case")]
+    #[derive(Debug, Clone, PartialEq)]
+    pub enum Id {
+        Uuid(::uuid::Uuid),
+        Username(crate::datatype::Username),
+    }
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[derive(Debug, Clone, PartialEq)]
+pub struct PlayerDataReply {
+    pub player: super::entity::Player,
+}
+pub mod player_service {
+    use tonic::codegen::*;
+    #[async_trait]
+    pub trait PlayerService: Send + Sync + 'static {
+        async fn retrieve_data(
+            &self,
+            request: tonic::Request<super::PlayerDataRequest>,
+        ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status>;
+    }
+    #[derive(Debug)]
+    pub struct PlayerServiceServer<T: PlayerService> {
+        inner: _Inner<T>,
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
+    }
+    struct _Inner<T>(Arc<T>);
+    impl<T: PlayerService> PlayerServiceServer<T> {
+        pub fn from_arc(inner: Arc<T>) -> Self {
+            Self {
+                inner: _Inner(inner),
+                accept_compression_encodings: Default::default(),
+                send_compression_encodings: Default::default(),
+            }
+        }
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
+        where
+            F: tonic::service::Interceptor,
+        {
+            InterceptedService::new(Self::new(inner), interceptor)
+        }
+        #[must_use]
+        pub fn accept_gzip(mut self) -> Self {
+            self.accept_compression_encodings.enable_gzip();
+            self
+        }
+        #[must_use]
+        pub fn send_gzip(mut self) -> Self {
+            self.send_compression_encodings.enable_gzip();
+            self
+        }
+    }
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for PlayerServiceServer<T>
+    where
+        T: PlayerService,
+        B: Body + Send + 'static,
+        B::Error: Into<StdError> + Send + 'static,
+    {
+        type Response = http::Response<tonic::body::BoxBody>;
+        type Error = std::convert::Infallible;
+        type Future = BoxFuture<Self::Response, Self::Error>;
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
+            Poll::Ready(Ok(()))
+        }
+        fn call(&mut self, req: http::Request<B>) -> Self::Future {
+            match req.uri().path() {
+                "/protocol.PlayerService/RetrieveData" => {
+                    #[allow(non_camel_case_types)]
+                    struct RetrieveDataSvc<T: PlayerService>(pub Arc<T>);
+                    impl<
+                        T: PlayerService,
+                    > tonic::server::UnaryService<super::PlayerDataRequest>
+                    for RetrieveDataSvc<T> {
+                        type Response = super::PlayerDataReply;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PlayerDataRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { inner.retrieve_data(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = RetrieveDataSvc(inner);
+                        let codec = crate::codec::CborCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
+            }
+        }
+    }
+    impl<T: PlayerService> Clone for PlayerServiceServer<T> {
+        fn clone(&self) -> Self {
+            Self {
+                inner: self.inner.clone(),
+                accept_compression_encodings: self.accept_compression_encodings.clone(),
+                send_compression_encodings: self.send_compression_encodings.clone(),
+            }
+        }
+    }
+    impl<T: PlayerService> Clone for _Inner<T> {
+        fn clone(&self) -> Self {
+            Self(self.0.clone())
+        }
+    }
+    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self.0)
+        }
+    }
+    impl<T: PlayerService> tonic::transport::NamedService for PlayerServiceServer<T> {
+        const NAME: &'static str = "protocol.PlayerService";
+    }
+    #[derive(Clone, Debug)]
+    pub struct PlayerServiceClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl PlayerServiceClient<tonic::transport::Channel> {
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> PlayerServiceClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            Self {
+                inner: tonic::client::Grpc::new(inner),
+            }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> PlayerServiceClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
+        {
+            PlayerServiceClient::new(InterceptedService::new(inner, interceptor))
+        }
+        #[must_use]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        #[must_use]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
+        }
+        pub async fn retrieve_data(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PlayerDataRequest>,
+        ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = crate::codec::CborCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/protocol.PlayerService/RetrieveData",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+}

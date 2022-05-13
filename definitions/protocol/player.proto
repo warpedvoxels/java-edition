@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+option java_multiple_files = true;
+option java_package = "org.hexalite.network.protobuf.protocol";
+option java_outer_classname = "PlayerProtocolProto";
+
+package protocol;
+
+import "entity/player.proto";
+import "datatype/uuid.proto";
+import "datatype/username.proto";
+
+service PlayerService {
+    rpc RetrieveData (PlayerDataRequest) returns (PlayerDataReply);
+}
+
+message PlayerDataRequest {
+    oneof id {
+        datatype.Uuid uuid = 1;
+        datatype.Username username =2;
+    }
+}
+
+message PlayerDataReply {
+    required entity.Player player = 1;
+}

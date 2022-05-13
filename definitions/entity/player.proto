@@ -6,7 +6,6 @@ option java_outer_classname = "PlayerProto";
 
 package entity;
 
-import "entity/role.proto";
 import "datatype/uuid.proto";
 import "datatype/username.proto";
 import "google/protobuf/timestamp.proto";

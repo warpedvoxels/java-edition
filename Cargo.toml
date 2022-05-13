@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+    "common-rust",
+    "common-rust/macros",
+    "cli",
+    "resource-pack",
+    "grpc-server",
+    "grpc-server/common",
+    "grpc-server/sql-macros",
+    "rest-webserver",
+]

@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 option java_multiple_files = true;
 option java_package = "org.hexalite.network.protobuf.protocol";
@@ -11,9 +11,9 @@ service Greeter {
 }
 
 message HelloRequest {
-    string name = 1;
+    required string name = 1;
 }
 
 message HelloReply {
-    string message = 1;
+    required string message = 1;
 }
