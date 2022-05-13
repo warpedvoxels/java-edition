@@ -14,26 +14,29 @@
   This project aims to bring the best experience possible to players without the need of mods.
 </div>
 
+
 ## 📚 Table of contents
 
-* [💻 Technologies / Project stack](#-technologies)
-* [✨ Contributors](#-contributors)
-* [💸 Supporting](#-supporting)
-* * [Starring the repository](#starring-the-repository)
-* * [Donations](#donations)
-* [🏟️ Contributing / Running locally](#-running-locally)
-* * [Prerequisites](#prerequisites)
-* * [Building the applications](#building-the-applications)
-* * [Command-line tool explanation](#command-line-tool-explanation)
-* [🏗️ Project structure](#-project-structure)
-* [🎉 Third party](#-third-party)
-* [📜 Licensing](#-licensing)
+1. [💻 Technologies / Project stack](#-technologies)
+2. [✨ Contributors](#-contributors)
+3. [💸 Supporting](#-supporting)
+   * [Starring the repository](#starring-the-repository)
+   * [Donations](#donations)
+4. [🏟️ Contributing / Running locally](#%EF%B8%8F-running-locally)
+   * [Prerequisites](#prerequisites)
+   * [Building the applications](#building-the-applications)
+   * [Command-line tool explanation](#command-line-tool-explanation)
+5. [🏗️ Project structure](#%EF%B8%8F-project-structure)
+6. [🎉 Third party](#-third-party)
+7. [📜 Licensing](#-licensing)
+
 
 ## 💻 Technologies
 
 All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [Velocity][velocity]. We also use [PostgreSQL][postgresql] as our database, and
 use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of directly accessing the database in multiple servers to avoid
 unsynchronization or/and loss of data, and for communications we use [RabbitMQ][rabbitmq]. We also appreciate the work and we are very grateful to the various open source libraries used in the project which you can find [here][third-party].
+
 
 ## ✨ Contributors
 
@@ -58,7 +61,7 @@ unsynchronization or/and loss of data, and for communications we use [RabbitMQ][
 
 ## 🏟️ Running locally
 
-If you are interesting in contributing, please make sure to read our [contribution guide][contribution-guide] and join
+If you are interesting in contributing, please make sure to read our [contributing guide][contributing-guide] and join
 our Discord community for further information and interaction with the developers and artists, and whoever knows what 
 they are doing.
 
@@ -68,7 +71,7 @@ they are doing.
 and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both though.
 * Install the latest nightly build of [Rust][rust].
 * Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
-* Install ProtoBuf's `protoc` locally and add it to the $PATH.
+* Install ProtoBuf's `protoc` locally and add it to the `$PATH`.
 
 ### Building the applications
 
@@ -90,16 +93,19 @@ This section will cover the project structure and the files that are used in the
 * `arcade/*` - Every single game the Minecraft server has.
 * `cli/*` - The command-line interface.
 * `branding` - Assets related to the Hexalite branding.
-* `common*` - Common files that are used by multiple components.
+* `common-*` - Common code used in multiple modules.
 * `docker` - Compose files for Docker, for an easier setup of the development environment.
 * `docs` - Documentation for features used in this project.
 * `kraken` - A library for easier Minecraft development.
 * `resource-pack` - The source code for the resource pack generator. Output is located at `resource-pack/out`.
-* `rest-webserver` - The REST webserver for the server.
-* `rest-webclient` - A consumer library for the REST webserver.
+* `grpc-server` - The gRPC server for interacting with the database other stuff.
+* `rest-server` - A public version of our gRPC server available as a REST server.
+* `kotlin-grpc-client` - A consumer library for our gRPC server.
+* `js-rest-client` - A consumer library for our REST server.
 * `reusable-plugins` - A collection of reusable plugins for the server.
 * `web` - The web interface for the server.
 * `run` - A development environment for a Purpur setup.
+
 
 ## 💸 Supporting
 
@@ -121,6 +127,8 @@ We depend on many third party libraries and applications, a complete list can be
 
 To know about the license of this project, you can read the [LICENSE.md][license] file.
 
+
+[contributing-guide]: https://git.hexalite.org/java-edition/blob/dev/next/CONTRIBUTING.md
 
 [rust]: https://www.rust-lang.org/
 
@@ -147,3 +155,4 @@ To know about the license of this project, you can read the [LICENSE.md][license
 [postgresql]: https://www.postgresql.org
 
 [discord]: https://discord.hexalite.org
+
