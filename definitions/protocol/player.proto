@@ -10,7 +10,7 @@ import "entity/player.proto";
 import "datatype/uuid.proto";
 import "datatype/username.proto";
 
-service PlayerService {
+service Player {
     rpc RetrieveData (PlayerDataRequest) returns (PlayerDataReply);
 }
 

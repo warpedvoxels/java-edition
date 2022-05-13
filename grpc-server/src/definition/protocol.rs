@@ -259,23 +259,23 @@ pub mod player_data_request {
 pub struct PlayerDataReply {
     pub player: super::entity::Player,
 }
-pub mod player_service {
+pub mod player {
     use tonic::codegen::*;
     #[async_trait]
-    pub trait PlayerService: Send + Sync + 'static {
+    pub trait Player: Send + Sync + 'static {
         async fn retrieve_data(
             &self,
             request: tonic::Request<super::PlayerDataRequest>,
         ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status>;
     }
     #[derive(Debug)]
-    pub struct PlayerServiceServer<T: PlayerService> {
+    pub struct PlayerServer<T: Player> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: PlayerService> PlayerServiceServer<T> {
+    impl<T: Player> PlayerServer<T> {
         pub fn from_arc(inner: Arc<T>) -> Self {
             Self {
                 inner: _Inner(inner),
@@ -306,9 +306,9 @@ pub mod player_service {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for PlayerServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for PlayerServer<T>
     where
-        T: PlayerService,
+        T: Player,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -323,12 +323,10 @@ pub mod player_service {
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             match req.uri().path() {
-                "/protocol.PlayerService/RetrieveData" => {
+                "/protocol.Player/RetrieveData" => {
                     #[allow(non_camel_case_types)]
-                    struct RetrieveDataSvc<T: PlayerService>(pub Arc<T>);
-                    impl<
-                        T: PlayerService,
-                    > tonic::server::UnaryService<super::PlayerDataRequest>
+                    struct RetrieveDataSvc<T: Player>(pub Arc<T>);
+                    impl<T: Player> tonic::server::UnaryService<super::PlayerDataRequest>
                     for RetrieveDataSvc<T> {
                         type Response = super::PlayerDataReply;
                         type Future = BoxFuture<
@@ -376,7 +374,7 @@ pub mod player_service {
             }
         }
     }
-    impl<T: PlayerService> Clone for PlayerServiceServer<T> {
+    impl<T: Player> Clone for PlayerServer<T> {
         fn clone(&self) -> Self {
             Self {
                 inner: self.inner.clone(),
@@ -385,7 +383,7 @@ pub mod player_service {
             }
         }
     }
-    impl<T: PlayerService> Clone for _Inner<T> {
+    impl<T: Player> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(self.0.clone())
         }
@@ -395,14 +393,14 @@ pub mod player_service {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: PlayerService> tonic::transport::NamedService for PlayerServiceServer<T> {
-        const NAME: &'static str = "protocol.PlayerService";
+    impl<T: Player> tonic::transport::NamedService for PlayerServer<T> {
+        const NAME: &'static str = "protocol.Player";
     }
     #[derive(Clone, Debug)]
-    pub struct PlayerServiceClient<T> {
+    pub struct PlayerClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl PlayerServiceClient<tonic::transport::Channel> {
+    impl PlayerClient<tonic::transport::Channel> {
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: std::convert::TryInto<tonic::transport::Endpoint>,
@@ -412,7 +410,7 @@ pub mod player_service {
             Ok(Self::new(conn))
         }
     }
-    impl<T> PlayerServiceClient<T>
+    impl<T> PlayerClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -427,7 +425,7 @@ pub mod player_service {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> PlayerServiceClient<InterceptedService<T, F>>
+        ) -> PlayerClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -441,7 +439,7 @@ pub mod player_service {
                 http::Request<tonic::body::BoxBody>,
             >>::Error: Into<StdError> + Send + Sync,
         {
-            PlayerServiceClient::new(InterceptedService::new(inner, interceptor))
+            PlayerClient::new(InterceptedService::new(inner, interceptor))
         }
         #[must_use]
         pub fn send_gzip(mut self) -> Self {
@@ -468,7 +466,7 @@ pub mod player_service {
                 })?;
             let codec = crate::codec::CborCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/protocol.PlayerService/RetrieveData",
+                "/protocol.Player/RetrieveData",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
