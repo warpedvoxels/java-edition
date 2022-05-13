@@ -42,8 +42,3 @@ syn = "^1"
 prettyplease = "^0.1"
 glob = "^0"
 heck = "^0.4"
-
-[profile.release]
-lto = true
-opt-level = 3
-codegen-units = 1

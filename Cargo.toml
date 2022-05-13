@@ -10,3 +10,8 @@ members = [
     "grpc-server/sql-macros",
     "rest-webserver",
 ]
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1

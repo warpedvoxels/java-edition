@@ -65,6 +65,3 @@ prost = { git = "https://github.com/eexsty/prost", branch = "no-message-trait", 
 [build-dependencies]
 prost-build = { git = "https://github.com/eexsty/prost", branch = "no-message-trait" }
 glob = "^0"
-
-[profile.release]
-lto = true
