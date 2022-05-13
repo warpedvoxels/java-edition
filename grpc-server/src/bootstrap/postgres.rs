@@ -18,6 +18,8 @@ pub async fn init(settings: &HexaliteSettings) -> Result<SqlPool> {
         .connect(&settings.url())
         .await
         .context("Failed to connect to PostgreSQL.")?;
+    sqlx::migrate!().run(&pool).await?;
+
     log::info!("Successfully connected to PostgreSQL.");
 
     Ok(pool)

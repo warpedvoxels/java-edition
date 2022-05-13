@@ -7,12 +7,13 @@ option java_outer_classname = "ReturnedProto";
 package returned;
 
 import "datatype/uuid.proto";
+import "datatype/username.proto";
 import "google/protobuf/timestamp.proto";
 
 message ReturnedPlayer {
     required datatype.Uuid uuid = 1;
     required int32 hexes = 2;
-    required string last_username = 3;
+    required datatype.Username last_username = 3;
     required google.protobuf.Timestamp last_seen = 4;
     required google.protobuf.Timestamp created_at = 5;
     required google.protobuf.Timestamp updated_at = 6;

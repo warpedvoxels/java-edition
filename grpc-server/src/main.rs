@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 
-use grpc_server::{bootstrap::*, routing::greeter::Greeter};
+use grpc_server::{bootstrap::*, routing::Greeter};
 use tonic::transport::Server;
 
 #[tokio::main]

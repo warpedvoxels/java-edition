@@ -533,8 +533,6 @@ fn main() {
     }
     println!("Files: {}", files.len());
 
-    
-
     prost_build::Config::new()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")
@@ -543,6 +541,7 @@ fn main() {
             "::chrono::DateTime<::chrono::Utc>",
         )
         .extern_path(".datatype.Uuid", "::uuid::Uuid")
+        .extern_path(".datatype.Username", "crate::datatype::Username")
         .type_attribute(".entity", "#[derive(hexalite_common::ExportFields)]")
         .out_dir("src/definition")
         .service_generator(Box::new(GrpcServiceGenerator::cbor()))
