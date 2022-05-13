@@ -6,10 +6,15 @@ edition = "2021"
 license = "AGPL-3.0"
 build = "build.rs"
 
+[workspace]
+members = ["./", "./common", "./sql-macros"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 hexalite-common = { path = "../common-rust" }
+grpc-server-common = { path = "./common" }
+grpc-server-sql-macros = { path = "./sql-macros" }
 tonic = { version = "^0.7", features = ["tls", "compression"] }
 uuid = { version = "^1", features = ["v4", "serde"] }
 chrono = { version = "^0.4", features = ["serde"] }

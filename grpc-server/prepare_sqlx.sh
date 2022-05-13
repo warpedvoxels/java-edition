@@ -23,4 +23,4 @@ if [ "$1" != "-s" ]; then
     cargo install sqlx-cli
 fi
 
-cargo sqlx prepare -- --lib
+cargo sqlx prepare -- --lib --all-targets --all-features
