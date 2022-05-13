@@ -3,6 +3,6 @@
 #[derive(Debug, Clone, PartialEq)]
 pub struct Authorization {
     pub sub: ::core::option::Option<::uuid::Uuid>,
-    pub exp: ::chrono::DateTime<::chrono::Utc>,
+    pub exp: ::chrono::NaiveDateTime,
     pub is_internal: bool,
 }

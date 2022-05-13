@@ -7,7 +7,6 @@ pub struct Role {
     pub unicode_character: ::prost::alloc::string::String,
     pub color: ::prost::alloc::string::String,
     pub tab_list_index: ::prost::alloc::string::String,
-    pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]

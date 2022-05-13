@@ -11,5 +11,4 @@ message Role {
     required string unicode_character = 2;
     required string color = 3;
     required string tab_list_index = 4;
-    repeated string permissions = 5;
 }
