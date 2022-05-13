@@ -33,15 +33,6 @@
       ]
     },
     {
-      "login": "Herocrife",
-      "name": "Herocrife",
-      "avatar_url": "https://avatars.githubusercontent.com/u/59402242?v=4",
-      "profile": "https://github.com/herocrife",
-      "contributions": [
-        "design"
-      ]
-    },
-    {
       "login": "luissfx",
       "name": "Luis",
       "avatar_url": "https://avatars.githubusercontent.com/u/40919071?v=4",
@@ -49,11 +40,21 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Herocrife",
+      "name": "Herocrife",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59402242?v=4",
+      "profile": "https://github.com/herocrife",
+      "contributions": [
+        "design"
+      ]
     }
   ],
+  "contributorsSortAlphabetically": false,
   "contributorsPerLine": 7,
   "projectName": "java-edition",
-  "projectOwner": "HexaliteNetwork",
+  "projectOwner": "playhexalite",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
