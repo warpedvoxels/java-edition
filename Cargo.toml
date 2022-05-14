@@ -9,6 +9,7 @@ members = [
     "grpc-server/common",
     "grpc-server/sql-macros",
     "rest-webserver",
+    "rust-tools/lint"
 ]
 
 [profile.release]

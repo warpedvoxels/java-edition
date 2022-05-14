@@ -1,7 +1,7 @@
 package org.hexalite.network.grpc.client
 
 import io.grpc.ManagedChannel
-import io.grpc.ManagedChannelBuilder
+import io.grpc.netty.NettyChannelBuilder
 import org.hexalite.network.common.settings.HexaliteSettings
 import org.hexalite.network.grpc.client.services.PlayerService
 
@@ -14,7 +14,7 @@ class HexaliteGrpcClient(val channel: ManagedChannel) {
 
     companion object {
         fun fromSettings(settings: HexaliteSettings) = HexaliteGrpcClient(
-            ManagedChannelBuilder.forAddress(settings.grpc.root.host, settings.grpc.root.port.toInt())
+            NettyChannelBuilder.forAddress(settings.grpc.root.host, settings.grpc.root.port.toInt())
                 .usePlaintext()
                 .build()
         )

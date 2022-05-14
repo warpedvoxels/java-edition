@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/common-kotlin/src/main/kotlin/org/hexalite/network/common/settings/HexaliteSettings.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/HexaliteGrpcClient.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/codec/CborMarshaller.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/services/PlayerService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/test/kotlin/ClientTest.kt" afterDir="false" />
+    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="feat(grpc/client): add initial consuming wrapper">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-kotlin/src/main/kotlin/org/hexalite/network/protobuf/impl/entity/Role.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-kotlin/src/main/kotlin/org/hexalite/network/protobuf/impl/entity/User.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hexalite.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/hexalite.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/HexaliteGrpcClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/HexaliteGrpcClient.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +146,7 @@
       <workItem from="1652547292750" duration="140000" />
       <workItem from="1652547969050" duration="1056000" />
       <workItem from="1652549049006" duration="208000" />
-      <workItem from="1652549289438" duration="4904000" />
+      <workItem from="1652549289438" duration="5330000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>
@@ -170,7 +162,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652550690071</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat(common/kotlin): add initial serializable configuration support">
+      <created>1652554247762</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652554247762</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat(grpc/client): add initial consuming wrapper">
+      <created>1652554266885</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652554266885</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +194,9 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="build(grpc/client): add initial build files" />
     <MESSAGE value="chore(definitions): remove unnecessary outer class name options" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(definitions): remove unnecessary outer class name options" />
+    <MESSAGE value="feat(common/kotlin): add initial serializable configuration support" />
+    <MESSAGE value="feat(grpc/client): add initial consuming wrapper" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(grpc/client): add initial consuming wrapper" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
