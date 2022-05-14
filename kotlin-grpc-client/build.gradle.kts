@@ -11,14 +11,14 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${rootProject.hexalite.versions.protobuf}"
+        artifact = "com.google.protobuf:protoc:${rootProject.hexalite.versions.protobuf.asProvider().get()}"
     }
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:${rootProject.hexalite.versions.grpc.protobuf}"
+            artifact = "io.grpc:protoc-gen-grpc-java:${rootProject.hexalite.versions.grpc.protobuf.get()}"
         }
         id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:${rootProject.hexalite.versions.grpc.kotlin}:jdk7@jar"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:${rootProject.hexalite.versions.grpc.kotlin.get()}:jdk7@jar"
         }
     }
     generateProtoTasks {
@@ -36,6 +36,7 @@ protobuf {
 
 sourceSets.main {
     proto {
-
+        val files = files(File(rootProject.projectDir, "definitions"))
+        srcDirs(files)
     }
 }
