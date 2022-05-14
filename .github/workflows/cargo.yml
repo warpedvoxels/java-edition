@@ -49,31 +49,16 @@ jobs:
         uses: arduino/setup-protoc@v1
         with:
           version: '3.x'
-      - name: Build the gRPC server
+      - name: Build everything (Rust)
         uses: actions-rs/cargo@v1
         with:
           command: build 
-          args: --release --manifest-path grpc-server/Cargo.toml 
-      # - name: Build the webserver
-      #   uses: actions-rs/cargo@v1
-      #   with:
-      #     command: build 
-      #     args: --release --manifest-path rest-webserver/Cargo.toml 
-      - name: Build the command-line interface
-        uses: actions-rs/cargo@v1
-        with:
-          command: build 
-          args: --release --manifest-path cli/Cargo.toml
-      - name: Build the resource pack generator
-        uses: actions-rs/cargo@v1
-        with:
-          command: build 
-          args: --release --manifest-path resource-pack/Cargo.toml
+          args: --release
       - name: Upload Cargo artifacts
         uses: actions/upload-artifact@v3
         with:
           name: cargo-artifacts
           path: |
-            ./rest-webserver/target/release/rest-webserver 
-            ./grpc-server/target/release/grpc-server 
-            ./cli/target/release/hexalite
+            ./target/release/rest-webserver 
+            ./target/release/grpc-server 
+            ./target/release/hexalite
