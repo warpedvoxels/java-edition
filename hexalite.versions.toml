@@ -59,13 +59,14 @@ commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 # Protobuf / gRPC
 grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpc-kotlin" }
 grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc-protobuf" }
+grpc-netty = { module = "io.grpc:grpc-netty", version.ref = "grpc-protobuf" }
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
 caffeine = ["caffeine", "caffeine-guava"]
-proto = ["grpc-kotlin-stub", "grpc-protobuf", "protobuf-kotlin", "kotlinx-serialization-cbor"]
+proto = ["grpc-kotlin-stub", "grpc-protobuf", "grpc-netty", "protobuf-kotlin", "kotlinx-serialization-cbor"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
