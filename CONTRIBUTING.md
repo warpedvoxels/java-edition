@@ -39,7 +39,7 @@ important it is. An example of priority or state labels are the following:
 * `❗ priority: medium` - this issue is neither low or high priority and will have normal priority
 * `❗ priority: high` - the issue is high priority and will be worked on first
 
-## Category
+### Categories
 
 Issues are categorized by some labels that indicate the module an feature or bug belong to. An example of category labels are 
 the following:
