@@ -307,8 +307,8 @@ impl GrpcServiceGenerator {
         buf.push_str("fn clone(&self) -> Self {\n");
         buf.push_str("Self {\n");
         buf.push_str("inner: self.inner.clone(),\n");
-        buf.push_str("accept_compression_encodings: self.accept_compression_encodings.clone(),\n");
-        buf.push_str("send_compression_encodings: self.send_compression_encodings.clone(),\n");
+        buf.push_str("accept_compression_encodings: self.accept_compression_encodings,\n");
+        buf.push_str("send_compression_encodings: self.send_compression_encodings,\n");
         buf.push_str("}\n");
         buf.push_str("}\n");
         buf.push_str("}\n");

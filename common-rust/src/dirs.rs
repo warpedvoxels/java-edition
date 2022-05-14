@@ -11,7 +11,7 @@ lazy_static::lazy_static! {
 }
 
 pub fn get_hexalite_dir_path() -> PathBuf {
-    HEXALITE.clone().to_path_buf()
+    HEXALITE.clone()
 }
 
 pub fn get_source_path() -> Result<PathBuf> {

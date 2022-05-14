@@ -17,13 +17,12 @@ impl protocol::player::Player for PlayerService {
         request: Request<PlayerDataRequest>,
     ) -> Result<Response<PlayerDataReply>, Status> {
         let msg = request.get_ref();
-        let uuid = match msg.id.as_ref().unwrap() {
+        let uuid = *match msg.id.as_ref().unwrap() {
             Id::Username(_) => {
                 return Err(Status::invalid_argument("Username is not supported yet."))
             }
             Id::Uuid(id) => id,
-        }
-        .clone();
+        };
         
         let dummy = Player {
             uuid,

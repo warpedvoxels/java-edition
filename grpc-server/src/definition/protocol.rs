@@ -129,8 +129,8 @@ pub mod greeter {
         fn clone(&self) -> Self {
             Self {
                 inner: self.inner.clone(),
-                accept_compression_encodings: self.accept_compression_encodings.clone(),
-                send_compression_encodings: self.send_compression_encodings.clone(),
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
             }
         }
     }
@@ -378,8 +378,8 @@ pub mod player {
         fn clone(&self) -> Self {
             Self {
                 inner: self.inner.clone(),
-                accept_compression_encodings: self.accept_compression_encodings.clone(),
-                send_compression_encodings: self.send_compression_encodings.clone(),
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
             }
         }
     }
