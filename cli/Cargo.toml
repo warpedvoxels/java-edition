@@ -15,3 +15,4 @@ lazy_static = "^1"
 home = "^0"
 hexalite-common = { path = "../common-rust" }
 anyhow = "^1.0"
+xshell = "^0.2"

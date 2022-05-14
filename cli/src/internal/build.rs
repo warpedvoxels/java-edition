@@ -31,7 +31,7 @@ fn link_plugin(src: &Path, symlinked_plugins_directory: &Path) {
     use_handling(&file, &dest, |src, dest| symlink::symlink_file(src, dest));
 }
 
-pub async fn build(module: Option<String>) -> Result<()> {
+pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
     let hexalite = get_hexalite_dir_path();
     let compiled_path = hexalite.join("compiled");
     if let Err(err) = fs::create_dir_all(&compiled_path) {
@@ -88,25 +88,24 @@ pub async fn build(module: Option<String>) -> Result<()> {
         let manifest_path = manifest_path
             .to_str()
             .context("Failed to get the manifest path as string.")?;
-        run_command(
-            "cargo",
-            &["build", "--release", "--manifest-path", manifest_path],
-        )
-        .await;
+        xshell::cmd!(sh, "cargo build --release --manifest-path {manifest_path}")
+            .run()
+            .context("Failed to build the project.")?;
     }
-    run_command(
-        // gradlew if unix or gradlew.bat if windows
-        src_path
-            .join(if cfg!(target_os = "windows") {
-                "gradlew.bat"
-            } else {
-                "gradlew"
-            })
-            .to_str()
-            .context("Could not get the gradle path as string.")?,
-        &["build", "--project-dir", src_path.to_str().unwrap()],
-    )
-    .await;
+    // gradlew if unix or gradlew.bat if windows
+    let gradlew = src_path.join(if cfg!(target_os = "windows") {
+        "gradlew.bat"
+    } else {
+        "gradlew"
+    });
+    let gradlew = gradlew
+        .to_str()
+        .context("Could not get the gradle path as string.")?;
+    let src_path_str = src_path.to_str().unwrap();
+
+    xshell::cmd!(sh, "{gradlew} build --project-dir {src_path_str}")
+        .run()
+        .context("Failed to build the project (Gradle).")?;
 
     if let Some(module) = module {
         let module = module.trim().to_lowercase();

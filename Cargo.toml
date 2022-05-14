@@ -8,7 +8,7 @@ members = [
     "grpc-server",
     "grpc-server/common",
     "grpc-server/sql-macros",
-    "rest-webserver",
+    #"rest-webserver",
     "rust-tools/lint"
 ]
 
