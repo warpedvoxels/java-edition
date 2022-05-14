@@ -6,6 +6,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common-kotlin"))
     implementation(rootProject.hexalite.bundles.proto)
 }
 
@@ -38,5 +39,13 @@ sourceSets.main {
     proto {
         val files = files(File(rootProject.projectDir, "definitions"))
         srcDirs(files)
+    }
+    java {
+        srcDirs(
+            "build/generated/source/proto/main/java",
+            "build/generated/source/proto/main/grpc",
+            "build/generated/source/proto/main/grpckt",
+            "build/generated/source/proto/main/kotlin"
+        )
     }
 }
