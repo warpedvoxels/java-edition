@@ -18,18 +18,25 @@ valiktor = "0.12.0"
 run-paper = "1.0.6"
 logback = "1.3.0-alpha14"
 mordant = "2.0.0-beta5"
-ktor = "2.0.0"
 caffeine = "3.0.5"
 commons-io = "2.11.0"
+protobuf-gradle = "0.8.18"
+protobuf = "3.21.0-rc-1"
+grpc-kotlin = "1.2.1"
+grpc-protobuf = "1.46.0"
+ktoml = "0.2.11"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
-kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
+# Serialization
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "kotlinx-serialization" }
+ktoml-core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml" }
+ktoml-file = { module = "com.akuleshov7:ktoml-file", version.ref = "ktoml" }
+kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 # Minecraft - Purpur [Server]
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
@@ -44,23 +51,21 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 # Logging
 mordant = { module = "com.github.ajalt.mordant:mordant", version.ref = "mordant" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
-# Rest Client
-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 # Caching
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
 caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref = "caffeine" }
 # IO
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+# Protobuf / gRPC
+grpc-kotlin-stub = { module = "io.grpc:grpc-kotlin-stub", version.ref = "grpc-kotlin" }
+grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc-protobuf" }
+protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
-ktor-client = ["ktor-serialization-kotlinx-json", "ktor-client-core", "ktor-client-cio", "ktor-client-logging", "ktor-client-content-negotiation"]
 caffeine = ["caffeine", "caffeine-guava"]
+proto = ["grpc-kotlin-stub", "grpc-protobuf", "protobuf-kotlin", "kotlinx-serialization-cbor"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -70,3 +75,4 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle" }

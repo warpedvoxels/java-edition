@@ -12,7 +12,6 @@ dependencies {
     implementation(rootProject.hexalite.bundles.kotlin.essential)
     implementation(rootProject.hexalite.mordant)
     implementation(rootProject.hexalite.kotlinx.serialization.json)
-    implementation(rootProject.hexalite.kotlinx.serialization.protobuf)
 }
 
 tasks.compileJava {

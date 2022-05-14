@@ -18,6 +18,7 @@ pluginManagement {
 
 include(
     ":common-kotlin",
+    ":kotlin-grpc-client",
     ":kraken:purpur",
     ":kraken:velocity",
     ":arcade:origins",
