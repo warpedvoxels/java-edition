@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
-use chrono::{Utc, Duration};
+use chrono::{Duration, Utc};
 use hexalite_common::settings::GrpcSettings;
-use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Validation, TokenData, Header};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, TokenData, Validation};
 use uuid::Uuid;
 
 use crate::{app::WebServerState, definitions::rest::Authorization};
@@ -24,9 +24,14 @@ impl Authorization {
     }
 
     pub fn decode(token: &str, state: &WebServerState) -> Result<TokenData<Self>> {
-        let decoding_key = DecodingKey::from_secret(state.settings.grpc.services.identity.secret_key.as_ref());
-        decode::<Authorization>(token, &decoding_key, &Validation::new(jsonwebtoken::Algorithm::HS512))
-            .context("Couldn't decode the provided JWT authorization.")
+        let decoding_key =
+            DecodingKey::from_secret(state.settings.grpc.services.identity.secret_key.as_ref());
+        decode::<Authorization>(
+            token,
+            &decoding_key,
+            &Validation::new(jsonwebtoken::Algorithm::HS512),
+        )
+        .context("Couldn't decode the provided JWT authorization.")
     }
 
     pub fn encode(&self, settings: &GrpcSettings) -> Result<String> {

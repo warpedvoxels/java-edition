@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 
 lazy_static::lazy_static! {
     pub(crate) static ref HEXALITE: PathBuf = {
@@ -15,5 +15,8 @@ pub fn get_hexalite_dir_path() -> PathBuf {
 }
 
 pub fn get_source_path() -> Result<PathBuf> {
-    HEXALITE.join("dev").canonicalize().context("Failed to get the canonical source path.")
+    HEXALITE
+        .join("dev")
+        .canonicalize()
+        .context("Failed to get the canonical source path.")
 }

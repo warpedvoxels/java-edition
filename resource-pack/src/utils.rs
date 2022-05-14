@@ -27,7 +27,8 @@ pub fn read_and_parse<T>(file_path: &Path) -> T
 where
     T: de::DeserializeOwned,
 {
-    let file_content = std::fs::read_to_string(file_path).expect("Failed to read the configuration file.");
+    let file_content =
+        std::fs::read_to_string(file_path).expect("Failed to read the configuration file.");
     serde_yaml::from_str(&file_content).expect("Failed to parse file")
 }
 

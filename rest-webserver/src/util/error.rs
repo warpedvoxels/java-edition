@@ -1,8 +1,4 @@
-use actix_web::{
-    error::{InternalError},
-    http::{StatusCode}, HttpResponse,
-};
-
+use actix_web::{error::InternalError, http::StatusCode, HttpResponse};
 
 pub trait IntoHttpError<T> {
     fn http_error(

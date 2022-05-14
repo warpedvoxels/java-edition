@@ -15,7 +15,7 @@ pub struct BlocksConfigEntry {
 
 #[derive(Debug, Default, Clone, Deserialize)]
 pub struct FontConfig {
-    pub font: Vec<FontConfigEntry>
+    pub font: Vec<FontConfigEntry>,
 }
 
 #[derive(Debug, Default, Clone, Deserialize)]
@@ -23,7 +23,7 @@ pub struct FontConfigEntry {
     pub char: String,
     pub ascent: u32,
     pub height: u32,
-    pub file: String
+    pub file: String,
 }
 
 #[derive(Debug, Default, Clone, Deserialize)]
@@ -35,7 +35,7 @@ pub struct BlocksConfigEntryTexture {
 #[derive(Debug, Default, Clone, Deserialize)]
 pub struct MetadataConfig {
     #[serde(rename = "metadata")]
-    pub inner: InnerMetadataConfig
+    pub inner: InnerMetadataConfig,
 }
 
 #[derive(Debug, Default, Clone, Deserialize)]

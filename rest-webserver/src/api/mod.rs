@@ -1,12 +1,26 @@
-use actix_web::{web, Scope, dev::{ServiceFactory, ServiceRequest, ServiceResponse}, body::{EitherBody, BoxBody}};
+use actix_web::{
+    body::{BoxBody, EitherBody},
+    dev::{ServiceFactory, ServiceRequest, ServiceResponse},
+    web, Scope,
+};
 use serde::{Deserialize, Serialize};
 
 use crate::middleware::Authentication;
 
 mod v1;
 
-pub fn v1() -> Scope<impl ServiceFactory<ServiceRequest, Response = ServiceResponse<EitherBody<BoxBody>>, Error = actix_web::Error, Config = (), InitError = ()>> {
-    let internal_auth_middleware = Authentication { needs_internal: true };
+pub fn v1() -> Scope<
+    impl ServiceFactory<
+        ServiceRequest,
+        Response = ServiceResponse<EitherBody<BoxBody>>,
+        Error = actix_web::Error,
+        Config = (),
+        InitError = (),
+    >,
+> {
+    let internal_auth_middleware = Authentication {
+        needs_internal: true,
+    };
 
     web::scope("/api/v1")
         .wrap(internal_auth_middleware)

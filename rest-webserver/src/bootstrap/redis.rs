@@ -31,10 +31,7 @@ pub async fn build(settings: &GrpcSettings) -> Result<RedisConnection> {
     Ok(connection)
 }
 
-pub async fn loop_into_key_generation(
-    settings: &GrpcSettings,
-    connection: &Mutex<Connection>,
-) {
+pub async fn loop_into_key_generation(settings: &GrpcSettings, connection: &Mutex<Connection>) {
     let delay = Duration::from_secs(5 * 60);
     let mut connection = connection.lock().await;
     let key = RedisKey::InternalIdentity.to_string();

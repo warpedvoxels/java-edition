@@ -1,5 +1,5 @@
-use crate::definitions::returned::ReturnedRole;
 pub use crate::definitions::entity::Role;
+use crate::definitions::returned::ReturnedRole;
 
 impl From<&Role> for ReturnedRole {
     fn from(role: &Role) -> Self {
@@ -11,4 +11,3 @@ impl From<&Role> for ReturnedRole {
         }
     }
 }
-

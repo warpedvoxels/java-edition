@@ -2,8 +2,8 @@ use crate::HexaliteCommand;
 
 mod build;
 mod init;
-mod utils;
 mod run;
+mod utils;
 use anyhow::Result;
 pub use utils::*;
 

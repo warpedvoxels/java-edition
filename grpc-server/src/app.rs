@@ -10,9 +10,6 @@ pub struct HexaliteGrpcServer {
 
 impl HexaliteGrpcServer {
     pub fn new(settings: HexaliteSettings, sql: SqlPool) -> Self {
-        Self {
-            settings,
-            sql,
-        }
+        Self { settings, sql }
     }
 }

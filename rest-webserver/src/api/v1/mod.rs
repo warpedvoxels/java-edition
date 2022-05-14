@@ -1,4 +1,4 @@
-use actix_web::{web, HttpResponse, Either, Result};
+use actix_web::{web, Either, HttpResponse, Result};
 
 pub type RestResult<T> = Result<Either<HttpResponse, web::Json<T>>>;
 

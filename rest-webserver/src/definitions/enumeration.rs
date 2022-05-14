@@ -1,4 +1,4 @@
-use super::protocol::{RedisKey, CommunicationsKey};
+use super::protocol::{CommunicationsKey, RedisKey};
 
 impl ToString for RedisKey {
     fn to_string(&self) -> String {
@@ -22,5 +22,3 @@ impl CommunicationsKey {
         VALUES.iter()
     }
 }
-
-

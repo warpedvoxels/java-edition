@@ -1,4 +1,4 @@
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 use env_logger::builder;
 
 pub fn init() -> Result<()> {

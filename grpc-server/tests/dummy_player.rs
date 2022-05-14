@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use grpc_server::definition::protocol::{ *, player::PlayerClient};
+use grpc_server::definition::protocol::{player::PlayerClient, *};
 use std::str::FromStr;
 use tonic::transport::Uri;
 
@@ -22,9 +22,7 @@ async fn greet_test() -> Result<()> {
     log::info!(
         "{:?}",
         client
-            .retrieve_data(PlayerDataRequest {
-                id: None
-            })
+            .retrieve_data(PlayerDataRequest { id: None })
             .await
             .context("Failed to request data.")?
     );

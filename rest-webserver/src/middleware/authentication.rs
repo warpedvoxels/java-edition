@@ -80,33 +80,17 @@ pub fn create_identity_service(
         panic!("The secret key for the identity service must have at least 32 characters.");
     }
     IdentityService::new(
-        CookieIdentityPolicy::new(
-            state
-                .settings
-                .grpc
-                .services
-                .identity
-                .secret_key
-                .as_ref(),
-        )
-        .name(
-            state
-                .settings
-                .grpc
-                .services
-                .identity
-                .cookie_name
-                .clone(),
-        )
-        .secure(state.settings.grpc.services.identity.is_secure)
-        .max_age(Duration::seconds(
-            state
-                .settings
-                .grpc
-                .services
-                .identity
-                .expiration
-                .num_seconds(),
-        )),
+        CookieIdentityPolicy::new(state.settings.grpc.services.identity.secret_key.as_ref())
+            .name(state.settings.grpc.services.identity.cookie_name.clone())
+            .secure(state.settings.grpc.services.identity.is_secure)
+            .max_age(Duration::seconds(
+                state
+                    .settings
+                    .grpc
+                    .services
+                    .identity
+                    .expiration
+                    .num_seconds(),
+            )),
     )
 }

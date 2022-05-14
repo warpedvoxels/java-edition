@@ -1,10 +1,10 @@
 use std::{
     fs,
     net::{Ipv4Addr, SocketAddr},
-    path::{PathBuf},
+    path::PathBuf,
 };
 
-use anyhow::{Result, Context};
+use anyhow::{Context, Result};
 use chrono::Duration;
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
@@ -23,7 +23,7 @@ pub struct WebServerSettings {
     #[serde(default)]
     pub root: WebServerRootSettings,
     #[serde(default)]
-    pub grpc_client: GrpcRootSettings
+    pub grpc_client: GrpcRootSettings,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -66,7 +66,7 @@ pub struct GrpcIdentityServiceSettings {
     #[serde(rename = "expiration_in_seconds")]
     pub expiration: Duration,
     pub is_secure: bool,
-    pub cookie_name: String
+    pub cookie_name: String,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -91,26 +91,26 @@ pub struct GrpcPostgresServiceSettings {
     pub user: String,
     pub password: String,
     pub database: String,
-    pub pool: GrpcPostgresPoolServiceSettings
+    pub pool: GrpcPostgresPoolServiceSettings,
 }
 
 #[serde_as]
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct GrpcPostgresPoolServiceSettings {
-     /// The maximum number of connections allowed.
-     pub max_connections: u32,
-     /// The maximum lifetime, if any, that a connection is allowed.
-     #[serde_as(as = "DurationSeconds<i64>")]
-     #[serde(rename = "max_lifetime_in_seconds")]
-     pub max_lifetime: Duration,
-     /// The duration, if any, after which idle_connections in excess of `min_idle` are closed.
-     #[serde_as(as = "DurationSeconds<i64>")]
-     #[serde(rename = "idle_timeout_in_seconds")]
-     pub idle_timeout: Duration,
-     /// The duration to wait to start a connection before giving up.
-     #[serde_as(as = "DurationSeconds<i64>")]
-     #[serde(rename = "connection_timeout_in_seconds")]
-     pub connection_timeout: Duration,
+    /// The maximum number of connections allowed.
+    pub max_connections: u32,
+    /// The maximum lifetime, if any, that a connection is allowed.
+    #[serde_as(as = "DurationSeconds<i64>")]
+    #[serde(rename = "max_lifetime_in_seconds")]
+    pub max_lifetime: Duration,
+    /// The duration, if any, after which idle_connections in excess of `min_idle` are closed.
+    #[serde_as(as = "DurationSeconds<i64>")]
+    #[serde(rename = "idle_timeout_in_seconds")]
+    pub idle_timeout: Duration,
+    /// The duration to wait to start a connection before giving up.
+    #[serde_as(as = "DurationSeconds<i64>")]
+    #[serde(rename = "connection_timeout_in_seconds")]
+    pub connection_timeout: Duration,
 }
 
 impl Default for WebServerRootSettings {
@@ -171,7 +171,7 @@ impl Default for GrpcRedisServiceSettings {
         Self {
             host: Ipv4Addr::LOCALHOST,
             port: 6379,
-            password: String::from("mysecretpassword")
+            password: String::from("mysecretpassword"),
         }
     }
 }
@@ -189,24 +189,25 @@ impl Default for GrpcRabbitMQServiceSettings {
 
 impl GrpcRabbitMQServiceSettings {
     pub fn url(&self) -> String {
-        format!("amqp://{}:{}@{}:{}", self.username, self.password, self.host, self.port)
+        format!(
+            "amqp://{}:{}@{}:{}",
+            self.username, self.password, self.host, self.port
+        )
     }
 }
 
 impl GrpcRedisServiceSettings {
     pub fn url(&self) -> String {
-        format!(
-            "redis://:{}@{}:{}",
-            self.password,
-            self.host,
-            self.port
-        )
+        format!("redis://:{}@{}:{}", self.password, self.host, self.port)
     }
 }
 
 impl GrpcPostgresServiceSettings {
     pub fn url(&self) -> String {
-        format!("postgresql://{}:{}/{}?user={}&password={}", self.host, self.port, self.database, self.user, self.password)
+        format!(
+            "postgresql://{}:{}/{}?user={}&password={}",
+            self.host, self.port, self.database, self.user, self.password
+        )
     }
 }
 

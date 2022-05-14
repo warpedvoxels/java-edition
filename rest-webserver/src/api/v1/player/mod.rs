@@ -11,16 +11,21 @@ use crate::{
     api::v1::RestResult,
     api::PageInfo,
     app::WebServerState,
+    definitions::returned::ReturnedPlayer,
     entity::{Entity, Player},
-    util::{try_either, IntoHttpError}, definitions::returned::ReturnedPlayer,
+    util::{try_either, IntoHttpError},
 };
 
 mod dto;
 pub use dto::*;
 
 #[post("/")]
-pub async fn create(data: ReturnedPlayerCreation, state: WebServerState) -> RestResult<ReturnedPlayer> {
-    let query = Player::find(&state.postgres, Either::Left(data.uuid)).await
+pub async fn create(
+    data: ReturnedPlayerCreation,
+    state: WebServerState,
+) -> RestResult<ReturnedPlayer> {
+    let query = Player::find(&state.postgres, Either::Left(data.uuid))
+        .await
         .http_internal_error("Failed to find the player.")?;
     if query.is_some() {
         return Ok(Either::Left(HttpResponse::Conflict().finish()));
@@ -81,6 +86,6 @@ pub async fn delete(id: web::Path<String>, state: WebServerState) -> RestResult<
         .await
         .http_internal_error("Failed to delete this player.")?;
     let player = ReturnedPlayer::from(&player);
-    
+
     Ok(Either::Right(web::Json(player)))
 }

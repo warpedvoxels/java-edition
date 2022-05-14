@@ -5,8 +5,8 @@ use std::{
 };
 
 use resource_pack::{
-    read_and_parse, BlockModel, BlocksConfig, FontConfig, FontProvider, FontProvidersHolder,
-    ItemModel, MetadataConfig, PackMeta, copy_dir_all,
+    copy_dir_all, read_and_parse, BlockModel, BlocksConfig, FontConfig, FontProvider,
+    FontProvidersHolder, ItemModel, MetadataConfig, PackMeta,
 };
 use serde_json::json;
 
@@ -79,7 +79,10 @@ fn main() {
         );
         paper.append(state.model_name, index);
     }
-    write_overwriting(&note_blocks_state_file, serde_json::to_string_pretty(&note_blocks_state).unwrap());
+    write_overwriting(
+        &note_blocks_state_file,
+        serde_json::to_string_pretty(&note_blocks_state).unwrap(),
+    );
     write_overwriting(
         &models_item.join("paper.json"),
         serde_json::to_string_pretty(&paper).unwrap(),
