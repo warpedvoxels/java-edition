@@ -34,10 +34,11 @@
 3. [💸 Supporting](#-supporting)
    * [Starring the repository](#starring-the-repository)
    * [Donations](#donations)
-4. [🏟️ Contributing / Running locally](#%EF%B8%8F-running-locally)
+4. [🏟️ Contributing / Running locally](#%EF%B8%8F-contributing--running-locally)
    * [Prerequisites](#prerequisites)
-   * [Building the applications](#building-the-applications)
-   * [Command-line tool explanation](#command-line-tool-explanation)
+   * [Building everything](#building-everything)
+     * [1. Compiling the command-line interface](#1-compiling-the-command-line-interface)
+     * [2. Initializing the environment](#2-initializing-the-environment)
 5. [🏗️ Project structure](#%EF%B8%8F-project-structure)
 6. [🎉 Third party](#-third-party)
 7. [📜 Licensing](#-licensing)
@@ -45,10 +46,10 @@
 
 ## 💻 Technologies
 
-All of our Minecraft servers are built on top of the [Purpur][purpur] server software, proxied by [Velocity][velocity]. We also use [PostgreSQL][postgresql] as our database, and
-use Redis for our multiserver caching and session system. We usually make a request to our rest webservers instead of directly accessing the database in multiple servers to avoid
-unsynchronization or/and loss of data, and for communications we use [RabbitMQ][rabbitmq]. We also appreciate the work and we are very grateful to the various open source libraries used in the project which you can find [here][third-party].
+The technology stack in this project is pretty straightforward and consists mainly of [Rust][rust] and [Kotlin][kotlin] when talking about programming languages. For transferring data between modules, we use a gRPC server based on `prost` over the CBOR binary format and compressed data. It is used for requesting data, and communicating between other stuff with `RabbitMQ`. Every Minecraft server on Hexalite is running on top of [Purpur][purpur] server software, proxied by [Velocity][velocity]. Purpur is a great alternative for Paper and it provide a lot of new features, such as mechanics, performance improvements and useful API changes.
 
+This is subject to change, since this type of infrastructure can improve over time. If you are interested in discussing about this or any other
+technology topics, feel free to join our [Discord server][discord] to chat with our development and artistic team.
 
 ## ✨ Contributors
 
@@ -71,7 +72,7 @@ unsynchronization or/and loss of data, and for communications we use [RabbitMQ][
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 
-## 🏟️ Running locally
+## 🏟️ Contributing / running locally
 
 If you are interesting in contributing, please make sure to read our [contributing guide][contributing-guide] and join
 our Discord community for further information and interaction with the developers and artists, and whoever knows what 
@@ -80,23 +81,33 @@ they are doing.
 ### Prerequisites
 
 * Install the [Java Development Kit][jdk]. We recommend using the [IBM's Semeru][jdk-semeru] for the OpenJ9 virtual machine
-and [Eclipse's Adoptium][jdk] for the Hotspot VM. We recommend installing both though.
-* Install the latest nightly build of [Rust][rust].
+and [Eclipse's Adoptium][jdk] for the Hotspot virtual machine. We recommend installing both though.
+* Install the latest nightly build of [Rust][rust]. You may consider using the `rustup` tool to make your life easier. 
 * Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
-* Install ProtoBuf's `protoc` locally and add it to the `$PATH`.
 
-### Building the applications
+The reason why we recommend installing both, is it because the OpenJ9 virtual machine is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing.
 
-* **Compile the command-line interface first by going to the `cli` directory then running `cargo build --release`.** This will
-generate a binary in `cli/target/release/hexalite` that will be referenced soon as `hexalite` for simplicity. You can add it
-to the $PATH on UNIX-like environments by running the `scripts/apply_cli.sh` script.
-* **Link the required components to the ~/.hexalite folder by running `hexalite init`.** This is required for getting all
-server resources internally without any dumb workarounds.
+### Building everything
 
-### Command-line tool explanation
+#### 1. Compiling the command-line interface
 
-A explanation of every subcommand in the command-line tool can be obtained by running the `hexalite help` command.
+The command-line interface is a tool written in Rust highly used in both development and productivity environments on Hexalite.
+It is a unified interface for doing all necessary things for running Hexalite.
 
+* You can start by cloning the repository, which needs [`Git`][git] to be installed in your system: `git clone https://git.hexalite.org/java-edition hexalite-java-edition`.
+* Then you can compile all the Rust-based applications by running `cd hexalite-java-edition && cargo build --release`.
+
+It is done now! You can link the compiled binaries to the `$PATH` by running the `./scripts/apply_cli.sh` command on UNIX-based systems. I'm
+not too sure in how to do this on Windows, but I'm sure you can find some help there by Googling it, since it doesn't seems that hard.
+
+#### 2. Initializing the environment
+
+After the compilation of the command-line interface, we need to initialize the environment. In this document, we will be referring to the
+command-line interface command as `hexalite`. It may different in your machine if you didn't added it to the `$PATH`, so it probably it would be
+`./target/release/hexalite`, assuming you already compiled it.
+
+* `hexalite init` ◉ This will initialize the environment, creating the `.hexalite` folder in your home directory, and symlinking all required
+files to this folder. You can get further explanation about how the command-line interface works by running `hexalite help`.
 
 ## 🏗️ Project structure
 
@@ -143,6 +154,10 @@ To know about the license of this project, you can read the [LICENSE.md][license
 [contributing-guide]: https://git.hexalite.org/java-edition/blob/dev/next/CONTRIBUTING.md
 
 [rust]: https://www.rust-lang.org/
+
+[kotlin]: https://kotlinlang.org/
+
+[git]: https://git-scm.com/
 
 [docker]: https://www.docker.com/
 
