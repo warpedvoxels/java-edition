@@ -5,6 +5,10 @@ use tonic::transport::Server;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    if cfg!(feature = "client") {
+        panic!("client feature is not supported for initializing");
+    }
+
     logging::init().unwrap();
     let settings = settings::init()?;
     let _postgres = postgres::init(&settings).await?;

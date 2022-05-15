@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/arcade/origins/skills" />
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/common-kotlin" />
+            <option value="$PROJECT_DIR$/definitions-gradle-plugin" />
             <option value="$PROJECT_DIR$/kotlin-grpc-client" />
             <option value="$PROJECT_DIR$/kraken" />
             <option value="$PROJECT_DIR$/kraken/purpur" />

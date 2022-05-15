@@ -26,6 +26,7 @@ include(
     ":arcade:duels",
     ":reusable-plugins:chat",
     ":reusable-plugins:combat",
+    ":definitions-gradle-plugin",
 )
 
 dependencyResolutionManagement {

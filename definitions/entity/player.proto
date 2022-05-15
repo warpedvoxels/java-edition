@@ -1,13 +1,6 @@
 syntax = "proto2";
 
-option java_multiple_files = true;
-option java_package = "org.hexalite.network.protobuf.entity";
-
 package entity;
-
-import "datatype/uuid.proto";
-import "datatype/username.proto";
-import "google/protobuf/timestamp.proto";
 
 message Player {
     required datatype.Uuid uuid = 1;

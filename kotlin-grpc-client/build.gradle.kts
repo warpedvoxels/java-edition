@@ -1,51 +1,10 @@
-import com.google.protobuf.gradle.*
-
-@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
-plugins {
-    alias(hexalite.plugins.protobuf)
-}
-
 dependencies {
-    implementation(project(":common-kotlin"))
-    implementation(rootProject.hexalite.bundles.proto)
+    api(project(":common-kotlin"))
 }
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${rootProject.hexalite.versions.protobuf.asProvider().get()}"
-    }
-    plugins {
-        id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:${rootProject.hexalite.versions.grpc.protobuf.get()}"
-        }
-        id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:${rootProject.hexalite.versions.grpc.kotlin.get()}:jdk7@jar"
-        }
-    }
-    generateProtoTasks {
-        all().forEach {
-            it.plugins {
-                id("grpc")
-                id("grpckt")
-            }
-            it.builtins {
-                id("kotlin")
-            }
-        }
-    }
-}
-
 sourceSets.main {
-    proto {
-        val files = files(File(rootProject.projectDir, "definitions"))
-        srcDirs(files)
-    }
     java {
         srcDirs(
-            "build/generated/source/proto/main/java",
-            "build/generated/source/proto/main/grpc",
-            "build/generated/source/proto/main/grpckt",
-            "build/generated/source/proto/main/kotlin"
+            "build/generated/source/definitions/main/kotlin"
         )
     }
 }

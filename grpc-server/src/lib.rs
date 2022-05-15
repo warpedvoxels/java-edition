@@ -1,11 +1,20 @@
 #![feature(const_type_name)]
 
-pub mod app;
-pub mod bootstrap;
+macro_rules! server {
+    ($name:ident) => {
+        #[cfg(feature = "server")]
+        pub mod $name;
+    };
+}
+
 pub mod codec;
 pub mod definition;
-pub mod routing;
 pub use grpc_server_common::datatype;
 
+server!(app);
+server!(bootstrap);
+server!(routing);
+
 #[path = "macro/mod.rs"]
+#[cfg(feature = "server")]
 pub mod macros;
