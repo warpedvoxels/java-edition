@@ -240,11 +240,9 @@ impl<'a> CodeGenerator<'a> {
     }
 
     fn append_field(&mut self, fq_message_name: &str, field: FieldDescriptorProto) {
-        let _type_ = field.r#type();
         let repeated = field.label == Some(Label::Repeated as i32);
         let optional = self.optional(&field);
         let ty = self.resolve_type(&field, fq_message_name);
-
         println!("    field: {:?}, type: {ty:?}", field.name(),);
 
         self.append_field_attributes(fq_message_name, field.name());

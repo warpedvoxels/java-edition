@@ -12,9 +12,7 @@ use anyhow::Result;
 use heck::{ToLowerCamelCase, ToUpperCamelCase};
 use itertools::Itertools;
 use prost::Message;
-use prost_types::{
-    field_descriptor_proto, DescriptorProto, FileDescriptorProto, FileDescriptorSet,
-};
+use prost_types::{FileDescriptorProto, FileDescriptorSet};
 use xshell::Shell;
 
 use crate::code_generator::CodeGenerator;
@@ -112,7 +110,7 @@ impl DefGeneratorConfig {
                     descriptor,
                 )
             })
-            .collect::<HashMap<_, _>>();
+            .collect::<Vec<_>>();
 
         let file_names = requests
             .iter()
@@ -150,7 +148,7 @@ impl DefGeneratorConfig {
     /// `build.rs` file, instead use [`compile_protos()`].
     pub fn generate(
         &mut self,
-        requests: HashMap<Module, FileDescriptorProto>,
+        requests: Vec<(Module, FileDescriptorProto)>,
     ) -> Result<HashMap<Module, String>> {
         let mut modules = HashMap::new();
         let mut packages = HashMap::new();
@@ -203,31 +201,47 @@ impl ExternPaths {
         };
 
         if prost_types {
-            extern_paths.insert(".google.protobuf".to_string(), "::prost_types".to_string())?;
-            extern_paths.insert(".google.protobuf.BoolValue".to_string(), "bool".to_string())?;
+            extern_paths.insert(
+                ".google.protobuf".to_string(),
+                "kotlinx.datetime".to_string(),
+            )?;
+            extern_paths.insert(
+                ".google.protobuf.Timestamp".to_string(),
+                "kotlinx.datetime.Instant".to_string(),
+            )?;
+            extern_paths.insert(
+                ".google.protobuf.BoolValue".to_string(),
+                "Boolean".to_string(),
+            )?;
             extern_paths.insert(
                 ".google.protobuf.BytesValue".to_string(),
-                "::prost::alloc::vec::Vec<u8>".to_string(),
+                "ByteArray".to_string(),
             )?;
             extern_paths.insert(
                 ".google.protobuf.DoubleValue".to_string(),
-                "f64".to_string(),
+                "Double".to_string(),
             )?;
-            extern_paths.insert(".google.protobuf.Empty".to_string(), "()".to_string())?;
-            extern_paths.insert(".google.protobuf.FloatValue".to_string(), "f32".to_string())?;
-            extern_paths.insert(".google.protobuf.Int32Value".to_string(), "i32".to_string())?;
-            extern_paths.insert(".google.protobuf.Int64Value".to_string(), "i64".to_string())?;
+            extern_paths.insert(".google.protobuf.Empty".to_string(), "Unit".to_string())?;
+            extern_paths.insert(
+                ".google.protobuf.FloatValue".to_string(),
+                "Float".to_string(),
+            )?;
+            extern_paths.insert(".google.protobuf.Int32Value".to_string(), "Int".to_string())?;
+            extern_paths.insert(
+                ".google.protobuf.Int64Value".to_string(),
+                "Long".to_string(),
+            )?;
             extern_paths.insert(
                 ".google.protobuf.StringValue".to_string(),
-                "::prost::alloc::string::String".to_string(),
+                "String".to_string(),
             )?;
             extern_paths.insert(
                 ".google.protobuf.UInt32Value".to_string(),
-                "u32".to_string(),
+                "Int".to_string(),
             )?;
             extern_paths.insert(
                 ".google.protobuf.UInt64Value".to_string(),
-                "u64".to_string(),
+                "Long".to_string(),
             )?;
         }
 

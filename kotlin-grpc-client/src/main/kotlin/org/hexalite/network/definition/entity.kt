@@ -1,5 +1,19 @@
 package org.hexalite.network.definition.entity
 @kotlinx.serialization.Serializable
+data class Pato (
+    val a: Int,
+)
+@kotlinx.serialization.Serializable
+data class Player (
+    val uuid: java.util.UUID,
+    val hexes: Int,
+    val lastUsername: String,
+    val lastSeen: kotlinx.datetime.Instant,
+    val createdAt: kotlinx.datetime.Instant,
+    val updatedAt: kotlinx.datetime.Instant,
+)
+package org.hexalite.network.definition.entity
+@kotlinx.serialization.Serializable
 data class Role (
     val id: String,
     val unicodeCharacter: String,
