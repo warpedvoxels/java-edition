@@ -3,7 +3,5 @@ syntax = "proto2";
 package datatype;
 
 message Username {
-    required string content = 1 [
-        (protokt.property).wrap = "String"
-    ];
+    required string content = 1;
 }

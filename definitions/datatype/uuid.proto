@@ -3,7 +3,5 @@ syntax = "proto2";
 package datatype;
 
 message Uuid {
-    required bytes content = 1 [
-        (protokt.property).wrap = "java.util.UUID"
-    ];
+    required bytes content = 1;
 }

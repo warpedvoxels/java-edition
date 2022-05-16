@@ -2,6 +2,10 @@ syntax = "proto2";
 
 package entity;
 
+import "datatype/uuid.proto";
+import "datatype/username.proto";
+import "google/protobuf/timestamp.proto";
+
 message Player {
     required datatype.Uuid uuid = 1;
     required int32 hexes = 2;

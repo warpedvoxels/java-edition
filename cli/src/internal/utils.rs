@@ -1,12 +1,10 @@
 use std::{
     io::{Error, ErrorKind},
     path::Path,
-    process::Stdio,
 };
 
-use anyhow::{Context, Result};
+use anyhow::Result;
 use hexalite_common::prelude::get_hexalite_dir_path;
-use xshell::Shell;
 
 pub fn handle_dir_error(src: &Path, dest: &Path, err: Error) {
     if err.kind() != ErrorKind::AlreadyExists {
@@ -35,5 +33,3 @@ where
     let dest = hexalite.join(path);
     use_handling(&src, &dest, func)
 }
-
-

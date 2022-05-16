@@ -10,7 +10,8 @@ members = [
     "grpc-server/sql-macros",
     "grpc-server/bindings",
     #"rest-webserver",
-    "rust-tools/lint"
+    "rust-tools/lint",
+    "jvm-definitions-generator"
 ]
 
 [profile.release]
