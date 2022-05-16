@@ -80,12 +80,13 @@ they are doing.
 
 ### Prerequisites
 
-* Install the [Java Development Kit][jdk]. We recommend using the [IBM's Semeru][jdk-semeru] for the OpenJ9 virtual machine
-and [Eclipse's Adoptium][jdk] for the Hotspot virtual machine. We recommend installing both though.
+* Install the latest [Early Access Project Panama Java Development Kit Build][jdk].
 * Install the latest nightly build of [Rust][rust]. You may consider using the `rustup` tool to make your life easier. 
 * Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
 
-The reason why we recommend installing both, is it because the OpenJ9 virtual machine is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing.
+**IMPORTANT!** A build of JDK with Project Panama is really necessary to run Hexalite locally, since we depend on its nifty features in development which aren't available in other JDK distributions such as Temurin or Azul's for now.
+
+> The reason why we will use the OpenJ9 virtual machine in the future is it is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing. Since there is no available build for OpenJ9 with Project Panama, we will use Hotspot for now.
 
 ### Building everything
 
@@ -163,9 +164,7 @@ To know about the license of this project, you can read the [LICENSE.md][license
 
 [docker-compose]: https://docs.docker.com/compose/
 
-[jdk]: https://projects.eclipse.org/projects/adoptium.temurin
-
-[jdk-semeru]: https://developer.ibm.com/languages/java/semeru-runtimes/downloads
+[jdk]: https://jdk.java.net/panama/
 
 [opencollective]: https://opencollective.com/hexalite
 
