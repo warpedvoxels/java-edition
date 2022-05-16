@@ -7,8 +7,11 @@ fn main() -> Result<()> {
     cmd!(sh, "cargo fmt --all")
         .run()
         .context("Failed to format all the code.")?;
-    cmd!(sh, "cargo clippy --workspace --fix --allow-dirty --all-targets --all-features -- -D warnings -A clippy::type_complexity -W clippy::doc_markdown")
-        .run()
-        .context("Please fix clippy errors in output above.")?;
+    cmd!(
+        sh,
+        "cargo clippy --workspace --fix --allow-dirty --allow-staged --all-targets --all-features"
+    )
+    .run()
+    .context("Please fix clippy errors in output above.")?;
     Ok(())
 }

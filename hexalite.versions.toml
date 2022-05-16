@@ -21,7 +21,6 @@ mordant = "2.0.0-beta5"
 caffeine = "3.0.5"
 commons-io = "2.11.0"
 ktoml = "0.2.11"
-kotlin-poet = "1.11.0"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -53,10 +52,6 @@ caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "c
 caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref = "caffeine" }
 # IO
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
-# Protobuf
-
-# Code generation
-kotlin-poet = { module = "com.squareup:kotlinpoet", version.ref = "kotlin-poet" }
 
 [bundles]
 kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
