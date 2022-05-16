@@ -1,9 +1,5 @@
 package org.hexalite.network.definition.entity
 @kotlinx.serialization.Serializable
-data class Pato (
-    val a: Int,
-)
-@kotlinx.serialization.Serializable
 data class Player (
     val uuid: java.util.UUID,
     val hexes: Int,

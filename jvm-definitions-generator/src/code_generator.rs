@@ -4,7 +4,8 @@ use itertools::{Either, Itertools};
 use multimap::MultiMap;
 use prost_types::{
     field_descriptor_proto::{Label, Type},
-    DescriptorProto, EnumDescriptorProto, EnumValueDescriptorProto, FieldDescriptorProto, FileDescriptorProto, OneofDescriptorProto,
+    DescriptorProto, EnumDescriptorProto, EnumValueDescriptorProto, FieldDescriptorProto,
+    FileDescriptorProto, OneofDescriptorProto,
 };
 
 use crate::config::{to_camel, to_upper_camel, DefGeneratorConfig, ExternPaths};
