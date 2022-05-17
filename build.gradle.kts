@@ -1,10 +1,14 @@
+import io.github.krakowski.jextract.JextractTask
+
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
     alias(hexalite.plugins.kotlin.jvm)
     alias(hexalite.plugins.kotlinx.serialization) apply false
     alias(hexalite.plugins.paperweight.userdev) apply false
     alias(hexalite.plugins.kapt) apply false
+    alias(hexalite.plugins.jextract) apply false
     id("hexalite-build-logic") apply false
+    java
 }
 
 allprojects {
@@ -12,6 +16,14 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     apply(plugin = "org.gradle.java-library")
     apply(plugin = "hexalite-build-logic")
+    apply(plugin = "io.github.krakowski.jextract")
+    apply(plugin = "java")
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(18))
+        }
+    }
 
     repositories {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
@@ -58,6 +70,23 @@ allprojects {
         }
         test {
             useJUnitPlatform()
+        }
+        withType<JextractTask> {
+            dependsOn(":native:cbindgen")
+            header("${rootProject.projectDir.absolutePath}/target/release/client.h") {
+                libraries.set(listOf("grpc-client"))
+                targetPackage.set("org.hexalite.network.native")
+                className.set("GrpcClient")
+                sourceMode.set(false)
+            }
+        }
+        withType<JavaExec> {
+            jvmArgs = listOf(
+                "--add-modules",
+                "jdk.incubator.foreign",
+                "--enable-native-access=ALL-UNNAMED",
+                "-Djava.library.path=${rootProject.projectDir.absolutePath}/target/release"
+            )
         }
     }
 }

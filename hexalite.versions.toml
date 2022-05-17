@@ -21,6 +21,8 @@ mordant = "2.0.0-beta5"
 caffeine = "3.0.5"
 commons-io = "2.11.0"
 ktoml = "0.2.11"
+jextract = "0.2.6"
+cargo-wrapper = "1.0.0"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -66,3 +68,5 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+jextract = { id = "io.github.krakowski.jextract", version.ref = "jextract" }
+cargo-wrapper = { id = "io.github.arc-blroth.cargo-wrapper", version.ref = "cargo-wrapper" }

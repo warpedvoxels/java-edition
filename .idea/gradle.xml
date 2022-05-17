@@ -15,9 +15,10 @@
             </builds>
           </compositeBuild>
         </compositeConfiguration>
+        <option name="delegatedBuild" value="true" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -27,11 +28,11 @@
             <option value="$PROJECT_DIR$/arcade/origins/skills" />
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/common-kotlin" />
-            <option value="$PROJECT_DIR$/definitions-gradle-plugin" />
             <option value="$PROJECT_DIR$/kotlin-grpc-client" />
             <option value="$PROJECT_DIR$/kraken" />
             <option value="$PROJECT_DIR$/kraken/purpur" />
             <option value="$PROJECT_DIR$/kraken/velocity" />
+            <option value="$PROJECT_DIR$/native" />
             <option value="$PROJECT_DIR$/reusable-plugins" />
             <option value="$PROJECT_DIR$/reusable-plugins/chat" />
             <option value="$PROJECT_DIR$/reusable-plugins/combat" />

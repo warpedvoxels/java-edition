@@ -8,34 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="feat(grpc/client): add initial consuming wrapper">
-      <change afterPath="$PROJECT_DIR$/definitions-gradle-plugin/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/definitions-gradle-plugin/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/definitions-gradle-plugin/src/main/kotlin/org/hexalite/network/definitions/gradle/DefinitionsGradlePlugin.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/definitions-gradle-plugin/src/main/kotlin/org/hexalite/network/definitions/gradle/DefinitionsPluginSettings.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/definitions-gradle-plugin/src/main/kotlin/org/hexalite/network/definitions/gradle/generator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/bindings/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/migrations/.gitkeep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/src/internal/utils.rs" beforeDir="false" afterPath="$PROJECT_DIR$/cli/src/internal/utils.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/datatype/username.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/datatype/username.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/datatype/uuid.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/datatype/uuid.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/entity/player.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/entity/player.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/entity/role.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/entity/role.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/protocol/greeting.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/protocol/greeting.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/protocol/keys.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/protocol/keys.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/protocol/player.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/protocol/player.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/rest/auth.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/rest/auth.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hexalite.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/hexalite.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/codec/CborMarshaller.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/services/PlayerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/services/PlayerService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/server.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rust-tooling.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rust-tooling.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +36,30 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hexalite-java-edition" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hexalite-java-edition" type="f1a62948:ProjectNode" />
+                <item name="hexalite-java-edition" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hexalite-java-edition" type="f1a62948:ProjectNode" />
+                <item name="hexalite-java-edition" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="hexalite-java-edition" type="f1a62948:ProjectNode" />
+                <item name="hexalite-java-edition" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -104,27 +102,50 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/media/files/Projects/Hexalite/Minecraft/Java Edition/definitions-gradle-plugin",
+    "last_opened_file_path": "/media/files/Projects/Hexalite/Minecraft/java-edition",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "editor.preferences.import"
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/native" />
+      <recent name="$PROJECT_DIR$/kotlin-grpc-client" />
       <recent name="$PROJECT_DIR$/definitions-gradle-plugin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/.idea/modules" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.Java Edition [jextract]">
+    <configuration name="Java Edition [cbindgen]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="cbindgen" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="Java Edition [generateProto]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -146,8 +167,31 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="Java Edition [jextract]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jextract" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Java Edition [jextract]" />
+        <item itemvalue="Gradle.Java Edition [cbindgen]" />
         <item itemvalue="Gradle.Java Edition [generateProto]" />
       </list>
     </recent_temporary>
@@ -175,6 +219,8 @@
       <workItem from="1652636722915" duration="610000" />
       <workItem from="1652640317668" duration="59000" />
       <workItem from="1652647597007" duration="1534000" />
+      <workItem from="1652760489946" duration="2245000" />
+      <workItem from="1652762942444" duration="376000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>

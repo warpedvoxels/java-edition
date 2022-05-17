@@ -11,3 +11,10 @@ crate-type = ["cdylib"]
 [dependencies]
 hexalite-common = { path = "../../common-rust" }
 grpc-server = { path = "../", default-features = false, features = ["client"] }
+tonic = { version = "^0.7", features = ["tls", "compression"] }
+uuid = "^1.0"
+libc = "^0.2"
+cbor4ii = { version = "^0.2", features = ["serde1", "use_std"] }
+
+[build-dependencies]
+cbindgen = "^0.23"
