@@ -8,7 +8,6 @@ data class Player (
     val createdAt: kotlinx.datetime.Instant,
     val updatedAt: kotlinx.datetime.Instant,
 )
-package org.hexalite.network.definition.entity
 @kotlinx.serialization.Serializable
 data class Role (
     val id: String,

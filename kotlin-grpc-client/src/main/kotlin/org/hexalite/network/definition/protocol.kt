@@ -7,16 +7,14 @@ data class HelloRequest (
 data class HelloReply (
     val message: String,
 )
-package org.hexalite.network.definition.protocol
 @kotlinx.serialization.Serializable
 enum class RedisKey {
-    InternalIdentity1,
+    InternalIdentity,
 }
 @kotlinx.serialization.Serializable
 enum class CommunicationsKey {
-    DataQueue1,
+    DataQueue,
 }
-package org.hexalite.network.definition.protocol
 @kotlinx.serialization.Serializable
 data class PlayerDataRequest (
     val id: arrow.core.Either<java.util.UUID, String>,

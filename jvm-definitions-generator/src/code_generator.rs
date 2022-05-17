@@ -96,12 +96,14 @@ impl<'a> CodeGenerator<'a> {
         );
 
         code_gen.path.push(4);
-        writeln!(
-            code_gen.buf,
-            "package {}.{}",
-            code_gen.config.base_package, code_gen.package
-        )
-        .unwrap();
+        if !code_gen.buf.starts_with("package ") {
+            writeln!(
+                code_gen.buf,
+                "package {}.{}",
+                code_gen.config.base_package, code_gen.package
+            )
+            .unwrap();
+        }
         for (idx, message) in file.message_type.into_iter().enumerate() {
             code_gen.path.push(idx as i32);
             code_gen.append_message(message);
@@ -331,7 +333,6 @@ impl<'a> CodeGenerator<'a> {
             None => &name,
         };
         self.buf.push_str(name_unprefixed);
-        self.buf.push_str(&value.number().to_string());
         self.buf.push_str(",\n");
     }
     fn append_oneof_field(
