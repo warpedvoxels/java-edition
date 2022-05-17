@@ -75,7 +75,7 @@ allprojects {
             dependsOn(":native:cbindgen")
             header("${rootProject.projectDir.absolutePath}/target/release/client.h") {
                 libraries.set(listOf("grpc-client"))
-                targetPackage.set("org.hexalite.network.native")
+                targetPackage.set("org.hexalite.network.panama.grpc.client")
                 className.set("GrpcClient")
                 sourceMode.set(false)
             }

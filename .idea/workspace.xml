@@ -7,11 +7,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="feat(grpc/client): add initial consuming wrapper">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/server.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rust-tooling.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rust-tooling.sh" afterDir="false" />
-    </list>
+    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="feat(grpc/client): add initial consuming wrapper" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -220,7 +216,7 @@
       <workItem from="1652640317668" duration="59000" />
       <workItem from="1652647597007" duration="1534000" />
       <workItem from="1652760489946" duration="2245000" />
-      <workItem from="1652762942444" duration="376000" />
+      <workItem from="1652762942444" duration="409000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>
