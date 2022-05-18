@@ -1,7 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
-plugins {
-}
-
 tasks {
     task<Exec>("cbindgen") {
         val config = rootProject.file("grpc-server/bindings/cbindgen.toml")
@@ -17,6 +13,16 @@ tasks {
             "--config", config.absolutePath,
             "--crate", "grpc-server-bindings",
             "--output", output.absolutePath
+        )
+    }
+    task<Exec>("build-native") {
+        workingDir(rootProject.projectDir)
+        commandLine("cargo")
+        args(
+            "build",
+            "-p",
+            "grpc-server-bindings",
+            "--release"
         )
     }
 }

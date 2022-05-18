@@ -18,7 +18,8 @@
 <div align="center">
   <br/>
   <strong>
-    Hexalite Network is an open-source modular network of Minecraft: Java Edition servers inspired by Mineclub, Wynncraft and Origin Realms.
+    Hexalite Network is an open-source modular network of Minecraft: Java Edition servers inspired by Mineclub, Wynncraft
+    and Origin Realms.
   </strong>
   This project aims to bring the best experience possible to players without the need of mods.
   <br/>
@@ -46,10 +47,16 @@
 
 ## 💻 Technologies
 
-The technology stack in this project is pretty straightforward and consists mainly of [Rust][rust] and [Kotlin][kotlin] when talking about programming languages. For transferring data between modules, we use a gRPC server based on `prost` over the CBOR binary format and compressed data. It is used for requesting data, and communicating between other stuff with `RabbitMQ`. Every Minecraft server on Hexalite is running on top of [Purpur][purpur] server software, proxied by [Velocity][velocity]. Purpur is a great alternative for Paper and it provide a lot of new features, such as mechanics, performance improvements and useful API changes.
+The technology stack in this project is pretty straightforward and consists mainly of [Rust][rust] and [Kotlin][kotlin] 
+when talking about programming languages. For transferring data between modules, we use a gRPC server based on `prost` 
+over the CBOR binary format and compressed data. It is used for requesting data, and communicating between other stuff
+over `RabbitMQ`. Every Minecraft server on Hexalite is running on top of the [Purpur][purpur] server software, proxied by 
+[Velocity][velocity]. Purpur is a great alternative for Paper, providing a lot of new features, such as mechanics, 
+performance improvements and useful API changes.
 
-This is subject to change, since this type of infrastructure can improve over time. If you are interested in discussing about this or any other
-technology topics, feel free to join our [Discord server][discord] to chat with our development and artistic team.
+This is subject to change, since this type of infrastructure can improve over time. If you are interested in discussing
+this or any other technology topics, feel free to join our [Discord server][discord] to chat with our development and 
+artistic team.
 
 ## ✨ Contributors
 
@@ -71,20 +78,21 @@ technology topics, feel free to join our [Discord server][discord] to chat with 
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-
 ## 🏟️ Contributing / running locally
 
-If you are interesting in contributing, please make sure to read our [contributing guide][contributing-guide] and join
+If you are interested in contributing, please make sure to read our [contributing guide][contributing-guide] and join
 our Discord community for further information and interaction with the developers and artists, and whoever knows what 
 they are doing.
 
 ### Prerequisites
 
 * Install the latest [Early Access Project Panama Java Development Kit Build][jdk].
-* Install the latest nightly build of [Rust][rust]. You may consider using the `rustup` tool to make your life easier. 
-* Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier way.
+* Install the latest nightly build of [Rust][rust]. You may consider using the `rustup` tool to make your life easier.
+* Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier
+  way.
 
-**IMPORTANT!** A build of JDK with Project Panama is really necessary to run Hexalite locally, since we depend on its nifty features in development which aren't available in other JDK distributions such as Temurin or Azul's for now.
+**IMPORTANT!** A build of JDK with Project Panama is really necessary to run Hexalite locally, since we depend on its
+nifty features in development which aren't available in other JDK distributions such as Temurin or Azul's for now.
 
 > The reason why we will use the OpenJ9 virtual machine in the future is it is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing. Since there is no available build for OpenJ9 with Project Panama, we will use Hotspot for now.
 
@@ -99,16 +107,17 @@ It is a unified interface for doing all necessary things for running Hexalite.
 * Then you can compile all the Rust-based applications by running `cd hexalite-java-edition && cargo build --release`.
 
 It is done now! You can link the compiled binaries to the `$PATH` by running the `./scripts/apply_cli.sh` command on UNIX-based systems. I'm
-not too sure in how to do this on Windows, but I'm sure you can find some help there by Googling it, since it doesn't seems that hard.
+not too sure in how to do this on Windows, but I'm sure you can find some help there by Googling it, since it doesn't seem that hard.
 
 #### 2. Initializing the environment
 
-After the compilation of the command-line interface, we need to initialize the environment. In this document, we will be referring to the
-command-line interface command as `hexalite`. It may different in your machine if you didn't added it to the `$PATH`, so it probably it would be
-`./target/release/hexalite`, assuming you already compiled it.
+After the compilation of the command-line interface, we need to initialize the environment. In this document, we will be
+referring to the command-line interface command as `hexalite`. It may be different in your machine if you didn't add it
+to the `$PATH`, so it probably it would be `./target/release/hexalite`, assuming you already compiled it.
 
-* `hexalite init` ◉ This will initialize the environment, creating the `.hexalite` folder in your home directory, and symlinking all required
-files to this folder. You can get further explanation about how the command-line interface works by running `hexalite help`.
+* `hexalite init` ◉ This will initialize the environment, creating the `.hexalite` folder in your home directory, and
+  symlinking all required files to this folder. You can get further explanation about how the command-line interface
+  works by running `hexalite help`.
 
 ## 🏗️ Project structure
 
@@ -165,6 +174,23 @@ To know about the license of this project, you can read the [LICENSE.md][license
 [docker-compose]: https://docs.docker.com/compose/
 
 [jdk]: https://jdk.java.net/panama/
+
+[opencollective]: https://opencollective.com/hexalite
+
+[third-party]: https://git.hexalite.org/java-edition-network/blob/dev/next/THIRD_PARTY.md
+
+[license]: https://git.hexalite.org/java-edition-network/blob/dev/next/LICENSE.md
+
+[purpur]: https://purpurmc.org
+
+[velocity]: https://github.com/PaperMC/Velocity
+
+[rabbitmq]: https://www.rabbitmq.com
+
+[postgresql]: https://www.postgresql.org
+
+[discord]: https://discord.hexalite.org
+
 
 [opencollective]: https://opencollective.com/hexalite
 

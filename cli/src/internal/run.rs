@@ -1,17 +1,11 @@
+use anyhow::{Context, Result};
+
 use hexalite_common::dirs::get_hexalite_dir_path;
 
 use super::*;
-use anyhow::{Context, Result};
 
 pub async fn webserver(sh: &Shell) -> Result<()> {
-    let hexalite = get_hexalite_dir_path();
-    let compiled = hexalite.join("compiled");
-    // webserver on unix-like systems and webserver.exe on windows
-    let path = if cfg!(target_os = "windows") {
-        compiled.join("webserver.exe")
-    } else {
-        compiled.join("webserver")
-    };
+    let path = compiled_file!("webserver");
     let path = path
         .to_str()
         .context("Failed to retrieve the compiled webserver path.")?;
@@ -22,13 +16,7 @@ pub async fn webserver(sh: &Shell) -> Result<()> {
 }
 
 pub async fn resource_pack(sh: &Shell) -> Result<()> {
-    let hexalite = get_hexalite_dir_path();
-    let compiled = hexalite.join("compiled");
-    let path = if cfg!(target_os = "windows") {
-        compiled.join("resource-pack.exe")
-    } else {
-        compiled.join("resource-pack")
-    };
+    let path = compiled_file!("resource_pack");
     let path = path
         .to_str()
         .context("Failed to retrieve the compiled resource pack path.")?;

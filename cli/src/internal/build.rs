@@ -1,12 +1,14 @@
 use std::{fs, path::Path};
 
 use anyhow::Context;
+
 use hexalite_common::dirs::{get_hexalite_dir_path, get_source_path};
 
+use crate::{compiled_file, file_from_src, file_name};
 use crate::internal::*;
 
 lazy_static::lazy_static! {
-    static ref MANIFESTS: Vec<&'static str> = vec!["cli/Cargo.toml", "resource-pack/Cargo.toml", "rest-webserver/Cargo.toml", "grpc-server/Cargo.toml"];
+    static ref MODULES: Vec<&'static str> = vec!["hexalite", "resource-pack", "grpc-server", "grpc-server-bindings"]; //"rest-webserver"];
     static ref WATERFALL_MODULES: Vec<&'static str> = vec![];
 }
 
@@ -43,22 +45,13 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
         panic!("The source path does not exist. Please make sure to populate the command-line interface first by using `hexalite init`.");
     }
 
-    let is_windows = cfg!(target_os = "windows");
-    let resource_pack_name = if is_windows {
-        "resource-pack.exe"
-    } else {
-        "resource-pack"
-    };
-    let webserver_name = if is_windows {
-        "webserver.exe"
-    } else {
-        "webserver"
-    };
+    let resource_pack_name = file_name!("resource-pack");
+    let webserver_name = file_name!("webserver");
+    let cli_name = file_name!("hexalite");
+
     use_handling(
-        &src_path
-            .join("rest-webserver/target/release")
-            .join(webserver_name),
-        &compiled_path.join(webserver_name),
+        &file_from_src!(&webserver_name),
+        &compiled_file!(&webserver_name),
         |src, dest| {
             println!(
                 "Creating symbolic link {} to {}",
@@ -69,10 +62,20 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
         },
     );
     use_handling(
-        &src_path
-            .join("resource-pack/target/release")
-            .join(resource_pack_name),
-        &compiled_path.join(resource_pack_name),
+        &file_from_src!(&resource_pack_name),
+        &compiled_file!(&resource_pack_name),
+        |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_file(src, dest)
+        },
+    );
+    use_handling(
+        &file_from_src!(&cli_name),
+        &compiled_file!(&cli_name),
         |src, dest| {
             println!(
                 "Creating symbolic link {} to {}",
@@ -83,12 +86,8 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
         },
     );
 
-    for manifest_path in &*MANIFESTS {
-        let manifest_path = src_path.join(manifest_path);
-        let manifest_path = manifest_path
-            .to_str()
-            .context("Failed to get the manifest path as string.")?;
-        xshell::cmd!(sh, "cargo build --release --manifest-path {manifest_path}")
+    for manifest_path in &*MODULES {
+        xshell::cmd!(sh, "cargo build -p {manifest_path} --release")
             .run()
             .context("Failed to build the project.")?;
     }

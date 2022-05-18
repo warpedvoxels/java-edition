@@ -1,3 +1,4 @@
+@file:kotlinx.serialization.UseSerializers(org.hexalite.network.common.serialization.UUIDSerializer::class)
 package org.hexalite.network.definition.protocol
 @kotlinx.serialization.Serializable
 data class HelloRequest (
@@ -17,7 +18,7 @@ enum class CommunicationsKey {
 }
 @kotlinx.serialization.Serializable
 data class PlayerDataRequest (
-    val id: arrow.core.Either<java.util.UUID, String>,
+    val id: java.util.UUID,
 )
 @kotlinx.serialization.Serializable
 data class PlayerDataReply (

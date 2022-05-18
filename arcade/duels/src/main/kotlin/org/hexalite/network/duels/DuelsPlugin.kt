@@ -6,7 +6,6 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.hexalite.network.duels.gameplay.feature.block.PlaceholderBlockFeature
 import org.hexalite.network.duels.gameplay.feature.block.PlaceholderBlockItemFeature
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.bukkit.getPlugin
 import org.hexalite.network.kraken.extension.readEvents
 import org.hexalite.network.kraken.extension.unaryPlus
 import org.hexalite.network.kraken.pipeline.packet.packetPipelineInjectionSystem
@@ -32,5 +31,3 @@ class DuelsPlugin: KrakenPlugin(namespace = "duels") {
         super.up()
     }
 }
-
-val duels: DuelsPlugin by getPlugin()

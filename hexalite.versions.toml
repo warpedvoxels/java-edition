@@ -22,7 +22,6 @@ caffeine = "3.0.5"
 commons-io = "2.11.0"
 ktoml = "0.2.11"
 jextract = "0.2.6"
-cargo-wrapper = "1.0.0"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -56,7 +55,7 @@ caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref =
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-serialization-cbor", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
 caffeine = ["caffeine", "caffeine-guava"]
 
@@ -69,4 +68,3 @@ plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
 jextract = { id = "io.github.krakowski.jextract", version.ref = "jextract" }
-cargo-wrapper = { id = "io.github.arc-blroth.cargo-wrapper", version.ref = "cargo-wrapper" }
