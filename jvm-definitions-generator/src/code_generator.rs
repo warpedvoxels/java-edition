@@ -4,12 +4,12 @@ use std::fmt::Write;
 use itertools::{Either, Itertools};
 use multimap::MultiMap;
 use prost_types::{
-    DescriptorProto,
-    EnumDescriptorProto, EnumValueDescriptorProto, field_descriptor_proto::{Label, Type}, FieldDescriptorProto,
+    field_descriptor_proto::{Label, Type},
+    DescriptorProto, EnumDescriptorProto, EnumValueDescriptorProto, FieldDescriptorProto,
     FileDescriptorProto, OneofDescriptorProto,
 };
 
-use crate::config::{DefGeneratorConfig, ExternPaths, to_camel, to_upper_camel};
+use crate::config::{to_camel, to_upper_camel, DefGeneratorConfig, ExternPaths};
 
 #[derive(PartialEq)]
 enum Syntax {
@@ -246,7 +246,7 @@ impl<'a> CodeGenerator<'a> {
         let repeated = field.label == Some(Label::Repeated as i32);
         let optional = self.optional(&field);
         let ty = self.resolve_type(&field, fq_message_name);
-        println!("    field: {:?}, type: {ty:?}", field.name(), );
+        println!("    field: {:?}, type: {ty:?}", field.name(),);
 
         self.append_field_attributes(fq_message_name, field.name());
         self.push_indent();
@@ -282,7 +282,7 @@ impl<'a> CodeGenerator<'a> {
             "val {}: Map<{key_ty}, {value_ty}>,",
             to_camel(field.name())
         )
-            .unwrap();
+        .unwrap();
     }
 
     fn append_enum(&mut self, desc: EnumDescriptorProto) {
@@ -352,11 +352,11 @@ impl<'a> CodeGenerator<'a> {
         // );
         let ty = self.resolve_type(&fields.first().unwrap().0, fq_message_name);
 
-        println!("    oneof: {:?}, ty: {ty}", oneof.name(), );
+        println!("    oneof: {:?}, ty: {ty}", oneof.name(),);
 
         self.append_field_attributes(fq_message_name, oneof.name());
         self.push_indent();
-        writeln!(self.buf, "val {}: {ty},", to_camel(oneof.name()), ).unwrap();
+        writeln!(self.buf, "val {}: {ty},", to_camel(oneof.name()),).unwrap();
     }
 
     fn optional(&self, field: &FieldDescriptorProto) -> bool {

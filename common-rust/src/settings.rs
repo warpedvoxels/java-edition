@@ -30,6 +30,7 @@ pub struct WebServerSettings {
 pub struct WebServerRootSettings {
     pub ip: Ipv4Addr,
     pub port: u16,
+    pub ssl: bool,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -44,6 +45,7 @@ pub struct GrpcSettings {
 pub struct GrpcRootSettings {
     pub ip: Ipv4Addr,
     pub port: u16,
+    pub ssl: bool,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -118,6 +120,7 @@ impl Default for WebServerRootSettings {
         Self {
             ip: Ipv4Addr::LOCALHOST,
             port: 8080,
+            ssl: false,
         }
     }
 }
@@ -138,6 +141,7 @@ impl Default for GrpcRootSettings {
         Self {
             ip: Ipv4Addr::LOCALHOST,
             port: 50051,
+            ssl: false,
         }
     }
 }

@@ -14,7 +14,7 @@ data class HexaliteSettings(
     @Serializable
     data class Grpc(val root: Root) {
         @Serializable
-        data class Root(val ip: String, val port: Long)
+        data class Root(val ip: String, val port: Long, val ssl: Boolean)
     }
 
     companion object {

@@ -4,8 +4,8 @@ use anyhow::Context;
 
 use hexalite_common::dirs::{get_hexalite_dir_path, get_source_path};
 
-use crate::{compiled_file, file_from_src, file_name};
 use crate::internal::*;
+use crate::{compiled_file, file_from_src, file_name};
 
 lazy_static::lazy_static! {
     static ref MODULES: Vec<&'static str> = vec!["hexalite", "resource-pack", "grpc-server", "grpc-server-bindings"]; //"rest-webserver"];
@@ -47,11 +47,19 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
 
     let resource_pack_name = file_name!("resource-pack");
     let webserver_name = file_name!("webserver");
+    let grpc_server_name = file_name!("grpc-server");
     let cli_name = file_name!("hexalite");
+    let client_native_name = if cfg!(target_os = "windows") {
+        "grpc_server_bindings.dll"
+    } else if cfg!(target_os = "macos") {
+        "libgrpc_server_bindings.dylib"
+    } else {
+        "libgrpc_server_bindings.so"
+    };
 
     use_handling(
-        &file_from_src!(&webserver_name),
-        &compiled_file!(&webserver_name),
+        &file_from_src!(webserver_name),
+        &compiled_file!(webserver_name),
         |src, dest| {
             println!(
                 "Creating symbolic link {} to {}",
@@ -62,8 +70,8 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
         },
     );
     use_handling(
-        &file_from_src!(&resource_pack_name),
-        &compiled_file!(&resource_pack_name),
+        &file_from_src!(resource_pack_name),
+        &compiled_file!(resource_pack_name),
         |src, dest| {
             println!(
                 "Creating symbolic link {} to {}",
@@ -74,8 +82,32 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
         },
     );
     use_handling(
-        &file_from_src!(&cli_name),
-        &compiled_file!(&cli_name),
+        &file_from_src!(cli_name),
+        &compiled_file!(cli_name),
+        |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_file(src, dest)
+        },
+    );
+    use_handling(
+        &file_from_src!(grpc_server_name),
+        &compiled_file!(grpc_server_name),
+        |src, dest| {
+            println!(
+                "Creating symbolic link {} to {}",
+                src.to_str().unwrap(),
+                dest.to_str().unwrap()
+            );
+            symlink::symlink_file(src, dest)
+        },
+    );
+    use_handling(
+        &src_path.join("target/release").join(&client_native_name),
+        &compiled_path.join(&client_native_name),
         |src, dest| {
             println!(
                 "Creating symbolic link {} to {}",
@@ -100,9 +132,7 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
     let gradlew = gradlew
         .to_str()
         .context("Could not get the gradle path as string.")?;
-    let src_path_str = src_path.to_str().unwrap();
-
-    xshell::cmd!(sh, "{gradlew} build --project-dir {src_path_str}")
+    xshell::cmd!(sh, "{gradlew} build")
         .run()
         .context("Failed to build the project (Gradle).")?;
 

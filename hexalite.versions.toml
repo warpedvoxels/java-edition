@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.6.21"
-kotlinx-serialization = "1.3.2"
+kotlinx-serialization = "1.3.3"
 kotlinx-datetime = "0.3.2"
 kaml = "0.43.0"
 minecraft = "1.18.2"
@@ -30,7 +30,6 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "kotlinx-serialization" }
 ktoml-core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml" }
 ktoml-file = { module = "com.akuleshov7:ktoml-file", version.ref = "ktoml" }
 kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
@@ -55,7 +54,7 @@ caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref =
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-serialization-cbor", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
 caffeine = ["caffeine", "caffeine-guava"]
 

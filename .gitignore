@@ -104,6 +104,9 @@ $RECYCLE.BIN/
 debug/
 target/
 Cargo.lock
+!cli/Cargo.lock
+!resource-pack/Cargo.lock
+!jvm-definitions-generator/Cargo.lock
 **/*.rs.bk
 *.pdb
 
