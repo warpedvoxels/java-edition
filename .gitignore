@@ -136,3 +136,7 @@ build/
 # Added by cargo
 
 /target
+
+# web stuff
+
+node_modules/*
