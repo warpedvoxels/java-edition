@@ -40,6 +40,7 @@
    * [Building everything](#building-everything)
      * [1. Compiling the command-line interface](#1-compiling-the-command-line-interface)
      * [2. Initializing the environment](#2-initializing-the-environment)
+   * [Developer resources](#developer-resources)
 5. [🏗️ Project structure](#%EF%B8%8F-project-structure)
 6. [🎉 Third party](#-third-party)
 7. [📜 Licensing](#-licensing)
@@ -98,6 +99,28 @@ may have issues with the toolchain being not supported by Gradle; if this is the
 and set `org.gradle.java.installations.paths=/path/to/panama/jdk` in your `~/.gradle/gradle.properties` file. 
 
 > The reason why we will use the OpenJ9 virtual machine in the future is it is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing. Since there is no available build for OpenJ9 with Project Panama, we will use Hotspot for now.
+
+#### Extra prequisites
+
+**Windows**: 
+* `cargo install -f cargo-binutils` 
+* `rustup component add llvm-tools-preview`
+
+**Linux:**
+* clang v12+
+* [`rui314/mold`](https://github.com/rui314/mold)
+
+**MacOS:**
+* [`michaeleisel/zld`](https://github.com/michaeleisel/zld)
+
+### Developer resources
+
+* [wiki.vg] - Addresses documentation about the Minecraft: Java Edition protocol
+* [Prisma documentation](https://prisma.io/docs/prisma-client/introduction) - Addresses documentation about the Prisma ORM
+* * [Prisma Client Rust documentation](https://github.com/Brendonovich/prisma-client-rust/tree/main/docs)
+* [The Rust Book](https://doc.rust-lang.org/book/)
+* [Kotlin language reference](https://kotlinlang.org/docs/reference/)
+
 
 ### Building everything
 

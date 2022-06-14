@@ -1,0 +1,13 @@
+datasource db {
+    provider = "postgres"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider      = "cargo prisma"
+    output        = "../src/prisma.rs"
+}
+
+model Player {
+    id  String @id @unique @db.Uuid
+}

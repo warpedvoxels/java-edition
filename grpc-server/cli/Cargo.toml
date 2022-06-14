@@ -1,0 +1,10 @@
+[package]
+name = "prisma-cli"
+publish = false
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0"
+
+[dependencies]
+hexalite-common = { path = "../../common-rust" }
+prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.5.1" }

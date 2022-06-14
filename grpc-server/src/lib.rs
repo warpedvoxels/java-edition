@@ -14,6 +14,7 @@ pub use grpc_server_common::datatype;
 server!(app);
 server!(bootstrap);
 server!(routing);
+server!(prisma);
 
 #[path = "macro/mod.rs"]
 #[cfg(feature = "server")]

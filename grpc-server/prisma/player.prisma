@@ -1,0 +1,3 @@
+model Player {
+    id  String @id @unique @db.Uuid
+}

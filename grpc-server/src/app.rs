@@ -1,15 +1,14 @@
 use hexalite_common::settings::HexaliteSettings;
+use crate::prisma::PrismaClient;
 
-use crate::bootstrap::postgres::SqlPool;
-
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct HexaliteGrpcServer {
     pub settings: HexaliteSettings,
-    pub sql: SqlPool,
+    pub sql: PrismaClient,
 }
 
 impl HexaliteGrpcServer {
-    pub fn new(settings: HexaliteSettings, sql: SqlPool) -> Self {
+    pub fn new(settings: HexaliteSettings, sql: PrismaClient) -> Self {
         Self { settings, sql }
     }
 }

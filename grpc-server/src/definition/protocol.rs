@@ -1,12 +1,12 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct HelloRequest {
     pub name: ::prost::alloc::string::String,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct HelloReply {
     pub message: ::prost::alloc::string::String,
 }
@@ -37,7 +37,10 @@ pub mod greeter {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -63,7 +66,10 @@ pub mod greeter {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -71,9 +77,13 @@ pub mod greeter {
                 "/protocol.Greeter/SayHello" => {
                     #[allow(non_camel_case_types)]
                     struct SayHelloSvc<T: Greeter>(pub Arc<T>);
-                    impl<T: Greeter> tonic::server::UnaryService<super::HelloRequest> for SayHelloSvc<T> {
+                    impl<T: Greeter> tonic::server::UnaryService<super::HelloRequest>
+                    for SayHelloSvc<T> {
                         type Response = super::HelloReply;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::HelloRequest>,
@@ -90,23 +100,28 @@ pub mod greeter {
                         let inner = inner.0;
                         let method = SayHelloSvc(inner);
                         let codec = crate::codec::CborCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => Box::pin(async move {
-                    Ok(http::Response::builder()
-                        .status(200)
-                        .header("grpc-status", "12")
-                        .header("content-type", "application/grpc")
-                        .body(empty_body())
-                        .unwrap())
-                }),
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
             }
         }
     }
@@ -171,8 +186,9 @@ pub mod greeter {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             GreeterClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -190,14 +206,19 @@ pub mod greeter {
             &mut self,
             request: impl tonic::IntoRequest<super::HelloRequest>,
         ) -> Result<tonic::Response<super::HelloReply>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = crate::codec::CborCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/protocol.Greeter/SayHello");
+            let path = http::uri::PathAndQuery::from_static(
+                "/protocol.Greeter/SayHello",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -218,7 +239,7 @@ pub enum CommunicationsKey {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct PlayerDataRequest {
     pub id: ::core::option::Option<player_data_request::Id>,
 }
@@ -226,7 +247,7 @@ pub struct PlayerDataRequest {
 pub mod player_data_request {
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
-    #[derive(Debug, Clone, PartialEq, Eq)]
+    #[derive(Debug, Clone, PartialEq)]
     pub enum Id {
         Uuid(::uuid::Uuid),
         Username(crate::datatype::Username),
@@ -234,7 +255,7 @@ pub mod player_data_request {
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct PlayerDataReply {
     pub player: super::entity::Player,
 }
@@ -265,7 +286,10 @@ pub mod player {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -291,7 +315,10 @@ pub mod player {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -299,9 +326,13 @@ pub mod player {
                 "/protocol.Player/RetrieveData" => {
                     #[allow(non_camel_case_types)]
                     struct RetrieveDataSvc<T: Player>(pub Arc<T>);
-                    impl<T: Player> tonic::server::UnaryService<super::PlayerDataRequest> for RetrieveDataSvc<T> {
+                    impl<T: Player> tonic::server::UnaryService<super::PlayerDataRequest>
+                    for RetrieveDataSvc<T> {
                         type Response = super::PlayerDataReply;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::PlayerDataRequest>,
@@ -318,23 +349,28 @@ pub mod player {
                         let inner = inner.0;
                         let method = RetrieveDataSvc(inner);
                         let codec = crate::codec::CborCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => Box::pin(async move {
-                    Ok(http::Response::builder()
-                        .status(200)
-                        .header("grpc-status", "12")
-                        .header("content-type", "application/grpc")
-                        .body(empty_body())
-                        .unwrap())
-                }),
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
             }
         }
     }
@@ -399,8 +435,9 @@ pub mod player {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
         {
             PlayerClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -418,14 +455,19 @@ pub mod player {
             &mut self,
             request: impl tonic::IntoRequest<super::PlayerDataRequest>,
         ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
             let codec = crate::codec::CborCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/protocol.Player/RetrieveData");
+            let path = http::uri::PathAndQuery::from_static(
+                "/protocol.Player/RetrieveData",
+            );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

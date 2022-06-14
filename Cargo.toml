@@ -7,14 +7,18 @@ members = [
     "resource-pack",
     "grpc-server",
     "grpc-server/common",
-    "grpc-server/sql-macros",
     "grpc-server/bindings",
+    "grpc-server/cli",
     #"rest-webserver",
     "rust-tools/lint",
     "jvm-definitions-generator"
 ]
 
+[profile.dev]
+opt-level = 1
+
 [profile.release]
-lto = true
+lto = "thin"
 opt-level = 3
 codegen-units = 1
+panic = "abort"
