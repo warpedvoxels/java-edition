@@ -6,8 +6,8 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelPromise
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.login.ServerboundHelloPacket
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer
+import net.minecraft.network.protocol.login.ClientboundGameProfilePacket
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -176,8 +176,8 @@ class BukkitPacketPipelineListener(override val plugin: KrakenPlugin) : BukkitEv
 class PlayerPipelineDuplexChannel(val channel: Channel, var transformIn: PacketTransformInContext, var transformOut: PacketTransformOutContext) : ChannelDuplexHandler() {
     override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
         if (msg != null && ctx != null) {
-            if (msg is ServerboundHelloPacket) {
-                log.debug { "Received a ServerboundHelloPacket from ${msg.gameProfile.id}. Setting up packet handling system for this channel..." }
+            if (msg is ClientboundGameProfilePacket) {
+                log.debug { "Received a ClientboundGameProfilePacket from ${msg.gameProfile.id}. Setting up packet handling system for this channel..." }
                 playerCustomDuplexChannels[msg.gameProfile.id] = this
             }
             val msg = transformIn(ctx, msg)

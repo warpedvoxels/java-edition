@@ -1,7 +1,7 @@
 package org.hexalite.network.common.settings
 
 import com.akuleshov7.ktoml.Toml
-import com.akuleshov7.ktoml.TomlConfig
+import com.akuleshov7.ktoml.TomlInputConfig
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -19,7 +19,7 @@ data class HexaliteSettings(
 
     companion object {
         val Toml = Toml(
-            config = TomlConfig(ignoreUnknownNames = true)
+            inputConfig = TomlInputConfig(ignoreUnknownNames = true),
         )
 
         fun read(): HexaliteSettings {

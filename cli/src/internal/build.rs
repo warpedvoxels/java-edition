@@ -8,7 +8,6 @@ use crate::internal::*;
 use crate::{compiled_file, file_from_src, file_name};
 
 lazy_static::lazy_static! {
-    static ref MODULES: Vec<&'static str> = vec!["hexalite", "resource-pack", "grpc-server", "grpc-server-bindings"]; //"rest-webserver"];
     static ref WATERFALL_MODULES: Vec<&'static str> = vec![];
 }
 
@@ -117,12 +116,9 @@ pub async fn build(sh: &Shell, module: Option<String>) -> Result<()> {
             symlink::symlink_file(src, dest)
         },
     );
+    sh.change_dir(&hexalite_common::dirs::get_source_path().unwrap());
+    xshell::cmd!(sh, "cargo build --release").run().unwrap();
 
-    for manifest_path in &*MODULES {
-        xshell::cmd!(sh, "cargo build -p {manifest_path} --release")
-            .run()
-            .context("Failed to build the project.")?;
-    }
     // gradlew if unix or gradlew.bat if windows
     let gradlew = src_path.join(if cfg!(target_os = "windows") {
         "gradlew.bat"

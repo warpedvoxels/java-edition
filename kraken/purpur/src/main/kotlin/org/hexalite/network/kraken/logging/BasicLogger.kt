@@ -5,7 +5,6 @@ import com.github.ajalt.mordant.rendering.TextColors.white
 import com.github.ajalt.mordant.terminal.Terminal
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import net.minecraft.network.chat.TextComponent
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.bukkit.server
 import org.hexalite.network.kraken.configuration.KrakenLoggingConfig
@@ -50,7 +49,7 @@ open class BasicLogger(val settings: () -> KrakenLoggingConfig) {
                     when (message) {
                         is Throwable -> message.stackTraceToString()
                         is Component -> PlainTextComponentSerializer.plainText().serialize(message)
-                        is TextComponent -> message.text
+                        is net.minecraft.network.chat.Component -> message.string
                         else -> terminal.render(message)
                     }.asFormattedText()
                 )

@@ -15,12 +15,6 @@ allprojects {
     apply(plugin = "hexalite-build-logic")
     apply(plugin = "java")
 
-    java {
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(18))
-        }
-    }
-
     repositories {
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
             name = "SpigotMC"
@@ -58,11 +52,11 @@ allprojects {
     tasks {
         compileKotlin {
             kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
-            kotlinOptions.jvmTarget = "18"
+            kotlinOptions.jvmTarget = "17"
         }
         compileTestKotlin {
             kotlinOptions.freeCompilerArgs = org.hexalite.network.build.BuildSystemFlags
-            kotlinOptions.jvmTarget = "18"
+            kotlinOptions.jvmTarget = "17"
         }
         test {
             useJUnitPlatform()

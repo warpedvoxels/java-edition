@@ -10,7 +10,6 @@ use xshell::Shell;
 
 pub async fn run(command: HexaliteCommand) -> Result<()> {
     let sh = Shell::new().context("Failed to create a shell session.")?;
-    sh.change_dir(&hexalite_common::dirs::get_source_path().unwrap());
     match command {
         HexaliteCommand::Init { path } => init::init(path).await,
         HexaliteCommand::Build { module } => build::build(&sh, module).await,

@@ -1,7 +1,8 @@
+#![allow(clippy::missing_safety_doc)]
+
 use std::ffi;
 use std::str::FromStr;
 
-use cbor4ii::serde as cbor;
 use libc::{c_char, size_t};
 use tonic::transport::Channel;
 use uuid::Uuid;
@@ -26,9 +27,10 @@ where
     T: serde::ser::Serialize,
 {
     fn from(value: &T) -> Self {
-        let vec = cbor::to_vec(Vec::new(), value).unwrap();
-        let len = vec.len() as size_t;
-        let bytes = vec.into_boxed_slice();
+        let buffer = cbor4ii::serde::to_vec(Vec::new(), value).unwrap();
+        let len = buffer.len() as size_t;
+        let bytes = buffer.into_boxed_slice();
+        println!("{}", hex::encode(&bytes));
         let data = Box::into_raw(bytes) as *const u8;
         Self { len, data }
     }
@@ -49,7 +51,7 @@ pub unsafe extern "C" fn free_buf(buf: *const ByteBuf) {
     if !buf.is_null() {
         let ptr = buf as *mut ByteBuf;
         let buf = Box::from_raw(ptr);
-        Vec::from_raw_parts(buf.data as *mut u8, buf.len, buf.len);
+        buf.vec();
     }
 }
 
@@ -100,7 +102,6 @@ pub unsafe extern "C" fn retrieve_player_by_uuid(id: *const c_char) -> *const By
             .await
             .expect("Failed to retrieve player");
         let buf = ByteBuf::from(&reply.get_ref().player);
-        println!("{buf:?}");
         Box::into_raw(Box::new(buf))
     })
 }
@@ -117,7 +118,7 @@ pub fn receiving() {
     unsafe {
         init_services(str("127.0.0.1:50051").into_raw(), false);
         let dummy = retrieve_player_by_uuid(str("2652b3d5-2c36-4582-a955-484f6edbdf9b").into_raw());
-        let player: Player = cbor::from_slice((*dummy).vec().as_slice()).unwrap();
+        let player: Player = cbor4ii::serde::from_slice((*dummy).vec().as_slice()).unwrap();
         println!("{player:?}");
     }
 }

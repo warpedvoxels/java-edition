@@ -27,11 +27,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Build with Gradle
-        run: ./gradlew build
-      - name: Upload Gradle artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: gradle-artifacts
-          path: ./**/build/libs/*.jar
+      - name: Check for code errors (Gradle)
+        run: ./gradlew check
+
 

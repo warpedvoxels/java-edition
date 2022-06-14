@@ -32,7 +32,15 @@ SERVER_FILENAME=${SERVER_FILENAME:-purpur.jar}
 # Additional JVM flags: Additional flags that you want to pass to the JVM.
 #                       By default, Aikar flags are used to optimize the
 #                       Minecraft server.
-ADDITIONAL_JVM_FLAGS=${ADDITIONAL_JVM_FLAGS:-"-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:InitiatingHeapOccupancyPercent=15 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"}
+ADDITIONAL_JVM_FLAGS=${ADDITIONAL_JVM_FLAGS:-"--add-modules=jdk.incubator.vector,jdk.incubator.foreign
+ --enable-native-access=ALL-UNNAMED
+ -Djava.library.path=$HOME/.hexalite/compiled
+ -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions
+ -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4
+ -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32
+ -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40
+ -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:InitiatingHeapOccupancyPercent=15
+ -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"}
 
 # Additional arguments: Additional arguments that you want to pass to the
 #                       Minecraft server. By default, only the "nogui" argument

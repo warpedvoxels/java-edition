@@ -1,4 +1,5 @@
 import org.hexalite.network.build.Hexalite
+import org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask
 
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {

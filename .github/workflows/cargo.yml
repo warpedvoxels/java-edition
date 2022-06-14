@@ -49,16 +49,7 @@ jobs:
         uses: arduino/setup-protoc@v1
         with:
           version: '3.x'
-      - name: Build everything (Rust)
+      - name: Check for code errors (Rust)
         uses: actions-rs/cargo@v1
         with:
-          command: build 
-          args: --release
-      - name: Upload Cargo artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: cargo-artifacts
-          path: |
-            ./target/release/rest-webserver 
-            ./target/release/grpc-server 
-            ./target/release/hexalite
+          command: check

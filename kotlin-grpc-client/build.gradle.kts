@@ -11,6 +11,12 @@ dependencies {
     api(project(":common-kotlin"))
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(19))
+    }
+}
+
 tasks {
     withType<JextractTask> {
         dependsOn(":native:cbindgen")

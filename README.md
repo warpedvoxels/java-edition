@@ -87,16 +87,25 @@ they are doing.
 ### Prerequisites
 
 * Install the latest [Early Access Project Panama Java Development Kit Build][jdk].
+* Install the latest version of [Google's ProtoBuf source info compiler][protoc].
 * Install the latest nightly build of [Rust][rust]. You may consider using the `rustup` tool to make your life easier.
 * Install [Docker][docker] and [Docker Compose][docker-compose] for setting up the development environment in an easier
   way.
 
 **IMPORTANT!** A build of JDK with Project Panama is really necessary to run Hexalite locally, since we depend on its
-nifty features in development which aren't available in other JDK distributions such as Temurin or Azul's for now.
+nifty features in development which aren't available in other JDK distributions such as Temurin or Azul's for now. You
+may have issues with the toolchain being not supported by Gradle; if this is the case, you can use Gradle with Java 18,
+and set `org.gradle.java.installations.paths=/path/to/panama/jdk` in your `~/.gradle/gradle.properties` file. 
 
 > The reason why we will use the OpenJ9 virtual machine in the future is it is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing. Since there is no available build for OpenJ9 with Project Panama, we will use Hotspot for now.
 
 ### Building everything
+
+> ◉ **NOTICE:** If you are an IntelliJ IDEA user, make sure to exclude the following directories at the 
+  **Module Settings (F4)**:
+> - `/*/target`
+> - `/target/`
+> - `/web/node_modules`
 
 #### 1. Compiling the command-line interface
 
@@ -105,6 +114,7 @@ It is a unified interface for doing all necessary things for running Hexalite.
 
 * You can start by cloning the repository, which needs [`Git`][git] to be installed in your system: `git clone https://git.hexalite.org/java-edition hexalite-java-edition`.
 * Then you can compile all the Rust-based applications by running `cd hexalite-java-edition && cargo build --release`.
+* You still need to install some Cargo binary crates though, which you can do by running `cargo install cbindgen`.
 
 It is done now! You can link the compiled binaries to the `$PATH` by running the `./scripts/apply_cli.sh` command on UNIX-based systems. I'm
 not too sure in how to do this on Windows, but I'm sure you can find some help there by Googling it, since it doesn't seem that hard.
@@ -118,6 +128,7 @@ to the `$PATH`, so it probably it would be `./target/release/hexalite`, assuming
 * `hexalite init` ◉ This will initialize the environment, creating the `.hexalite` folder in your home directory, and
   symlinking all required files to this folder. You can get further explanation about how the command-line interface
   works by running `hexalite help`.
+
 
 ## 🏗️ Project structure
 
@@ -207,4 +218,6 @@ To know about the license of this project, you can read the [LICENSE.md][license
 [postgresql]: https://www.postgresql.org
 
 [discord]: https://discord.hexalite.org
+
+[protoc]: https://grpc.io/docs/protoc-installation/
 

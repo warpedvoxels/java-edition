@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.ChannelInitializer
 import org.bukkit.Server
-import org.bukkit.craftbukkit.v1_18_R2.CraftServer
+import org.bukkit.craftbukkit.v1_19_R1.CraftServer
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.logging.critical
 import org.hexalite.network.kraken.logging.debug

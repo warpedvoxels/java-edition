@@ -14,7 +14,7 @@ lazy_static::lazy_static! {
 
 pub async fn init(src_path: PathBuf) -> Result<()> {
     let hexalite = get_hexalite_dir_path();
-    if let Err(err) = fs::create_dir(&hexalite).await {
+    if let Err(err) = fs::create_dir_all(&hexalite).await {
         handle_dir_error(&hexalite, &hexalite, err);
     }
 
@@ -28,11 +28,6 @@ pub async fn init(src_path: PathBuf) -> Result<()> {
 
     for file in &*FILES {
         use_handling_auto(&src_path, file, |src, dest| {
-            println!(
-                "Creating symbolic link {} to {}",
-                src.to_str().unwrap(),
-                dest.to_str().unwrap()
-            );
             symlink::symlink_auto(src, dest)
         });
     }

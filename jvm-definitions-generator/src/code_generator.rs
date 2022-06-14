@@ -11,7 +11,7 @@ use prost_types::{
 
 use crate::config::{to_camel, to_upper_camel, DefGeneratorConfig, ExternPaths};
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Eq)]
 enum Syntax {
     Proto2,
     Proto3,
@@ -96,13 +96,16 @@ impl<'a> CodeGenerator<'a> {
         );
 
         code_gen.path.push(4);
-        if !code_gen.buf.starts_with("@file:kotlinx.serialization.UseSerializers(org.hexalite.network.common.serialization.UUIDSerializer::class)") {
-            code_gen.buf.push_str("@file:kotlinx.serialization.UseSerializers(org.hexalite.network.common.serialization.UUIDSerializer::class)\n");
+        let header = "@file:kotlinx.serialization.UseSerializers(org.hexalite.network.common.serialization.UUIDSerializer::class, org.hexalite.network.common.serialization.ChronoInstantSerializer::class)\n";
+
+        if !code_gen.buf.starts_with(&header) {
+            code_gen.buf.push_str(header);
             writeln!(
                 code_gen.buf,
                 "package {}.{}",
                 code_gen.config.base_package, code_gen.package
-            ).unwrap();
+            )
+            .unwrap();
         }
         for (idx, message) in file.message_type.into_iter().enumerate() {
             code_gen.path.push(idx as i32);
@@ -257,7 +260,23 @@ impl<'a> CodeGenerator<'a> {
         } else {
             ty.to_string()
         };
-        writeln!(self.buf, "val {}: {ty},", to_camel(field.name())).unwrap();
+        let name = field.name();
+        let camel = to_camel(name);
+        if name != camel {
+            writeln!(self.buf, "@kotlinx.serialization.SerialName(\"{name}\")").unwrap();
+            self.push_indent();
+        }
+        if ty.as_str() == "java.util.UUID" {
+            writeln!(
+                self.buf,
+                "@OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)"
+            )
+            .unwrap();
+            self.push_indent();
+            writeln!(self.buf, "@kotlinx.serialization.cbor.ByteString").unwrap();
+            self.push_indent();
+        }
+        writeln!(self.buf, "val {camel}: {ty},").unwrap();
     }
 
     fn append_map_field(

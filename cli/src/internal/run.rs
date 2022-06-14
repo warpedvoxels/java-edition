@@ -28,11 +28,8 @@ pub async fn resource_pack(sh: &Shell) -> Result<()> {
 pub async fn minecraft(sh: &Shell) -> Result<()> {
     let hexalite = get_hexalite_dir_path();
     let run = hexalite.join("run");
-    let path = run.join("purpur.jar");
-    let path = path
-        .to_str()
-        .expect("Failed to retrieve the path to the Minecraft server.");
-    xshell::cmd!(sh, "java -Xmx2G -jar {path}")
+    sh.change_dir(&run);
+    xshell::cmd!(sh, "java -Xmx2G -jar purpur.jar")
         .run()
         .context(" Failed to run the Minecraft server.")
 }

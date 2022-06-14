@@ -1,35 +1,35 @@
 [versions]
-kotlin = "1.6.21"
+kotlin = "1.7.0"
 kotlinx-serialization = "1.3.3"
-kotlinx-datetime = "0.3.2"
-kaml = "0.43.0"
-minecraft = "1.18.2"
+kotlinx-datetime = "0.3.3"
+kotlinx-coroutines = "1.6.2"
+kaml = "0.45.0"
+minecraft = "1.19"
 velocity = "3.1.0"
 velocity-annotation-processor = "4.0.0-SNAPSHOT"
 paperweight-userdev = "1.3.7-SNAPSHOT"
-plugin-yml = "0.5.1"
-purpur = "1.18.2-R0.1-SNAPSHOT"
-coroutines = "1.6.1"
+plugin-yml = "0.5.2"
+purpur = "1.19-R0.1-SNAPSHOT"
 shadow = "7.1.2"
-adventure = "4.10.1"
+adventure = "4.11.0"
 kotest = "5.1.0"
 mockk = "1.12.3"
 valiktor = "0.12.0"
 run-paper = "1.0.6"
 logback = "1.3.0-alpha14"
-mordant = "2.0.0-beta5"
-caffeine = "3.0.5"
-commons-io = "2.11.0"
-ktoml = "0.2.11"
-jextract = "0.2.6"
+mordant = "2.0.0-beta7"
+caffeine = "3.1.1"
+ktoml = "0.2.12"
+jextract-gradle = "0.2.6"
 
 [libraries]
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 valiktor-core = { module = "org.valiktor:valiktor-core", version.ref = "valiktor" }
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "kotlinx-serialization" }
 ktoml-core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml" }
 ktoml-file = { module = "com.akuleshov7:ktoml-file", version.ref = "ktoml" }
 kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
@@ -50,11 +50,9 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 # Caching
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
 caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref = "caffeine" }
-# IO
-commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-serialization-cbor", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
 caffeine = ["caffeine", "caffeine-guava"]
 
@@ -66,4 +64,4 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
-jextract = { id = "io.github.krakowski.jextract", version.ref = "jextract" }
+jextract = { id = "io.github.krakowski.jextract", version.ref = "jextract-gradle" }

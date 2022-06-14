@@ -7,7 +7,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.arguments.EntityArgument
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_18_R2.CraftServer
+import org.bukkit.craftbukkit.v1_19_R1.CraftServer
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.command.KrakenCommand
 import org.hexalite.network.kraken.command.buildBukkit
