@@ -1,6 +1,6 @@
+use std::fmt::Write;
 use std::fs;
 use std::path::PathBuf;
-use std::fmt::Write;
 
 use heck::ToSnakeCase;
 use prost_build::{Method, Service, ServiceGenerator};
@@ -528,7 +528,8 @@ fn main() {
     let prisma_scheme = prisma.join("schema.prisma");
     let _ = std::fs::remove_file(&prisma_scheme);
     let mut prisma_files = prisma.read_dir().unwrap();
-    let mut prisma_base = std::fs::read_to_string(prisma_files.next().unwrap().unwrap().path()).unwrap();
+    let mut prisma_base =
+        std::fs::read_to_string(prisma_files.next().unwrap().unwrap().path()).unwrap();
 
     for entry in prisma_files {
         let entry = entry.unwrap();
@@ -539,22 +540,23 @@ fn main() {
     fs::write(&prisma_scheme, &prisma_base).unwrap();
 
     if let Ok(settings) = hexalite_common::settings::read() {
-        use std::io::Write;
-        let path = hexalite_common::dirs::get_source_path()
-            .unwrap()
-            .join(".env");
-        let mut file = std::fs::OpenOptions::new().write(true).open(&path).unwrap();
-        let mut content = std::fs::read_to_string(&path).unwrap();
-        if let Some(index) = content.match_indices("DATABASE_URL=").last() {
-            content = content.chars().take(index.0 - 1).collect();
+        if let Ok(path) = hexalite_common::dirs::get_source_path() {
+            use std::io::Write;
+
+            let path = path.join(".env");
+            let mut file = std::fs::OpenOptions::new().write(true).open(&path).unwrap();
+            let mut content = std::fs::read_to_string(&path).unwrap();
+            if let Some(index) = content.match_indices("DATABASE_URL=").last() {
+                content = content.chars().take(index.0 - 1).collect();
+            }
+            write!(
+                content,
+                "\nDATABASE_URL=\"{}\"",
+                settings.grpc.services.postgres.url()
+            )
+            .unwrap();
+            file.write_all(content.as_bytes()).unwrap();
         }
-        write!(
-            content,
-            "\nDATABASE_URL=\"{}\"",
-            settings.grpc.services.postgres.url()
-        )
-        .unwrap();
-        file.write_all(content.as_bytes()).unwrap();
     }
 
     let working_directory = current_dir.join("../").canonicalize().unwrap();
