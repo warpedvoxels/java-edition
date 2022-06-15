@@ -40,6 +40,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
+      - uses: rui314/setup-mold@v1
       - name: Install latest nightly
         uses: actions-rs/toolchain@v1
         with:
