@@ -3,7 +3,6 @@ syntax = "proto2";
 package protocol;
 
 import "datatype/uuid.proto";
-import "datatype/username.proto";
 import "entity/player.proto";
 
 service Player {
@@ -13,7 +12,7 @@ service Player {
 message PlayerDataRequest {
     oneof id {
         datatype.Uuid uuid = 1;
-        datatype.Username username =2;
+        string username =2;
     }
 }
 

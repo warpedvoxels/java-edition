@@ -1,7 +1,0 @@
-syntax = "proto2";
-
-package datatype;
-
-message Username {
-    required string content = 1;
-}

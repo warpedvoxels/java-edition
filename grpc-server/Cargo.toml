@@ -10,7 +10,6 @@ build = "build.rs"
 
 [dependencies]
 hexalite-common = { path = "../common-rust" }
-grpc-server-common = { path = "./common" }
 tonic = { version = "^0.7", features = ["tls", "compression"] }
 uuid = { version = "^1", features = ["v4", "serde"] }
 chrono = { version = "^0.4", features = ["serde"] }
@@ -30,7 +29,8 @@ rustls = { version = "^0.20", optional = true }
 phf = { version = "^0.10", features = ["macros"] }
 lazy_static = { version = "^1.3", optional = true }
 heck = { version = "^0.4", optional = true }
-prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.5.1" }
+image = { version = "^0.24", optional = true }
+prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.5.1", optional = true }
 
 [build-dependencies]
 hexalite-common = { path = "../common-rust" }
@@ -51,5 +51,7 @@ server = [
     "rustls",
     "lazy_static",
     "heck",
+    "prisma-client-rust",
+    "image",
 ]
 client = []

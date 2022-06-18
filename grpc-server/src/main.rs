@@ -18,5 +18,4 @@ async fn main() -> Result<()> {
         .add_service(PlayerService::service())
         .serve(app.settings.grpc.ip())
         .await
-        .context("Failed to serve the gRPC server.")
-}
+        .context("Failed to serve the gRPC server.")}

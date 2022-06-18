@@ -1,5 +1,4 @@
 use chrono::Utc;
-use grpc_server_common::datatype::Username;
 use tonic::{Request, Response, Status};
 
 use crate::definition::{
@@ -27,7 +26,7 @@ impl protocol::player::Player for PlayerService {
         let dummy = Player {
             uuid,
             hexes: 0,
-            last_username: Username::from("dummy"),
+            last_username: "dummy".into(),
             last_seen: Utc::now().naive_utc(),
             created_at: Utc::now().naive_utc(),
             updated_at: Utc::now().naive_utc(),

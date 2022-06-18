@@ -539,28 +539,11 @@ fn main() {
     }
     fs::write(&prisma_scheme, &prisma_base).unwrap();
 
-    if let Ok(settings) = hexalite_common::settings::read() {
-        if let Ok(path) = hexalite_common::dirs::get_source_path() {
-            use std::io::Write;
-
-            let path = path.join(".env");
-            let mut file = std::fs::OpenOptions::new().write(true).open(&path).unwrap();
-            let mut content = std::fs::read_to_string(&path).unwrap();
-            if let Some(index) = content.match_indices("DATABASE_URL=").last() {
-                content = content.chars().take(index.0 - 1).collect();
-            }
-            write!(
-                content,
-                "\nDATABASE_URL=\"{}\"",
-                settings.grpc.services.postgres.url()
-            )
-            .unwrap();
-            file.write_all(content.as_bytes()).unwrap();
-        }
-    }
-
-    let working_directory = current_dir.join("../").canonicalize().unwrap();
-    let working_directory = working_directory.join("definitions");
+    let current_dir = current_dir
+        .join("../")
+        .canonicalize()
+        .unwrap()
+        .join("definitions");
 
     let mut files: Vec<PathBuf> = Vec::new();
     if let Ok(input) = glob::glob("../definitions/**/*.proto") {
@@ -574,10 +557,8 @@ fn main() {
         .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")
         .extern_path(".google.protobuf.Timestamp", "::chrono::NaiveDateTime")
         .extern_path(".datatype.Uuid", "::uuid::Uuid")
-        .extern_path(".datatype.Username", "crate::datatype::Username")
-        .type_attribute(".entity", "#[derive(hexalite_common::ExportFields)]")
         .out_dir("src/definition")
         .service_generator(Box::new(GrpcServiceGenerator::cbor()))
-        .compile_protos(&files, &[working_directory])
+        .compile_protos(&files, &[current_dir])
         .expect("Failed to compile the protocol buffer definitions");
 }

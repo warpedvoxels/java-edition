@@ -9,6 +9,8 @@ use chrono::Duration;
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
 use serde_with::DurationSeconds;
+use std::fmt::Write;
+use urlencoding::encode as url;
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct HexaliteSettings {
@@ -90,15 +92,25 @@ pub struct GrpcRabbitMQServiceSettings {
 pub struct GrpcPostgresServiceSettings {
     pub host: Ipv4Addr,
     pub port: u16,
-    pub user: String,
-    pub password: String,
+    pub username: String,
+    pub password: Option<String>,
     pub database: String,
-    pub pool: GrpcPostgresPoolServiceSettings,
+    pub schema: String,
+    pub ssl: GrpcPostgresServiceSslSettings,
+    pub pool: GrpcPostgresServicePoolSettings,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct GrpcPostgresServiceSslSettings {
+    pub enable: bool,
+    pub cert_path: Option<PathBuf>,
+    pub identity_path: Option<PathBuf>,
+    pub password: Option<String>,
 }
 
 #[serde_as]
 #[derive(Clone, Serialize, Deserialize, Debug)]
-pub struct GrpcPostgresPoolServiceSettings {
+pub struct GrpcPostgresServicePoolSettings {
     /// The maximum number of connections allowed.
     pub max_connections: u32,
     /// The maximum lifetime, if any, that a connection is allowed.
@@ -125,7 +137,7 @@ impl Default for WebServerRootSettings {
     }
 }
 
-impl Default for GrpcPostgresPoolServiceSettings {
+impl Default for GrpcPostgresServicePoolSettings {
     fn default() -> Self {
         Self {
             max_connections: 10,
@@ -151,10 +163,12 @@ impl Default for GrpcPostgresServiceSettings {
         Self {
             host: Ipv4Addr::LOCALHOST,
             port: 5432,
-            user: String::from("johndoe"),
-            password: String::from("mysecretpassword"),
+            username: String::from("johndoe"),
+            password: Some(String::from("mysecretpassword")),
             database: String::from("hexalite"),
-            pool: GrpcPostgresPoolServiceSettings::default(),
+            schema: String::from("public"),
+            ssl: GrpcPostgresServiceSslSettings::default(),
+            pool: GrpcPostgresServicePoolSettings::default(),
         }
     }
 }
@@ -191,8 +205,19 @@ impl Default for GrpcRabbitMQServiceSettings {
     }
 }
 
-impl GrpcRabbitMQServiceSettings {
-    pub fn url(&self) -> String {
+impl Default for GrpcPostgresServiceSslSettings {
+    fn default() -> Self {
+        Self {
+            enable: false,
+            cert_path: None,
+            identity_path: None,
+            password: None,
+        }
+    }
+}
+
+impl ToString for GrpcRabbitMQServiceSettings {
+    fn to_string(&self) -> String {
         format!(
             "amqp://{}:{}@{}:{}",
             self.username, self.password, self.host, self.port
@@ -200,18 +225,48 @@ impl GrpcRabbitMQServiceSettings {
     }
 }
 
-impl GrpcRedisServiceSettings {
-    pub fn url(&self) -> String {
+impl ToString for GrpcRedisServiceSettings {
+    fn to_string(&self) -> String {
         format!("redis://:{}@{}:{}", self.password, self.host, self.port)
     }
 }
 
-impl GrpcPostgresServiceSettings {
-    pub fn url(&self) -> String {
-        format!(
-            "postgresql://{}:{}/{}?user={}&password={}",
-            self.host, self.port, self.database, self.user, self.password
+impl ToString for GrpcPostgresServiceSettings {
+    fn to_string(&self) -> String {
+        let mut buf = format!("postgresql://{}", url(&self.username));
+        if let Some(password) = &self.password {
+            write!(buf, ":{}", url(&password)).unwrap();
+        }
+        write!(
+            buf,
+            "@{}:{}/{}?schema={}",
+            url(&self.host.to_string()),
+            self.port,
+            self.database,
+            self.schema
         )
+        .unwrap();
+        if self.ssl.enable {
+            buf.push_str("&sslmode=require&sslaccept=strict");
+            if let Some(cert) = &self.ssl.cert_path {
+                write!(buf, "&sslcert={}", url(cert.to_str().unwrap())).unwrap();
+            }
+            if let Some(identity) = &self.ssl.identity_path {
+                write!(buf, "&sslidentity={}", url(identity.to_str().unwrap())).unwrap();
+            }
+            if let Some(password) = &self.ssl.password {
+                write!(buf, "&sslpassword={}", url(&password)).unwrap();
+            }
+        }
+        write!(
+            buf,
+            "&connection_limit={}&connect_timeout={}&pool_timeout={}&socket_timeout={}",
+            self.pool.max_connections,
+            self.pool.connection_timeout.num_seconds(),
+            self.pool.idle_timeout.num_seconds(),
+            self.pool.max_lifetime.num_seconds()
+        ).unwrap();
+        buf
     }
 }
 

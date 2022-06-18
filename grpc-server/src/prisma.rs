@@ -19,7 +19,7 @@ pub use prisma_client_rust::{queries::Error as QueryError, NewClientError};
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use std::sync::Arc;
-static DATAMODEL_STR : & 'static str = "datasource db {\n    provider = \"postgres\"\n    url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n    provider      = \"cargo prisma\"\n    output        = \"../src/prisma.rs\"\n}\n\nmodel Player {\n    id  String @id @unique @db.Uuid\n}\n" ;
+static DATAMODEL_STR : & 'static str = "datasource db {\n    provider = \"postgres\"\n    url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n    provider      = \"cargo prisma\"\n    output        = \"../src/prisma.rs\"\n}\n\nmodel Player {\n    id           String    @id @unique @db.Uuid\n    hexes        Int       @default(0)\n    lastUsername String?\n    lastSeen     DateTime?\n    createdAt    DateTime? @default(now())\n    updatedAt    DateTime? @default(now())\n\n    @@index(lastUsername)\n}\n\n" ;
 static DATABASE_STR: &'static str = "postgres";
 pub async fn new_client() -> Result<_prisma::PrismaClient, NewClientError> {
     let config = parse_configuration(DATAMODEL_STR)?.subject;
@@ -124,19 +124,265 @@ pub mod player {
             }
         }
     }
+    pub mod hexes {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{Cursor, OrderByParam, SetParam, UniqueWhereParam, WhereParam, WithParam};
+        pub fn set<T: From<Set>>(value: i32) -> T {
+            Set(value).into()
+        }
+        pub fn equals(value: i32) -> WhereParam {
+            WhereParam::HexesEquals(value).into()
+        }
+        pub fn order(direction: Direction) -> OrderByParam {
+            OrderByParam::Hexes(direction)
+        }
+        pub fn in_vec(value: Vec<i32>) -> WhereParam {
+            WhereParam::HexesInVec(value)
+        }
+        pub fn not_in_vec(value: Vec<i32>) -> WhereParam {
+            WhereParam::HexesNotInVec(value)
+        }
+        pub fn lt(value: i32) -> WhereParam {
+            WhereParam::HexesLt(value)
+        }
+        pub fn lte(value: i32) -> WhereParam {
+            WhereParam::HexesLte(value)
+        }
+        pub fn gt(value: i32) -> WhereParam {
+            WhereParam::HexesGt(value)
+        }
+        pub fn gte(value: i32) -> WhereParam {
+            WhereParam::HexesGte(value)
+        }
+        pub fn not(value: i32) -> WhereParam {
+            WhereParam::HexesNot(value)
+        }
+        pub fn increment(value: i32) -> SetParam {
+            SetParam::IncrementHexes(value)
+        }
+        pub fn decrement(value: i32) -> SetParam {
+            SetParam::DecrementHexes(value)
+        }
+        pub fn multiply(value: i32) -> SetParam {
+            SetParam::MultiplyHexes(value)
+        }
+        pub fn divide(value: i32) -> SetParam {
+            SetParam::DivideHexes(value)
+        }
+        pub struct Set(i32);
+        impl From<Set> for SetParam {
+            fn from(value: Set) -> Self {
+                Self::SetHexes(value.0)
+            }
+        }
+    }
+    pub mod last_username {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{Cursor, OrderByParam, SetParam, UniqueWhereParam, WhereParam, WithParam};
+        pub fn set<T: From<Set>>(value: Option<String>) -> T {
+            Set(value).into()
+        }
+        pub fn equals(value: Option<String>) -> WhereParam {
+            WhereParam::LastUsernameEquals(value).into()
+        }
+        pub fn order(direction: Direction) -> OrderByParam {
+            OrderByParam::LastUsername(direction)
+        }
+        pub fn in_vec(value: Vec<String>) -> WhereParam {
+            WhereParam::LastUsernameInVec(value)
+        }
+        pub fn not_in_vec(value: Vec<String>) -> WhereParam {
+            WhereParam::LastUsernameNotInVec(value)
+        }
+        pub fn lt(value: String) -> WhereParam {
+            WhereParam::LastUsernameLt(value)
+        }
+        pub fn lte(value: String) -> WhereParam {
+            WhereParam::LastUsernameLte(value)
+        }
+        pub fn gt(value: String) -> WhereParam {
+            WhereParam::LastUsernameGt(value)
+        }
+        pub fn gte(value: String) -> WhereParam {
+            WhereParam::LastUsernameGte(value)
+        }
+        pub fn contains(value: String) -> WhereParam {
+            WhereParam::LastUsernameContains(value)
+        }
+        pub fn starts_with(value: String) -> WhereParam {
+            WhereParam::LastUsernameStartsWith(value)
+        }
+        pub fn ends_with(value: String) -> WhereParam {
+            WhereParam::LastUsernameEndsWith(value)
+        }
+        pub fn mode(value: QueryMode) -> WhereParam {
+            WhereParam::LastUsernameMode(value)
+        }
+        pub fn not(value: String) -> WhereParam {
+            WhereParam::LastUsernameNot(value)
+        }
+        pub struct Set(Option<String>);
+        impl From<Set> for SetParam {
+            fn from(value: Set) -> Self {
+                Self::SetLastUsername(value.0)
+            }
+        }
+    }
+    pub mod last_seen {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{Cursor, OrderByParam, SetParam, UniqueWhereParam, WhereParam, WithParam};
+        pub fn set<T: From<Set>>(value: Option<chrono::DateTime<chrono::FixedOffset>>) -> T {
+            Set(value).into()
+        }
+        pub fn equals(value: Option<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::LastSeenEquals(value).into()
+        }
+        pub fn order(direction: Direction) -> OrderByParam {
+            OrderByParam::LastSeen(direction)
+        }
+        pub fn in_vec(value: Vec<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::LastSeenInVec(value)
+        }
+        pub fn not_in_vec(value: Vec<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::LastSeenNotInVec(value)
+        }
+        pub fn lt(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::LastSeenLt(value)
+        }
+        pub fn lte(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::LastSeenLte(value)
+        }
+        pub fn gt(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::LastSeenGt(value)
+        }
+        pub fn gte(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::LastSeenGte(value)
+        }
+        pub fn not(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::LastSeenNot(value)
+        }
+        pub struct Set(Option<chrono::DateTime<chrono::FixedOffset>>);
+        impl From<Set> for SetParam {
+            fn from(value: Set) -> Self {
+                Self::SetLastSeen(value.0)
+            }
+        }
+    }
+    pub mod created_at {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{Cursor, OrderByParam, SetParam, UniqueWhereParam, WhereParam, WithParam};
+        pub fn set<T: From<Set>>(value: Option<chrono::DateTime<chrono::FixedOffset>>) -> T {
+            Set(value).into()
+        }
+        pub fn equals(value: Option<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::CreatedAtEquals(value).into()
+        }
+        pub fn order(direction: Direction) -> OrderByParam {
+            OrderByParam::CreatedAt(direction)
+        }
+        pub fn in_vec(value: Vec<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::CreatedAtInVec(value)
+        }
+        pub fn not_in_vec(value: Vec<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::CreatedAtNotInVec(value)
+        }
+        pub fn lt(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::CreatedAtLt(value)
+        }
+        pub fn lte(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::CreatedAtLte(value)
+        }
+        pub fn gt(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::CreatedAtGt(value)
+        }
+        pub fn gte(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::CreatedAtGte(value)
+        }
+        pub fn not(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::CreatedAtNot(value)
+        }
+        pub struct Set(Option<chrono::DateTime<chrono::FixedOffset>>);
+        impl From<Set> for SetParam {
+            fn from(value: Set) -> Self {
+                Self::SetCreatedAt(value.0)
+            }
+        }
+    }
+    pub mod updated_at {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{Cursor, OrderByParam, SetParam, UniqueWhereParam, WhereParam, WithParam};
+        pub fn set<T: From<Set>>(value: Option<chrono::DateTime<chrono::FixedOffset>>) -> T {
+            Set(value).into()
+        }
+        pub fn equals(value: Option<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::UpdatedAtEquals(value).into()
+        }
+        pub fn order(direction: Direction) -> OrderByParam {
+            OrderByParam::UpdatedAt(direction)
+        }
+        pub fn in_vec(value: Vec<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::UpdatedAtInVec(value)
+        }
+        pub fn not_in_vec(value: Vec<chrono::DateTime<chrono::FixedOffset>>) -> WhereParam {
+            WhereParam::UpdatedAtNotInVec(value)
+        }
+        pub fn lt(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::UpdatedAtLt(value)
+        }
+        pub fn lte(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::UpdatedAtLte(value)
+        }
+        pub fn gt(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::UpdatedAtGt(value)
+        }
+        pub fn gte(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::UpdatedAtGte(value)
+        }
+        pub fn not(value: chrono::DateTime<chrono::FixedOffset>) -> WhereParam {
+            WhereParam::UpdatedAtNot(value)
+        }
+        pub struct Set(Option<chrono::DateTime<chrono::FixedOffset>>);
+        impl From<Set> for SetParam {
+            fn from(value: Set) -> Self {
+                Self::SetUpdatedAt(value.0)
+            }
+        }
+    }
     pub fn _outputs() -> Vec<Selection> {
-        ["id"]
-            .into_iter()
-            .map(|o| {
-                let builder = Selection::builder(o);
-                builder.build()
-            })
-            .collect()
+        [
+            "id",
+            "hexes",
+            "lastUsername",
+            "lastSeen",
+            "createdAt",
+            "updatedAt",
+        ]
+        .into_iter()
+        .map(|o| {
+            let builder = Selection::builder(o);
+            builder.build()
+        })
+        .collect()
     }
     #[derive(Debug, Clone, Serialize, Deserialize)]
     pub struct Data {
         #[serde(rename = "id")]
         pub id: String,
+        #[serde(rename = "hexes")]
+        pub hexes: i32,
+        #[serde(rename = "lastUsername")]
+        pub last_username: Option<String>,
+        #[serde(rename = "lastSeen")]
+        pub last_seen: Option<chrono::DateTime<chrono::FixedOffset>>,
+        #[serde(rename = "createdAt")]
+        pub created_at: Option<chrono::DateTime<chrono::FixedOffset>>,
+        #[serde(rename = "updatedAt")]
+        pub updated_at: Option<chrono::DateTime<chrono::FixedOffset>>,
     }
     impl Data {}
     pub enum WithParam {}
@@ -147,16 +393,83 @@ pub mod player {
     }
     pub enum SetParam {
         SetId(String),
+        SetHexes(i32),
+        IncrementHexes(i32),
+        DecrementHexes(i32),
+        MultiplyHexes(i32),
+        DivideHexes(i32),
+        SetLastUsername(Option<String>),
+        SetLastSeen(Option<chrono::DateTime<chrono::FixedOffset>>),
+        SetCreatedAt(Option<chrono::DateTime<chrono::FixedOffset>>),
+        SetUpdatedAt(Option<chrono::DateTime<chrono::FixedOffset>>),
     }
     impl Into<(String, PrismaValue)> for SetParam {
         fn into(self) -> (String, PrismaValue) {
             match self {
                 SetParam::SetId(value) => ("id".to_string(), PrismaValue::String(value)),
+                SetParam::SetHexes(value) => ("hexes".to_string(), PrismaValue::Int(value as i64)),
+                SetParam::IncrementHexes(value) => (
+                    "hexes".to_string(),
+                    PrismaValue::Object(vec![(
+                        "increment".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::DecrementHexes(value) => (
+                    "hexes".to_string(),
+                    PrismaValue::Object(vec![(
+                        "decrement".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::MultiplyHexes(value) => (
+                    "hexes".to_string(),
+                    PrismaValue::Object(vec![(
+                        "multiply".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::DivideHexes(value) => (
+                    "hexes".to_string(),
+                    PrismaValue::Object(vec![(
+                        "divide".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::SetLastUsername(value) => (
+                    "lastUsername".to_string(),
+                    value
+                        .map(|value| PrismaValue::String(value))
+                        .unwrap_or(PrismaValue::Null),
+                ),
+                SetParam::SetLastSeen(value) => (
+                    "lastSeen".to_string(),
+                    value
+                        .map(|value| PrismaValue::DateTime(value))
+                        .unwrap_or(PrismaValue::Null),
+                ),
+                SetParam::SetCreatedAt(value) => (
+                    "createdAt".to_string(),
+                    value
+                        .map(|value| PrismaValue::DateTime(value))
+                        .unwrap_or(PrismaValue::Null),
+                ),
+                SetParam::SetUpdatedAt(value) => (
+                    "updatedAt".to_string(),
+                    value
+                        .map(|value| PrismaValue::DateTime(value))
+                        .unwrap_or(PrismaValue::Null),
+                ),
             }
         }
     }
     pub enum OrderByParam {
         Id(Direction),
+        Hexes(Direction),
+        LastUsername(Direction),
+        LastSeen(Direction),
+        CreatedAt(Direction),
+        UpdatedAt(Direction),
     }
     impl Into<(String, PrismaValue)> for OrderByParam {
         fn into(self) -> (String, PrismaValue) {
@@ -164,6 +477,26 @@ pub mod player {
                 Self::Id(direction) => {
                     ("id".to_string(), PrismaValue::String(direction.to_string()))
                 }
+                Self::Hexes(direction) => (
+                    "hexes".to_string(),
+                    PrismaValue::String(direction.to_string()),
+                ),
+                Self::LastUsername(direction) => (
+                    "lastUsername".to_string(),
+                    PrismaValue::String(direction.to_string()),
+                ),
+                Self::LastSeen(direction) => (
+                    "lastSeen".to_string(),
+                    PrismaValue::String(direction.to_string()),
+                ),
+                Self::CreatedAt(direction) => (
+                    "createdAt".to_string(),
+                    PrismaValue::String(direction.to_string()),
+                ),
+                Self::UpdatedAt(direction) => (
+                    "updatedAt".to_string(),
+                    PrismaValue::String(direction.to_string()),
+                ),
             }
         }
     }
@@ -193,6 +526,50 @@ pub mod player {
         IdEndsWith(String),
         IdMode(QueryMode),
         IdNot(String),
+        HexesEquals(i32),
+        HexesInVec(Vec<i32>),
+        HexesNotInVec(Vec<i32>),
+        HexesLt(i32),
+        HexesLte(i32),
+        HexesGt(i32),
+        HexesGte(i32),
+        HexesNot(i32),
+        LastUsernameEquals(Option<String>),
+        LastUsernameInVec(Vec<String>),
+        LastUsernameNotInVec(Vec<String>),
+        LastUsernameLt(String),
+        LastUsernameLte(String),
+        LastUsernameGt(String),
+        LastUsernameGte(String),
+        LastUsernameContains(String),
+        LastUsernameStartsWith(String),
+        LastUsernameEndsWith(String),
+        LastUsernameMode(QueryMode),
+        LastUsernameNot(String),
+        LastSeenEquals(Option<chrono::DateTime<chrono::FixedOffset>>),
+        LastSeenInVec(Vec<chrono::DateTime<chrono::FixedOffset>>),
+        LastSeenNotInVec(Vec<chrono::DateTime<chrono::FixedOffset>>),
+        LastSeenLt(chrono::DateTime<chrono::FixedOffset>),
+        LastSeenLte(chrono::DateTime<chrono::FixedOffset>),
+        LastSeenGt(chrono::DateTime<chrono::FixedOffset>),
+        LastSeenGte(chrono::DateTime<chrono::FixedOffset>),
+        LastSeenNot(chrono::DateTime<chrono::FixedOffset>),
+        CreatedAtEquals(Option<chrono::DateTime<chrono::FixedOffset>>),
+        CreatedAtInVec(Vec<chrono::DateTime<chrono::FixedOffset>>),
+        CreatedAtNotInVec(Vec<chrono::DateTime<chrono::FixedOffset>>),
+        CreatedAtLt(chrono::DateTime<chrono::FixedOffset>),
+        CreatedAtLte(chrono::DateTime<chrono::FixedOffset>),
+        CreatedAtGt(chrono::DateTime<chrono::FixedOffset>),
+        CreatedAtGte(chrono::DateTime<chrono::FixedOffset>),
+        CreatedAtNot(chrono::DateTime<chrono::FixedOffset>),
+        UpdatedAtEquals(Option<chrono::DateTime<chrono::FixedOffset>>),
+        UpdatedAtInVec(Vec<chrono::DateTime<chrono::FixedOffset>>),
+        UpdatedAtNotInVec(Vec<chrono::DateTime<chrono::FixedOffset>>),
+        UpdatedAtLt(chrono::DateTime<chrono::FixedOffset>),
+        UpdatedAtLte(chrono::DateTime<chrono::FixedOffset>),
+        UpdatedAtGt(chrono::DateTime<chrono::FixedOffset>),
+        UpdatedAtGte(chrono::DateTime<chrono::FixedOffset>),
+        UpdatedAtNot(chrono::DateTime<chrono::FixedOffset>),
     }
     impl Into<SerializedWhere> for WhereParam {
         fn into(self) -> SerializedWhere {
@@ -310,6 +687,366 @@ pub mod player {
                     SerializedWhereValue::Object(vec![(
                         "not".to_string(),
                         PrismaValue::String(value),
+                    )]),
+                ),
+                Self::HexesEquals(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "equals".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                Self::HexesInVec(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "in".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::Int(v as i64))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::HexesNotInVec(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "notIn".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::Int(v as i64))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::HexesLt(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lt".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                Self::HexesLte(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lte".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                Self::HexesGt(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gt".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                Self::HexesGte(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gte".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                Self::HexesNot(value) => (
+                    "hexes".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                Self::LastUsernameEquals(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "equals".to_string(),
+                        value
+                            .map(|value| PrismaValue::String(value))
+                            .unwrap_or(PrismaValue::Null),
+                    )]),
+                ),
+                Self::LastUsernameInVec(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "in".to_string(),
+                        PrismaValue::List(
+                            value.into_iter().map(|v| PrismaValue::String(v)).collect(),
+                        ),
+                    )]),
+                ),
+                Self::LastUsernameNotInVec(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "notIn".to_string(),
+                        PrismaValue::List(
+                            value.into_iter().map(|v| PrismaValue::String(v)).collect(),
+                        ),
+                    )]),
+                ),
+                Self::LastUsernameLt(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lt".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameLte(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lte".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameGt(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gt".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameGte(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gte".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameContains(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "contains".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameStartsWith(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "startsWith".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameEndsWith(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "endsWith".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastUsernameMode(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "mode".to_string(),
+                        PrismaValue::Enum(value.to_string()),
+                    )]),
+                ),
+                Self::LastUsernameNot(value) => (
+                    "lastUsername".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        PrismaValue::String(value),
+                    )]),
+                ),
+                Self::LastSeenEquals(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "equals".to_string(),
+                        value
+                            .map(|value| PrismaValue::DateTime(value))
+                            .unwrap_or(PrismaValue::Null),
+                    )]),
+                ),
+                Self::LastSeenInVec(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "in".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::DateTime(v))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::LastSeenNotInVec(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "notIn".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::DateTime(v))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::LastSeenLt(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lt".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::LastSeenLte(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lte".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::LastSeenGt(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gt".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::LastSeenGte(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gte".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::LastSeenNot(value) => (
+                    "lastSeen".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::CreatedAtEquals(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "equals".to_string(),
+                        value
+                            .map(|value| PrismaValue::DateTime(value))
+                            .unwrap_or(PrismaValue::Null),
+                    )]),
+                ),
+                Self::CreatedAtInVec(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "in".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::DateTime(v))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::CreatedAtNotInVec(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "notIn".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::DateTime(v))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::CreatedAtLt(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lt".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::CreatedAtLte(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lte".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::CreatedAtGt(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gt".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::CreatedAtGte(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gte".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::CreatedAtNot(value) => (
+                    "createdAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::UpdatedAtEquals(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "equals".to_string(),
+                        value
+                            .map(|value| PrismaValue::DateTime(value))
+                            .unwrap_or(PrismaValue::Null),
+                    )]),
+                ),
+                Self::UpdatedAtInVec(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "in".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::DateTime(v))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::UpdatedAtNotInVec(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "notIn".to_string(),
+                        PrismaValue::List(
+                            value
+                                .into_iter()
+                                .map(|v| PrismaValue::DateTime(v))
+                                .collect(),
+                        ),
+                    )]),
+                ),
+                Self::UpdatedAtLt(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lt".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::UpdatedAtLte(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "lte".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::UpdatedAtGt(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gt".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::UpdatedAtGte(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "gte".to_string(),
+                        PrismaValue::DateTime(value),
+                    )]),
+                ),
+                Self::UpdatedAtNot(value) => (
+                    "updatedAt".to_string(),
+                    SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        PrismaValue::DateTime(value),
                     )]),
                 ),
             }
@@ -467,11 +1204,26 @@ pub mod _prisma {
     pub enum PlayerScalarFieldEnum {
         #[serde(rename = "id")]
         Id,
+        #[serde(rename = "hexes")]
+        Hexes,
+        #[serde(rename = "lastUsername")]
+        LastUsername,
+        #[serde(rename = "lastSeen")]
+        LastSeen,
+        #[serde(rename = "createdAt")]
+        CreatedAt,
+        #[serde(rename = "updatedAt")]
+        UpdatedAt,
     }
     impl ToString for PlayerScalarFieldEnum {
         fn to_string(&self) -> String {
             match self {
                 Self::Id => "id".to_string(),
+                Self::Hexes => "hexes".to_string(),
+                Self::LastUsername => "lastUsername".to_string(),
+                Self::LastSeen => "lastSeen".to_string(),
+                Self::CreatedAt => "createdAt".to_string(),
+                Self::UpdatedAt => "updatedAt".to_string(),
             }
         }
     }

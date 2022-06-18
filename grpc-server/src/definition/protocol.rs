@@ -250,7 +250,7 @@ pub mod player_data_request {
     #[derive(Debug, Clone, PartialEq)]
     pub enum Id {
         Uuid(::uuid::Uuid),
-        Username(crate::datatype::Username),
+        Username(::prost::alloc::string::String),
     }
 }
 #[derive(serde::Serialize, serde::Deserialize)]

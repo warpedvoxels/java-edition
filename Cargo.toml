@@ -6,7 +6,6 @@ members = [
     "cli",
     "resource-pack",
     "grpc-server",
-    "grpc-server/common",
     "grpc-server/bindings",
     "grpc-server/cli",
     #"rest-webserver",

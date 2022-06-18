@@ -9,13 +9,12 @@ macro_rules! server {
 
 pub mod codec;
 pub mod definition;
-pub use grpc_server_common::datatype;
 
 server!(app);
 server!(bootstrap);
 server!(routing);
 server!(prisma);
 
-#[path = "macro/mod.rs"]
+#[path = "macro.rs"]
 #[cfg(feature = "server")]
 pub mod macros;
