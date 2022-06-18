@@ -1,12 +1,21 @@
+model FFAPlayerStats {
+    playerId          String @id @unique @db.Uuid
+    kills             Int    @default(0)
+    deaths            Int    @default(0)
+    killstreak        Int    @default(0)
+    longestKillstreak Int    @default(0)
+}
+
 datasource db {
     provider = "postgres"
     url      = env("DATABASE_URL")
 }
 
 generator client {
-    provider      = "cargo prisma"
-    output        = "../src/prisma.rs"
+    provider = "cargo prisma"
+    output   = "../src/prisma.rs"
 }
+
 
 model Player {
     id           String    @id @unique @db.Uuid

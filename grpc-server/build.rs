@@ -527,17 +527,15 @@ fn main() {
     let prisma = current_dir.join("prisma");
     let prisma_scheme = prisma.join("schema.prisma");
     let _ = std::fs::remove_file(&prisma_scheme);
-    let mut prisma_files = prisma.read_dir().unwrap();
-    let mut prisma_base =
-        std::fs::read_to_string(prisma_files.next().unwrap().unwrap().path()).unwrap();
-
-    for entry in prisma_files {
-        let entry = entry.unwrap();
-        let path = entry.path();
-        let content = std::fs::read_to_string(&path).unwrap();
-        writeln!(prisma_base, "\n{content}").unwrap();
+    if let Ok(mut input) = glob::glob("./prisma/**/*.prisma") {
+        let mut prisma_base = std::fs::read_to_string(input.next().unwrap().unwrap()).unwrap();
+        for entry in input {
+            let path = entry.unwrap();
+            let content = std::fs::read_to_string(&path).unwrap();
+            writeln!(prisma_base, "\n{content}").unwrap();
+        }
+        fs::write(&prisma_scheme, &prisma_base).unwrap();
     }
-    fs::write(&prisma_scheme, &prisma_base).unwrap();
 
     let current_dir = current_dir
         .join("../")

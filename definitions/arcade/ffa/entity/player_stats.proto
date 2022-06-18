@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package arcade.ffa.entity;
+
+import "datatype/uuid.proto";
+
+message FFAPlayerStats {
+    required datatype.Uuid uuid = 1;
+    required int32 kills = 2;
+    required int32 deaths = 3;
+    required int32 killstreak = 4;
+    required int32 longestKillstreak = 5;
+}

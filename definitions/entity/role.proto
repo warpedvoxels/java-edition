@@ -4,7 +4,7 @@ package entity;
 
 message Role {
     required string id = 1;
-    required string unicode_character = 2;
+    required string unicodeCharacter = 2;
     required string color = 3;
-    required string tab_list_index = 4;
+    required string tabListIndex = 4;
 }

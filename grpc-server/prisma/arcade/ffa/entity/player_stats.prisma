@@ -1,0 +1,7 @@
+model FFAPlayerStats {
+    playerId          String @id @unique @db.Uuid
+    kills             Int    @default(0)
+    deaths            Int    @default(0)
+    killstreak        Int    @default(0)
+    longestKillstreak Int    @default(0)
+}
