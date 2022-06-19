@@ -7,9 +7,9 @@ use libc::{c_char, size_t};
 use tonic::transport::Channel;
 use uuid::Uuid;
 
-use grpc_server::definition::protocol::{
-    player::PlayerClient, player_data_request::Id, PlayerDataRequest,
-};
+use grpc_server::definition::{datatype::id::Data as Id, protocol::{
+    player::PlayerClient, PlayerDataRequest,
+}};
 
 pub mod runtime;
 
@@ -95,13 +95,13 @@ pub unsafe extern "C" fn retrieve_player_by_uuid(id: *const c_char) -> *const By
         let id = as_str(id);
         let uuid = Uuid::from_str(id).expect("Failed to parse given UUID");
         let req = PlayerDataRequest {
-            id: Some(Id::Uuid(uuid)),
+            id: Id::Uuid(uuid).into(),
         };
         let reply = get_player_service()
             .retrieve_data(req)
             .await
             .expect("Failed to retrieve player");
-        let buf = ByteBuf::from(&reply.get_ref().player);
+        let buf = ByteBuf::from(&reply.get_ref().data);
         Box::into_raw(Box::new(buf))
     })
 }

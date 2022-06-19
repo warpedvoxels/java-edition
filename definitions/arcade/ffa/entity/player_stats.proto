@@ -8,6 +8,7 @@ message FFAPlayerStats {
     required datatype.Uuid uuid = 1;
     required int32 kills = 2;
     required int32 deaths = 3;
-    required int32 killstreak = 4;
-    required int32 longestKillstreak = 5;
+    required int32 assists = 4;
+    required int32 killstreak = 5;
+    required int32 longestKillstreak = 6;
 }

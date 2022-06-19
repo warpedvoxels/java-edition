@@ -1,0 +1,30 @@
+syntax = "proto2";
+
+package arcade.ffa.protocol;
+
+import "datatype/uuid.proto";
+import "google/protobuf/timestamp.proto";
+import "arcade/ffa/entity/player_stats.proto";
+
+service FFAPlayerStats {
+    rpc RetrieveData (FFAPlayerStatsDataRequest) returns (FFAPlayerStatsDataReply);
+
+    rpc ModifyData (FFAPlayerStatsDataPatchRequest) returns (FFAPlayerStatsDataReply);
+}
+
+message FFAPlayerStatsDataRequest {
+    required datatype.Id id = 1;
+}
+
+message FFAPlayerStatsDataPatchRequest {
+    required datatype.Id id = 1;
+    optional int32 kills = 2;
+    optional int32 deaths = 3;
+    optional int32 assists = 4;
+    optional int32 killstreak = 5;
+    optional int32 longestKillstreak = 6;
+}
+
+message FFAPlayerStatsDataReply {
+    required arcade.ffa.entity.FFAPlayerStats data = 1;
+}

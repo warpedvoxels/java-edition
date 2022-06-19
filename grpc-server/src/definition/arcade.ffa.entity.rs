@@ -5,6 +5,7 @@ pub struct FfaPlayerStats {
     pub uuid: ::uuid::Uuid,
     pub kills: i32,
     pub deaths: i32,
+    pub assists: i32,
     pub killstreak: i32,
     pub longest_killstreak: i32,
 }

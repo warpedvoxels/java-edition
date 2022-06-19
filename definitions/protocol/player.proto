@@ -4,18 +4,27 @@ package protocol;
 
 import "datatype/uuid.proto";
 import "entity/player.proto";
+import "google/protobuf/timestamp.proto";
 
 service Player {
     rpc RetrieveData (PlayerDataRequest) returns (PlayerDataReply);
+
+    rpc ModifyData (PlayerDataPatchRequest) returns (PlayerDataReply);
 }
 
 message PlayerDataRequest {
-    oneof id {
-        datatype.Uuid uuid = 1;
-        string username =2;
-    }
+    required datatype.Id id = 1;
+}
+
+message PlayerDataPatchRequest {
+    required datatype.Id id = 1;
+    optional int32 hexes = 2;
+    optional string last_username = 3;
+    optional google.protobuf.Timestamp lastSeen = 4;
+    optional google.protobuf.Timestamp createdAt = 5;
+    optional google.protobuf.Timestamp updatedAt = 6;
 }
 
 message PlayerDataReply {
-    required entity.Player player = 1;
+    required entity.Player data = 1;
 }

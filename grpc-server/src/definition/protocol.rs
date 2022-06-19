@@ -241,23 +241,24 @@ pub enum CommunicationsKey {
 #[serde(rename_all = "snake_case")]
 #[derive(Debug, Clone, PartialEq)]
 pub struct PlayerDataRequest {
-    pub id: ::core::option::Option<player_data_request::Id>,
+    pub id: super::datatype::Id,
 }
-/// Nested message and enum types in `PlayerDataRequest`.
-pub mod player_data_request {
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[serde(rename_all = "snake_case")]
-    #[derive(Debug, Clone, PartialEq)]
-    pub enum Id {
-        Uuid(::uuid::Uuid),
-        Username(::prost::alloc::string::String),
-    }
+#[derive(serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[derive(Debug, Clone, PartialEq)]
+pub struct PlayerDataPatchRequest {
+    pub id: super::datatype::Id,
+    pub hexes: ::core::option::Option<i32>,
+    pub last_username: ::core::option::Option<::prost::alloc::string::String>,
+    pub last_seen: ::core::option::Option<::chrono::NaiveDateTime>,
+    pub created_at: ::core::option::Option<::chrono::NaiveDateTime>,
+    pub updated_at: ::core::option::Option<::chrono::NaiveDateTime>,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
 #[derive(Debug, Clone, PartialEq)]
 pub struct PlayerDataReply {
-    pub player: super::entity::Player,
+    pub data: super::entity::Player,
 }
 pub mod player {
     use tonic::codegen::*;
@@ -266,6 +267,10 @@ pub mod player {
         async fn retrieve_data(
             &self,
             request: tonic::Request<super::PlayerDataRequest>,
+        ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status>;
+        async fn modify_data(
+            &self,
+            request: tonic::Request<super::PlayerDataPatchRequest>,
         ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status>;
     }
     #[derive(Debug)]
@@ -348,6 +353,44 @@ pub mod player {
                     let fut = async move {
                         let inner = inner.0;
                         let method = RetrieveDataSvc(inner);
+                        let codec = crate::codec::CborCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/protocol.Player/ModifyData" => {
+                    #[allow(non_camel_case_types)]
+                    struct ModifyDataSvc<T: Player>(pub Arc<T>);
+                    impl<
+                        T: Player,
+                    > tonic::server::UnaryService<super::PlayerDataPatchRequest>
+                    for ModifyDataSvc<T> {
+                        type Response = super::PlayerDataReply;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PlayerDataPatchRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { inner.modify_data(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ModifyDataSvc(inner);
                         let codec = crate::codec::CborCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -467,6 +510,25 @@ pub mod player {
             let codec = crate::codec::CborCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/protocol.Player/RetrieveData",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn modify_data(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PlayerDataPatchRequest>,
+        ) -> Result<tonic::Response<super::PlayerDataReply>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = crate::codec::CborCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/protocol.Player/ModifyData",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }

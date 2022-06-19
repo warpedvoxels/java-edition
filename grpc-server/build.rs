@@ -106,7 +106,7 @@ impl GrpcServiceGenerator {
                 .unwrap();
             }
         }
-        buf.push('\n');
+        buf.push_str("\n");
     }
 
     fn generate_server_trait_impl_struct(&self, service: &Service, buf: &mut String) {
@@ -285,8 +285,8 @@ impl GrpcServiceGenerator {
                     self.apply_streaming_to_buf("streaming", &req_name, method, buf);
                 }
             }
+            buf.push_str("},\n");
         }
-        buf.push_str("},\n");
         buf.push_str("_ => Box::pin(async move {\n");
         buf.push_str("Ok(http::Response::builder()\n");
         buf.push_str(".status(200)\n");
@@ -423,7 +423,7 @@ impl GrpcServiceGenerator {
             func_name, into
         )
         .unwrap();
-        buf.push('}');
+        buf.push_str("}\n");
     }
 
     fn generate_client_struct_impl(&self, service: &Service, buf: &mut String) {
@@ -509,6 +509,7 @@ impl ServiceGenerator for GrpcServiceGenerator {
     fn generate(&mut self, service: Service, buf: &mut String) {
         let mut new_buf = String::new();
         self.generate_internally(&service, &mut new_buf);
+        println!("{new_buf}");
         let syntax_tree = syn::parse_file(&new_buf)
             .expect("Failed to convert generated code into a syntax tree.");
         let formatted_buf = prettyplease::unparse(&syntax_tree);
