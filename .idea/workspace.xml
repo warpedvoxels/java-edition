@@ -8,37 +8,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/branding/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rust-toolchain.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.all-contributorsrc" beforeDir="false" afterPath="$PROJECT_DIR$/.all-contributorsrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/examples/java/PlaceholderBlockFeature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/examples/java/SamplePlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-rust/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/common-rust/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-rust/src/settings.rs" beforeDir="false" afterPath="$PROJECT_DIR$/common-rust/src/settings.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/datatype/username.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/entity/player.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/entity/player.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/definitions/protocol/player.proto" beforeDir="false" afterPath="$PROJECT_DIR$/definitions/protocol/player.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/arcade/duels/src/main/kotlin/org/hexalite/network/duels/gameplay/feature/block/PlaceholderBlockFeature.kt" beforeDir="false" afterPath="$PROJECT_DIR$/arcade/duels/src/main/kotlin/org/hexalite/network/duels/gameplay/feature/block/PlaceholderBlockFeature.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc-server/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/build.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/build.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/common/Cargo.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/common/src/datatype/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/common/src/datatype/username.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/common/src/lib.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/common/src/macro.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/macro.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/prisma/player.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/prisma/player.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/bootstrap/logging.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/bootstrap/logging.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc-server/src/bootstrap/postgres.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/bootstrap/postgres.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/bootstrap/settings.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/bootstrap/settings.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/entity.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/entity.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/protocol.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/protocol.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/macro/mod.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/macro/sql.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/macro.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/macro.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc-server/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/prisma.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/prisma.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc-server/src/routing/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/routing/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/tests/serialization.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/KrakenPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/KrakenPlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/GameplayFeatureView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/GameplayFeatureView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/block/CustomBlockFeature.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/block/CustomBlockFeature.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/item/CustomItemFeature.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/item/CustomItemFeature.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/item/CustomItemModifier.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/gameplay/feature/item/CustomItemModifier.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/pipeline/packet/extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kraken/purpur/src/main/kotlin/org/hexalite/network/kraken/pipeline/packet/extensions.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,10 +83,10 @@
       <list>
         <option value="Kotlin Data Class" />
         <option value="Kotlin Object" />
-        <option value="Class" />
         <option value="Kotlin File" />
         <option value="Rust File" />
         <option value="Kotlin Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -144,26 +128,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/media/files/Projects/Hexalite/Minecraft/java-edition&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/media/files/Projects/Hexalite/Minecraft/java-edition",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/native" />
@@ -311,10 +295,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.java-edition [jextract]" />
         <item itemvalue="Gradle.java-edition [build]" />
         <item itemvalue="Gradle.LoggingTest.should print two simple colored messages" />
         <item itemvalue="Gradle.LoggingTest" />
-        <item itemvalue="Gradle.java-edition [jextract]" />
+        <item itemvalue="Cargo.Test receiving (2)" />
       </list>
     </recent_temporary>
   </component>
@@ -396,6 +381,8 @@
       <workItem from="1655576269566" duration="167000" />
       <workItem from="1655576474295" duration="598000" />
       <workItem from="1655577111250" duration="346000" />
+      <workItem from="1655780080379" duration="602000" />
+      <workItem from="1655823270904" duration="2504000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>

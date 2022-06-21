@@ -1,10 +1,9 @@
 package org.hexalite.network.kraken.gameplay.feature.item
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TranslatableComponent
 
 sealed class CustomItemModifier {
-    data class Name(val component: TranslatableComponent): CustomItemModifier()
+    data class Name(val component: Component): CustomItemModifier()
 
     data class Lore(val components: List<Component>): CustomItemModifier()
 

@@ -1,10 +1,13 @@
+@file:JvmName("PacketPipeline")
 package org.hexalite.network.kraken.pipeline.packet
 
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelPromise
+import net.minecraft.data.models.blockstates.PropertyDispatch.QuadFunction
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ServerGamePacketListener
+import org.apache.commons.lang3.function.TriFunction
 import org.bukkit.entity.Player
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.BukkitEventListener
@@ -25,6 +28,10 @@ typealias PacketTransformInContext = PlayerPipelineDuplexChannel.(ctx: ChannelHa
 typealias PacketTransformOutContext = PlayerPipelineDuplexChannel.(ctx: ChannelHandlerContext, packet: Any, promise: ChannelPromise) -> Any?
 typealias PacketTransformInSpecificContext<T, R> = PlayerPipelineDuplexChannel.(ctx: ChannelHandlerContext, packet: T) -> R
 typealias PacketTransformOutSpecificContext<T, R> = PlayerPipelineDuplexChannel.(ctx: ChannelHandlerContext, packet: T, promise: ChannelPromise) -> R
+typealias PacketTransformInContextJava = TriFunction<PlayerPipelineDuplexChannel, ChannelHandlerContext, Any, Any?>
+typealias PacketTransformOutContextJava = QuadFunction<PlayerPipelineDuplexChannel, ChannelHandlerContext, Any, ChannelPromise, Any?>
+typealias PacketTransformInSpecificContextJava<T, R> = TriFunction<PlayerPipelineDuplexChannel, ChannelHandlerContext, T, R>
+typealias PacketTransformOutSpecificContextJava<T, R> = QuadFunction<PlayerPipelineDuplexChannel, ChannelHandlerContext, T, ChannelPromise, R>
 
 val Player.customDuplexChannelOrNull
     get() = playerCustomDuplexChannels[uuid]
@@ -215,8 +222,56 @@ inline fun <reified T: Packet<ClientGamePacketListener>> Player.transformPackets
 }
 
 /**
+ * Sets the packet in transformation globally.
+ */
+@PacketDslMarker
+@JvmName("transformAllIncomingPackets")
+inline fun <reified T : Packet<ServerGamePacketListener>> transformPacketsIncoming(reader: PacketTransformInSpecificContextJava<T, Any?>) {
+    transformPacketsIncoming<T> { ctx, packet ->
+        reader.apply(this, ctx, packet)
+    }
+}
+
+/**
+ * Sets the packet out transformation globally.
+ */
+@PacketDslMarker
+@JvmName("transformAllOutgoingPackets")
+inline fun <reified T : Packet<ClientGamePacketListener>> transformPacketsOutgoing(writer: PacketTransformOutSpecificContextJava<T, Any?>) {
+    return transformPacketsOutgoing<T> { ctx, packet, future ->
+        writer.apply(this, ctx, packet, future)
+    }
+}
+
+/**
+ * Sets the packet in transformation for this player.
+ */
+@PacketDslMarker
+@JvmName("transformIncomingPackets")
+inline fun <reified T : Packet<ServerGamePacketListener>> Player.transformPacketsIncoming(reader: PacketTransformInSpecificContextJava<T, Any?>) {
+    val old = customDuplexChannel.transformIn
+    return transformPacketsIncoming<T> { a, b ->
+        reader.apply(this, a, b)
+    }
+}
+
+/**
+ * Sets the packet out transformation for this player.
+ */
+@PacketDslMarker
+@JvmName("transformOutgoingPackets")
+inline fun <reified T : Packet<ClientGamePacketListener>> Player.transformPacketsOutgoing(writer: PacketTransformOutSpecificContextJava<T, Any?>) {
+    val old = customDuplexChannel.transformOut
+    return transformPacketsOutgoing<T> { a, b, c ->
+        writer.apply(this, a, b, c)
+    }
+}
+
+
+/**
  * Set up the entire packet pipeline injection system.
  */
+@JvmName("setup")
 fun KrakenPlugin.packetPipelineInjectionSystem(): BukkitEventListener {
     setupInternalPacketListening()
     return BukkitPacketPipelineListener(this)

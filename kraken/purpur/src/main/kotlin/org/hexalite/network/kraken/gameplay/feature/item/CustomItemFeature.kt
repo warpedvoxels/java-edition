@@ -1,7 +1,6 @@
 package org.hexalite.network.kraken.gameplay.feature.item
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TranslatableComponent
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -10,57 +9,70 @@ import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
+import org.hexalite.network.kraken.gameplay.feature.GameplayFeature
 import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureView
 import java.util.*
 
-open class CustomItemFeature(
+open class CustomItemFeature @JvmOverloads constructor(
     val textureIndex: Int,
     val slot: EquipmentSlot = EquipmentSlot.HAND,
     val modifiers: MutableSet<CustomItemModifier> = mutableSetOf(),
-) {
+): GameplayFeature {
+    @JvmName("withModifier")
     inline fun <reified T: CustomItemModifier> modifier(value: T) {
         modifiers.removeIf { it is T }
         modifiers.add(value)
     }
 
-    fun name(component: TranslatableComponent) = modifier(CustomItemModifier.Name(component))
+    @JvmName("withName")
+    fun name(component: Component) = apply { modifier(CustomItemModifier.Name(component)) }
 
-    fun name(key: String) = modifier(CustomItemModifier.Name(Component.translatable(key)))
+    @JvmName("withLocalizedName")
+    fun localizedName(key: String) = apply { modifier(CustomItemModifier.Name(Component.translatable(key))) }
 
-    fun attackSpeed(value: Double) = modifier(CustomItemModifier.AttackSpeed(value))
+    @JvmName("withAttackSpeed")
+    fun attackSpeed(value: Double) = apply { modifier(CustomItemModifier.AttackSpeed(value)) }
 
-    fun attackDamage(value: Double) = modifier(CustomItemModifier.AttackDamage(value))
+    @JvmName("withAttackDamage")
+    fun attackDamage(value: Double) = apply { modifier(CustomItemModifier.AttackDamage(value)) }
 
-    fun attackKnockback(value: Double) = modifier(CustomItemModifier.AttackKnockback(value))
+    @JvmName("withAttackKnockback")
+    fun attackKnockback(value: Double) = apply { modifier(CustomItemModifier.AttackKnockback(value)) }
 
-    fun armor(points: Double) = modifier(CustomItemModifier.Armor(points))
+    @JvmName("withArmor")
+    fun armor(points: Double) = apply {  modifier(CustomItemModifier.Armor(points)) }
 
-    fun knockbackResistance(value: Double) = modifier(CustomItemModifier.KnockbackResistance(value))
+    @JvmName("withKnockbackResistance")
+    fun knockbackResistance(value: Double) = apply {  modifier(CustomItemModifier.KnockbackResistance(value)) }
 
-    fun attack(damage: Double) = attackDamage(damage)
+    @JvmName("withAttack")
+    fun attack(damage: Double) = apply { attackDamage(damage) }
 
-    fun attack(speed: Double, damage: Double) {
+    @JvmName("withAttack")
+    fun attack(speed: Double, damage: Double) = apply  {
         attackSpeed(speed)
         attackDamage(damage)
     }
 
-    fun attack(speed: Double, damage: Double, knockback: Double) {
+    @JvmName("withAttack")
+    fun attack(speed: Double, damage: Double, knockback: Double) = apply {
         attackSpeed(speed)
         attackDamage(damage)
         attackKnockback(knockback)
     }
 
-    fun lore(vararg components: Component) {
+    @JvmName("withLore")
+    fun lore(vararg components: Component) = apply {
         if (components.isEmpty()) {
             modifiers.removeIf { it is CustomItemModifier.Lore }
-            return
+            return@apply
         }
         modifier(CustomItemModifier.Lore(components.toList()))
     }
 
-    fun appendLore(vararg components: Component) {
+    fun appendLore(vararg components: Component) = apply {
         if (components.isEmpty()) {
-            return
+            return@apply
         }
         val modifier = modifiers.firstNotNullOfOrNull { it as? CustomItemModifier.Lore? } ?: return lore(*components)
         modifier(CustomItemModifier.Lore(modifier.components + components))
@@ -83,6 +95,8 @@ open class CustomItemFeature(
     inline val customModelData: Int
         get() = textureIndex + 1000
 
+    @JvmName("asItemStack")
+    @JvmOverloads
     fun stack(namespace: NamespacedKey, amount: Int = 1, showTextureIndexInLore: Boolean = true): ItemStack {
         fun ItemMeta.setAttribute(key: Attribute, value: Double?) {
             if (value != null) {
@@ -126,7 +140,7 @@ open class CustomItemFeature(
     }
 }
 
-fun CustomItemFeature.asCustomBlockOrNull(view: GameplayFeatureView) = view.retrieveCustomBlock(textureIndex)
+fun CustomItemFeature. asCustomBlockOrNull(view: GameplayFeatureView) = view.retrieveCustomBlock(textureIndex)
 
 fun ItemStack.asCustomOrNull(view: GameplayFeatureView): CustomItemFeature? {
     val meta = itemMeta ?: return null

@@ -7,9 +7,12 @@ import org.hexalite.network.kraken.gameplay.feature.block.CustomBlockFeature
 import org.hexalite.network.kraken.gameplay.feature.item.CustomItemAdapter
 import org.hexalite.network.kraken.gameplay.feature.item.CustomItemFeature
 
+interface GameplayFeature
+
 @DslMarker
 annotation class GameplayFeatureDsl
 
+@Suppress("NOTHING_TO_INLINE")
 class GameplayFeatureView(
     val plugin: KrakenPlugin,
     var blocks: MutableMap<Int, CustomBlockFeature> = mutableMapOf(),
@@ -29,7 +32,23 @@ class GameplayFeatureView(
 
     fun retrieveCustomBlock(id: Int) = blocks[id]
 
-    operator fun CustomBlockFeature.unaryPlus() = blocks.put(textureIndex, this)
+    operator fun GameplayFeature.unaryPlus(): GameplayFeature? = when(this) {
+        is CustomItemFeature -> items.put(textureIndex, this)
+        is CustomBlockFeature -> blocks.put(textureIndex, this)
+        else -> throw IllegalArgumentException("Unsupported feature type")
+    }
 
-    operator fun CustomItemFeature.unaryPlus() = items.put(textureIndex, this)
+    operator fun GameplayFeature.unaryMinus() = when(this) {
+        is CustomItemFeature -> items.remove(textureIndex)
+        is CustomBlockFeature -> blocks.remove(textureIndex)
+        else -> throw IllegalArgumentException("Unsupported feature type")
+    }
+
+    inline operator fun Collection<GameplayFeature>.unaryPlus() = forEach { +it }
+
+    inline operator fun Collection<GameplayFeature>.unaryMinus() = forEach { -it }
+
+    inline operator fun Array<GameplayFeature>.unaryPlus() = forEach { +it }
+
+    inline operator fun Array<GameplayFeature>.unaryMinus() = forEach { -it }
 }
