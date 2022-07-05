@@ -18,8 +18,19 @@ java {
 }
 
 tasks {
+    task<Exec>("build-bindings") {
+        workingDir(rootProject.projectDir)
+        commandLine("cargo")
+        args(
+            "build",
+            "-p",
+            "grpc-server-bindings",
+            "--release"
+        )
+    }
+
     withType<JextractTask> {
-        dependsOn(":native:cbindgen")
+        dependsOn(":kotlin-grpc-client:build-bindings")
         header("${rootProject.projectDir.absolutePath}/target/release/client.h") {
             libraries.set(listOf("grpc_server_bindings"))
             targetPackage.set("org.hexalite.network.panama.grpc.client")

@@ -9,7 +9,6 @@ import org.hexalite.network.common.settings.HexaliteSettings
 import org.hexalite.network.grpc.client.service.PlayerService
 import org.hexalite.network.panama.grpc.client.GrpcClient
 import java.io.Closeable
-import java.util.*
 
 class HexaliteGrpcClient(private val settings: HexaliteSettings) : Closeable {
     private val job = SupervisorJob()
@@ -42,12 +41,4 @@ class HexaliteGrpcClient(private val settings: HexaliteSettings) : Closeable {
         GrpcClient.shutdown()
         coroutineScope.cancel()
     }
-}
-
-suspend fun main() {
-    val settings = HexaliteSettings.read()
-    val client = HexaliteGrpcClient(settings)
-    client.initialize(settings.grpc.root.ssl)
-    val player = client.services.player.retrieveByUuid(UUID.randomUUID())
-    println("got $player")
 }

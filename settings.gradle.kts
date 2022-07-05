@@ -26,7 +26,6 @@ include(
     ":arcade:duels",
     ":reusable-plugins:chat",
     ":reusable-plugins:combat",
-    ":native"
 )
 
 dependencyResolutionManagement {

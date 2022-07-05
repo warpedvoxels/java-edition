@@ -1,0 +1,56 @@
+use std::str::FromStr;
+use libc::c_char;
+use tonic::transport::Channel;
+use uuid::Uuid;
+
+use grpc_server::definition::{
+    datatype::id::Data as Id,
+    protocol::{player::PlayerClient, PlayerDataRequest},
+};
+
+use crate::{as_str, ByteBuf, runtime};
+
+static mut SERVICE: Option<PlayerClient<Channel>> = None;
+
+pub async unsafe fn connect(uri: String) {
+    SERVICE = Some(PlayerClient::connect(uri).await.unwrap());
+}
+
+pub unsafe fn shutdown() {
+    SERVICE = None;
+}
+
+pub unsafe fn get<'a>() -> &'a mut PlayerClient<Channel> {
+    SERVICE.as_mut().expect("Player service not initialized")
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn retrieve_player_by_uuid(id: *const c_char) -> *const ByteBuf {
+    runtime::exec(async move {
+        let uuid = Uuid::from_str(as_str(id)).expect("Failed to parse given UUID");
+        let req = PlayerDataRequest {
+            id: Id::Uuid(uuid).into(),
+        };
+        let reply = get()
+            .retrieve_data(req)
+            .await
+            .expect("Failed to retrieve player by UUID.");
+        let buf = ByteBuf::from(&reply.get_ref().data);
+        Box::into_raw(Box::new(buf))
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn retrieve_player_by_last_username(username: *const c_char) -> *const ByteBuf {
+    runtime::exec(async move {
+        let req = PlayerDataRequest {
+            id: Id::Username(as_str(username).into()).into(),
+        };
+        let reply = get()
+            .retrieve_data(req)
+            .await
+            .expect("Failed to retrieve player by last username.");
+        let buf = ByteBuf::from(&reply.get_ref().data);
+        Box::into_raw(Box::new(buf))
+    })
+}

@@ -6,7 +6,7 @@ import jdk.incubator.foreign.MemoryAddress
 import jdk.incubator.foreign.ValueLayout
 import org.hexalite.network.panama.grpc.client.GrpcClient
 
-fun MemoryAddress.asByteBuf(): ByteArray {
+operator fun MemoryAddress.unaryPlus(): ByteArray {
     val length = GrpcClient.get_buf_len(this)
     val data = GrpcClient.get_buf_data(this)
     val bytes = ByteArray(length.toInt()) { (data[ValueLayout.JAVA_BYTE, it.toLong()].toInt() and 0xFF).toByte() }
