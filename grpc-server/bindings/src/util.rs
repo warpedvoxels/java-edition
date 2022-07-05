@@ -8,6 +8,7 @@ pub struct ByteBuf {
     pub data: *const u8,
 }
 
+//noinspection HttpUrlsUsage
 pub unsafe fn http_uri(uri: *const c_char, prefer_ssl: bool) -> String {
     if prefer_ssl {
         format!("https://{}", as_str(uri))
@@ -28,6 +29,7 @@ impl<T> From<&T> for ByteBuf
         Self { len, data }
     }
 }
+
 
 #[no_mangle]
 pub unsafe extern "C" fn free_buf(buf: *const ByteBuf) {

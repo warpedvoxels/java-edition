@@ -1,5 +1,5 @@
 use std::str::FromStr;
-use libc::c_char;
+use libc::{c_char, size_t};
 use tonic::transport::Channel;
 use uuid::Uuid;
 
@@ -7,6 +7,7 @@ use grpc_server::definition::{
     datatype::id::Data as Id,
     protocol::{player::PlayerClient, PlayerDataRequest},
 };
+use grpc_server::definition::protocol::PlayerDataPatchRequest;
 
 use crate::{as_str, ByteBuf, runtime};
 
@@ -50,6 +51,17 @@ pub unsafe extern "C" fn retrieve_player_by_last_username(username: *const c_cha
             .retrieve_data(req)
             .await
             .expect("Failed to retrieve player by last username.");
+        let buf = ByteBuf::from(&reply.get_ref().data);
+        Box::into_raw(Box::new(buf))
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn modify_player_data(data: *const u8, len: size_t) -> *const ByteBuf {
+    runtime::exec(async move {
+        let slice = std::slice::from_raw_parts(data, len);
+        let patch: PlayerDataPatchRequest = cbor4ii::serde::from_slice(slice).expect("Failed to deserialize patch.");
+        let reply = get().modify_data(patch).await.expect("Failed to modify player data.");
         let buf = ByteBuf::from(&reply.get_ref().data);
         Box::into_raw(Box::new(buf))
     })

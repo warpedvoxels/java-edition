@@ -7,27 +7,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="1">
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/bindings/src/player.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/bindings/src/util.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/GrpcService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/arcade.ffa.entity.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/arcade.ffa.entity.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/arcade.ffa.protocol.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/arcade.ffa.protocol.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/datatype.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/datatype.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/entity.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/entity.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/protocol.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/protocol.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/definition/rest.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/definition/rest.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/HexaliteGrpcClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/HexaliteGrpcClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/extension/ByteBuf.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/extension/ByteBuf.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/player.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/GrpcService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/GrpcService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/PlayerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/PlayerService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/native/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/native/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +361,7 @@
       <workItem from="1657048473849" duration="746000" />
       <workItem from="1657049237717" duration="143000" />
       <workItem from="1657049392049" duration="2478000" />
-      <workItem from="1657056089051" duration="1520000" />
+      <workItem from="1657056089051" duration="3995000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>
@@ -434,7 +419,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655825839775</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="refactor(grpc): split client bindings into multiple files&#10;&#10;This takes advantage of cbindgen support for multiple files to allow us to have a cleaner codebase while still using C bindings.">
+      <created>1657057764427</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1657057764427</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments.">
+      <created>1657059932231</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1657059932231</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -473,7 +472,9 @@
     <MESSAGE value="feat(grpc/bindings): add initial code for binary entity negotiation&#10;&#10;The process of entity negotiation is made over a simple binary format while using C bindings with the nifty features of Project Panama (FFI/JExtract)." />
     <MESSAGE value="feat(grpc/bindings): add initial code for binary entity negotiation and update minecraft to 1.19 &#10;&#10;The process of entity negotiation is made over a simple binary format while using C bindings with the nifty features of Project Panama (FFI/JExtract)." />
     <MESSAGE value="feat(kraken/purpur): improve java support and add examples for it" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(kraken/purpur): improve java support and add examples for it" />
+    <MESSAGE value="refactor(grpc): split client bindings into multiple files&#10;&#10;This takes advantage of cbindgen support for multiple files to allow us to have a cleaner codebase while still using C bindings." />
+    <MESSAGE value="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
