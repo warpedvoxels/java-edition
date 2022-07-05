@@ -8,19 +8,14 @@ data class Player (
     val hexes: Int,
     @kotlinx.serialization.SerialName("last_username")
     val lastUsername: String,
-    @kotlinx.serialization.SerialName("last_seen")
     val lastSeen: kotlinx.datetime.Instant,
-    @kotlinx.serialization.SerialName("created_at")
     val createdAt: kotlinx.datetime.Instant,
-    @kotlinx.serialization.SerialName("updated_at")
     val updatedAt: kotlinx.datetime.Instant,
 )
 @kotlinx.serialization.Serializable
 data class Role (
     val id: String,
-    @kotlinx.serialization.SerialName("unicode_character")
     val unicodeCharacter: String,
     val color: String,
-    @kotlinx.serialization.SerialName("tab_list_index")
     val tabListIndex: String,
 )

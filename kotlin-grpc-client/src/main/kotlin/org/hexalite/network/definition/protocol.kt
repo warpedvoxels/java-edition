@@ -18,9 +18,19 @@ enum class CommunicationsKey {
 }
 @kotlinx.serialization.Serializable
 data class PlayerDataRequest (
-    val id: java.util.UUID,
+    val id: org.hexalite.network.definition.datatype.Id,
+)
+@kotlinx.serialization.Serializable
+data class PlayerDataPatchRequest (
+    val id: org.hexalite.network.definition.datatype.Id,
+    val hexes: Int,
+    @kotlinx.serialization.SerialName("last_username")
+    val lastUsername: String,
+    val lastSeen: kotlinx.datetime.Instant,
+    val createdAt: kotlinx.datetime.Instant,
+    val updatedAt: kotlinx.datetime.Instant,
 )
 @kotlinx.serialization.Serializable
 data class PlayerDataReply (
-    val player: org.hexalite.network.definition.entity.Player,
+    val data: org.hexalite.network.definition.entity.Player,
 )

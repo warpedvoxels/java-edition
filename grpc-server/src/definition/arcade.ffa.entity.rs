@@ -1,6 +1,6 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct FfaPlayerStats {
     pub uuid: ::uuid::Uuid,
     pub kills: i32,

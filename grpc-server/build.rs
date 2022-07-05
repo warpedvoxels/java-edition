@@ -106,7 +106,7 @@ impl GrpcServiceGenerator {
                 .unwrap();
             }
         }
-        buf.push_str("\n");
+        buf.push('\n');
     }
 
     fn generate_server_trait_impl_struct(&self, service: &Service, buf: &mut String) {

@@ -14,6 +14,7 @@ server!(app);
 server!(bootstrap);
 server!(routing);
 server!(prisma);
+server!(utils);
 
 #[path = "macro.rs"]
 #[cfg(feature = "server")]

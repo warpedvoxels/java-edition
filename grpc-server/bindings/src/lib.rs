@@ -7,9 +7,10 @@ use libc::{c_char, size_t};
 use tonic::transport::Channel;
 use uuid::Uuid;
 
-use grpc_server::definition::{datatype::id::Data as Id, protocol::{
-    player::PlayerClient, PlayerDataRequest,
-}};
+use grpc_server::definition::{
+    datatype::id::Data as Id,
+    protocol::{player::PlayerClient, PlayerDataRequest},
+};
 
 pub mod runtime;
 

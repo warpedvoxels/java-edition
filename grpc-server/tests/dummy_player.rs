@@ -1,8 +1,11 @@
 use anyhow::{Context, Result};
-use grpc_server::definition::{protocol::{player::PlayerClient, *}, datatype::id::Data as Id};
-use uuid::Uuid;
+use grpc_server::definition::{
+    datatype::id::Data as Id,
+    protocol::{player::PlayerClient, *},
+};
 use std::str::FromStr;
 use tonic::transport::Uri;
+use uuid::Uuid;
 
 mod common;
 
@@ -23,7 +26,9 @@ async fn greet_test() -> Result<()> {
     log::info!(
         "{:?}",
         client
-            .retrieve_data(PlayerDataRequest { id: Id::Uuid(Uuid::new_v4()).into() })
+            .retrieve_data(PlayerDataRequest {
+                id: Id::Uuid(Uuid::new_v4()).into()
+            })
             .await
             .context("Failed to request data.")?
     );

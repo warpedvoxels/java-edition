@@ -1,10 +1,10 @@
 model Player {
     id           String    @id @unique @db.Uuid
     hexes        Int       @default(0)
-    lastUsername String?
-    lastSeen     DateTime?
-    createdAt    DateTime? @default(now())
-    updatedAt    DateTime? @default(now())
+    lastUsername String
+    lastSeen     DateTime
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @default(now())
 
     @@index(lastUsername)
 }

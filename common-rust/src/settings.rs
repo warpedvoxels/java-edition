@@ -100,7 +100,7 @@ pub struct GrpcPostgresServiceSettings {
     pub pool: GrpcPostgresServicePoolSettings,
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug, Default)]
 pub struct GrpcPostgresServiceSslSettings {
     pub enable: bool,
     pub cert_path: Option<PathBuf>,
@@ -205,17 +205,6 @@ impl Default for GrpcRabbitMQServiceSettings {
     }
 }
 
-impl Default for GrpcPostgresServiceSslSettings {
-    fn default() -> Self {
-        Self {
-            enable: false,
-            cert_path: None,
-            identity_path: None,
-            password: None,
-        }
-    }
-}
-
 impl ToString for GrpcRabbitMQServiceSettings {
     fn to_string(&self) -> String {
         format!(
@@ -235,7 +224,7 @@ impl ToString for GrpcPostgresServiceSettings {
     fn to_string(&self) -> String {
         let mut buf = format!("postgresql://{}", url(&self.username));
         if let Some(password) = &self.password {
-            write!(buf, ":{}", url(&password)).unwrap();
+            write!(buf, ":{}", url(password)).unwrap();
         }
         write!(
             buf,
@@ -255,7 +244,7 @@ impl ToString for GrpcPostgresServiceSettings {
                 write!(buf, "&sslidentity={}", url(identity.to_str().unwrap())).unwrap();
             }
             if let Some(password) = &self.ssl.password {
-                write!(buf, "&sslpassword={}", url(&password)).unwrap();
+                write!(buf, "&sslpassword={}", url(password)).unwrap();
             }
         }
         write!(
@@ -265,7 +254,8 @@ impl ToString for GrpcPostgresServiceSettings {
             self.pool.connection_timeout.num_seconds(),
             self.pool.idle_timeout.num_seconds(),
             self.pool.max_lifetime.num_seconds()
-        ).unwrap();
+        )
+        .unwrap();
         buf
     }
 }

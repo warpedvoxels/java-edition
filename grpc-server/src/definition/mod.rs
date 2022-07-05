@@ -15,12 +15,10 @@ pub mod arcade {
 
 pub mod datatype {
     include!("datatype.rs");
-    
-    impl Into<Id> for id::Data {
-        fn into(self) -> Id {
-            Id {
-                data: Some(self),
-            }
+
+    impl From<id::Data> for Id {
+        fn from(data: id::Data) -> Id {
+            Id { data: Some(data) }
         }
     }
 }

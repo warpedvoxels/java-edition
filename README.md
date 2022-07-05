@@ -102,6 +102,9 @@ and set `org.gradle.java.installations.paths=/path/to/panama/jdk` in your `~/.gr
 
 #### Extra prequisites
 
+> You may also be interested on [`holmgr/cargo-sweep`](https://github.com/holmgr/cargo-sweep) if you actively develop
+  Rust with the nightly toolchain.
+
 **Windows**: 
 * `cargo install -f cargo-binutils` 
 * `rustup component add llvm-tools-preview`
@@ -115,18 +118,18 @@ and set `org.gradle.java.installations.paths=/path/to/panama/jdk` in your `~/.gr
 
 ### Developer resources
 
-* [wiki.vg] - Addresses documentation about the Minecraft: Java Edition protocol
+* [wiki.vg](https://wiki.vg) - Addresses documentation about the Minecraft: Java Edition protocol
 * [Prisma documentation](https://prisma.io/docs/prisma-client/introduction) - Addresses documentation about the Prisma ORM
 * * [Prisma Client Rust documentation](https://github.com/Brendonovich/prisma-client-rust/tree/main/docs)
-* [The Rust Book](https://doc.rust-lang.org/book/)
-* [Kotlin language reference](https://kotlinlang.org/docs/reference/)
+* [The Rust Book](https://doc.rust-lang.org/book/) - Book to learn how the Rust programming language works
+* [Kotlin language reference](https://kotlinlang.org/docs/reference/) - Reference about the Kotlin programming language
 
 
 ### Building everything
 
 > ◉ **NOTICE:** If you are an IntelliJ IDEA user, make sure to exclude the following directories at the 
   **Module Settings (F4)**:
-> - `/*/target`
+> - `**/**/target`
 > - `/target/`
 > - `/web/node_modules`
 

@@ -10,7 +10,9 @@ members = [
     "grpc-server/cli",
     #"rest-webserver",
     "rust-tools/lint",
-    "jvm-definitions-generator"
+    "jvm-definitions-generator",
+    "discord/bot",
+    "discord/oauth2"
 ]
 
 [profile.dev]
