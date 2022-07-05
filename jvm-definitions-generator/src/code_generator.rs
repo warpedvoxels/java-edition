@@ -253,10 +253,10 @@ impl<'a> CodeGenerator<'a> {
 
         self.append_field_attributes(fq_message_name, field.name());
         self.push_indent();
-        let _kind = if repeated {
+        let ty = if repeated {
             format!("List<{ty}>")
         } else if optional {
-            format!("{ty}?")
+            format!("{ty}? = null")
         } else {
             ty.to_string()
         };

@@ -7,11 +7,11 @@ data class FfaPlayerStatsDataRequest (
 @kotlinx.serialization.Serializable
 data class FfaPlayerStatsDataPatchRequest (
     val id: org.hexalite.network.definition.org.hexalite.network.definition.org.hexalite.network.definition.datatype.Id,
-    val kills: Int,
-    val deaths: Int,
-    val assists: Int,
-    val killstreak: Int,
-    val longestKillstreak: Int,
+    val kills: Int? = null,
+    val deaths: Int? = null,
+    val assists: Int? = null,
+    val killstreak: Int? = null,
+    val longestKillstreak: Int? = null,
 )
 @kotlinx.serialization.Serializable
 data class FfaPlayerStatsDataReply (

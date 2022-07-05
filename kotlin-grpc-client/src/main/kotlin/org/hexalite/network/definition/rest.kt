@@ -2,9 +2,7 @@
 package org.hexalite.network.definition.rest
 @kotlinx.serialization.Serializable
 data class Authorization (
-    @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
-    @kotlinx.serialization.cbor.ByteString
-    val sub: java.util.UUID,
+    val sub: java.util.UUID? = null,
     val exp: kotlinx.datetime.Instant,
     @kotlinx.serialization.SerialName("is_internal")
     val isInternal: Boolean,

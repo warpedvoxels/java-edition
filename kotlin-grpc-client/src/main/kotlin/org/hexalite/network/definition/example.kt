@@ -2,7 +2,7 @@
 package org.hexalite.network.definition.example
 @kotlinx.serialization.Serializable
 data class Example (
-    val name: String,
+    val name: String? = null,
     val id: Int,
     val email: String,
 )

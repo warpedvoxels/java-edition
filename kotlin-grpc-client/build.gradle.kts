@@ -28,9 +28,20 @@ tasks {
             "--release"
         )
     }
+    task<Exec>("generate-definitions") {
+        workingDir(rootProject.projectDir)
+        commandLine("cargo")
+        args(
+            "run",
+            "-p",
+            "jvm-definitions-generator",
+        )
+    }
 
     withType<JextractTask> {
         dependsOn(":kotlin-grpc-client:build-bindings")
+        dependsOn(":kotlin-grpc-client:generate-definitions")
+
         header("${rootProject.projectDir.absolutePath}/target/release/client.h") {
             libraries.set(listOf("grpc_server_bindings"))
             targetPackage.set("org.hexalite.network.panama.grpc.client")

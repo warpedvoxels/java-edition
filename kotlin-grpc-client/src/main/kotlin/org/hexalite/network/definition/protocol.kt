@@ -23,12 +23,12 @@ data class PlayerDataRequest (
 @kotlinx.serialization.Serializable
 data class PlayerDataPatchRequest (
     val id: org.hexalite.network.definition.datatype.Id,
-    val hexes: Int,
+    val hexes: Int? = null,
     @kotlinx.serialization.SerialName("last_username")
-    val lastUsername: String,
-    val lastSeen: kotlinx.datetime.Instant,
-    val createdAt: kotlinx.datetime.Instant,
-    val updatedAt: kotlinx.datetime.Instant,
+    val lastUsername: String? = null,
+    val lastSeen: kotlinx.datetime.Instant? = null,
+    val createdAt: kotlinx.datetime.Instant? = null,
+    val updatedAt: kotlinx.datetime.Instant? = null,
 )
 @kotlinx.serialization.Serializable
 data class PlayerDataReply (
