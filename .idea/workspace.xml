@@ -7,12 +7,12 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments.">
+    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="feat(grpc): implement modify route for the client">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/player.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/player.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/util.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/GrpcService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/GrpcService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/PlayerService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/kotlin-grpc-client/src/main/kotlin/org/hexalite/network/grpc/client/service/PlayerService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/native/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/native/settings.gradle.kts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,26 +119,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/media/files/Downloads/new_ui_preview.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "language.rust"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/media/files/Downloads/new_ui_preview.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/native" />
@@ -262,7 +262,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Cargo.Test receiving (2)" />
       <item itemvalue="Gradle.LoggingTest" />
       <item itemvalue="Gradle.LoggingTest.should print two simple colored messages" />
       <item itemvalue="Gradle.java-edition [build]" />
@@ -361,7 +360,8 @@
       <workItem from="1657048473849" duration="746000" />
       <workItem from="1657049237717" duration="143000" />
       <workItem from="1657049392049" duration="2478000" />
-      <workItem from="1657056089051" duration="3995000" />
+      <workItem from="1657056089051" duration="4055000" />
+      <workItem from="1657830273627" duration="2212000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>
@@ -433,7 +433,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657059932231</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="feat(grpc): implement modify route for the client">
+      <created>1657060121346</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1657060121346</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat(grpc): implement modify route for the client">
+      <created>1657060126753</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1657060126753</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,7 +488,8 @@
     <MESSAGE value="feat(kraken/purpur): improve java support and add examples for it" />
     <MESSAGE value="refactor(grpc): split client bindings into multiple files&#10;&#10;This takes advantage of cbindgen support for multiple files to allow us to have a cleaner codebase while still using C bindings." />
     <MESSAGE value="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments." />
+    <MESSAGE value="feat(grpc): implement modify route for the client" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(grpc): implement modify route for the client" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

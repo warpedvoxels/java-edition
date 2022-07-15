@@ -2,12 +2,12 @@
 
 use libc::c_char;
 
+pub mod player;
 pub mod runtime;
 pub mod util;
-pub mod player;
 
-pub use util::*;
 pub use player::*;
+pub use util::*;
 
 //noinspection HttpUrlsUsage
 #[no_mangle]
