@@ -7,12 +7,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="feat(grpc): implement modify route for the client">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="46754019-65ec-439c-a28d-aad4eb3a7dbb" name="Changes" comment="chore: remove unnecessary gradle subprojects">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/bindings/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/native/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/native/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/build.rs" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/build.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +133,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -262,6 +259,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Cargo.Test receiving (2)" />
       <item itemvalue="Gradle.LoggingTest" />
       <item itemvalue="Gradle.LoggingTest.should print two simple colored messages" />
       <item itemvalue="Gradle.java-edition [build]" />
@@ -278,7 +276,7 @@
   </component>
   <component name="RustProjectSettings">
     <option name="runExternalLinterOnTheFly" value="true" />
-    <option name="toolchainHomeDirectory" value="/usr/bin" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -362,6 +360,7 @@
       <workItem from="1657049392049" duration="2478000" />
       <workItem from="1657056089051" duration="4055000" />
       <workItem from="1657830273627" duration="2212000" />
+      <workItem from="1657927341261" duration="1299000" />
     </task>
     <task id="LOCAL-00001" summary="build(grpc/client): add initial build files">
       <created>1652549431622</created>
@@ -447,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657060126753</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="chore: remove unnecessary gradle subprojects">
+      <created>1657927412501</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1657927412501</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -489,7 +495,8 @@
     <MESSAGE value="refactor(grpc): split client bindings into multiple files&#10;&#10;This takes advantage of cbindgen support for multiple files to allow us to have a cleaner codebase while still using C bindings." />
     <MESSAGE value="fix(definitions): overwrite ty field&#10;&#10;This will add support for lists and optional fields on Kotlin environments." />
     <MESSAGE value="feat(grpc): implement modify route for the client" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(grpc): implement modify route for the client" />
+    <MESSAGE value="chore: remove unnecessary gradle subprojects" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: remove unnecessary gradle subprojects" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
