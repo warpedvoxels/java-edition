@@ -4,19 +4,17 @@ import dev.kord.common.Locale
 import dev.kord.common.entity.Permissions
 import org.hexalite.discord.common.utils.validateLocales
 
-class UserCommandBuilder(val name: String) {
+class UserCommandBuilder(val name: String, private var executor: (suspend (UserCommandContext).() -> Unit)? = null) {
     var nameLocalizations: MutableMap<Locale, String>? = null
     var dmPermission: Boolean? = null
     var defaultMemberPermissions: Permissions? = null
-
-    private lateinit var executor: suspend (UserCommandContext).() -> Unit
 
     fun execute(block: suspend (UserCommandContext).() -> Unit) {
         executor = block
     }
 
     fun validate() {
-        if (!::executor.isInitialized)
+        if (executor == null)
             error("The $name UserCommand needs an executor")
         if (name.length !in 1..32)
             error("The $name UserCommand has a name that exceeds the ranger")
@@ -29,6 +27,6 @@ class UserCommandBuilder(val name: String) {
         nameLocalizations,
         dmPermission,
         defaultMemberPermissions,
-        executor
+        executor ?: error("UserCommandBuilder: Executor function not initialized.")
     )
 }

@@ -1,11 +1,12 @@
 package org.hexalite.discord.common.command
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.interaction.*
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.interaction.GroupCommandBuilder
 import dev.kord.rest.builder.interaction.SubCommandBuilder
-import org.hexalite.discord.common.HexaliteClient
+import org.hexalite.discord.common.DiscordCommonData
 import org.hexalite.discord.common.command.message.MessageCommandContext
 import org.hexalite.discord.common.command.message.MessageCommandData
 import org.hexalite.discord.common.command.slash.*
@@ -15,19 +16,19 @@ import org.hexalite.discord.common.command.user.UserCommandData
 
 interface CommandRegistry {
     val kord: Kord
-    val hexalite: HexaliteClient
+    val hexalite: DiscordCommonData
     val commands: MutableList<ApplicationCommandData>
 
     suspend fun registerDiscordCommands() {
         val commandsToRegister = commands.toMutableList()
 
-        if (hexalite.guildsId == null) {
+        if (hexalite.settings.guildIds == null) {
             kord.createGlobalApplicationCommands {
                 registerDiscordCommands(commandsToRegister)
             }
         } else {
-            hexalite.guildsId!!.forEach {
-                kord.createGuildApplicationCommands(it) {
+            hexalite.settings.guildIds!!.forEach {
+                kord.createGuildApplicationCommands(Snowflake(it)) {
                     registerDiscordCommands(commandsToRegister)
                 }
             }

@@ -22,7 +22,7 @@ import org.hexalite.discord.common.utils.InteractionException
 @Suppress("UNCHECKED_CAST")
 open class InteractionContext(
     open val interaction: Interaction,
-    val hexalite: HexaliteClient
+    val hexalite: DiscordCommonData
 ) {
     fun failPublic(builder: InteractionResponseCreateBuilder.() -> Unit): Nothing =
         throw InteractionException(

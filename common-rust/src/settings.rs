@@ -18,6 +18,8 @@ pub struct HexaliteSettings {
     pub grpc: GrpcSettings,
     #[serde(default)]
     pub webserver: WebServerSettings,
+    #[serde(default)]
+    pub discord: DiscordSettings,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -48,6 +50,15 @@ pub struct GrpcRootSettings {
     pub ip: Ipv4Addr,
     pub port: u16,
     pub ssl: bool,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct DiscordSettings {
+    pub token: String,
+    pub id: u64,
+    pub public_key: String,
+    pub secret: String,
+    pub guild_id: Option<Vec<u64>>,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug, Default)]
@@ -201,6 +212,18 @@ impl Default for GrpcRabbitMQServiceSettings {
             port: 5672,
             username: String::from("johndoe"),
             password: String::from("mysecretpassword"),
+        }
+    }
+}
+
+impl Default for DiscordSettings {
+    fn default() -> Self {
+        Self {
+            token: "token-here!@*!*&#".to_string(),
+            id: 950527109774843904,
+            public_key: "public-key-here-xd2352384523w".to_string(),
+            secret: "secret-here-asasdasdsadscsa".to_string(),
+            guild_id: Some(vec![908438033613848596])
         }
     }
 }

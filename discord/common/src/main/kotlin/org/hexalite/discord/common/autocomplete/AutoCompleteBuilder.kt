@@ -1,7 +1,6 @@
 package org.hexalite.discord.common.autocomplete
 
-class AutoCompleteBuilder<T> {
-    lateinit var executor: suspend (AutoCompleteContext).() -> Map<String, T>
+class AutoCompleteBuilder<T>(var executor: (suspend (AutoCompleteContext).() -> Map<String, T>)? = null) {
 
     // Map<String seen by the user, Argument value>
     fun execute(block: suspend (AutoCompleteContext).() -> Map<String, T>) {
@@ -9,7 +8,7 @@ class AutoCompleteBuilder<T> {
     }
 
     fun validate() {
-        if(!::executor.isInitialized)
+        if(executor == null)
             error("AutoComplete needs an executor")
     }
 }

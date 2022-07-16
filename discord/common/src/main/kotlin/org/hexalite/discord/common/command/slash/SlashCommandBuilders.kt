@@ -97,14 +97,14 @@ class GroupCommandBuilder(private val name: String, private val description: Str
 
     var subCommands: MutableList<SubCommandData<out SlashCommandArguments>> = mutableListOf()
 
-    inline fun subCommand(name: String, description: String, block: SubCommandBuilder<*>.() -> Unit) {
+    inline fun subcommand(name: String, description: String, block: SubCommandBuilder<*>.() -> Unit) {
         val builder = SubCommandBuilder<SlashCommandArguments>(name, description, null).apply(block)
         builder.validate()
 
         subCommands.add(builder.build())
     }
 
-    inline fun <R : SlashCommandArguments> subCommand(
+    inline fun <R : SlashCommandArguments> subcommand(
         name: String,
         description: String,
         noinline arguments: () -> R,

@@ -16,6 +16,8 @@ jobs:
         with:
           website: jdk.java.net
           release: panama
+      - uses: rui314/setup-mold@v1
+      - uses: egor-tensin/setup-clang@v1
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Use Cache

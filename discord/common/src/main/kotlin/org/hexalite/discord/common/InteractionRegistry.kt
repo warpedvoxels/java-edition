@@ -26,11 +26,11 @@ import org.hexalite.discord.common.utils.InteractionException
 
 class InteractionRegistry(
     override val kord: Kord,
-    override val hexalite: HexaliteClient
+    override val hexalite: DiscordCommonData
 ) : CommandRegistry, ComponentRegistry, ModalSubmitRegistry, AutoCompleteRegistry {
     override val commands: MutableList<ApplicationCommandData> = mutableListOf()
 
-    private fun startListening() {
+private fun startListening() {
         kord.on<ApplicationCommandInteractionCreateEvent> {
             val command = findCommand(interaction)
             executeInteraction(command, interaction)

@@ -3,12 +3,12 @@ package org.hexalite.discord.common.component
 import dev.kord.core.entity.interaction.ButtonInteraction
 import dev.kord.core.entity.interaction.ComponentInteraction
 import dev.kord.core.entity.interaction.SelectMenuInteraction
-import org.hexalite.discord.common.HexaliteClient
+import org.hexalite.discord.common.DiscordCommonData
 import org.hexalite.discord.common.component.button.ButtonContext
 import org.hexalite.discord.common.component.selectmenu.SelectMenuContext
 
 interface ComponentRegistry {
-    val hexalite: HexaliteClient
+    val hexalite: DiscordCommonData
 
     companion object {
         val components: MutableList<MessageComponentData> = mutableListOf()

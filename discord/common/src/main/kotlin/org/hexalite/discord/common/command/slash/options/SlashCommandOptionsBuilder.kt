@@ -35,7 +35,6 @@ interface ChoiceableCommandOptionBuilder<T> : SlashCommandOptionBuilder {
     fun autoComplete(block: AutoCompleteBuilder<T>.() -> Unit) {
         val builder = AutoCompleteBuilder<T>().apply(block)
         builder.validate()
-
         autocomplete = builder.executor
     }
 

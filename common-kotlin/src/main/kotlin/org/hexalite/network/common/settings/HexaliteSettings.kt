@@ -2,6 +2,7 @@ package org.hexalite.network.common.settings
 
 import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.TomlInputConfig
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import java.io.File
@@ -22,9 +23,11 @@ data class HexaliteSettings(
     data class Discord(
         val token: String,
         val id: Long,
+        @SerialName("public_key")
         val publicKey: String,
         val secret: String,
-        val guidsToRegisterCommands: List<Long>?
+        @SerialName("guild_ids")
+        val guildIds: List<Long>?
     )
 
     companion object {

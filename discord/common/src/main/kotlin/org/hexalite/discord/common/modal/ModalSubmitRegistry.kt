@@ -1,11 +1,11 @@
 package org.hexalite.discord.common.modal
 
 import dev.kord.core.entity.interaction.ModalSubmitInteraction
-import org.hexalite.discord.common.HexaliteClient
+import org.hexalite.discord.common.DiscordCommonData
 import org.hexalite.discord.common.modal.options.ModalArguments
 
 interface ModalSubmitRegistry {
-    val hexalite: HexaliteClient
+    val hexalite: DiscordCommonData
 
     companion object {
         val modals: MutableList<ModalSubmitData<ModalArguments>> = mutableListOf()
