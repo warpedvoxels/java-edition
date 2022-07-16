@@ -1,0 +1,34 @@
+package org.hexalite.discord.common.command.message
+
+import dev.kord.common.Locale
+import dev.kord.common.entity.Permissions
+import org.hexalite.discord.common.utils.validateLocales
+
+class MessageCommandBuilder(private val name: String) {
+    var nameLocalizations: MutableMap<Locale, String>? = null
+    var dmPermission: Boolean? = null
+    var defaultMemberPermissions: Permissions? = null
+
+    private lateinit var executor: suspend (MessageCommandContext).() -> Unit
+
+    fun execute(block: suspend (MessageCommandContext).() -> Unit) {
+        executor = block
+    }
+
+    fun validate() {
+        if (!::executor.isInitialized)
+            error("The $name MessageCommand needs an executor")
+        if (name.length !in 1..32)
+            error("The $name MessageCommand has a name that exceeds the ranger")
+
+        validateLocales(nameLocalizations, name)
+    }
+
+    fun build() = MessageCommandData(
+        name,
+        nameLocalizations,
+        dmPermission,
+        defaultMemberPermissions,
+        executor
+    )
+}
