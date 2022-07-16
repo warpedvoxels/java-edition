@@ -9,13 +9,23 @@ import java.io.FileNotFoundException
 
 @Serializable
 data class HexaliteSettings(
-    val grpc: Grpc
+    val grpc: Grpc,
+    val discord: Discord
 ) {
     @Serializable
     data class Grpc(val root: Root) {
         @Serializable
         data class Root(val ip: String, val port: Long, val ssl: Boolean)
     }
+
+    @Serializable
+    data class Discord(
+        val token: String,
+        val id: Long,
+        val publicKey: String,
+        val secret: String,
+        val guidsToRegisterCommands: List<Long>?
+    )
 
     companion object {
         val Toml = Toml(
