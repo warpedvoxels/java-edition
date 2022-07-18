@@ -21,7 +21,7 @@ mordant = "2.0.0-beta7"
 caffeine = "3.1.1"
 ktoml = "0.2.12"
 jextract-gradle = "0.2.6"
-kord = "0.8.x-SNAPSHOT"
+kord = "0.8.0-M15"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }

@@ -44,10 +44,8 @@ interface CommandRegistry {
                 findCommand(interaction.command, rootCommand as RootSlashCommandData<*>)
             }
 
-            is UserCommandInteraction, is MessageCommandInteraction -> {
-                // MessageCommand and UserCommand have no groups or subcommands
-                rootCommand
-            }
+            // MessageCommand and UserCommand have no groups or subcommands
+            is UserCommandInteraction, is MessageCommandInteraction -> rootCommand
         }
     }
 

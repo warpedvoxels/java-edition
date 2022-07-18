@@ -14,11 +14,11 @@ class InteractionsBasedBotTesting {
     @Test
     fun `should run a bot with a test command just fine`() = runBlocking {
         val settings = HexaliteSettings.Discord(
-            token = System.getenv("TESTING_TOKEN"),
-            id = System.getenv("TESTING_BOT_ID").toLong(),
-            publicKey = System.getenv("TESTING_PUBLIC_KEY"),
-            secret = System.getenv("TESTING_SECRET"),
-            guildIds = listOf(System.getenv("TESTING_GUILD_ID").toLong())
+            token = System.getenv("TESTING_TOKEN").also(::println),
+            id = System.getenv("TESTING_BOT_ID")?.toLong()!!.also(::println),
+            publicKey = System.getenv("TESTING_PUBLIC_KEY").also(::println),
+            secret = System.getenv("TESTING_SECRET").also(::println),
+            guildIds = listOf(System.getenv("TESTING_GUILD_ID")?.toLong()!!.also(::println))
         )
         val kord = Kord(settings.token)
         val registry = InteractionRegistry(kord, DiscordCommonData(settings))
@@ -30,7 +30,7 @@ class InteractionsBasedBotTesting {
         val hello = slashCommand("hello", "\uD83D\uDC4B Greets the given user.", ::HelloArguments) {
             execute {
                 val user = arguments.user ?: interaction.user
-                val message = "`\uD83D\uDC4B` Hello, ${user.mention}"
+                val message = "`\uD83D\uDC4B` Hello, ${user.mention} (${user.tag})"
                 interaction.respondEphemeral { content = message }
             }
         }
