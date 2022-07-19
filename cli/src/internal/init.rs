@@ -1,5 +1,6 @@
-use anyhow::{Context, Result};
 use std::path::PathBuf;
+
+use anyhow::{Context, Result};
 use tokio::fs;
 
 use hexalite_common::dirs::get_hexalite_dir_path;
@@ -9,7 +10,7 @@ use crate::internal::{handle_dir_error, use_handling_auto};
 use super::use_handling;
 
 lazy_static::lazy_static! {
-    static ref FILES: Vec<&'static str> = vec![".env", "resource-pack", "run"];
+    static ref FILES: Vec<&'static str> = vec!["run", ".env"];
 }
 
 pub async fn init(src_path: PathBuf) -> Result<()> {
@@ -25,12 +26,14 @@ pub async fn init(src_path: PathBuf) -> Result<()> {
     use_handling(&src_path, &hexalite.join("dev"), |src, dest| {
         symlink::symlink_dir(src, dest)
     });
+    use_handling(&src_path.join("resource-pack/out"), &hexalite.join("resource-pack"), |src, dest| {
+        symlink::symlink_dir(src, dest)
+    });
 
     for file in &*FILES {
         use_handling_auto(&src_path, file, |src, dest| {
             symlink::symlink_auto(src, dest)
         });
     }
-
     Ok(())
 }

@@ -6,8 +6,7 @@ fn main() {
 
     let working_directory = std::env::current_dir()
         .unwrap()
-        .join("../")
-        .canonicalize()
+        .parent()
         .unwrap();
     let working_directory = working_directory.join("definitions");
 

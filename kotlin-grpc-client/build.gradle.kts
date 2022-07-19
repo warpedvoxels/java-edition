@@ -1,6 +1,6 @@
 import io.github.krakowski.jextract.JextractTask
 
-@Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(hexalite.plugins.jextract)
     id("com.github.johnrengelman.shadow") version "7.1.2"

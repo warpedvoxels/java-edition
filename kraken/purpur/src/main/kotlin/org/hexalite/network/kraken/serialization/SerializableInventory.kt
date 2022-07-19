@@ -44,7 +44,7 @@ data class SerializableInventory(val contents: Array<ItemStack?>) {
         private fun String.inventory(): Array<ItemStack?> {
             val bytes = ByteArrayInputStream(Base64Coder.decodeLines(this))
             val bukkit = BukkitObjectInputStream(bytes)
-            val items = Array(bukkit.readInt()) { it ->
+            val items = Array(bukkit.readInt()) {
                 val stack = bukkit.readObject() as? ByteArray?
                 if (stack != null) {
                     ItemStack.deserializeBytes(stack)
@@ -91,4 +91,4 @@ data class SerializableInventory(val contents: Array<ItemStack?>) {
     override fun hashCode(): Int = contents.contentHashCode()
 }
 
-fun Inventory.serializable(): SerializableInventory = SerializableInventory(contents ?: emptyArray())
+fun Inventory.serializable(): SerializableInventory = SerializableInventory(contents)

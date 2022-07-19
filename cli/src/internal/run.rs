@@ -16,7 +16,7 @@ pub async fn webserver(sh: &Shell) -> Result<()> {
 }
 
 pub async fn resource_pack(sh: &Shell) -> Result<()> {
-    let path = compiled_file!("resource_pack");
+    let path = compiled_file!("resource-pack");
     let path = path
         .to_str()
         .context("Failed to retrieve the compiled resource pack path.")?;

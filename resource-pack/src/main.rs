@@ -39,25 +39,25 @@ fn write_overwriting(path: &Path, content: String) {
 }
 
 fn main() {
-    let home = home::home_dir().expect("Failed to get home directory");
-
-    let resource_pack = home
-        .join(".hexalite")
+    let resource_pack = hexalite_common::dirs::get_hexalite_dir_path()
         .join("resource-pack")
         .canonicalize()
         .expect("Failed to canonicalize the ~/.hexalite/resource-pack directory");
+    let resource_pack_dev = resource_pack.parent().unwrap();
 
-    let metadata: MetadataConfig = read_and_parse(&resource_pack.join("metadata.yml"));
-    let blocks: BlocksConfig = read_and_parse(&resource_pack.join("blocks.yml"));
-    let font: FontConfig = read_and_parse(&resource_pack.join("font.yml"));
+    let metadata: MetadataConfig = read_and_parse(&resource_pack_dev.join("metadata.yml"));
+    let blocks: BlocksConfig = read_and_parse(&resource_pack_dev.join("blocks.yml"));
+    let font: FontConfig = read_and_parse(&resource_pack_dev.join("font.yml"));
 
-    let out_dir = create_dir(resource_pack.join("out"));
     write_overwriting(
-        &out_dir.join("pack.mcmeta"),
+        &resource_pack.join("pack.mcmeta"),
         serde_json::to_string(&PackMeta::from(metadata)).unwrap(),
     );
 
-    let assets_minecraft = create_dir(out_dir.join("assets").join("minecraft"));
+    let assets = resource_pack.join("assets");
+    let assets_hexalite = create_dir(assets.join("hexalite"));
+    let assets_minecraft = create_dir(assets.join("minecraft"));
+
     let blockstates = create_dir(assets_minecraft.join("blockstates"));
     let font_dir = create_dir(assets_minecraft.join("font"));
     let models = create_dir(assets_minecraft.join("models"));
@@ -75,30 +75,30 @@ fn main() {
         note_blocks_state["variants"][field] = serde_json::to_value(&state).unwrap();
         write_overwriting(
             &models.join(format!("{}.json", &state.model_name)),
-            serde_json::to_string_pretty(&model).unwrap(),
+            serde_json::to_string(&model).unwrap(),
         );
         paper.append(state.model_name, index);
     }
     write_overwriting(
         &note_blocks_state_file,
-        serde_json::to_string_pretty(&note_blocks_state).unwrap(),
+        serde_json::to_string(&note_blocks_state).unwrap(),
     );
     write_overwriting(
         &models_item.join("paper.json"),
-        serde_json::to_string_pretty(&paper).unwrap(),
+        serde_json::to_string(&paper).unwrap(),
     );
 
     let font = FontProvidersHolder::new(font.font.iter().map(FontProvider::from).collect());
     write_overwriting(
         &font_dir.join("default.json"),
-        serde_json::to_string_pretty(&font).unwrap(),
+        serde_json::to_string(&font).unwrap(),
     );
 
-    let textures_out = out_dir.join("textures");
-    let lang_out = out_dir.join("lang");
+    let textures_out = assets_hexalite.join("textures");
+    let lang_out = assets_minecraft.join("lang");
     let _ = fs::remove_dir(&textures_out);
     let _ = fs::remove_dir(&lang_out);
 
-    copy_dir_all(&resource_pack.join("textures"), &textures_out).expect("Failed to copy textures");
-    copy_dir_all(&resource_pack.join("lang"), &lang_out).expect("Failed to copy lang");
+    copy_dir_all(&resource_pack_dev.join("textures"), &textures_out).expect("Failed to copy textures.");
+    copy_dir_all(&resource_pack_dev.join("lang"), &lang_out).expect("Failed to copy language files.");
 }
