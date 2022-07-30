@@ -1,15 +1,27 @@
 package org.hexalite.network.kraken.command.argument
 
 import com.mojang.brigadier.arguments.StringArgumentType
-import org.hexalite.network.kraken.command.KrakenCommand
+import net.minecraft.commands.CommandSourceStack
+import org.hexalite.network.kraken.command.dsl.CommandArgumentsScope
+import org.hexalite.network.kraken.command.dsl.SuggestionsDsl
 
-fun <S> KrakenCommand<S>.literal(
+fun CommandArgumentsScope.literal(
     name: String,
     type: StringArgumentType,
-) = createArgument(name, type, StringArgumentType::getString)
+    suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null
+) = command.createArgument(name, type, StringArgumentType::getString, suggestions)
 
-inline fun <S> KrakenCommand<S>.word(name: String) = literal(name, StringArgumentType.word())
+inline fun CommandArgumentsScope.word(
+    name: String,
+    noinline suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null
+) = literal(name, StringArgumentType.word(), suggestions)
 
-inline fun <S> KrakenCommand<S>.string(name: String) = literal(name, StringArgumentType.string())
+inline fun CommandArgumentsScope.string(
+    name: String,
+    noinline suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null
+) = literal(name, StringArgumentType.string(), suggestions)
 
-inline fun <S> KrakenCommand<S>.greedyString(name: String) = literal(name, StringArgumentType.greedyString())
+inline fun CommandArgumentsScope.greedyString(
+    name: String,
+    noinline suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null
+) = literal(name, StringArgumentType.greedyString(), suggestions)

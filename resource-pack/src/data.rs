@@ -41,6 +41,11 @@ pub struct PackMeta {
 }
 
 #[derive(Debug, Default, Clone, Serialize)]
+pub struct PackMetaHolder {
+    pub pack: PackMeta,
+}
+
+#[derive(Debug, Default, Clone, Serialize)]
 pub struct ItemModel {
     pub parent: String,
     pub textures: ItemModelTextures,
@@ -68,8 +73,8 @@ pub struct ItemModelOverridePredicate {
 pub struct FontProvider {
     pub file: String,
     pub chars: Vec<String>,
-    pub ascent: u32,
-    pub height: u32,
+    pub ascent: i32,
+    pub height: i32,
     #[serde(rename = "type")]
     pub kind: String,
 }
@@ -109,7 +114,7 @@ impl From<&FontConfigEntry> for FontProvider {
     fn from(entry: &FontConfigEntry) -> Self {
         FontProvider {
             file: entry.file.clone(),
-            chars: vec![entry.char.clone()],
+            chars: entry.chars.clone(),
             ascent: entry.ascent,
             height: entry.height,
             kind: String::from("bitmap"),
@@ -123,6 +128,12 @@ impl From<MetadataConfig> for PackMeta {
             format_id: metadata.inner.format,
             description: metadata.inner.description,
         }
+    }
+}
+
+impl From<PackMeta> for PackMetaHolder {
+    fn from(meta: PackMeta) -> Self {
+        PackMetaHolder { pack: meta }
     }
 }
 

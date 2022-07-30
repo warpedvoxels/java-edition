@@ -43,14 +43,15 @@ MAX_NURSERY_SIZE=${MAX_NURSERY_SIZE:-$((HEAP_SIZE * 2 / 5))}
 # Additional JVM flags: Additional flags that you want to pass to the JVM.
 #                       By default, there is only a few flags set to optimize
 #                       the Minecraft server.
-
+#                       For Minecraft 1.12.2 and below (or if you are using Velocity),
+#                       "-Xgcpolicy:gencon" is recommend. If you are using a VPS or
+#                       dedicated server, adding "-Xtune:virtualized" is also a good
+#                       choice.
 ADDITIONAL_JVM_FLAGS=${ADDITIONAL_JVM_FLAGS:-"--add-modules=jdk.incubator.vector,jdk.incubator.foreign
  --enable-native-access=ALL-UNNAMED
  -Djava.library.path=$HOME/.hexalite/compiled
  -Xgcpolicy:balanced
  -Xdisableexplicitgc"}
-                                             # For Minecraft 1.12.2 and below (or if you are using Velocity), "-Xgcpolicy:gencon" is recommend
-                                             # If you are using a VPS or dedicated server, adding "-Xtune:virtualized" is recommended
 
 # Additional arguments: Additional arguments that you want to pass to the
 #                       Minecraft server. By default, only the "nogui" argument

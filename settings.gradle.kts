@@ -24,8 +24,10 @@ include(
     ":arcade:origins",
     ":arcade:origins:skills",
     ":arcade:duels",
+    ":arcade:lobby",
     ":reusable-plugins:chat",
     ":reusable-plugins:combat",
+    ":reusable-plugins:roles",
     ":discord:common"
 )
 

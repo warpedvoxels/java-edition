@@ -4,12 +4,18 @@ import com.mojang.brigadier.arguments.DoubleArgumentType
 import com.mojang.brigadier.arguments.FloatArgumentType
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.LongArgumentType
-import org.hexalite.network.kraken.command.KrakenCommand
+import net.minecraft.commands.CommandSourceStack
+import org.hexalite.network.kraken.command.dsl.CommandArgumentsScope
+import org.hexalite.network.kraken.command.dsl.SuggestionsDsl
 
-fun <S> KrakenCommand<S>.integer(name: String) = createArgument(name, IntegerArgumentType.integer(), IntegerArgumentType::getInteger)
+fun CommandArgumentsScope.integer(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, IntegerArgumentType.integer(), IntegerArgumentType::getInteger, suggestions)
 
-fun <S> KrakenCommand<S>.long(name: String) = createArgument(name, LongArgumentType.longArg(), LongArgumentType::getLong)
+fun CommandArgumentsScope.long(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, LongArgumentType.longArg(), LongArgumentType::getLong, suggestions)
 
-fun <S> KrakenCommand<S>.double(name: String) = createArgument(name, DoubleArgumentType.doubleArg(), DoubleArgumentType::getDouble)
+fun CommandArgumentsScope.double(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, DoubleArgumentType.doubleArg(), DoubleArgumentType::getDouble, suggestions)
 
-fun <S> KrakenCommand<S>.float(name: String) = createArgument(name, FloatArgumentType.floatArg(), FloatArgumentType::getFloat)
+fun CommandArgumentsScope.float(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, FloatArgumentType.floatArg(), FloatArgumentType::getFloat, suggestions)

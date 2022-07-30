@@ -2,18 +2,38 @@
 #[serde(rename_all = "snake_case")]
 #[derive(Debug, Clone, PartialEq)]
 pub struct FfaPlayerStatsDataRequest {
-    pub id: super::super::super::datatype::Id,
+    pub id: ::core::option::Option<ffa_player_stats_data_request::Id>,
+}
+/// Nested message and enum types in `FFAPlayerStatsDataRequest`.
+pub mod ffa_player_stats_data_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[serde(rename_all = "snake_case")]
+    #[derive(Debug, Clone, PartialEq)]
+    pub enum Id {
+        Uuid(::uuid::Uuid),
+        Username(::prost::alloc::string::String),
+    }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
 #[derive(Debug, Clone, PartialEq)]
 pub struct FfaPlayerStatsDataPatchRequest {
-    pub id: super::super::super::datatype::Id,
     pub kills: ::core::option::Option<i32>,
     pub deaths: ::core::option::Option<i32>,
     pub assists: ::core::option::Option<i32>,
     pub killstreak: ::core::option::Option<i32>,
     pub longest_killstreak: ::core::option::Option<i32>,
+    pub id: ::core::option::Option<ffa_player_stats_data_patch_request::Id>,
+}
+/// Nested message and enum types in `FFAPlayerStatsDataPatchRequest`.
+pub mod ffa_player_stats_data_patch_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[serde(rename_all = "snake_case")]
+    #[derive(Debug, Clone, PartialEq)]
+    pub enum Id {
+        Uuid(::uuid::Uuid),
+        Username(::prost::alloc::string::String),
+    }
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]

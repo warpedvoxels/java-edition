@@ -4,7 +4,7 @@ import com.github.ajalt.mordant.rendering.AnsiLevel
 import com.github.ajalt.mordant.rendering.TextColors.white
 import com.github.ajalt.mordant.terminal.Terminal
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.bukkit.server
 import org.hexalite.network.kraken.configuration.KrakenLoggingConfig
@@ -20,16 +20,15 @@ import org.hexalite.network.kraken.kraken
 val terminal = Terminal(tabWidth = 4, ansiLevel = AnsiLevel.TRUECOLOR)
 typealias LoggingMessage = () -> Any
 
-open class BasicLogger(val settings: () -> KrakenLoggingConfig) {
+open class BasicLogger(val namespace: String, val settings: KrakenLoggingConfig) {
     open fun log(level: LoggingLevel, message: LoggingMessage? = null, exception: Throwable? = null) {
-        val config = settings()
         if (!when (level) {
-                LoggingLevel.System -> config.enableSystemLogLevel
-                LoggingLevel.Info -> config.enableInfoLogLevel
-                LoggingLevel.Warning -> config.enableWarningLogLevel
-                LoggingLevel.Debug -> config.enableDebugLogLevel
-                LoggingLevel.Error -> config.enableErrorLogLevel
-                LoggingLevel.Critical -> config.enableCriticalLogLevel
+                LoggingLevel.System -> settings.enableSystemLogLevel
+                LoggingLevel.Info -> settings.enableInfoLogLevel
+                LoggingLevel.Warning -> settings.enableWarningLogLevel
+                LoggingLevel.Debug -> settings.enableDebugLogLevel
+                LoggingLevel.Error -> settings.enableErrorLogLevel
+                LoggingLevel.Critical -> settings.enableCriticalLogLevel
             }
         ) return
 
@@ -48,7 +47,7 @@ open class BasicLogger(val settings: () -> KrakenLoggingConfig) {
                 append(
                     when (message) {
                         is Throwable -> message.stackTraceToString()
-                        is Component -> PlainTextComponentSerializer.plainText().serialize(message)
+                        is Component -> LegacyComponentSerializer.legacySection().serialize(message)
                         is net.minecraft.network.chat.Component -> message.string
                         else -> terminal.render(message)
                     }.asFormattedText()
@@ -63,7 +62,7 @@ open class BasicLogger(val settings: () -> KrakenLoggingConfig) {
         terminal.println(text)
     }
 
-    companion object Default: BasicLogger({ kraken.conf.logging }) {
+    companion object Default: BasicLogger("Default", kraken.conf.logging) {
         @LoggingDsl
         fun globally(apply: KrakenLoggingConfig.() -> Unit) {
             for (plugin in server.pluginManager.plugins) {

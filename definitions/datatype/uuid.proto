@@ -5,10 +5,3 @@ package datatype;
 message Uuid {
     required bytes content = 1;
 }
-
-message Id {
-    oneof data {
-        datatype.Uuid uuid = 1;
-        string username =2;
-    } 
-}

@@ -361,17 +361,17 @@ impl<'a> CodeGenerator<'a> {
         oneof: &OneofDescriptorProto,
         fields: &[(FieldDescriptorProto, usize)],
     ) {
-        // todo: add support for oneofs
-        // let ty = format!(
-        //     "arrow.core.Either<{}>",
-        //     fields
-        //         .iter()
-        //         .map(|(f, _)| { self.resolve_type(f, fq_message_name) })
-        //         .join(", ")
-        // );
-        let ty = self.resolve_type(&fields.first().unwrap().0, fq_message_name);
-
-        println!("    oneof: {:?}, ty: {ty}", oneof.name(),);
+        if fields.len() > 2 {
+            panic!("oneof should contain a maximum of two types");
+        }
+        let ty = format!(
+            "org.hexalite.network.common.util.Either<{}>",
+            fields
+                .iter()
+                .map(|(f, _)| { self.resolve_type(f, fq_message_name) })
+                .join(", ")
+        );
+        println!("    oneof: {:?}, ty: {ty}", oneof.name());
 
         self.append_field_attributes(fq_message_name, oneof.name());
         self.push_indent();
@@ -432,13 +432,8 @@ impl<'a> CodeGenerator<'a> {
         // Skip path elements in common.
         while local_path.peek().is_some() && local_path.peek() == ident_path.peek() {
             local_path.next();
-            ident_path.next();
         }
 
-        local_path
-            .map(|_| self.config.base_package.clone())
-            .chain(ident_path.map(to_camel))
-            .chain(std::iter::once(to_upper_camel(ident_type)))
-            .join(".")
+        format!("{}.{}.{}", self.config.base_package.clone(), ident_path.map(to_camel).join("."), to_upper_camel(ident_type))
     }
 }

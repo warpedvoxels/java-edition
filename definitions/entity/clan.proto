@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package entity;
+
+import "datatype/uuid.proto";
+import "google/protobuf/timestamp.proto";
+
+message Clan {
+    required uint32 id = 1;
+    required string name = 2;
+    required string tag = 3;
+    required int32 points = 4;
+    required datatype.Uuid owner_id = 5;
+    required google.protobuf.Timestamp created_at = 6;
+    required google.protobuf.Timestamp updated_at = 7;
+}
+
+message ClanMember {
+    required datatype.Uuid user_id = 1;
+    required uint32 clan_id = 2;
+}

@@ -6,7 +6,7 @@ use std::{
 
 use resource_pack::{
     copy_dir_all, read_and_parse, BlockModel, BlocksConfig, FontConfig, FontProvider,
-    FontProvidersHolder, ItemModel, MetadataConfig, PackMeta,
+    FontProvidersHolder, ItemModel, MetadataConfig, PackMeta, PackMetaHolder,
 };
 use serde_json::json;
 
@@ -51,7 +51,7 @@ fn main() {
 
     write_overwriting(
         &resource_pack.join("pack.mcmeta"),
-        serde_json::to_string(&PackMeta::from(metadata)).unwrap(),
+        serde_json::to_string(&PackMetaHolder::from(PackMeta::from(metadata))).unwrap(),
     );
 
     let assets = resource_pack.join("assets");
@@ -95,10 +95,12 @@ fn main() {
     );
 
     let textures_out = assets_hexalite.join("textures");
-    let lang_out = assets_minecraft.join("lang");
+    let lang_out = assets_hexalite.join("lang");
     let _ = fs::remove_dir(&textures_out);
     let _ = fs::remove_dir(&lang_out);
 
-    copy_dir_all(&resource_pack_dev.join("textures"), &textures_out).expect("Failed to copy textures.");
-    copy_dir_all(&resource_pack_dev.join("lang"), &lang_out).expect("Failed to copy language files.");
+    copy_dir_all(&resource_pack_dev.join("textures"), &textures_out)
+        .expect("Failed to copy textures.");
+    copy_dir_all(&resource_pack_dev.join("lang"), &lang_out)
+        .expect("Failed to copy language files.");
 }

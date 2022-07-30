@@ -1,14 +1,1 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "minecraft:item/paper"
-  },
-  "overrides": [
-    {
-      "model": "block/placeholder",
-      "predicate": {
-        "custom_model_data": 1001
-      }
-    }
-  ]
-}
+{"parent":"minecraft:item/generated","textures":{"layer0":"minecraft:item/paper"},"overrides":[{"model":"block/placeholder","predicate":{"custom_model_data":1001}}]}

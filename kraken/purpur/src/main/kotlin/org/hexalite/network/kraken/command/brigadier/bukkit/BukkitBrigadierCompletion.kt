@@ -7,11 +7,9 @@ import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.OpenBukkitEventListener
 
 class BukkitBrigadierCompletion(override val plugin: KrakenPlugin) : OpenBukkitEventListener(plugin) {
-
     @EventHandler
     @Suppress("DEPRECATION")
-    fun brigadierCompletion(event: CommandRegisteredEvent<CommandSourceStack>) {
+    fun onBrigadierCompletion(event: CommandRegisteredEvent<CommandSourceStack>) {
         event.literal = (event.command as? BukkitBrigadierCommandWrapper? ?: return).kraken.buildLiteral()
     }
-
 }

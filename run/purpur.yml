@@ -99,21 +99,28 @@ settings:
     disable-note-block-updates: true
     disable-chorus-plant-updates: false
   enchantment:
+    clamp-levels: true
     allow-infinity-and-mending-together: false
     allow-infinity-on-crossbow: false
     allow-looting-on-shears: false
-    allow-unsafe-enchants: false
     allow-unsafe-enchant-command: true
+    anvil:
+      allow-unsafe-enchants: false
+      allow-inapplicable-enchants: true
+      allow-incompatible-enchants: true
+      allow-higher-enchants-levels: true
   entity:
     enderman:
       short-height: false
   allow-water-placement-in-the-end: true
   network:
+    kick-for-out-of-order-chat: true
     upnp-port-forwarding: false
     max-joins-per-second: false
   username-valid-characters: ^[a-zA-Z0-9_.]*$
   food-properties: {}
   logger:
+    suppress-sent-expired-chat: false
     suppress-init-legacy-material-errors: false
     suppress-ignored-advancement-warnings: false
     suppress-unrecognized-recipe-errors: false
@@ -121,10 +128,31 @@ settings:
   tps-catchup: true
   server-mod-name: Purpur
   disable-give-dropping: false
-config-version: 27
+config-version: 30
 world-settings:
   default:
+    settings:
+      entity:
+        shared-random: true
     mobs:
+      allay:
+        ridable: false
+        ridable-in-water: false
+        controllable: true
+      frog:
+        ridable: false
+        ridable-in-water: false
+        controllable: true
+        ridable-jump-height: 0.6499999761581421
+        breeding-delay-ticks: 6000
+      tadpole:
+        ridable: false
+        ridable-in-water: false
+        controllable: true
+      warden:
+        ridable: false
+        ridable-in-water: false
+        controllable: true
       enderman:
         ridable: false
         ridable-in-water: false
@@ -451,6 +479,7 @@ world-settings:
         takes-damage-from-water: false
         always-drop-exp: false
       horse:
+        stand-when-hurt: true
         ridable-in-water: false
         attributes:
           max_health:
@@ -699,6 +728,7 @@ world-settings:
         takes-damage-from-water: false
         always-drop-exp: false
       skeleton:
+        feed-wither-roses: 0
         ridable: false
         ridable-in-water: false
         controllable: true
@@ -978,6 +1008,12 @@ world-settings:
         takes-damage-from-water: false
         always-drop-exp: false
     blocks:
+      coral:
+        die-outside-water: true
+      sculk_shrieker:
+        can-summon-default: false
+      enchantment-table:
+        lapis-persists: false
       observer:
         disable-clock: false
       anvil:
@@ -1094,6 +1130,7 @@ world-settings:
       stonecutter:
         damage: 0.0
       turtle_egg:
+        feather-fall-distance-affects-trampling: false
         break-from-exp-orbs: true
         break-from-items: true
         break-from-minecarts: true
@@ -1173,6 +1210,12 @@ world-settings:
           minecraft:crimson_hyphae:
             into: minecraft:stripped_crimson_hyphae
             drops: {}
+          minecraft:mangrove_log:
+            drops: {}
+            into: minecraft:stripped_mangrove_log
+          minecraft:mangrove_wood:
+            drops: {}
+            into: minecraft:stripped_mangrove_wood
         waxables:
           minecraft:waxed_weathered_cut_copper:
             into: minecraft:weathered_cut_copper
@@ -1422,20 +1465,6 @@ world-settings:
         allow-void-trading: false
       projectile-damage:
         snowball: -1
-      projectile-despawn-rates:
-        dragon_fireball: -1
-        egg: -1
-        ender_pearl: -1
-        experience_bottle: -1
-        firework_rocket: -1
-        fishing_bobber: -1
-        fireball: -1
-        llama_spit: -1
-        potion: -1
-        shulker_bullet: -1
-        small_fireball: -1
-        snowball: -1
-        wither_skull: -1
       projectile-offset:
         bow: 1.0
         crossbow: 1.0

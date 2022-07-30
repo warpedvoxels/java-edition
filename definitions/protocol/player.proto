@@ -10,19 +10,31 @@ service Player {
     rpc RetrieveData (PlayerDataRequest) returns (PlayerDataReply);
 
     rpc ModifyData (PlayerDataPatchRequest) returns (PlayerDataReply);
+
+    rpc Create (PlayerCreateRequest) returns (PlayerDataReply);
 }
 
 message PlayerDataRequest {
-    required datatype.Id id = 1;
+    oneof id {
+        datatype.Uuid uuid = 1;
+        string username = 2;
+    }
 }
 
 message PlayerDataPatchRequest {
-    required datatype.Id id = 1;
-    optional int32 hexes = 2;
-    optional string last_username = 3;
-    optional google.protobuf.Timestamp lastSeen = 4;
-    optional google.protobuf.Timestamp createdAt = 5;
+    oneof id {
+        datatype.Uuid uuid = 1;
+        string username = 2;
+    }
+    optional int32 hexes = 3;
+    optional string last_username = 4;
+    optional google.protobuf.Timestamp lastSeen = 5;
     optional google.protobuf.Timestamp updatedAt = 6;
+}
+
+message PlayerCreateRequest {
+    required datatype.Uuid uuid = 1;
+    required string username = 2;
 }
 
 message PlayerDataReply {

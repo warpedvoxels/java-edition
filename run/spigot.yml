@@ -59,6 +59,7 @@ commands:
   send-namespaced: true
 world-settings:
   default:
+    hopper-can-load-chunks: false
     below-zero-generation-in-existing-chunks: true
     verbose: false
     merge-radius:

@@ -13,16 +13,22 @@ service FFAPlayerStats {
 }
 
 message FFAPlayerStatsDataRequest {
-    required datatype.Id id = 1;
+    oneof id {
+        datatype.Uuid uuid = 1;
+        string username = 2;
+    }
 }
 
 message FFAPlayerStatsDataPatchRequest {
-    required datatype.Id id = 1;
-    optional int32 kills = 2;
-    optional int32 deaths = 3;
-    optional int32 assists = 4;
-    optional int32 killstreak = 5;
-    optional int32 longestKillstreak = 6;
+    oneof id {
+        datatype.Uuid uuid = 1;
+        string username = 2;
+    }
+    optional int32 kills = 3;
+    optional int32 deaths = 4;
+    optional int32 assists = 5;
+    optional int32 killstreak = 6;
+    optional int32 longest_killstreak = 7;
 }
 
 message FFAPlayerStatsDataReply {

@@ -20,9 +20,9 @@ pub struct FontConfig {
 
 #[derive(Debug, Default, Clone, Deserialize)]
 pub struct FontConfigEntry {
-    pub char: String,
-    pub ascent: u32,
-    pub height: u32,
+    pub chars: Vec<String>,
+    pub ascent: i32,
+    pub height: i32,
     pub file: String,
 }
 

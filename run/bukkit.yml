@@ -1,4 +1,5 @@
 settings:
+  use-map-color-cache: true
   allow-end: true
   warn-on-overload: true
   permissions-file: permissions.yml
@@ -10,16 +11,17 @@ settings:
   shutdown-message: Server closed
   minimum-api: none
 spawn-limits:
-    monsters: 20
-    animals: 5
-    water-animals: 2
-    water-ambient: 2
-    water-underground-creature: 3
-    axolotls: 3
-    ambient: 1
+  monsters: 20
+  animals: 5
+  water-animals: 2
+  water-ambient: 2
+  water-underground-creature: 3
+  axolotls: 3
+  ambient: 1
 chunk-gc:
   period-in-ticks: 600
 ticks-per:
+  autosave: 6000
   monster-spawns: 10
   animal-spawns: 400
   water-spawns: 400

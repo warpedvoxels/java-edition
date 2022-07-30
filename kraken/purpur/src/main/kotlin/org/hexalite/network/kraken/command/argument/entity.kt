@@ -2,12 +2,17 @@ package org.hexalite.network.kraken.command.argument
 
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.arguments.EntityArgument
-import org.hexalite.network.kraken.command.KrakenCommand
+import org.hexalite.network.kraken.command.dsl.CommandArgumentsScope
+import org.hexalite.network.kraken.command.dsl.SuggestionsDsl
 
-fun KrakenCommand<CommandSourceStack>.entity(name: String) = createArgument(name, EntityArgument.entity(), EntityArgument::getEntity)
+fun CommandArgumentsScope.entity(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, EntityArgument.entity(), EntityArgument::getEntity, suggestions)
 
-fun KrakenCommand<CommandSourceStack>.player(name: String) = createArgument(name, EntityArgument.player(), EntityArgument::getPlayer)
+fun CommandArgumentsScope.player(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, EntityArgument.player(), EntityArgument::getPlayer, suggestions)
 
-fun KrakenCommand<CommandSourceStack>.entities(name: String) = createArgument(name, EntityArgument.entities(), EntityArgument::getEntities)
+fun CommandArgumentsScope.entities(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, EntityArgument.entities(), EntityArgument::getEntities, suggestions)
 
-fun KrakenCommand<CommandSourceStack>.players(name: String) = createArgument(name, EntityArgument.players(), EntityArgument::getPlayers)
+fun CommandArgumentsScope.players(name: String, suggestions: (SuggestionsDsl<CommandSourceStack>.() -> Unit)? = null) =
+    command.createArgument(name, EntityArgument.players(), EntityArgument::getPlayers, suggestions)

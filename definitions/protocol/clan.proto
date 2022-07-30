@@ -1,0 +1,39 @@
+syntax = "proto2";
+
+package protocol;
+
+import "entity/clan.proto";
+import "datatype/uuid.proto";
+import "google/protobuf/timestamp.proto";
+
+service Clan {
+    rpc RetrieveData (ClanDataRequest) returns (ClanDataReply);
+
+    rpc ModifyData (ClanDataPatchRequest) returns (ClanDataReply);
+
+    rpc Create (ClanCreateRequest) returns (ClanDataReply);
+}
+
+message ClanDataRequest {
+    oneof id {
+        uint32 in_database = 1;
+        string name = 2;
+    }
+}
+
+message ClanDataPatchRequest {
+    optional string name = 1;
+    optional string tag = 2;
+    required int32 points = 3;
+    optional datatype.Uuid owner_id = 4;
+    optional google.protobuf.Timestamp updated_at = 5;
+}
+
+message ClanCreateRequest {
+    required string name = 1;
+    required string tag  = 2;
+}
+
+message ClanDataReply {
+    required entity.Clan data = 1;
+}

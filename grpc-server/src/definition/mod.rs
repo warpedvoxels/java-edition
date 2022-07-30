@@ -12,13 +12,3 @@ pub mod arcade {
         }
     }
 }
-
-pub mod datatype {
-    include!("datatype.rs");
-
-    impl From<id::Data> for Id {
-        fn from(data: id::Data) -> Id {
-            Id { data: Some(data) }
-        }
-    }
-}

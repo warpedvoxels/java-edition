@@ -9,8 +9,8 @@ message Player {
     required datatype.Uuid uuid = 1;
     required int32 hexes = 2;
     required string last_username = 3;
-    required google.protobuf.Timestamp lastSeen = 4;
-    required google.protobuf.Timestamp createdAt = 5;
-    required google.protobuf.Timestamp updatedAt = 6;
+    required google.protobuf.Timestamp last_seen = 4;
+    required google.protobuf.Timestamp created_at = 5;
+    required google.protobuf.Timestamp updated_at = 6;
 }
 

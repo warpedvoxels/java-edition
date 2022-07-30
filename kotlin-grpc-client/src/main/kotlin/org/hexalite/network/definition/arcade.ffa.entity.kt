@@ -9,5 +9,6 @@ data class FfaPlayerStats (
     val deaths: Int,
     val assists: Int,
     val killstreak: Int,
+    @kotlinx.serialization.SerialName("longest_killstreak")
     val longestKillstreak: Int,
 )

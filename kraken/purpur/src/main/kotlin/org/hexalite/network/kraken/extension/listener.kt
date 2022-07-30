@@ -22,6 +22,10 @@ interface BukkitEventListener : Listener {
 
 open class OpenBukkitEventListener(override val plugin: KrakenPlugin): BukkitEventListener
 
+@BukkitDslMarker
+inline fun KrakenPlugin.listener(callback: OpenBukkitEventListener.() -> Unit) = OpenBukkitEventListener(this)
+    .apply(callback)
+
 inline fun KrakenPlugin.readEvents(listener: Listener) = server.pluginManager.registerEvents(listener, this)
 
 inline operator fun <T: BukkitEventListener> T.unaryPlus(): T = also {

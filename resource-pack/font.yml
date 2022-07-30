@@ -1,6 +1,39 @@
 ---
 font:
-  - char: "\uE000"
-    ascent: 7
-    height: 7
-    file: hexalite:ui/chat/elite.png
+  # /ui/chat
+  - { chars: [ "\uE000" ],
+      ascent: 7, height: 7,
+      file: hexalite:ui/chat/elite.png }
+  # /font
+  - { chars: [ "\uF801" ], ascent: -32768, height: -3, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF802" ], ascent: -32768, height: -4, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF803" ], ascent: -32768, height: -5, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF804" ], ascent: -32768, height: -6, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF805" ], ascent: -32768, height: -7, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF806" ], ascent: -32768, height: -8, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF807" ], ascent: -32768, height: -9, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF808" ], ascent: -32768, height: -10, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF809" ], ascent: -32768, height: -19, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF80A" ], ascent: -32768, height: -21, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF80B" ], ascent: -32768, height: -66, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF80C" ], ascent: -32768, height: -130, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF80D" ], ascent: -32768, height: -258, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF80E" ], ascent: -32768, height: -514, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF80F" ], ascent: -32768, height: -1026, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF800" ], ascent: -65536, height: -32770, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF822" ], ascent: -32768, height: 1, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF823" ], ascent: -32768, height: 2, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF824" ], ascent: -32768, height: 3, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF825" ], ascent: -32768, height: 4, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF826" ], ascent: -32768, height: 5, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF827" ], ascent: -32768, height: 6, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF828" ], ascent: -32768, height: 7, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF829" ], ascent: -32768, height: 15, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF82A" ], ascent: -32768, height: 31, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF82B" ], ascent: -32768, height: 63, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF82C" ], ascent: -32768, height: 127, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF82D" ], ascent: -32768, height: 255, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF82E" ], ascent: -32768, height: 511, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF82F" ], ascent: -32768, height: 1023, file: hexalite:font/space_split.png }
+  - { chars: [ "\uF820" ], ascent: -65536, height: 32767, file: hexalite:font/space_split.png }
+

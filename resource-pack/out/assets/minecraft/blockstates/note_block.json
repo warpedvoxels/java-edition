@@ -1,7 +1,1 @@
-{
-  "variants": {
-    "instrument=basedrum,note=2,powered=false": {
-      "model": "block/placeholder"
-    }
-  }
-}
+{"variants":{"instrument=basedrum,note=2,powered=false":{"model":"block/placeholder"}}}

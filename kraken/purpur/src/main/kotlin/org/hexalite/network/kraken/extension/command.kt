@@ -59,7 +59,4 @@ inline fun noPlayerFound(): Nothing = throw EntityArgument.NO_PLAYERS_FOUND.crea
 
 inline fun KrakenPlugin.registerCommand(command: Command) = (server as CraftServer).commandMap.register(namespace, command)
 
-inline operator fun KrakenCommand<CommandSourceStack>.unaryPlus() {
-    val plugin = this::class.members.first { it.name == "plugin" }.call(this) as KrakenPlugin
-    plugin.registerCommand(this.buildBukkit(plugin))
-}
+inline fun KrakenPlugin.registerCommand(command: KrakenCommand<CommandSourceStack>) = registerCommand(command.buildBukkit(this))
