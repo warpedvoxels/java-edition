@@ -88,9 +88,12 @@ impl DefGeneratorConfig {
         for proto in protos {
             inc.push(proto.as_ref().to_str().unwrap());
         }
+        let protoc_path = hexalite_common::dirs::get_hexalite_dir_path().join("installer/protoc/bin/protoc").to_str()
+            .map(|x| if cfg!(target_os = "windows") { format!("{x}.exe") } else { x.to_string() })
+            .unwrap_or_else(|| String::from("protoc"));
         xshell::cmd!(
             sh,
-            "protoc --include_imports --include_source_info -o {descriptor_path} {inc...}"
+            "{protoc_path} --include_imports --include_source_info -o {descriptor_path} {inc...}"
         )
         .run()?;
         let buf = fs::read(descriptor_path)?;

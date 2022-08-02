@@ -1,0 +1,5 @@
+{
+  "protoc": "https://github.com/protocolbuffers/protobuf/releases/download/v21.4/protoc-21.4-linux-x86_64.zip",
+  "jdk": "https://download.java.net/java/early_access/panama/1/openjdk-19-panama+1-13_linux-x64_bin.tar.gz",
+  "rustup": "https://sh.rustup.rs"
+}

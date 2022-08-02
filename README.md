@@ -31,19 +31,18 @@
 ## 📚 Table of contents
 
 1. [💻 Technologies / Project stack](#-technologies)
-2. [✨ Contributors](#-contributors)
-3. [💸 Supporting](#-supporting)
+1. [💸 Supporting](#-supporting)
    * [Starring the repository](#starring-the-repository)
    * [Donations](#donations)
-4. [🏟️ Contributing / Running locally](#%EF%B8%8F-contributing--running-locally)
+1. [🏟️ Contributing / Running locally](#%EF%B8%8F-contributing--running-locally)
    * [Prerequisites](#prerequisites)
    * [Building everything](#building-everything)
      * [1. Compiling the command-line interface](#1-compiling-the-command-line-interface)
      * [2. Initializing the environment](#2-initializing-the-environment)
    * [Developer resources](#developer-resources)
-5. [🏗️ Project structure](#%EF%B8%8F-project-structure)
-6. [🎉 Third party](#-third-party)
-7. [📜 Licensing](#-licensing)
+1. [🏗️ Project structure](#%EF%B8%8F-project-structure)
+1. [🎉 Third party](#-third-party)
+1. [📜 Licensing](#-licensing)
 
 
 ## 💻 Technologies
@@ -59,25 +58,6 @@ This is subject to change, since this type of infrastructure can improve over ti
 this or any other technology topics, feel free to join our [Discord server][discord] to chat with our development and 
 artistic team.
 
-## ✨ Contributors
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="http://www.exst.fun"><img src="https://avatars.githubusercontent.com/u/45243386?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pedro Henrique</b></sub></a><br /><a href="https://github.com/playhexalite/java-edition/commits?author=eexsty" title="Code">💻</a> <a href="#infra-eexsty" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/playhexalite/java-edition/pulls?q=is%3Apr+reviewed-by%3Aeexsty" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/playhexalite/java-edition/commits?author=eexsty" title="Documentation">📖</a> <a href="#translation-eexsty" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/SrGaabriel"><img src="https://avatars.githubusercontent.com/u/58668092?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriel</b></sub></a><br /><a href="https://github.com/playhexalite/java-edition/commits?author=SrGaabriel" title="Code">💻</a> <a href="#translation-SrGaabriel" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/santosbpd"><img src="https://avatars.githubusercontent.com/u/89719009?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Breno S.</b></sub></a><br /><a href="https://github.com/playhexalite/java-edition/commits?author=santosbpd" title="Code">💻</a> <a href="#translation-santosbpd" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/luissfx"><img src="https://avatars.githubusercontent.com/u/40919071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Luis</b></sub></a><br /><a href="https://github.com/playhexalite/java-edition/commits?author=luissfx" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/herocrife"><img src="https://avatars.githubusercontent.com/u/59402242?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Herocrife</b></sub></a><br /><a href="#design-Herocrife" title="Design">🎨</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## 🏟️ Contributing / running locally
 
@@ -95,7 +75,7 @@ they are doing.
 
 **IMPORTANT!** A build of JDK with Project Panama is really necessary to run Hexalite locally, since we depend on its
 nifty features in development which aren't available in other JDK distributions such as Temurin or Azul's for now. You
-may have issues with the toolchain being not supported by Gradle; if this is the case, you can use Gradle with Java 18,
+may have issues with the toolchain being not supported by Gradle; if this is the case, you can use Gradle with Java 17,
 and set `org.gradle.java.installations.paths=/path/to/panama/jdk` in your `~/.gradle/gradle.properties` file. 
 
 > The reason why we will use the OpenJ9 virtual machine in the future is it is known to use less memory and CPU than Hotspot, so it is a better choice for running Minecraft servers. In contrast to this, the hotspot virtual machine is known to be more stable and more efficient in terms of IDE support, so it is a better choice for developing. Since there is no available build for OpenJ9 with Project Panama, we will use Hotspot for now.
@@ -122,8 +102,8 @@ and set `org.gradle.java.installations.paths=/path/to/panama/jdk` in your `~/.gr
 * [Prisma documentation](https://prisma.io/docs/prisma-client/introduction) - Addresses documentation about the Prisma ORM
 * * [Prisma Client Rust documentation](https://github.com/Brendonovich/prisma-client-rust/tree/main/docs)
 * [The Rust Book](https://doc.rust-lang.org/book/) - Book to learn how the Rust programming language works
-* [Kotlin language reference](https://kotlinlang.org/docs/reference/) - Reference about the Kotlin programming language
-
+* [The Kotlin programming language reference](https://kotlinlang.org/docs/reference/) - Reference about the Kotlin programming language
+* 
 
 ### Building everything
 
@@ -227,7 +207,6 @@ To know about the license of this project, you can read the [LICENSE.md][license
 [postgresql]: https://www.postgresql.org
 
 [discord]: https://discord.hexalite.org
-
 
 [opencollective]: https://opencollective.com/hexalite
 
