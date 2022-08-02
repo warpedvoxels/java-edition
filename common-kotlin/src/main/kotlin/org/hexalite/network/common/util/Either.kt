@@ -59,7 +59,7 @@ data class Either<L, R> private constructor(private var left: L? = null, private
      * Returns the value bound at the right type ([R]) or null if it is not bound
      * at the given position.
      */
-    fun rightOrNull() = left
+    fun rightOrNull() = right
 
     /**
      * Returns the value bound at the left type ([L]) or throws a
