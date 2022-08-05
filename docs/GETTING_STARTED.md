@@ -103,31 +103,31 @@ A library that allows easier Minecraft-related development.
 
 The source code for the resource pack generator.
 
-## `common-(kotlin|rust)`
+### `common-(kotlin|rust)`
 
 Common code used by modules of the same programming language this module was written in.
 
-## `grpc-server`
+### `grpc-server`
 
 The gRPC server for interacting with the database and internal stuff.
 
-## `rest-server`
+### `rest-server`
 
 A public and limited version of our gRPC server available as a REST server.
 
-## `kotlin-grpc-client`
+### `kotlin-grpc-client`
 
 A consumer library written in Kotlin for our gRPC server.
 
-## `js-rest-client`
+### `js-rest-client`
 
 A consumer library written in TypeScript for our REST server.
 
-## `reusable-plugins`
+### `reusable-plugins`
 
 A collection of reusable plugins for our Minecraft: Java Edition servers.
 
-## `run`
+### `run`
 
 A development environment for a Purpur setup.
 

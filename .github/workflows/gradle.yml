@@ -18,9 +18,14 @@ jobs:
           release: panama
       - uses: rui314/setup-mold@v1
       - uses: egor-tensin/setup-clang@v1
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Use Cache
+      - name: Use Cache (Gradle)
         uses: actions/cache@v2
         with:
           path: |
@@ -29,6 +34,22 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Use Cache (Rust)
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            common-rust/target/
+            resource-pack/target/
+            rest-webserver/target/
+            grpc-server/target/
+            cli/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
       - name: Check for code errors (Gradle)
         run: ./gradlew check
 
