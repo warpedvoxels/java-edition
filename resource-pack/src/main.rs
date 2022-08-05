@@ -4,11 +4,12 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use resource_pack::{
-    copy_dir_all, read_and_parse, BlockModel, BlocksConfig, FontConfig, FontProvider,
-    FontProvidersHolder, ItemModel, MetadataConfig, PackMeta, PackMetaHolder,
-};
 use serde_json::json;
+
+use resource_pack::{
+    BlockModel, BlocksConfig, copy_dir_all, FontConfig, FontProvider, FontProvidersHolder,
+    ItemModel, MetadataConfig, PackMeta, PackMetaHolder, read_and_parse,
+};
 
 fn create_dir(path: PathBuf) -> PathBuf {
     if let Err(err) = fs::create_dir_all(&path) {

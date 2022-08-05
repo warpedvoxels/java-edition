@@ -8,5 +8,5 @@ import org.hexalite.network.lobby.LobbyPlugin
 @Suppress("FunctionName")
 fun LobbyPlugin.DamageCancellation() = readEvents<EntityDamageEvent> {
     val player = entity as? Player? ?: return@readEvents
-
+    isCancelled = true
 }

@@ -551,6 +551,17 @@ fn main() {
     }
     println!("Files: {}", files.len());
 
+    if std::env::var("PROTOC").is_err() {
+        let binary = if cfg!(target_os = "windows") {
+            hexalite_common::dirs::get_hexalite_dir_path().join("installer/protoc/bin/protoc.exe")
+        } else {
+            hexalite_common::dirs::get_hexalite_dir_path().join("installer/protoc/bin/protoc")
+        };
+        if binary.exists() {
+            std::env::set_var("PROTOC", binary.to_str().unwrap())
+        }
+    }
+
     prost_build::Config::new()
         .type_attribute(".", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(".", "#[serde(rename_all = \"snake_case\")]")

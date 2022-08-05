@@ -21,16 +21,19 @@ import org.hexalite.network.kraken.collections.onlinePlayersMapOf
 import org.hexalite.network.kraken.pipeline.packet.sendPacket
 import kotlin.time.Duration
 
-typealias ScoreboardEntry = Entry.(player: Player) -> Unit
+typealias ScoreboardEntry = Entry.(player: Player) -> List<Component>
 
 @JvmInline
 value class Entry(val components: MutableList<Component> = mutableListOf()) {
-    operator fun Any.unaryPlus() {
-        components.add(Component.text(toString()))
-    }
-
-    operator fun Component.unaryPlus() {
-        components.add(this)
+    operator fun Any.unaryPlus(): List<Component> {
+        when (this) {
+            is Component -> components.add(this)
+            is List<*> -> {
+                forEach { it?.unaryPlus() }
+            }
+            else -> components.add(Component.text(toString()))
+        }
+        return components
     }
 }
 
@@ -75,7 +78,7 @@ data class KrakenScoreboard(
     fun tickIndividually(player: Player) {
         val metadata = consumers[player] ?: consumers.putIfAbsent(player, IndividualMetadata(0, 0, 0))
         val cursor = metadata?.cursor ?: 0
-        val title = Entry().apply { title(player) }.components
+        val title = Entry().run { title(player) }
         val titleFrame = PaperAdventure.asVanilla(title[cursor.coerceAtMost(title.size - 1)])
         val objective: Objective = scoreboard.getObjective(player.scoreboardId) ?: scoreboard.addObjective(
             player.scoreboardId, ObjectiveCriteria.DUMMY, titleFrame, ObjectiveCriteria.RenderType.INTEGER
@@ -90,7 +93,7 @@ data class KrakenScoreboard(
 
         if (entries.isNotEmpty()) {
             for (index in entries.lastIndex downTo 0) {
-                val entry = Entry().apply { entries[index](player) }.components
+                val entry = Entry().run { entries[index](player) }
                 val frame = GlobalTranslator.render(entry[cursor.coerceAtMost(entry.size - 1)], player.locale())
                 val serialized = LegacyComponentSerializer.legacySection().serialize(frame)
                 val score = ClientboundSetScorePacket(ServerScoreboard.Method.CHANGE, objective.name, serialized, index)

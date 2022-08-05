@@ -12,17 +12,17 @@ import requests
 from tqdm import tqdm
 
 home = str(Path.home())
-hexalite_installer = home + "/.hexalite/installer/"
-
+hexalite_installer = home + '/.hexalite/installer/'
 
 def apply_gradle_props():
-    gradle_props = Path(home + "/.gradle/gradle.properties")
-    gradle_props.parent.mkdir(exist_ok=True, parents=True)
-    content = "org.gradle.java.installations.paths=" + str(hexalite_installer) + "jdk/jdk-19"
-    with open(gradle_props, 'r') as stream:
-        if content not in stream.read():
-            gradle_props.write_text(content)
-
+    file = Path(home + '/.gradle/gradle.properties')
+    file.parent.mkdir(exist_ok=True, parents=True)
+    with open(file, 'r+') as stream:
+        content = stream.read()
+        prop = 'org.gradle.java.installations.paths='
+        if prop not in content:
+            prop = "\n" + str(hexalite_installer) + 'jdk/jdk-19'
+            stream.write(prop)
 
 def welcome_stuff():
     print("""
@@ -34,8 +34,7 @@ NOTE: Make sure you are running this at the root directory of our source code.
 Welcome to the Hexalite installer! This script is going to download most tools you need
 to compile the required development environment. There are a few things you need to install
 after this script finishes:""")
-    print("")
-    print('* Docker and Docker/Compose')
+    print('* Docker and Docker-Compose')
     match platform.system():
         case 'Linux':
             print('* CLang\n* OpenSSL-devel\n* mold (https://github.com/rui314/mold)')
@@ -43,6 +42,7 @@ after this script finishes:""")
             print('* CLang\n* OpenSSL-devel\n* zld (https://github.com/michaeleisel/zld)')
         case 'Windows':
             print('* MSVC')
+            print('NOTE: Using WSL is recommend if you are running Windows.')
         case other:
             print('ERROR: Unsupported OS -> ' + other)
             exit(-1)
@@ -70,10 +70,10 @@ def download_file(name, url, args=""):
         for data in res.iter_content(chunk_size=1024):
             size = file.write(data)
             progress.update(size)
-    if name.endswith(".zip"):
+    if name.endswith('.zip'):
         with zipfile.ZipFile(path, 'r') as zipped:
             zipped.extractall(path=path.parent)
-    elif name.endswith(".tar.gz"):
+    elif name.endswith('.tar.gz'):
         with tarfile.open(path, 'r:gz') as tar:
             tar.extractall(path=path.parent)
     elif name.endswith('.sh'):
@@ -88,7 +88,8 @@ def main():
     welcome_stuff()
     apply_gradle_props()
     download_all()
-
+    if platform.system() == 'Windows':
+        subprocess.call(['cargo', 'install', '-f', 'cargo-binutils', 'llvm-tools-preview'])
 
 if __name__ == "__main__":
     main()
