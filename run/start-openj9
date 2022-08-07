@@ -48,10 +48,10 @@ MAX_NURSERY_SIZE=${MAX_NURSERY_SIZE:-$((HEAP_SIZE * 2 / 5))}
 #                       dedicated server, adding "-Xtune:virtualized" is also a good
 #                       choice.
 ADDITIONAL_JVM_FLAGS=${ADDITIONAL_JVM_FLAGS:-"--add-modules=jdk.incubator.vector,jdk.incubator.foreign
- --enable-native-access=ALL-UNNAMED
- -Djava.library.path=$HOME/.hexalite/compiled
- -Xgcpolicy:balanced
- -Xdisableexplicitgc"}
+   --enable-preview --enable-native-access=ALL-UNNAMED
+   -Djava.library.path=$HOME/.hexalite/compiled
+   -Xgcpolicy:balanced
+   -Xdisableexplicitgc"}
 
 # Additional arguments: Additional arguments that you want to pass to the
 #                       Minecraft server. By default, only the "nogui" argument

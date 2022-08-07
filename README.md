@@ -30,11 +30,11 @@
 
 * [🏟 Getting Started](https://git.hexalite.org/java-edition/blob/dev/next/docs/GETTING_STARTED.md) - A guide in how to
   start a great development workflow for Hexalite.
+* [🎉 Frequently asked questions](https://git.hexalite.org/java-edition/blob/dev/next/docs/FAQ.md) - Some pre-defined
+  responses to questions that are asked frequently to our internal team.
 * [💸 Supporting](https://git.hexalite.org/java-edition/blob/dev/next/docs/SUPPORTING.md) - All the ways you can support
   our work.
 * [💡 Techniques](https://git.hexalite.org/java-edition/tree/dev/next/docs/techniques) - All techniques used for creating
   special effects and cool aesthetics in Minecraft.
-* [🎉 Frequently-asked questions](https://git.hexalite.org/java-edition/blob/dev/next/docs/FAQ.md) - Some pre-defined
-  responses to questions that are asked frequently to our internal team.
 * [📜 Licensing](https://git.hexalite.org/java-edition-network/blob/dev/next/LICENSE.md) - Information about the
   licensing of our products.

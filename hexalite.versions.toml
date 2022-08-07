@@ -1,26 +1,24 @@
 [versions]
 kotlin = "1.7.10"
-kotlinx-serialization = "1.3.3"
-kotlinx-datetime = "0.3.3"
-kotlinx-coroutines = "1.6.2"
-kaml = "0.45.0"
-minecraft = "1.19"
-velocity = "3.1.0"
+kotlinx-serialization = "1.4.0-RC"
+kotlinx-datetime = "0.4.0"
+kotlinx-coroutines = "1.6.4"
+minecraft = "1.19.2"
+velocity = "3.1.1"
 velocity-annotation-processor = "4.0.0-SNAPSHOT"
-paperweight-userdev = "1.3.7-SNAPSHOT"
+paperweight-userdev = "1.3.9-SNAPSHOT"
 plugin-yml = "0.5.2"
-purpur = "1.19-R0.1-SNAPSHOT"
+purpur = "1.19.2-R0.1-SNAPSHOT"
 shadow = "7.1.2"
 adventure = "4.11.0"
-kotest = "5.1.0"
-mockk = "1.12.3"
+kotest = "5.4.1"
+mockk = "1.12.5"
 valiktor = "0.12.0"
-run-paper = "1.0.6"
-logback = "1.3.0-alpha14"
+logback = "1.3.0-alpha16"
 mordant = "2.0.0-beta7"
 caffeine = "3.1.1"
-ktoml = "0.2.12"
-jextract-gradle = "0.2.6"
+ktoml = "0.2.13"
+jextract-gradle = "0.3.0"
 kord = "0.8.0-M15"
 
 [libraries]
@@ -33,7 +31,6 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "kotlinx-serialization" }
 ktoml-core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml" }
 ktoml-file = { module = "com.akuleshov7:ktoml-file", version.ref = "ktoml" }
-kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 # Minecraft - Purpur [Server]
 purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
 adventure-extra-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
@@ -55,7 +52,7 @@ caffeine-guava = { module = "com.github.ben-manes.caffeine:guava", version.ref =
 kord-core = { module = "dev.kord:kord-core", version.ref = "kord" }
 
 [bundles]
-kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-serialization-cbor", "kotlinx-datetime", "kaml", "ktoml-core", "ktoml-file", "valiktor-core"]
+kotlin-essential = ["kotlinx-coroutines", "kotlin-reflect", "kotlinx-serialization-json", "kotlinx-serialization-cbor", "kotlinx-datetime", "ktoml-core", "ktoml-file", "valiktor-core"]
 adventure = ["adventure-text-serializer-plain", "adventure-extra-kotlin", "adventure-text-serializer-gson"]
 caffeine = ["caffeine", "caffeine-guava"]
 
@@ -66,5 +63,4 @@ kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 plugin-yml = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "plugin-yml" }
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
-run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
 jextract = { id = "io.github.krakowski.jextract", version.ref = "jextract-gradle" }

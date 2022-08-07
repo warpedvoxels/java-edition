@@ -25,11 +25,11 @@ allprojects {
         maven(url = "https://repo.purpurmc.org/snapshots/") {
             name = "PurpurMC"
         }
-        maven(url = "https://nexus.velocitypowered.com/repository/maven-public/") {
-            name = "Velocity"
-        }
         maven(url = "https://maven.fabricmc.net/") {
             name = "FabricMC"
+        }
+        maven(url = "https://nexus.velocitypowered.com/repository/maven-public/") {
+            name = "Velocity"
         }
         maven(url = "https://maven.pkg.jetbrains.space/public/p/ktor/eap/") {
             name = "Ktor EAP"
