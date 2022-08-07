@@ -90,6 +90,9 @@ def main():
     download_all()
     if platform.system() == 'Windows':
         subprocess.call(['cargo', 'install', '-f', 'cargo-binutils', 'llvm-tools-preview'])
+    else:
+        path = Path(hexalite_installer + 'protoc/bin/protoc')
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
 
 if __name__ == "__main__":
     main()

@@ -22,7 +22,7 @@ impl From<PlayerQueryData> for crate::definition::entity::Player {
     fn from(data: PlayerQueryData) -> Self {
         Self {
             uuid: Uuid::from_str(&data.id).unwrap(),
-            hexes: data.hexes,
+            hexes: data.hexes as u32,
             last_seen: data.last_seen.naive_utc(),
             created_at: data.created_at.naive_utc(),
             updated_at: data.updated_at.naive_utc(),
@@ -79,9 +79,10 @@ impl protocol::player::Player for PlayerService {
             }))
             .await?;
         let attributes = prisma_attr!(
-            msg => hexes:      msg.hexes.unwrap(),
-                   last_seen:  msg.last_seen.unwrap().fixed(),
-                   updated_at: msg.updated_at.unwrap().fixed()
+            msg => hexes:         msg.hexes.unwrap(),
+                   last_username: msg.last_username.to_owned().unwrap(),
+                   last_seen:     msg.last_seen.unwrap().fixed(),
+                   updated_at:    msg.updated_at.unwrap().fixed()
         );
 
         match self
@@ -128,7 +129,7 @@ impl protocol::player::Player for PlayerService {
         {
             Ok(player) => Ok(Response::new(PlayerDataReply { data: player.into() })),
             Err(error) => {
-                log::error!("ISE: Failed to modify a player, {error}");
+                log::error!("ISE: Failed to create a player, {error}");
                 Err(Status::internal(
                     "An internal error occurred while modifying a player.",
                 ))

@@ -28,8 +28,8 @@ message PlayerDataPatchRequest {
     }
     optional int32 hexes = 3;
     optional string last_username = 4;
-    optional google.protobuf.Timestamp lastSeen = 5;
-    optional google.protobuf.Timestamp updatedAt = 6;
+    optional google.protobuf.Timestamp last_seen = 5;
+    optional google.protobuf.Timestamp updated_at = 6;
 }
 
 message PlayerCreateRequest {

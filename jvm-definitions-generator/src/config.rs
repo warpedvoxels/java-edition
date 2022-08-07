@@ -240,11 +240,11 @@ impl ExternPaths {
             )?;
             extern_paths.insert(
                 ".google.protobuf.UInt32Value".to_string(),
-                "Int".to_string(),
+                "UInt".to_string(),
             )?;
             extern_paths.insert(
                 ".google.protobuf.UInt64Value".to_string(),
-                "Long".to_string(),
+                "ULong".to_string(),
             )?;
         }
 

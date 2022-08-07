@@ -397,8 +397,8 @@ impl<'a> CodeGenerator<'a> {
         match field.r#type() {
             Type::Float => String::from("Float"),
             Type::Double => String::from("Double"),
-            Type::Uint32 | Type::Fixed32 => String::from("Int"),
-            Type::Uint64 | Type::Fixed64 => String::from("Long"),
+            Type::Uint32 | Type::Fixed32 => String::from("UInt"),
+            Type::Uint64 | Type::Fixed64 => String::from("ULong"),
             Type::Int32 | Type::Sfixed32 | Type::Sint32 | Type::Enum => String::from("Int"),
             Type::Int64 | Type::Sfixed64 | Type::Sint64 => String::from("Long"),
             Type::Bool => String::from("Boolean"),

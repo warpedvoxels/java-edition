@@ -2,7 +2,7 @@
 package org.hexalite.network.definition.protocol
 @kotlinx.serialization.Serializable
 data class ClanDataRequest (
-    val id: org.hexalite.network.common.util.Either<Int, String>,
+    val id: org.hexalite.network.common.util.Either<UInt, String>,
 )
 @kotlinx.serialization.Serializable
 data class ClanDataPatchRequest (
@@ -48,7 +48,9 @@ data class PlayerDataPatchRequest (
     val hexes: Int? = null,
     @kotlinx.serialization.SerialName("last_username")
     val lastUsername: String? = null,
+    @kotlinx.serialization.SerialName("last_seen")
     val lastSeen: kotlinx.datetime.Instant? = null,
+    @kotlinx.serialization.SerialName("updated_at")
     val updatedAt: kotlinx.datetime.Instant? = null,
     val id: org.hexalite.network.common.util.Either<java.util.UUID, String>,
 )

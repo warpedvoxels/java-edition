@@ -2,10 +2,10 @@
 package org.hexalite.network.definition.entity
 @kotlinx.serialization.Serializable
 data class Clan (
-    val id: Int,
+    val id: UInt,
     val name: String,
     val tag: String,
-    val points: Int,
+    val points: UInt,
     @kotlinx.serialization.SerialName("owner_id")
     @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
     @kotlinx.serialization.cbor.ByteString
@@ -17,19 +17,19 @@ data class Clan (
 )
 @kotlinx.serialization.Serializable
 data class ClanMember (
-    @kotlinx.serialization.SerialName("user_id")
+    @kotlinx.serialization.SerialName("player_id")
     @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
     @kotlinx.serialization.cbor.ByteString
-    val userId: java.util.UUID,
+    val playerId: java.util.UUID,
     @kotlinx.serialization.SerialName("clan_id")
-    val clanId: Int,
+    val clanId: UInt,
 )
 @kotlinx.serialization.Serializable
 data class Player (
     @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
     @kotlinx.serialization.cbor.ByteString
     val uuid: java.util.UUID,
-    val hexes: Int,
+    val hexes: UInt,
     @kotlinx.serialization.SerialName("last_username")
     val lastUsername: String,
     @kotlinx.serialization.SerialName("last_seen")
@@ -40,9 +40,11 @@ data class Player (
     val updatedAt: kotlinx.datetime.Instant,
 )
 @kotlinx.serialization.Serializable
-data class Role (
-    val id: String,
-    val unicodeCharacter: String,
-    val color: String,
-    val tabListIndex: String,
+data class UserRole (
+    @kotlinx.serialization.SerialName("player_id")
+    @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
+    @kotlinx.serialization.cbor.ByteString
+    val playerId: java.util.UUID,
+    @kotlinx.serialization.SerialName("clan_id")
+    val clanId: String,
 )

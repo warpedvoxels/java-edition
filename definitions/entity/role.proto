@@ -2,9 +2,9 @@ syntax = "proto2";
 
 package entity;
 
-message Role {
-    required string id = 1;
-    required string unicodeCharacter = 2;
-    required string color = 3;
-    required string tabListIndex = 4;
+import "datatype/uuid.proto";
+
+message UserRole {
+    required datatype.Uuid player_id = 1;
+    required string clan_id = 2;
 }

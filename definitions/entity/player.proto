@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 message Player {
     required datatype.Uuid uuid = 1;
-    required int32 hexes = 2;
+    required uint32 hexes = 2;
     required string last_username = 3;
     required google.protobuf.Timestamp last_seen = 4;
     required google.protobuf.Timestamp created_at = 5;
