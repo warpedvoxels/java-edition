@@ -26,7 +26,7 @@ fun <T : Event> KrakenPlugin.createEventFlow(
 ): Job {
     val job = SupervisorJob()
     readEvents(kind, priority, ignoreIfCancelled, listener) {
-        launchCoroutine(KrakenPlugin::async) {
+        launch(Async) {
             eventFlow.emit(this@readEvents)
         }
     }
