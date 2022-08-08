@@ -45,20 +45,3 @@ class BukkitDispatcher(val plugin: KrakenPlugin, val async: Boolean = true): Del
     }
 }
 
-@Suppress("FunctionName", "unused")
-object BukkitDispatchers {
-    private val syncDispatchers = hashMapOf<KrakenPlugin, BukkitDispatcher>()
-    private val asyncDispatchers = hashMapOf<KrakenPlugin, BukkitDispatcher>()
-
-    /**
-     * Creates a new sync dispatcher falling back to asynchronous code.
-     * @param plugin the plugin where the scheduler code is located.
-     */
-    fun Main(plugin: KrakenPlugin) = syncDispatchers.getOrPut(plugin) { BukkitDispatcher(plugin, false) }
-
-    /**
-     * Creates a new async dispatcher falling back to synchronous code.
-     * @param plugin the plugin where the scheduler code is located.
-     */
-    fun Async(plugin: KrakenPlugin) = asyncDispatchers.getOrPut(plugin) { BukkitDispatcher(plugin, true) }
-}

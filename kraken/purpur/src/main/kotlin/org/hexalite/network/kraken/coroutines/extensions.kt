@@ -2,13 +2,16 @@
 
 package org.hexalite.network.kraken.coroutines
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.hexalite.network.kraken.KrakenPlugin
 
 /**
  * Switch the context of the current coroutine to the given plugin's dispatcher.
  */
-suspend fun <T> switch(dispatcher: BukkitDispatcher, block: suspend CoroutineScope.() -> T) = withContext(dispatcher as CoroutineDispatcher) {
+suspend fun <T> switch(dispatcher: BukkitDispatcher, block: suspend CoroutineScope.() -> T) = withContext(dispatcher) {
     block.invoke(this)
 }
 
@@ -26,7 +29,7 @@ suspend fun <T> KrakenPlugin.switch(getter: (KrakenPlugin) -> BukkitDispatcher, 
  */
 fun <T> KrakenPlugin.launchCoroutine(getter: (KrakenPlugin) -> BukkitDispatcher, block: suspend CoroutineScope.() -> T): Job {
     val dispatcher = getter(this)
-    return coroutineScope.launch(dispatcher) { block.invoke(this) }.also { job ->
+    return launch(dispatcher) { block.invoke(this) }.also { job ->
         activeJobs.add(job)
         job.invokeOnCompletion {
             activeJobs.remove(job)

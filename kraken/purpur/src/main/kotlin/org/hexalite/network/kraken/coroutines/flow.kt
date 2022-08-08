@@ -1,77 +1,72 @@
 package org.hexalite.network.kraken.coroutines
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerEvent
-import org.bukkit.event.player.PlayerKickEvent
-import org.bukkit.event.player.PlayerQuitEvent
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.extension.*
 import java.util.*
 import kotlin.reflect.KClass
 
-@OptIn(ExperimentalCoroutinesApi::class)
-fun <T: Event> KrakenPlugin.createEventFlow(
-    type: KClass<T>,
-    `for`: UUID? = null,
+/**
+ * Register a new event flow consumer.
+ * @param type The type of the events to be listened to.
+ * @param priority The priority of the event listening.
+ * @param ignoreCancelled Whether to ignore cancelled events.
+ */
+fun <T : Event> KrakenPlugin.createEventFlow(
+    kind: KClass<T>,
     priority: EventPriority = EventPriority.NORMAL,
-    ignoreCancelled: Boolean = true,
-    channel: Channel<T> = Channel(Channel.CONFLATED),
+    ignoreIfCancelled: Boolean = true,
     listener: BukkitEventListener = OpenBukkitEventListener(this),
-    onClose: (description: EventFlowDescription<T>) -> Unit = {},
-): EventFlowDescription<T> {
-
-    val flow = channel.consumeAsFlow()
-        .onStart {
-            listener.readEvents(type, priority, ignoreCancelled) {
-                coroutineScope.launch(Dispatchers.IO) {
-                    channel.send(this@readEvents)
-                }
-            }
-        }
-    if (`for` != null) {
-        listener.readEvents<PlayerEvent> {
-            if (this is PlayerQuitEvent || this is PlayerKickEvent) {
-                if (player.uuid == `for`) {
-                    channel.close()
-                }
-            }
+    invokeOnCompletion: (job: Job, cause: Throwable?) -> Unit = { _, _ -> }
+): Job {
+    val job = SupervisorJob()
+    readEvents(kind, priority, ignoreIfCancelled, listener) {
+        launchCoroutine(KrakenPlugin::async) {
+            eventFlow.emit(this@readEvents)
         }
     }
-    val description = EventFlowDescription(type, `for`, priority, ignoreCancelled, flow, channel)
-    channel.invokeOnClose {
+    job.invokeOnCompletion {
         listener.unregister()
-        onClose(description)
+        invokeOnCompletion(job, it)
     }
-    return description
+    return job
 }
 
-inline fun <reified T: Event> KrakenPlugin.createEventFlow(
-    `for`: UUID? = null,
+/**
+ * Register a new event flow consumer.
+ * @param T The type of the events to be listened to.
+ * @param priority The priority of the event listening.
+ * @param ignoreCancelled Whether to ignore cancelled events.
+ */
+inline fun <reified T : Event> KrakenPlugin.createEventFlow(
     priority: EventPriority = EventPriority.NORMAL,
-    ignoreCancelled: Boolean = true,
-    channel: Channel<T> = Channel(Channel.CONFLATED),
+    ignoreIfCancelled: Boolean = true,
     listener: BukkitEventListener = OpenBukkitEventListener(this),
-    noinline onClose: (description: EventFlowDescription<T>) -> Unit = {},
-): EventFlowDescription<T> = createEventFlow(T::class, `for`, priority, ignoreCancelled, channel, listener, onClose)
+    noinline invokeOnCompletion: (job: Job, cause: Throwable?) -> Unit
+): Job = createEventFlow(T::class, priority, ignoreIfCancelled, listener, invokeOnCompletion)
 
-inline fun <T: PlayerEvent> Player.observe(
+inline fun <T : PlayerEvent> Player.observe(
     plugin: KrakenPlugin,
-    type: KClass<T>,
+    kind: KClass<T>,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,
-    noinline onClose: (description: EventFlowDescription<T>) -> Unit = {},
-): EventFlowDescription<T> = plugin.createEventFlow(type, uuid, priority, ignoreCancelled, onClose = onClose)
+    listener: BukkitEventListener = OpenBukkitEventListener(plugin),
+    noinline invokeOnCompletion: (job: Job, cause: Throwable?) -> Unit = { _, _ -> },
+    crossinline callback: suspend T.(job: Job) -> Unit,
+): Job {
+    val job = plugin.createEventFlow(kind, priority, ignoreCancelled, listener, invokeOnCompletion)
+    val id = uniqueId
+    (plugin.eventFlow.filter { kind.isInstance(it) && (this as PlayerEvent).player.uniqueId == id } as Flow<T>)
+        .onEach { callback(it, job) }
+    return job
+}
 
-inline fun <reified T: PlayerEvent> Player.observe(
+inline fun <reified T : PlayerEvent> Player.observe(
     plugin: KrakenPlugin,
     priority: EventPriority = EventPriority.NORMAL,
     ignoreCancelled: Boolean = true,

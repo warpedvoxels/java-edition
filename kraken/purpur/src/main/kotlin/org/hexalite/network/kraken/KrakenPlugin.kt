@@ -2,37 +2,39 @@ package org.hexalite.network.kraken
 
 import com.github.ajalt.mordant.rendering.TextColors
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import org.bukkit.event.Event
-import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import org.hexalite.network.kraken.command.dsl.CommandRegisteringScope
 import org.hexalite.network.kraken.configuration.KrakenConfig
-import org.hexalite.network.kraken.coroutines.EventFlowDescription
-import org.hexalite.network.kraken.coroutines.createEventFlow
+import org.hexalite.network.kraken.coroutines.BukkitDispatcher
 import org.hexalite.network.kraken.extension.unaryPlus
 import org.hexalite.network.kraken.gameplay.feature.GameplayFeature
 import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureDsl
 import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureView
 import org.hexalite.network.kraken.gameplay.feature.block.CustomBlockAdapter
+import org.hexalite.network.kraken.gameplay.feature.datapack.DataPackFeatureAdapter
 import org.hexalite.network.kraken.gameplay.feature.item.CustomItemAdapter
 import org.hexalite.network.kraken.logging.BasicLogger
 import org.hexalite.network.kraken.logging.info
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.reflect.KClass
+import kotlin.coroutines.CoroutineContext
 
-abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
+abstract class KrakenPlugin(open val namespace: String) : JavaPlugin(), CoroutineScope {
     val commands = CommandRegisteringScope(this)
+
+    // dispatchers
+    val sync = BukkitDispatcher(this, false)
+    val async = BukkitDispatcher(this, true)
 
     /**
      * The default [KrakenConfig] for this plugin. It can be (de)serialized using kotlinx.serialization
-     * and the KAML plug-in.
+     * and the KToml add-on.
      */
     val conf = KrakenConfig()
 
@@ -50,47 +52,9 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
     }
 
     /**
-     * Returns a lazy concurrent set of all event flow descriptions.
+     * Returns a [MutableSharedFlow]-based event consumer and publisher for the Bukkit API.
      */
-    val descriptions by lazy { ConcurrentHashMap.newKeySet<EventFlowDescription<*>>() }
-
-    /**
-     * Register a new event flow description.
-     * @param type The type of the events to be listened to.
-     * @param priority The priority of the event listening.
-     * @param ignoreCancelled Whether to ignore cancelled events.
-     * @param for For which player this event flow will be assigned.
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun <T : Event> events(
-        type: KClass<T>,
-        `for`: UUID? = null,
-        priority: EventPriority = EventPriority.NORMAL,
-        ignoreCancelled: Boolean = true
-    ): Flow<T> {
-        val flow =
-            descriptions.firstOrNull { it.type == type && it.`for` == `for` && it.priority == priority && it.ignoreCancelled == ignoreCancelled }
-        if (flow != null) {
-            return (flow as EventFlowDescription<T>).flow
-        }
-        val description = createEventFlow(type, `for`, priority, ignoreCancelled, onClose = descriptions::remove)
-        descriptions.add(description)
-        return description.flow
-    }
-
-    /**
-     * Register a new event flow description.
-     * @param T The type of the events to be listened to.
-     * @param priority The priority of the event listening.
-     * @param ignoreCancelled Whether to ignore cancelled events.
-     * @param for For which player this event flow will be assigned.
-     */
-    inline fun <reified T : Event> events(
-        `for`: UUID? = null,
-        priority: EventPriority = EventPriority.NORMAL,
-        ignoreCancelled: Boolean = true
-    ): Flow<T> =
-        events(T::class, `for`, priority, ignoreCancelled)
+    val eventFlow = MutableSharedFlow<Event>()
 
     /**
      * Register custom gameplay features for this [KrakenPlugin].
@@ -107,6 +71,9 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
         }
         if (HandlerList.getRegisteredListeners(this).none { it.listener is CustomBlockAdapter }) {
             + features.blockAdapter
+        }
+        if (HandlerList.getRegisteredListeners(this).none { it.listener is DataPackFeatureAdapter }) {
+            + features.dataPackAdapter
         }
         features.block()
     }
@@ -135,7 +102,7 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
     /**
      * A coroutine scope mainly used for coroutines launched in this framework.
      */
-    val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Default
 
     // Executed when the plugin is enabled.
     protected open fun up() {
@@ -166,7 +133,6 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin() {
         }
         down()
         // Cancel just after the [down] function is called to prevent any unexpected behaviour.
-        coroutineScope.cancel()
-        //adventure.close()
+        cancel()
     }
 }
