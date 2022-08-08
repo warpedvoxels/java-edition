@@ -1,7 +1,10 @@
 package org.hexalite.network.kraken
 
 import com.github.ajalt.mordant.rendering.TextColors
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
@@ -19,7 +22,6 @@ import org.hexalite.network.kraken.gameplay.feature.item.CustomItemAdapter
 import org.hexalite.network.kraken.logging.BasicLogger
 import org.hexalite.network.kraken.logging.info
 import java.util.*
-import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -94,12 +96,6 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin(), Coroutin
     }
 
     /**
-     * A list of jobs that should be cancelled when the plugin is disabled.
-     * Mainly used for coroutines launched in this framework.
-     */
-    val activeJobs = ConcurrentLinkedQueue<Job>()
-
-    /**
      * A coroutine scope mainly used for coroutines launched in this framework.
      */
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Default
@@ -128,9 +124,6 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin(), Coroutin
      * function.
      */
     final override fun onDisable() {
-        for (job in activeJobs) {
-            job.cancel()
-        }
         down()
         // Cancel just after the [down] function is called to prevent any unexpected behaviour.
         cancel()

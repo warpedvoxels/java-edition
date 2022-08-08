@@ -8,7 +8,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.bukkit.server
 import org.hexalite.network.kraken.configuration.KrakenLoggingConfig
-import org.hexalite.network.kraken.extension.callerName
 import org.hexalite.network.kraken.kraken
 
 //    __                  _
@@ -38,8 +37,7 @@ open class BasicLogger(val namespace: String, val settings: KrakenLoggingConfig)
             append(level.color(level.prefix))
             if (message != null) {
                 if (level != LoggingLevel.System) {
-                    val caller = message.callerName().substringAfterLast('.')
-                    append(" ${white("on $caller")}: ")
+                    append(" ${white("on $namespace")}: ")
                 } else {
                     append(": ")
                 }

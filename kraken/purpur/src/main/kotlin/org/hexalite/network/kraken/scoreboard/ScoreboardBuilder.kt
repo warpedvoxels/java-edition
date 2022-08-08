@@ -2,16 +2,18 @@ package org.hexalite.network.kraken.scoreboard
 
 import net.kyori.adventure.text.Component
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.bukkit.BukkitDslMarker
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+
+@DslMarker
+annotation class ScoreboardDslMarker
 
 class ScoreboardBuilder(val plugin: KrakenPlugin, val id: String) {
     var title: ScoreboardEntry = { emptyList() }
     val entries: MutableList<ScoreboardEntry> = mutableListOf()
 
-    @BukkitDslMarker
+    @ScoreboardDslMarker
     fun title(builder: ScoreboardEntry) {
         title = builder
     }
@@ -28,7 +30,7 @@ class ScoreboardBuilder(val plugin: KrakenPlugin, val id: String) {
     }
 
 
-    @BukkitDslMarker
+    @ScoreboardDslMarker
     fun entry(builder: ScoreboardEntry) {
         entries.add(builder)
     }
@@ -52,6 +54,7 @@ class ScoreboardBuilder(val plugin: KrakenPlugin, val id: String) {
 }
 
 @OptIn(ExperimentalContracts::class)
+@ScoreboardDslMarker
 inline fun KrakenPlugin.scoreboard(id: String, scoreboardBuilder: ScoreboardBuilder.() -> Unit): KrakenScoreboard {
     contract {
         callsInPlace(scoreboardBuilder, InvocationKind.EXACTLY_ONCE)

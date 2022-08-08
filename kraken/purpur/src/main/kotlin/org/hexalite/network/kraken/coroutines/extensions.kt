@@ -3,36 +3,27 @@
 package org.hexalite.network.kraken.coroutines
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.hexalite.network.kraken.KrakenPlugin
+import org.hexalite.network.kraken.bukkit.BukkitDslMarker
+import kotlin.coroutines.CoroutineContext
 
-/**
- * Switch the context of the current coroutine to the given plugin's dispatcher.
- */
-suspend fun <T> switch(dispatcher: BukkitDispatcher, block: suspend CoroutineScope.() -> T) = withContext(dispatcher) {
-    block.invoke(this)
-}
+@BukkitDslMarker
+fun KrakenPlugin.launch(
+    context: (KrakenPlugin) -> BukkitDispatcher,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+): Job = launch(+context, start, block)
 
-/**
- * Switch the context of the current coroutine to the given plugin's dispatcher.
- * @param getter the function that returns the plugin's dispatcher
- */
-suspend fun <T> KrakenPlugin.switch(getter: (KrakenPlugin) -> BukkitDispatcher, block: suspend CoroutineScope.() -> T) = withContext(getter(this)) {
-    block.invoke(this)
-}
+context(KrakenPlugin)
+    inline operator fun ((KrakenPlugin) -> BukkitDispatcher).unaryPlus() = invoke(this@KrakenPlugin)
 
-/**
- * Launch a coroutine on the given plugin's dispatcher.
- * @param getter the function that returns the plugin's dispatcher
- */
-fun <T> KrakenPlugin.launchCoroutine(getter: (KrakenPlugin) -> BukkitDispatcher, block: suspend CoroutineScope.() -> T): Job {
-    val dispatcher = getter(this)
-    return launch(dispatcher) { block.invoke(this) }.also { job ->
-        activeJobs.add(job)
-        job.invokeOnCompletion {
-            activeJobs.remove(job)
-        }
-    }
-}
+context(KrakenPlugin)
+    inline operator fun CoroutineContext.plus(getter: (KrakenPlugin) -> BukkitDispatcher): CoroutineContext =
+    this + getter(this@KrakenPlugin)
+
+inline val Async get() = KrakenPlugin::async
+
+inline val Sync get() = KrakenPlugin::sync
