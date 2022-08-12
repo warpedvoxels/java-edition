@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
+import org.hexalite.network.kraken.bukkit.WithPlugin
 import org.hexalite.network.kraken.command.dsl.CommandRegisteringScope
 import org.hexalite.network.kraken.configuration.KrakenConfig
 import org.hexalite.network.kraken.coroutines.BukkitDispatcher
@@ -27,7 +28,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 
-abstract class KrakenPlugin(open val namespace: String) : JavaPlugin(), CoroutineScope {
+abstract class KrakenPlugin(val namespace: String) : JavaPlugin(), CoroutineScope, WithPlugin {
     val commands = CommandRegisteringScope(this)
 
     // dispatchers
@@ -38,13 +39,10 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin(), Coroutin
      * The default [KrakenConfig] for this plugin. It can be (de)serialized using kotlinx.serialization
      * and the KToml add-on.
      */
-    val conf = KrakenConfig()
+    val config = KrakenConfig()
 
     inline val log: BasicLogger
-        get() = BasicLogger(
-            namespace.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
-            conf.logging
-        )
+        get() = BasicLogger(namespace.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
 
     /**
      * Returns a view for all custom gameplay features.
@@ -128,4 +126,8 @@ abstract class KrakenPlugin(open val namespace: String) : JavaPlugin(), Coroutin
         // Cancel just after the [down] function is called to prevent any unexpected behaviour.
         cancel()
     }
+
+    @Suppress("OVERRIDE_BY_INLINE")
+    final override inline val plugin: KrakenPlugin
+        get() = this
 }

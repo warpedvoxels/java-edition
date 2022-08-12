@@ -1,11 +1,13 @@
+@file:JvmName("ListenerExt")
 package org.hexalite.network.kraken.extension
 
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
+import org.hexalite.network.kraken.BukkitDslMarker
 import org.hexalite.network.kraken.KrakenPlugin
-import org.hexalite.network.kraken.bukkit.BukkitDslMarker
+import org.hexalite.network.kraken.WithPlugin
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -16,9 +18,7 @@ import kotlin.reflect.KClass
 //  / /__/ (_-</ __/ -_) _ \/ -_) __/
 // /____/_/___/\__/\__/_//_/\__/_/
 
-interface BukkitEventListener : Listener {
-    val plugin: KrakenPlugin
-}
+interface BukkitEventListener : Listener, WithPlugin
 
 open class OpenBukkitEventListener(override val plugin: KrakenPlugin): BukkitEventListener
 

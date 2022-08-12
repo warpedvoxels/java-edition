@@ -1,3 +1,5 @@
+@file:JvmName("CommandExt")
+
 package org.hexalite.network.kraken.extension
 
 import com.mojang.brigadier.context.CommandContext
@@ -7,10 +9,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.arguments.EntityArgument
 import org.bukkit.command.Command
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.command.KrakenCommand
 import org.hexalite.network.kraken.command.buildBukkit
+import org.hexalite.network.kraken.craftbukkit
 
 //    ____              __ __              __
 //   / __/___  ___  ___/ // /  ___ _ ____ / /__
@@ -18,7 +20,7 @@ import org.hexalite.network.kraken.command.buildBukkit
 // /_/   \__/ \__/ \_,_//_.__/\_,_/ \__//_/\_\
 
 const val Success = 1
-const val Error = -1
+const val Error = - 1
 
 inline fun CommandContext<CommandSourceStack>.reply(text: String, broadcastToOps: Boolean = false) = Success.also {
     source.sendSuccess(text, broadcastToOps)
@@ -28,7 +30,10 @@ inline fun CommandContext<CommandSourceStack>.reply(text: Component, broadcastTo
     source.sendSuccess(text, broadcastToOps)
 }
 
-inline fun CommandContext<CommandSourceStack>.reply(text: net.minecraft.network.chat.Component, broadcastToOps: Boolean = false) = Success.also {
+inline fun CommandContext<CommandSourceStack>.reply(
+    text: net.minecraft.network.chat.Component,
+    broadcastToOps: Boolean = false
+) = Success.also {
     source.sendSuccess(text, broadcastToOps)
 }
 
@@ -57,6 +62,7 @@ inline fun noPlayerFound(): Nothing = throw EntityArgument.NO_PLAYERS_FOUND.crea
 // / /__/ _ \/  ' \/  ' \/ _ `/ _ \/ _  (_-<
 // \___/\___/_/_/_/_/_/_/\_,_/_//_/\_,_/___/.
 
-inline fun KrakenPlugin.registerCommand(command: Command) = (server as CraftServer).commandMap.register(namespace, command)
+inline fun KrakenPlugin.registerCommand(command: Command) = server.craftbukkit().commandMap.register(namespace, command)
 
-inline fun KrakenPlugin.registerCommand(command: KrakenCommand<CommandSourceStack>) = registerCommand(command.buildBukkit(this))
+inline fun KrakenPlugin.registerCommand(command: KrakenCommand<CommandSourceStack>) =
+    registerCommand(command.buildBukkit(this))

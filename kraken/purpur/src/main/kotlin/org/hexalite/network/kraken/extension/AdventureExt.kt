@@ -1,3 +1,4 @@
+@file:JvmName("AdventureExt")
 package org.hexalite.network.kraken.extension
 
 import net.kyori.adventure.text.minimessage.MiniMessage

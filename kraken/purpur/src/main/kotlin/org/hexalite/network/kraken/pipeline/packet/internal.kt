@@ -5,8 +5,8 @@ import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.ChannelInitializer
 import org.bukkit.Server
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer
 import org.hexalite.network.kraken.KrakenPlugin
+import org.hexalite.network.kraken.handle
 import org.hexalite.network.kraken.logging.critical
 import org.hexalite.network.kraken.logging.debug
 import org.hexalite.network.kraken.logging.log
@@ -32,7 +32,7 @@ val Server.channels: List<Channel>
  * Set up the packet listening system internally.
  */
 internal fun KrakenPlugin.setupInternalPacketListening() {
-    val internal = (server as CraftServer).server.connection ?: error("This server does not has an internal connection.")
+    val internal = server.handle().connection ?: error("This server does not has an internal connection.")
     internal.connections.forEach { connection ->
         val channel = connection.channel
         log.debug { "Initializing internal packet listening on connection ${channel.id()}." }

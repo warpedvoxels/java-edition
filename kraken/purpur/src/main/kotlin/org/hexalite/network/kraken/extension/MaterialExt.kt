@@ -1,3 +1,4 @@
+@file:JvmName("MaterialExt")
 package org.hexalite.network.kraken.extension
 
 import org.bukkit.inventory.ItemStack

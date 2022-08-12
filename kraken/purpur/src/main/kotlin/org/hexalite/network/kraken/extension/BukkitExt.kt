@@ -1,8 +1,10 @@
-package org.hexalite.network.kraken.bukkit
+@file:JvmName("BukkitExt")
+package org.hexalite.network.kraken
 
 import org.bukkit.Bukkit
+import org.bukkit.Server
+import org.bukkit.craftbukkit.v1_19_R1.CraftServer
 import org.bukkit.plugin.java.JavaPlugin
-import org.hexalite.network.kraken.KrakenPlugin
 
 //    ___       __    __    _ __
 //   / _ )__ __/ /__ / /__ (_) /_
@@ -21,3 +23,12 @@ annotation class BukkitDslMarker
 inline fun <reified T: KrakenPlugin> getPlugin(): Lazy<T> = lazy {
     JavaPlugin.getPlugin(T::class.java)
 }
+
+interface WithPlugin {
+    val plugin: KrakenPlugin
+}
+
+inline fun Server.craftbukkit() = this as CraftServer
+
+inline fun Server.handle() = craftbukkit().server
+

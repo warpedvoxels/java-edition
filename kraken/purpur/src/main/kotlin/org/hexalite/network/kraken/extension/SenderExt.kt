@@ -1,3 +1,4 @@
+@file:JvmName("SenderExt")
 package org.hexalite.network.kraken.extension
 
 import net.kyori.adventure.identity.Identity
@@ -5,11 +6,6 @@ import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
 import java.util.*
-
-inline val Entity.uuid: UUID
-    get() = uniqueId
-
-inline fun UUID.asIdentity() = Identity.identity(this)
 
 inline fun CommandSender.send(component: Component) =
     sendMessage(component)

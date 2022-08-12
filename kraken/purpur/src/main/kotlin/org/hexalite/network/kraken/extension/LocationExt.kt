@@ -1,7 +1,10 @@
+@file:JvmName("LocationExt")
 package org.hexalite.network.kraken.extension
 
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Location
+import org.bukkit.World
+import org.bukkit.craftbukkit.v1_19_R1.CraftWorld
 
 //    __                 __  _
 //   / /  ___  _______ _/ /_(_)__  ___
@@ -24,3 +27,6 @@ inline fun Location.getInteractionPoint(maxDistance: Double, ignorePassableBlock
     }
     return result.hitPosition.subtract(result.hitBlock!!.location.toVector()).toLocation(world)
 }
+
+inline fun World.handle() = (this as CraftWorld).handle
+
