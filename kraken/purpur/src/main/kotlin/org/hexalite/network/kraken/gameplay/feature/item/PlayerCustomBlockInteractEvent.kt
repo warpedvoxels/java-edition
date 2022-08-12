@@ -4,9 +4,11 @@ import org.bukkit.event.Cancellable
 import org.bukkit.event.HandlerList
 import org.bukkit.event.player.PlayerEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.hexalite.network.kraken.gameplay.feature.block.CustomBlockFeature
 
-data class PlayerCustomItemInteractEvent(
-    val original: PlayerInteractEvent, val mainHand: CustomItemFeature?, val offHand: CustomItemFeature?,
+data class PlayerCustomBlockInteractEvent(
+    val original: PlayerInteractEvent,
+    val block: CustomBlockFeature,
 ): PlayerEvent(original.player), Cancellable {
     private var _isCancelled = false
 

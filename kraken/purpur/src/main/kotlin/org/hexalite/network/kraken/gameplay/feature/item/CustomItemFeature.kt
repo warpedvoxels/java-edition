@@ -9,8 +9,9 @@ import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
+import org.hexalite.network.kraken.KrakenPlugin
+import org.hexalite.network.kraken.extension.BukkitEventListener
 import org.hexalite.network.kraken.gameplay.feature.GameplayFeature
-import org.hexalite.network.kraken.gameplay.feature.GameplayFeatureView
 import java.util.*
 
 open class CustomItemFeature @JvmOverloads constructor(
@@ -140,11 +141,15 @@ open class CustomItemFeature @JvmOverloads constructor(
     }
 }
 
-fun CustomItemFeature. asCustomBlockOrNull(view: GameplayFeatureView) = view.retrieveCustomBlock(textureIndex)
+context(BukkitEventListener)
+    fun CustomItemFeature.block() = plugin.features.blocks[textureIndex]
 
-fun ItemStack.asCustomOrNull(view: GameplayFeatureView): CustomItemFeature? {
+context(BukkitEventListener)
+    fun ItemStack.custom() = asCustomOrNull(plugin)
+
+fun ItemStack.asCustomOrNull(plugin: KrakenPlugin): CustomItemFeature? {
     val meta = itemMeta ?: return null
     val container = meta.persistentDataContainer
-    val textureIndex = container.get(view.id, PersistentDataType.INTEGER) ?: return null
-    return view.retrieveCustomItem(textureIndex)
+    val textureIndex = container.get(plugin.features.id, PersistentDataType.INTEGER) ?: return null
+    return plugin.features.items[textureIndex]
 }

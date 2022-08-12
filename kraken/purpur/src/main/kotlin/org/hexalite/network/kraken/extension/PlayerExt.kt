@@ -1,6 +1,9 @@
+@file:JvmName("PlayerExt")
 package org.hexalite.network.kraken.extension
 
 import org.bukkit.Bukkit
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer
+import org.bukkit.entity.Player
 import java.util.*
 
 //    ___  __
@@ -8,6 +11,8 @@ import java.util.*
 //  / ___/ / _ `/ // / -_) __/
 // /_/  /_/\_,_/\_, /\__/_/
 //             /___/
+
+inline fun Player.handle() = (this as CraftPlayer).handle
 
 /**
  * Find a player from the given UUID or throw an IllegalArgumentException.

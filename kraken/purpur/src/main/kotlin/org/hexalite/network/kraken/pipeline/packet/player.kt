@@ -7,7 +7,6 @@ import io.netty.channel.ChannelPromise
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.login.ClientboundGameProfilePacket
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -16,6 +15,7 @@ import org.bukkit.event.server.PluginDisableEvent
 import org.hexalite.network.kraken.KrakenPlugin
 import org.hexalite.network.kraken.collections.onlineUUIDsMapOf
 import org.hexalite.network.kraken.extension.BukkitEventListener
+import org.hexalite.network.kraken.extension.handle
 import org.hexalite.network.kraken.extension.unregister
 import org.hexalite.network.kraken.extension.uuid
 import org.hexalite.network.kraken.kraken
@@ -32,7 +32,7 @@ import org.hexalite.network.kraken.logging.log
  * Returns the connection for a connected player in this server.
  */
 inline val Player.connection: Connection
-    get() = (this as CraftPlayer).handle.connection.connection
+    get() = handle().connection.connection
 
 /**
  * Returns the name of the pipeline injection for a specific [KrakenPlugin].
