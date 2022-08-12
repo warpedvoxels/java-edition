@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "3.22.5",
-    "vue": "3.2.35",
+    "vue": "3.2.37",
     "vue-router": "4.0.15"
   },
   "devDependencies": {
