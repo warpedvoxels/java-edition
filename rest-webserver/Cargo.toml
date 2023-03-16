@@ -11,7 +11,7 @@ build = "build.rs"
 [dependencies]
 actix-web = { version = "^4", features = ["rustls"] }
 actix-cors = "^0.6"
-actix-identity = "^0.4"
+actix-identity = "^0.5.2"
 hexalite-common = { path = "../common-rust" }
 sea-query = { version = "^0", default-features = false, features = [
     "derive",
