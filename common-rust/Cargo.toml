@@ -9,7 +9,7 @@ publish = false
 [dependencies]
 common-macros = { path = "./macros" }
 home = "^0"
-lazy_static = "^1"
+lazy_static = "^1.4.0"
 anyhow = "^1.0"
 serde = { version = "^1", features = ["derive"] }
 serde_with = { version = "^1.13", features = ["chrono"] }
