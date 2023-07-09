@@ -1,0 +1,32 @@
+[versions]
+kotlin = "1.9.0"
+minecraft = "1.20.1"
+purpur = "1.20.1-R0.1-SNAPSHOT"
+paperweight = "1.5.5"
+run-task = "2.1.0"
+shadow = "8.1.1"
+serialization = "1.5.1"
+coroutines = "1.7.2"
+plugin-yml = "0.6.0"
+velocity-api = "3.1.1"
+brigadier = "1.0.18"
+adventure = "4.14.0"
+
+[libraries]
+purpur-dev-bundle = { module = "org.purpurmc.purpur:dev-bundle", version.ref = "purpur" }
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity-api" }
+brigadier = { module = "com.mojang:brigadier", version.ref = "brigadier" }
+adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-text-serializer-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
+
+[plugins]
+paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-task" }
+run-velocity = { id = "xyz.jpenilla.run-velocity", version.ref = "run-task" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+plugin-yml = { id = "net.minecrell.plugin-yml.paper", version.ref = "plugin-yml" }

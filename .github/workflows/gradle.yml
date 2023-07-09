@@ -1,0 +1,31 @@
+name: Kotlin Code Analysis
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  gradle:
+    strategy:
+      matrix:
+        os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Restore build cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Perform code analysis
+        run: ./gradlew check

@@ -1,0 +1,24 @@
+# gradle
+.gradle/
+build/
+bin/
+run/
+!src/**/bin/
+!src/**/run/
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# editor-specific
+*.launch
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.vscode/
+.classpath
+.project
+.bloop
+.metals
