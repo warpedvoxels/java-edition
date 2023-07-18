@@ -1,0 +1,20 @@
+name: Rust Code Analysis
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint-with-clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: clippy
+      - uses: actions-rs/clippy@v1
+        with:
+          command: clippy
+          args: --manifest-path voxeru-discord-bot/Cargo.toml
