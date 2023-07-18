@@ -1,9 +1,9 @@
 <h1>    
-    <img width="32px" height="32px" alt="" src="./artwork/branding/logo@10x.png" />
+    <img width="38px" height="38px" alt="" src="./artwork/branding/logo@10x.png" />
     <code>warpedvoxels</code>
 </h1>
 <a href="https://discord.gg/gRFnmxHkFb">
-  <img src="https://img.shields.io/discord/908438033613848596?colorA=1e1e28&colorB=f5c858&style=for-the-badge&logo=discord&logoColor=f5c858" />
+  <img src="https://img.shields.io/discord/908438033613848596?colorA=1e1e28&colorB=c4d1fb&style=for-the-badge&logo=discord&logoColor=c4d1fb" />
 </a>
 
 **Welcome to WarpedVoxels' Git mono-repository!** This is where
@@ -31,9 +31,9 @@ players and pushes the boundaries of Minecraft: Java Edition gameplay.
 
 ## ⚠️ Disclaimer
 
-Minecraft is intellectual property of Mojang Studios, and it is solely
+Minecraft is intellectual property of Mojang, AB, and it is solely
 mentioned for descriptive purposes. WarpedVoxels is not associated with
-or endorsed by Mojang Studios.
+or endorsed by Mojang, AB.
 
 Any references to Minecraft within this repository are purely for
 descriptive purposes to provide context and showcase the work done by

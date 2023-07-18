@@ -16,25 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
+pub use poise::serenity_prelude as serenity;
+
+use crate::config::VoxeruConfig;
+
+pub struct VoxeruState {
+    pub config: VoxeruConfig,
 }
 
-rootProject.name = "warpedvoxels"
+pub type PoiseFramework = poise::Framework<VoxeruState, anyhow::Error>;
+pub type PoiseContext<'a> = poise::Context<'a, VoxeruState, anyhow::Error>;
 
-includeBuild("gradle-plugin")
-include(
-    ":voxels-command-framework",
-    ":voxels-command-framework:paper",
-    ":voxels-command-framework:velocity",
-    ":voxels-core:architecture",
-    ":voxels-core:utility",
-    ":voxels-core:networking",
-    ":voxels-core:serialization",
-    ":voxels-core:behaviour-pack",
-    ":voxels-core:extension",
-    ":voxels-proxy-core:architecture",
-    ":voxels-proxy-core:utility",
-    ":voxels-proxy-core:resource-pack",
-    ":voxels-proxy-core:extension"
-)

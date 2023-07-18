@@ -1,0 +1,23 @@
+{
+  "accent_color": 3945724,
+  "command_prefix": "::",
+  "locale_dir": "/localisation",
+  "asset_path": {
+    "header": {
+      "introduction": "/assets/headers/introduction.png",
+      "rules": "/assets/headers/rules.png"
+    }
+  },
+  "guild": {
+    "id": 908438033613848596,
+    "channel_id": {
+      "introduction": 1004451625999536269,
+      "rules": 990567288212164678,
+      "general": 950429987830366219,
+      "commands": 950444706888818709,
+      "support": 1019653948572966912,
+      "new_members": 1129536166316736622,
+      "announcements": 950406122257383434
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "commands": {
+    "source": {
+      "header": "<:warpedvoxels:1128342976914014359> **WarpedVoxels is _libre software_ licensed under [GNU Affero General Public License version 3.0](https://www.gnu.org/licenses/agpl-3.0.en.html).** This means all of our source code and assets are free to use for personal and commercial projects as long as you provide attribution, share any modifications under the same license, and make the source code of your project available to anyone you distribute it to. Feel free to use our source code as a reference for your own projects, or maybe even contribute to our project!",
+      "footer": "https://github.com/warpedvoxels"
+    },
+    "invite": {
+      "header": "**You may help us grow our community by inviting your friends to our community!** This is a permanent invite link that will never expire.",
+      "footer": "https://discord.gg/gRFnmxHkFb"
+    }
+  },
+  "description": {
+    "welcome_screen": "Welcome to Southdust, where creativity and community come together!",
+    "introduction": "Information about our project and community.",
+    "rules": "A channel reserved for our code of conduct.",
+    "general": "A channel reserved for general discussion.",
+    "support": "A channel reserved for help and support.",
+    "news": "A channel reserved for announcements related to our projects."
+  },
+  "topic": {
+    "internalisation": "We have an unique approach of internationalisation, which allows users from all over the world to come together and have a great time. We strive to create a diverse and inclusive community where everyone feels welcome and valued. Additionally, our focus on internationalisation also allows us to tap into a wider pool of talent and resources, resulting in even more exciting and innovative projects. To learn more about us and this community and the topic of this channel, click the button below and select the language you prefer.",
+    "introduction": {
+      "title": "Introduction",
+      "description": "\uD83D\uDC4B **Welcome to Southdust Labs, where creativity and community come together!** We are an indie team of passionate developers and artists dedicated to creating high-quality open-source software.\n\nOur focus is centered around sub-organizations, which allows for efficient management and control of diverse perspectives. One example is <:warpedvoxels:1128342976914014359> **WarpedVoxels**, where we create exceptional Minecraft content, including, but not limited to, frameworks and a complete network of servers.\n\nThis community also addresses the **Voxu Project**, a strongly and statically typed, memory-efficient functional programming language.\n\nYou can learn more about it at <https://code.axyria.dev/voxu>.\n\nOur <#950429987830366219> channel is designed to foster conversations in different languages, with _threading_ support that allows for easy organization and engagement. You can find the language specific threads pinned at the top of the channel for easy access and participation. So, whether you speak English, Spanish, Portuguese, or any other language, you can find a community within our community to share and exchange ideas with.\n\nPlease note that our community is currently under construction, and to ensure a pleasant experience for everyone, please review the <#990567288212164678> before interacting with other members."
+    },
+    "rules": {
+      "title": "Community Guidelines",
+      "header": "\uD83C\uDDEC\uD83C\uDDE7 **In order to maintain a safe and enjoyable environment for all members, please review and follow these guidelines carefully.**",
+      "values": [
+        "**Follow the platform terms of service.** This includes mostly critical infractions, such as, but not limited to, being under 13 (thirteen) years old, execution of self-bots or user-bots, don't infringe intellectual property, etc. You can find an overview of each term at <https://dis.gd/tos> and <https://discord.com/guidelines>.",
+        "**No age-restricted or obscene content.** This includes text, images, or links featuring nudity, sex, hard violence, or other graphically disturbing content.",
+        "**Treat everyone with respect.** Absolutely no harassment, witch hunting, or any kind of hate speech will be tolerated in this community.",
+        "**No self-promotion or spam in our community or direct messages of our members.** Most people don't like receiving commercial advertisements or being invited to Discord servers without their permission.",
+        "**Use common sense and respect the boundaries of others.** Any behavior that makes others uncomfortable may result in disciplinary action, even if it is not explicitly listed in these guidelines. Staff members are also held to the same standards and expected to follow these guidelines. This is a community where all cultures and beliefs should be respected, so avoid any kind of slurs as well.",
+        "**Avoid discussing sensitive or divisive topics.** Conversations about, but not limited to, politics and religion can be sensitive topics to some people and lead to conflicts within our community. While it is okay to discuss these topics occasionally, please exercise discretion and avoid engaging in these conversations too frequently or in a way that could potentially cause offence or upset other members. It's important to keep in mind to respect people's opinions and beliefs and be mindful that our community is composed of people from different backgrounds, cultures, and perspectives."
+      ]
+    }
+  }
+}

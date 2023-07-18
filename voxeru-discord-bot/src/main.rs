@@ -16,25 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
+mod command;
+mod config;
+mod discord;
+mod typealias;
+mod git;
+
+use anyhow::Result;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    env_logger::init();
+    let config = config::parse().await?;
+    discord::init(config).await?;
+    Ok(())
 }
-
-rootProject.name = "warpedvoxels"
-
-includeBuild("gradle-plugin")
-include(
-    ":voxels-command-framework",
-    ":voxels-command-framework:paper",
-    ":voxels-command-framework:velocity",
-    ":voxels-core:architecture",
-    ":voxels-core:utility",
-    ":voxels-core:networking",
-    ":voxels-core:serialization",
-    ":voxels-core:behaviour-pack",
-    ":voxels-core:extension",
-    ":voxels-proxy-core:architecture",
-    ":voxels-proxy-core:utility",
-    ":voxels-proxy-core:resource-pack",
-    ":voxels-proxy-core:extension"
-)
