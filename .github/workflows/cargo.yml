@@ -14,6 +14,18 @@ jobs:
           toolchain: stable
           override: true
           components: clippy
+      - name: Set up Cargo cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            voxeru-discord-bot/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
       - uses: actions-rs/cargo@v1
         with:
           command: clippy
